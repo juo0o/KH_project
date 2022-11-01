@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'MapoGoldenPier';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+	font-family: 'MapoGoldenPier';
+}
+
+
+
+/* 테이블에 스크롤만들어 주고 스크롤 디자인 적용 */
+/* 1. tbody에  높이와 y축 스크롤을 준다 그 후 diplay:block 으로  tbody를  블록속성으로 만든다. 
+--> tbody는 thead의 td와같이 한블록으로 취급된다
+--> t body 의 width를 맞추어준다.
+2. thead와  tbody 의 tr속성에  display:table 을 주어서  한테이블로 취급되도록 만들어준다.
+--> tr속성에 width를 주어서 너비를 맞추어준다 .
+ */
+
+
+
+
+/* #stuTable > tbody{ */
+/* 	height: 300px; */
+/* 	overflow-y: scroll;  */
+/* 	display:block; */
+/*   	width: 100%;    */
+/* } */
+/* #stuTable > thead, tbody tr {   */
+/*      display:table;     */
+/*      width:500px;        */
+/*      table-layout:fixed;    */
+/* }   */
+/* #stuTable > thead {   */
+/*       width: calc( 100% - 1em );   */
+/* }   */
+/* 테이블에 스크롤만들어 주고 스크롤 디자인 적용 */
+
+
+#scroll{
+	overflow-y: scroll;
+	height: 800px;
+}
+
+	 ::-webkit-scrollbar {
+        width: 10px;
+      }
+       
+      ::-webkit-scrollbar-track {
+        background: #eeeeee;
+        border-radius: 5px;
+      }
+       
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(#c2e59c, #64b3f4);
+        background: black;
+        border-radius: 5px;
+      }   
+      
+a {
+  text-decoration: none;
+  color: black;
+}
+      
+
+
+
+
+
+

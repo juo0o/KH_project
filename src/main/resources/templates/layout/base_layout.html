@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link href="/css/common.css" rel="stylesheet">
+		
+		
+    <link href="/js//common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/css/common/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="container-fluid">
+	
+		<div class="row">
+		
+			<div class="col-2">
+				<div th:replace="fragment/side::side" ></div>
+			</div>
+			
+			<div class="col-10" >
+			
+				<div class="row"  >
+					<div th:replace="fragment/top::top"></div>
+				</div>
+				
+				<div class="row" >
+					<div layout:fragment="content" style="margin-top: 100px;"></div>
+				</div>
+				
+			</div>		
+			
+		</div>
+		
+	</div>
+	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+	<!-- Bootstrap core JavaScript-->
+    <script src="/js/common/vendor/jquery/jquery.min.js"></script>
+    <script src="/js/common/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/js/common/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/common/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/js/common/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/common/demo/chart-area-demo.js"></script>
+    <script src="/js/common/demo/chart-pie-demo.js"></script>
+</body>
+</html>
