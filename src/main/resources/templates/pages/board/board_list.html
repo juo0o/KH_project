@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col-12">
+				<table>
+					<tr>
+						<th>글번호</th>
+						<th>글제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+						<th>조회수</th>
+					</tr>
+					<th:block th:each="board: ${boardList}">
+						<tr>
+							<td th:text="${board.boardNum}"></td>
+							<td th:href="@{board/boardDetail(boardNum=${board.boardNum})}">
+								<span th:text="${board.boardTitle}"></span>
+							</td>
+							<td th:text="${board.boardWriter}"></td>
+							<td th:text="${board.bordRegDate}"></td>
+							<td th:text="${board.boardReadCnt}"></td>
+						</tr>
+					</th:block>
+				</table>
+			</div>
+			<div class="row" text-right>
+				<div class="col-4">
+					<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/regBoard}'|">글쓰기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>
