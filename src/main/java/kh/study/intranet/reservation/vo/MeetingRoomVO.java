@@ -1,0 +1,17 @@
+package kh.study.intranet.reservation.vo;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class MeetingRoomVO {
+	private String roomCode;
+	private String roomName;
+	private int maxRoomCnt;
+	private String available;
+	
+	
+}

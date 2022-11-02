@@ -4,6 +4,47 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="reservationMapper">
 	
+	<!-- 회의실 테이블 -->
+	<resultMap type="kh.study.intranet.reservation.vo.MeetingRoomVO" id="meeting">
+		<id column="ROOM_CODE" property="roomCode"/>
+		<result column="ROOM_NAME" property="roomName"/>
+		<result column="MAX_ROOM_CNT" property="maxRoomCnt"/>
+		<result column="AVAILABLE" property="available"/>
+		
+	
+	</resultMap>
+	
+	
+	<!-- 회의실 예약 테이블 -->
+	<resultMap type="kh.study.intranet.reservation.vo.ReservationVO" id="reservation">
+		<id column="RESERVE_CODE" property="reserveCode"/>
+		<result column="RESERVE_ROOM_CODE" property="reserveRoomCode"/>
+		<result column="RESERVE_DATE" property="reserveDate"/>
+		<result column="RESERVE_TIME" property="reserveTime"/>
+		<result column="RESERVE_USER_ID" property="reserveUserId"/>
+		<result column="RESERVE_AVAILABLE" property="reserveAvailable"/>
+	</resultMap>
+		
+	
+	
+	<select id="selectMeetingRoom" resultMap="meeting">
+	SELECT ROOM_CODE
+		, ROOM_NAME
+		, MAX_ROOM_CNT
+		, AVAILABLE
+		FROM MEETING_ROOM
+	
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
 
 
