@@ -12,5 +12,13 @@ public class MainController {
 		
 		return "/main/mainPage";
 	}
+	
+	@RequestMapping("/index")
+	public String indexPage() {
+		
+		return "/main//index";
+	}
+	
+	
 
 }
