@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+	
+<div layout:fragment="content">
+	<div>결재현황</div>
+	<div class="row">
+		<div class="col-4">
+			<div class="card text-center text-success" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">결재대기</h5>
+					<br> <br>
+					<h3 class="card-subtitle mb-2 text-muted">1 건</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card text-center text-success" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">결재중</h5>
+					<br> <br>
+					<h3 class="card-subtitle mb-2 text-muted">2 건</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="card text-center text-success" style="width: 18rem;">
+				<div class="card-body">
+					<h5 class="card-title">결재완료</h5>
+					<br> <br>
+					<h3 class="card-subtitle mb-2 text-muted">3 건</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 리스트 -->
+	<div>결재 수신목록</div>
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr bordercolor="sold 1px;">
+					<th scope="col">#</th>
+					<th scope="col">First</th>
+					<th scope="col">Last</th>
+					<th scope="col">Handle</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+				<tr>
+					<th scope="row">2</th>
+					<td>Jacob</td>
+					<td>Thornton</td>
+					<td>@fat</td>
+				</tr>
+				<tr>
+					<th scope="row">3</th>
+					<td>Larry the Bird</td>
+					<td>@twitter</td>
+					<td>@twitter</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>
+</html>

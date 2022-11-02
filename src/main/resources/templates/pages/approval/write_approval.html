@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="content">
+
+
+
+
+
+	<div>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="연차신청서"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="일반품의서"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="구매품의서"></span>
+	</div>
+	<br>
+	<div class="approval_import ie9-scroll-fix" style="width:60%; height:100%; border: 1px solid black;"  align="center">
+		<!-- 문서 내용 표시 테스트 -->
+		<form id="document_content" class="form_doc_editor editor_view"
+			onsubmit="return false;">
+				<span style="line-height: normal; font-family: 맑은 고딕; font-size: 10pt; margin-top: 0px; margin-bottom: 0px;"></span>
+					<div style="width: 100%" >
+						<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; width: 800px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important;" >
+							<tbody>
+								<tr>
+									<td
+										style="padding: 3px !important; border: 0px solid black; border-image: none; width: 300px; height: 90px !important; text-align: center; font-size: 22px; font-weight: bold; vertical-align: middle;"
+										colspan="2" class="">연차신청서</td>
+								</tr>
+								<tr>
+									<td
+										style="padding: 0px !important; border: 0px currentColor; border-image: none; width: 300px;"
+										class=""><table class="__se_tbl"
+											style="background: white; margin: 0px; border: 1px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important;">
+											<!-- User -->
+		
+											<tbody>
+												<tr>
+													<td
+														style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+		
+														기안자</td>
+													<td
+														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;"><span
+														>김상후</span></td>
+												</tr>
+												<tr>
+													<td
+														style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+		
+														기안부서</td>
+													<td
+														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;"><span
+														
+														>다우그룹</span></td>
+												</tr>
+												<tr>
+													<td
+														style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+		
+														기안일</td>
+													<td
+														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;"><span
+													
+														>2022-10-14(금)</span>
+													</td>
+												</tr>
+												<tr>
+													<td
+														style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+		
+														문서번호</td>
+													<td
+														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;"><span
+														
+														>다우그룹-2022-00027</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+
+									<td style="padding: 0px ; border: 1px currentColor;  border-image: none; width: 500px; text-align: right; vertical-align: top" class="">
+									 	<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important; float:right;" >
+											<tr>
+												<td
+													style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+													rowspan="4">승인</td>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
+											</tr>
+											<tr>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+													rowspan="2">
+													<div>그림</div>
+													<div>승인자</div>
+												</td>
+											</tr>
+											<tr>
+											</tr>
+											<tr>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
+											</tr>
+										</table> 
+									</td>
+
+								</tr>
+							</tbody>
+						</table> 
+						<br>
+					<!-- 	<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important; float:right;" >
+								<tr>
+									<td
+										style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+										rowspan="4">승인</td>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
+								</tr>
+								<tr>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+										rowspan="2">
+										<div>그림</div>
+										<div>승인자</div>
+									</td>
+								</tr>
+								<tr>
+								</tr>
+								<tr>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
+								</tr>
+						</table>  -->
+					</div>
+					<br>
+					<br>
+					<br>
+				<div>
+				<table class="__se_tbl" style="background: white; border: 1px solid black; border-image: none; width: 800px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; margin-top: 0px; border-collapse: collapse !important;">
+					<tbody>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+								휴가&nbsp;종류</td>
+							<td
+								style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;"><span
+								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; margin-top: 0px; margin-bottom: 0px;"
+								>
+									<span
+									>연차</span>
+							</span></td>
+						</tr>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+								기간&nbsp;및&nbsp;일시</td>
+							<td
+								style="background: rgb(255, 255, 255); padding: 3px; border: 1px solid black; border-image: none; width: 700px; height: 22px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: middle;"><span
+								>2022-10-19(수)</span>&nbsp;~&nbsp;
+								<span>
+								>2022-10-19(수)</span> <span
+								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;"><b>사용일수
+										: </b> <span class="editor_num" data-type="num"
+									>0.5</span> <b 
+									style="font-weight: bold; color: red">신청가능일을 초과하였습니다.</b> </span></td>
+						</tr>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+								반차&nbsp;여부</td>
+							<td
+								style="background: rgb(255, 255, 255); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: left; color: rgb(0, 0, 0); font-size: 14px; font-weight: normal; vertical-align: middle;"><span
+							
+								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 11pt; margin-top: 0px; margin-bottom: 0px;"><span
+									> <span><input type="checkbox"
+											><label
+											>시작일</label>&nbsp;</span> ( <span><input
+											type="radio" class="editor_opt" 
+											id="" name=""
+											value="오전" checked=""><label
+											>오전</label>&nbsp;</span> <span><input
+											type="radio"
+											id="" name=""
+											><label
+											>오후</label>&nbsp;</span> )
+								</span> <span> <span><input
+											type="checkbox" class=""
+											id=""
+											name="" value="종료일"
+											><label
+											>종료일</label>&nbsp;</span> ( <span><input
+											type="radio"
+											id="" name=""
+											value="오전"><label
+											>오전</label>&nbsp;</span> <span><input
+											type="radio"
+											id="" name=""
+											value="오후"><label
+											>오후</label>&nbsp;</span> )
+								</span> </span></td>
+						</tr>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; border-image: none; height: 25px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;">
+
+								연차&nbsp;일수</td>
+							<td
+								style="background: rgb(255, 255, 255); padding: 3px; border: 1px solid black; border-image: none; width: 700px; height: 22px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: middle;"><span
+								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;"><b>잔여연차
+										: </b></span> <span
+									style="font-weight: bold; color: red"> </span><span
+								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;"><b>신청연차
+									1.5	: </b> <span>
+									0.5</span> <b
+									style="font-weight: bold; color: red"></b> </span></td>
+						</tr>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 5px; border: 1px solid black; border-image: none; height: 80px; text-align: center; color: rgb(0, 0, 0); font-size: 14px; font-weight: bold; vertical-align: middle;"><b
+								style="color: rgb(255, 0, 0);">*</b>&nbsp;휴가&nbsp;사유</td>
+							<td
+								style="background: rgb(255, 255, 255); padding: 3px; border: 1px solid black; border-image: none; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top;"><span
+							></span>
+							</td>
+						</tr>
+						<tr>
+							<td
+								style="background: rgb(221, 221, 221); padding: 20px !important; border: 1px solid black; border-image: none; width: 800px; height: 22px; text-align: left; vertical-align: middle;"
+								colspan="2">1. 연차의 사용은 근로기준법에 따라 전년도에 발생한 개인별 잔여 연차에 한하여
+								사용함을 원칙으로 한다. 단, 최초 입사시에는 근로 기준법에 따라 발생 예정된 연차를 차용하여 월 1회 사용 할 수
+								있다.<br> 2. 경조사 휴가는 행사일을 증명할 수 있는 가족 관계 증명서 또는 등본, 청첩장 등 제출<br>
+								3. 공가(예비군/민방위)는 사전에 통지서를, 사후에 참석증을 반드시 제출
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+			</form>
+			</div>
+		</div>
+</html>
+
+
+
+
+     
