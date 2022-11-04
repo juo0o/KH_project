@@ -21,7 +21,7 @@
     
     
     <div class="row">
-    	<div class="col">회의실 정보
+    	<div class="col">회의실 예약
     		
     	</div>
     </div>
@@ -33,13 +33,24 @@
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          
+         
+        	
+        	
           initialView: 'dayGridMonth',
           height: '550px',
           
           expandRows: true ,
           
           dateClick: function (info) {
-              alert('Clicked on: ' + info.dateStr);
+              
+//            //모달창띄운다
+            $('#createEventModal').modal('show');
+           
+            showRoomInfoAjax(info.dateStr)
+    
+
+              
               
       }
           
@@ -51,54 +62,125 @@
       });
 
     </script>
+      
+      
           
           
- <div id="createEventModal" class="modal fade">
+  <div class="modal fade insertModal" id="createEventModal">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
-                <h4>Add an Event</h4>
-            </div>
-            <div id="modalBody" class="modal-body">
-               <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Event Name">
-                </div>
-
-                <div class="form-group form-inline">
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control" placeholder="Due Date mm/dd/yyyy">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control" type="text" rows="4" placeholder="Event Description"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                <button type="submit" class="btn btn-primary" id="submitButton">Save</button>
-            </div>
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">회의실 예약</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
         </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="form-group empl_nm">
+			<label for="empl_nm">회의실</label>
+			<input type="text" class="form-control" placeholder="" id="" >
+		  </div>
+		  <br>
+          <div class="form-group">
+			<label for="title">예약자</label>
+			<input type="text" class="form-control" placeholder="" id="">
+		  </div>
+          <div class="form-group">
+			<label for="title">날짜</label>
+			<input type="date" class="form-control" placeholder="" id="">
+		  </div>
+		  <div class="form-group">
+			<label for="start">시작시간:</label>
+			<select class="form-control" id="start" onchange="startChange()">
+				<option value="09:00">09:00</option>
+				<option value="09:30">09:30</option>
+				<option value="10:00">10:00</option>
+				<option value="10:30">10:30</option>
+				<option value="11:00">11:00</option>
+				<option value="11:30">11:30</option>
+				<option value="12:00">12:00</option>
+				<option value="12:30">12:30</option>
+				<option value="13:00">13:00</option>
+				<option value="13:30">13:30</option>
+				<option value="14:00">14:00</option>
+				<option value="14:30">14:30</option>
+				<option value="15:00">15:00</option>
+				<option value="15:30">15:30</option>
+				<option value="16:00">16:00</option>
+				<option value="16:30">16:30</option>
+				<option value="17:00">17:00</option>
+				<option value="17:30">17:30</option>
+				<option value="18:00">18:00</option>
+				<option value="18:30">18:30</option>
+			</select>
+		  </div>
+		   <div class="form-group">
+			<label for="end">종료시간:</label>
+			<select class="form-control" id="end">
+				<option value="09:30">09:30</option>
+				<option value="10:00">10:00</option>
+				<option value="10:30">10:30</option>
+				<option value="11:00">11:00</option>
+				<option value="11:30">11:30</option>
+				<option value="12:00">12:00</option>
+				<option value="12:30">12:30</option>
+				<option value="13:00">13:00</option>
+				<option value="13:30">13:30</option>
+				<option value="14:00">14:00</option>
+				<option value="14:30">14:30</option>
+				<option value="15:00">15:00</option>
+				<option value="15:30">15:30</option>
+				<option value="16:00">16:00</option>
+				<option value="16:30">16:30</option>
+				<option value="17:00">17:00</option>
+				<option value="17:30">17:30</option>
+				<option value="18:00">18:00</option>
+				<option value="18:30">18:30</option>
+				<option value="19:00">19:00</option>
+			</select>
+		  </div>
+		  <div class="form-group">
+			<!--   <label for="allDay">참여인원</label>
+			  <div class="form-check">
+				<label class="form-check-label">
+					<input type="text"  class="form-check-input" value="" name="allDay">명
+				</label>
+			  </div> -->
+		
+		
+			</div>
+        </div>
+        <!-- Modal footer -->
+       <div class="modal-footer">
+		 
+		  
+		  <button type="button" class="btn btn-dark  float-right deleteBtn" onclick="">등록</button>
+		  <button type="button" class="btn btn-warning float-right insertBtn"
+							data-bs-dismiss="modal">취소</button>
+		  <!-- <button type="button" class="btn btn-warning float-right insertBtn" onclick="">취소</button> -->
+        </div>
+        
+      </div>
     </div>
-</div>
+  </div>
+
           
           
          
     <div id='calendar'>
           
+    </div>
   
   
    		
     
-    </div>
   
     <link href="../css/reservation/fullcalendar-5.11.3/main.css" rel='stylesheet' />
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="../css/reservation/fullcalendar-5.11.3/main.js"></script>
+	<script type="text/javascript" th:src="@{/js/Reservation/insertReserve.js}"></script>
 	
 	</div>
 </html>

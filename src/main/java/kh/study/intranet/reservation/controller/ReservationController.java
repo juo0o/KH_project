@@ -1,6 +1,7 @@
 package kh.study.intranet.reservation.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,8 @@ public class ReservationController {
 	private ReservationService reservationService;
 	
 	@GetMapping("/insertReserve")
-	public String insertReserve(MeetingRoomVO meetingRoomVO,Model model) {
+	public String insertReserve(MeetingRoomVO meetingRoomVO,Model model,HttpSession httpSession) {
+		
 		
 		
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
