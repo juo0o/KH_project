@@ -27,9 +27,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity // @EnableWebSecurity : 해당 클래스로부터 만들어진 객체가 security 설정 파일임을 인지
 public class SecurityConfig {
 	
-//	
-//	@Resource(name="sucessHandler")
-//	AuthenticationSuccessHandler sucessHandler;
+	
+	@Resource(name="sucessHandler")
+	AuthenticationSuccessHandler sucessHandler;
 //	
 //	@Resource(name="failHandler")
 //	AuthenticationFailureHandler failHandler;
@@ -48,16 +48,17 @@ public class SecurityConfig {
 								).permitAll() // antMatchers("/~~") : ~~ 요청에 대한 설정을 하겠다.  permitAll "~~"요청에 대한 접근은 누구나 접근가능 
 //					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 //					.antMatcher("/cart/**).
-//				.and()
-//				.formLogin()
-//					.loginPage("/login") //spring 로그인 페이지가 아닌 커스터마이징한 로그인 페이지로 이동하겠다.
-//					.successHandler(sucessHandler)
+				.and()
+				.formLogin()
+					.loginPage("/user/login") //spring 로그인 페이지가 아닌 커스터마이징한 로그인 페이지로 이동하겠다.
+					.loginProcessingUrl("/user/login_start") //로그인 Form Action Url, default: /login
+					.usernameParameter("userId")
+					.passwordParameter("userPw")
+					.successHandler(sucessHandler)
 					//failhandler추가해준다\
 //					.failureHandler(failHandler)
 //					.defaultSuccessUrl("/member/loginResult?isSuccess=true")
 //		            .failureUrl("/member/loginResult?isSuccess=false")	//나중에 추가해볼까
-//					.usernameParameter("memberId")
-//					.passwordParameter("memberPw")
 				
 //				.and()
 //				.logout()
@@ -78,7 +79,6 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-	//관리자권한 핸들러
 	
 }
 	

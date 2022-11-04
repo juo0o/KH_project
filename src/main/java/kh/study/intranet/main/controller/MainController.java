@@ -17,14 +17,10 @@ public class MainController {
 	@RequestMapping("/index")
 	public String indexPage() {
 		
-		return "/main//index";
+		return "/main/index";
 	}
 	
-	@RequestMapping("/login")
-	public String login() {
-		
-		return "/main/login";
-	}
+	
 	
 	
 

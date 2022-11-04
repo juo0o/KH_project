@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="userMapper">
+
+	<resultMap type="kh.study.intranet.main.vo.UserVO" id="userInfo">
+		<id column="USER_ID" 						property="userId"/>
+		<result column="USER_PW" 					property="userPw"/>
+		<result column="EMP_NUM" 					property="empNum"/>
+		<result column="EMP_NAME" 					property="empName"/>
+		<result column="EMP_GENDER" 				property="empGender"/>
+		<result column="EMP_BIRTHDAY" 				property="empBirthDay"/>
+		<result column="EMP_TELL" 					property="empTell"/>
+		<result column="EMP_ADDR" 					property="empAddr"/>
+		<result column="EMP_DEATAIL_ADDR" 			property="empDetailAddr"/>
+		<result column="EMP_EMAIL" 					property="empEmail"/>
+		<result column="DEPT_CODE" 					property="deptCode"/>
+		<result column="DEPT_NAME" 					property="deptName"/>
+		<result column="EMP_POSITION" 				property="empPosition"/>
+		<result column="EMP_ROLE" 					property="empRole"/>
+		<result column="EMP_PICTURE_ORIGIN_NAME" 	property="empPictureOriginName"/>
+		<result column="EMP_PICTURE_REFILE_NAME" 	property="empPictureRefileName"/>
+		<result column="EMP_HIRE_DATE" 				property="empHireDate"/>
+	</resultMap>
+	
+	
+	<!-- 로그인 -->
+	<select id="loginMember" resultMap="userInfo">
+		SELECT USER_ID
+		       , USER_PW
+		       , EMP_ROLE
+		       FROM EMP
+		       WHERE USER_ID = #{userId} 
+	
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="joinMember">
+		INSERT INTO EMP (USER_ID
+                         , USER_PW
+                         , EMP_NUM
+                         , EMP_NAME
+                         
+                         
+                         , EMP_TELL
+                         , EMP_ADDR
+                         , EMP_DETAIL_ADDR
+                         , EMP_EMAIL
+                         )
+                         VALUES(
+                        #{userId}
+                        , #{userPw}
+                        , #{empNum}
+                        , #{empName}
+
+                        , #{empTell}
+                        , #{empAddr}
+                        , #{empDetailAddr}
+                        , #{empEmail}
+                         )
+	</insert>
+	
+</mapper>
+
+
+
