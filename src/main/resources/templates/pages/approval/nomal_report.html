@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+
+			<div layout:fragment="content">
+
+			<div>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><input type="button" value="연차신청서"
+					onclick="location.href='/approval/writeApproval';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><input type="button" value="일반품의서"
+					onclick="location.href='/approval/nomalReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span><input type="button" value="구매품의서"
+					onclick="location.href='/approval/orderReport';"></span>
+			</div>
+
+
+	<!-- 문서 헤더 시작-->
+
+			<table
+				style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
+				<colgroup>
+					<col style="width: 90px;">
+					<col style="width: 180px;">
+					<col style="width: 90px;">
+					<col style="width: 120px;">
+					<col style="width: 90px;">
+				</colgroup>
+
+				<tbody>
+					<tr>
+						<td style="padding: 3px; border: 1px solid black; height: 140px !important; font-size: 27px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="2">
+							품 &nbsp;의 &nbsp;서
+						</td>
+<!-- 						<td> -->
+<!-- 							<div class="row" style="background-color: blue;"> -->
+							
+<!-- 								<div class="col-3"> aa</div> -->
+<!-- 								<div class="col-3">bb</div> -->
+<!-- 								<div class="col-3"> cc</div> -->
+<!-- 								<div class="col-3">dd</div> -->
+
+<!-- 							</div> -->
+<!-- 						</td> -->
+						<td>a</td>
+						<td>b</td>
+						<td colspan="2" >
+							<table style="border: 1px solid black; height: 135px; width: 100%; ">
+							
+							<colgroup>
+								<col style="width: 10%;">
+								<col style="width: 30%;">
+								<col style="width: 30%;">
+								<col style="width: 30%;">
+							</colgroup>
+							
+							
+								<tr style="border: 1px solid black; height: 17%">
+									<td rowspan="3">결 <br> 재 <br> 선</td>
+									<td style="border: 1px solid black;">직책</td>
+									<td style="border: 1px solid black;">직책</td>
+									<td style="border: 1px solid black;">직책</td>
+								</tr>
+								
+								<tr style="border: 1px solid black; height: 17%">
+<!-- 									<td>a</td> -->
+									<td style="border: 1px solid black;">이름</td>
+									<td style="border: 1px solid black;">이름</td>
+									<td style="border: 1px solid black;">이름5</td>
+								</tr>
+								
+								<tr style="border: 1px solid black;">
+<!-- 									<td>a</td> -->
+									<td style="border: 1px solid black;">도장</td>
+									<td style="border: 1px solid black;">도장</td>
+									<td style="border: 1px solid black;">도장</td>
+								</tr>
+								
+							</table>
+						</td>
+					
+					</tr>
+					
+					<tr>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							기안부서
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span >[기안부서]</span>
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							기 안 일
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span >[기안일]</span>
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							문서번호
+						</td>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left; font-size: 12px;">
+							<span >[문서번호]</span>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							기 안 자
+						</td>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span >[기안자]</span>
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							보존년한
+						</td>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span>[보존연한]</span>
+						</td>
+						
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							문서종류
+						</td>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span>[문서종류]</span>
+						</td>
+					</tr>
+				</tbody>
+			</table> <!-- 문서 헤더 끝--> <!-- 마진 시작-->
+
+			<table
+				style="width: 800px; border-collapse: collapse; border-spacing: 0px; border: 1px solid black;">
+				<tbody>
+					<tr>
+						<td
+							style="padding: 0px !important; height: 10px; vertical-align: middle; border: 1px solid black; font-size: 9px;">
+								<br>
+						</td>
+					</tr>
+				</tbody>
+			</table> <!-- 마진 끝 --> 
+			
+			
+			
+			
+			<!-- 제목 및 내용 시작 -->
+
+			<table
+				style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
+				<colgroup>
+					<col style="width: 90px;">
+					<col style="width: 710px;">
+				</colgroup>
+
+				<tbody>
+					<tr>
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+							제  &nbsp;&nbsp;&nbsp; 목
+						</td>
+						<td>
+							<input type="text">
+						</td>
+							
+					</tr>
+					
+					<tr>
+					<!-- 본문내용 -->
+						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
+						aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+						</td>
+					</tr>
+				</tbody>
+			</table> <!-- 제목 및 내용 끝 --> 
+		<div style="margin-top: 20px; text-align:center; ">
+				<input type="button" value="결재요청">
+			</div>
+
+
+</div>
+</html>

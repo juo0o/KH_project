@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+
+<div layout:fragment="content">
+
+	<div>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="연차신청서"
+			onclick="location.href='/approval/writeApproval';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="일반품의서"
+			onclick="location.href='/approval/nomalReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span><input type="button" value="구매품의서"
+			onclick="location.href='/approval/orderReport';"></span>
+	</div>
+
+	<div class="approval_import ie9-scroll-fix" style="border: 1px solid black; width:60%; margin-top: 20px;" align="center">
+		<!-- 문서 내용 표시 테스트 -->
+		<form id="document_content" class="form_doc_editor editor_view"
+			onsubmit="return false;">
+			
+					<div id="divCustomWrapper">
+						<!-- Embededd Style이 적용받는 범위 입니다. 상단의 스타일은 이 요소 안에서만 동작합니다. -->
+						<!-- 1. Title Section (start) : 문서제목이 작성되는 영역입니다.-->
+			
+						<div id="titleSection">회계(입금.출금.대체)품의서</div>
+						<!-- 1. Title Section (end) -->
+
+						<!-- Subject Section (start) : 제목이 작성되는 영역입니다. -->
+						<table class="detailSection" style="margin-top: 30px;">
+							<tbody>
+								<tr>
+									<td class="detailColumn" width="800px"><b>*
+										제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 :&nbsp;</b><input type="text"
+										class="ipt_editor" name="subject" id="subject" value=""	style="width: 600px;">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Subject Section (end) -->
+
+						<!-- 2. Draft Section (Start) : 결재정보가 작성되는 영역입니다. -->
+
+						<div class="partition" id="draftSection"
+							style="font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+							<!-- 2.1 Drafter Information (Start) -->
+							<div class="left"
+								style="font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;">
+								<table class=""
+									style="word-break: break-all; -ms-word-break: break-all;  border: 1px solid black;">
+									<tbody>
+										<tr>
+											<td class="subjectColumn" width="80px">기안자</td>
+											<td class="detailColumn" width="170px"><input type="text" style="vertical-align: middle; width: 100%; border: 0px; "
+												name="draftUser" id="draftUser" value="김상후"><br></td>
+										</tr>
+										<tr style="border: 1px solid black;">
+											<td class="subjectColumn">소 속</td>
+											<td class=""><input type="text"
+												style="vertical-align: middle; width: 100%; border: 1px;" name="" id="" value="다우그룹"><br>
+											</td>
+										</tr>
+										<tr>
+											<td class="subjectColumn">기안일</td>
+											<td class=""><input type="text"
+												style="vertical-align: middle; width: 100%; border: 1px; "
+												name="" id="d" value=""
+												><br>
+											</td>
+										</tr>
+										<tr>
+											<td class="subjectColumn">문서번호</td>
+											<td class="detailColumn"><input type="text"
+												style="vertical-align: middle; width: 100%; border: 0px; "
+												name="" id="" value=""
+												><br>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- 2.1 Drafter Information (end) -->
+							<!-- 2.2 Draft Line(start) -->
+							<div class="" style="font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px; text-align: right;">
+							<div style="padding: 0px ; border: 1px currentColor;  border-image: none; width: 500px;  vertical-align: top;">
+							
+								<table>
+								<tr>
+									<td	style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold;"
+										rowspan="4">승인</td>
+									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
+									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">부장</td>
+									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">팀원</td>
+								</tr>
+								<tr>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+										rowspan="2">
+										<div>그림</div>
+										<div>승인자</div>
+									</td>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+										rowspan="2">
+										<div>그림</div>
+										<div>승인자</div>
+									</td>
+									<td
+										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+										rowspan="2">
+										<div>그림</div>
+										<div>승인자</div>
+									</td>
+								</tr>
+								</table>
+							
+							</div>
+						 <br>
+							</div>
+							<!-- 2.2 Draft Line(end) -->
+						</div>
+						<!-- 2. Draft Section (end) -->
+						<!-- 3. Detail Section (start) : 내용이 작성되는 영역입니다. -->
+						<!-- 3.1 JavaScript 적용 테이블 -->
+
+						<table class="detailSection __se_tbl"
+							style="word-break: break-all; margin-top: 10px; -ms-word-break: break-all;">
+							<colgroup>
+								<col width="70">
+								<col width="230">
+								<col width="70">
+								<col width="180">
+								<col width="70">
+								<col width="180">
+							</colgroup>
+
+							<tbody>
+								<tr>
+									<td colspan="6" class="detailColumn">&nbsp; &nbsp; &nbsp;&nbsp;<span>
+									<input type="checkbox" class="" id="" value="세금계산서" name=""><label class="">세금계산서</label>
+									<input type="checkbox" id="" value="간이영수증" name=""><label>간이영수증</label>
+									<input type="checkbox" id="" value="신용카드"	name=""><label class="editor_label">신용카드</label>
+									<input type="checkbox" class="" id="" value="기타" name=""><label class="editor_label">기타</label></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="subjectColumn">지급요청일</td>
+									<td colspan="5" class="detailColumn"><input type="text"
+										class="" id="" name="" value=""><br></td>
+								</tr>
+								<tr>
+									<td rowspan="2" class="subjectColumn">금 액</td>
+									<td class="detailColumn">&nbsp;
+										<input type="text" class="ipt_editor ipt_editor_num" name="" id="" value="">정
+									</td>
+									<td class="subjectColumn">가 액</td>
+									<td class="detailColumn">\
+										<input type="text" class="ipt_editor ipt_editor_num edit" name="" id="" value="" style="text-align: right;">
+									</td>
+									<td class="subjectColumn">세 액</td>
+									<td class="detailColumn">\
+										<input type="text" class="ipt_editor ipt_editor_num edit" name="A" id="A" value="" style="text-align: right;">
+									</td>
+								</tr>
+								<tr>
+									<td class="detailColumn"><p
+											style="font-size: 12pt; line-height: 24px; margin-top: 0px; margin-bottom: 0px;">
+											<span
+												style="font-size: 9pt; line-height: 24px; margin-top: 0px; margin-bottom: 0px;"></span><input
+												type="text"	style="vertical-align: middle; text-align: right; width: 100%; border: 0px; box-shadow: inset 0px 0px 0px rgba(150, 150, 150, 0.2)"
+												name="" id="" value="">&nbsp;
+										</p></td>
+									<td class="subjectColumn">사업자<br>등록번호
+									</td>
+									<td class="detailColumn">
+										<input type="text" class="ipt_editor" name="editorForm_11" id="" value=""><br></td>
+									<td class="subjectColumn">거래처</td>
+									<td class="detailColumn"><input type="text"
+										class="ipt_editor" name=""
+										id="" value=""
+										><br></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<!-- 3.2 내용 테이블 -->
+
+						<table class="detailSection __se_tbl"
+							style="word-break: break-all; -ms-word-break: break-all;">
+							<colgroup>
+								<col width="70">
+								<col width="300">
+								<col width="70">
+								<col width="360">
+							</colgroup>
+
+							<tbody>
+								<tr>
+									<td class="subjectColumn">가지급금<br>수령자</td>
+									<td class="detailColumn" style="border-top: 0px;">
+									<input
+										type="text" class="ipt_editor" name="editorForm_13" id="" value="">
+									</td>
+									<td class="subjectColumn" style="border-top: 0px;">지급방법</td>
+									<td class="detailColumn" style="border-top: 0px;">
+										<input type="text" class="ipt_editor" name="editorForm_14" id="" value=""><br>
+									</td>
+								</tr>
+								<tr>
+									<td class="subjectColumn">계좌번호</td>
+									<td class="detailColumn">
+										<input type="text" class="ipt_editor" name="" id="" value=""><br>
+									</td>
+									<td class="subjectColumn">지급은행</td>
+									<td class="detailColumn">
+										<input type="text" class="ipt_editor"name="" id="" value=""><br>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4" class="detailColumn">
+											<div style="width: 100%; height: 450px;">
+												<div id="dext_resizebar_appContent"	class="">
+													<div class="DEXT_resizebar_btn"	id="">
+														<div class="DEXT_resizebar_horizon_line" id=""></div>
+													</div>
+												</div>
+											</div>
+										<br>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- 3. Detail Section (end) -->
+						<!-- Page Wrapping (end) -->
+					</div> <!-- Common style (Don't modify) -->
+<style type="text/css">
+	/* 1. Essential style : 반드시 적용되어야 하는 스타일입니다. 문서작성 시, Sample에서 제거불가 한 스타일 */
+	#divCustomWrapper {
+		word-break: break-all;
+		font-family: malgun gothic, dotum, arial, tahoma;
+		font-size: 12px;
+		width: 800px !important;
+	}
+	
+	#divCustomWrapper * {
+		max-width: 800px !important;
+	}
+	/* (1) Section(제목, 결재선, 내용) */
+	#divCustomWrapper #titleSection, #divCustomWrapper #draftSection,
+		#divCustomWrapper #detailSection {
+		display: inline-block;
+		width: 800px !important;
+		clear: both;
+		margin-top: 20px;
+		vertical-align: middle;
+	}
+	
+	#divCustomWrapper #titleSection {
+		text-align: center;
+		font-size: 25px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	
+	#divCustomWrapper #detailSection>* {
+		margin-bottom: 10px;
+	}
+	/* (2) Table */
+	#divCustomWrapper table {
+		border-collapse: collapse;
+	}
+	
+	#divCustomWrapper .detailSection table {
+		width: 800px;
+	}
+	</style>
+				<style type="text/css">
+	/* 2. Option style : 용도에 따라 적용합니다.*/
+	/* (1) Table option : 2Type(subject / detail), Affacted elements(td), Range(divCustomWrapper 하단요소) */
+	#divCustomWrapper td.subjectColumn {
+		border: 1px solid black;
+		height: 22px;
+		padding: 3px 1px 3px 1px; /*top right bottom left*/
+	}
+	
+	#divCustomWrapper td.detailColumn {
+		border: 1px solid black;
+		height: 22px;
+		padding: 3px 5px 3px 5px; /*top right bottom left*/
+	}
+	
+	#divCustomWrapper td.detailColumn {
+		text-align: left;
+	}
+	
+	#divCustomWrapper td.subjectColumn {
+		background: rgb(221, 221, 221);
+		font-weight: bold;
+		text-align: center;
+		vertical-align: middle;
+	}
+	/* (2) Indent option : 2Type(one / two), Affcted elements(All) */
+	#divCustomWrapper .oneDepth {
+		margin-left: 15px;
+	}
+	
+	#divCustomWrapper .twoDepth {
+		margin-left: 37px;
+	}
+	/* (3) Partition option : 2Type (left / right), Affacted elements(div), Range('partition'div영역 하단요소) */
+	/* 설명 : 좌,우로 분할되는 레이아웃 작성시 사용, 1라인에 1개 요소만 배치(줄바뀜 동반) */
+	/* 사용방법 : 분할할 영역에 partition CLASS를 적용 -> 분할배치하고자하는 하위요소에 'left, right' CLASS 적용 */
+	#divCustomWrapper div.partition .left {
+		display: inline-block;
+		clear: left;
+		float: left;
+	}
+	
+	#divCustomWrapper div.partition .right {
+		display: inline-block;
+		clear: right;
+		float: right;
+	}
+	/* (4) In a row option : 2Type(left / right), Affacted elements(All), Range('inaRowRight or inRowLeft'div영역 하단요소 */
+	/* 설명 : 좌,우 끝에 정렬되는 레이아웃 작성 시 사용, 1라인에 여러개 요소 배치, Partition option과 조합(줄바뀜 없이 배치) */
+	/* 사용방법 : 나란히 정렬하고자 하는 요소들을, 'in a row'div 영역 내에 배치*/
+	#divCustomWrapper div.inaRowRight {
+		text-align: right;
+	}
+	
+	#divCustomWrapper div.inaRowLeft {
+		text-align: left;
+	}
+	
+	#divCustomWrapper div.inaRowRight>*, #divCustomWrapper div.inaRowLeft>*
+		{
+		display: inline-block;
+	}
+	</style>
+				<!-- Common style (Don't modify) -->
+				<!-- Print style (Don't modify) -->
+			<!-- Custom style -->
+				<p style="font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;">&nbsp;</p>
+		</form>
+	</div>
+
+</div>
+</html>
