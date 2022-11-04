@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-layout:decorate="~{layout/base_layout}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/base_layout}">
 
 
-	<div layout:fragment="content">
-		<div class="row">
-			<div class="col-12">
-				<table>
+<div layout:fragment="content">
+	<div class="row">
+		<div class="col-12">
+			<table class="table table-bordered">
+				<thead>
 					<tr>
 						<th>글번호</th>
 						<th>글제목</th>
@@ -16,6 +17,8 @@ layout:decorate="~{layout/base_layout}">
 						<th>작성일</th>
 						<th>조회수</th>
 					</tr>
+				</thead>
+				<tbody>
 					<th:block th:each="board: ${boardList}">
 						<tr>
 							<td th:text="${board.boardNum}"></td>
@@ -27,13 +30,15 @@ layout:decorate="~{layout/base_layout}">
 							<td th:text="${board.boardReadCnt}"></td>
 						</tr>
 					</th:block>
-				</table>
-			</div>
-			<div class="row" text-right>
-				<div class="col-4">
-					<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/regBoard}'|">글쓰기</button>
-				</div>
-			</div>
+				</tbody>
+			</table>
 		</div>
+		<div class="row">
+			<div class="col-2">
+				<button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/regBoardForm}'|">글쓰기</button>
+			</div>
+		</div> 
 	</div>
+</div>
+
 </html>

@@ -38,5 +38,23 @@
 		WHERE BOARD_NUM = (SELECT BOARD_NUM FROM BOARD WHERE BOARD_TITLE = #{boardTitle})
 	</select>
 	
+	<insert id="insertBoard">
+		INSERT INTO BOARD (
+			BOARD_NUM
+			, BOARD_WRITER
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, IS_SECRET
+			, IS_SECRET_PW
+		) VALUES (
+			(SELECT NVL(MAX(BOARD_NUM),0)+1 FROM BOARD)
+			, #{boardWriter}
+			, #{boardTitle}
+			, #{boardContent}
+			, #{isSecret}
+			, #{isSecretPw}
+		)
+	</insert>
+	
 </mapper>
 

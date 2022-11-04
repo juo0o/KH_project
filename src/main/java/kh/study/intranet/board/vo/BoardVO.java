@@ -10,6 +10,7 @@ import lombok.ToString;
 public class BoardVO  {
 	private String boardNum;
 	private String boardWriter;
+	private String boardTitle;
 	private String boardContent;
 	private String isSecret;
 	private String secretPw;
