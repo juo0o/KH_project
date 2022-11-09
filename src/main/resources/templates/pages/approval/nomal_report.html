@@ -17,15 +17,15 @@ layout:decorate="~{layout/base_layout}">
 					onclick="location.href='/approval/writeApproval';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><input type="button" value="일반품의서"
 					onclick="location.href='/approval/nomalReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span><input type="button" value="구매품의서"
+				<span><input type="button" value="회계품의서"
 					onclick="location.href='/approval/orderReport';"></span>
 			</div>
 
 
+		<div>
 	<!-- 문서 헤더 시작-->
-
-			<table
-				style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
+		<div style="margin-top: 27px; ">
+			<table style="width: 1000px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				<colgroup>
 					<col style="width: 90px;">
 					<col style="width: 180px;">
@@ -52,7 +52,7 @@ layout:decorate="~{layout/base_layout}">
 						<td>a</td>
 						<td>b</td>
 						<td colspan="2" >
-							<table style="border: 1px solid black; height: 135px; width: 100%; ">
+							<table style="border: 1px solid black; height: 135px; width: 100%; text-align: center; ">
 							
 							<colgroup>
 								<col style="width: 10%;">
@@ -62,7 +62,7 @@ layout:decorate="~{layout/base_layout}">
 							</colgroup>
 							
 							
-								<tr style="border: 1px solid black; height: 17%">
+								<tr style="border: 1px solid black; height: 17%; text-align: center;">
 									<td rowspan="3">결 <br> 재 <br> 선</td>
 									<td style="border: 1px solid black;">직책</td>
 									<td style="border: 1px solid black;">직책</td>
@@ -136,9 +136,9 @@ layout:decorate="~{layout/base_layout}">
 					</tr>
 				</tbody>
 			</table> <!-- 문서 헤더 끝--> <!-- 마진 시작-->
-
+		</div>
 			<table
-				style="width: 800px; border-collapse: collapse; border-spacing: 0px; border: 1px solid black;">
+				style="width: 1000px; border-collapse: collapse; border-spacing: 0px; border: 1px solid black;">
 				<tbody>
 					<tr>
 						<td
@@ -155,7 +155,7 @@ layout:decorate="~{layout/base_layout}">
 			<!-- 제목 및 내용 시작 -->
 
 			<table
-				style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
+				style="width: 1000px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
 				<colgroup>
 					<col style="width: 90px;">
 					<col style="width: 710px;">
@@ -180,9 +180,10 @@ layout:decorate="~{layout/base_layout}">
 					</tr>
 				</tbody>
 			</table> <!-- 제목 및 내용 끝 --> 
-		<div style="margin-top: 20px; text-align:center; ">
-				<input type="button" value="결재요청">
-			</div>
+				<div style="margin-top: 20px; text-align:center; ">
+						<input style="margin-right: 540px; margin-bottom: 25px;" type="button" value="결재요청">
+				</div>
+		</div>	
 
 
 </div>

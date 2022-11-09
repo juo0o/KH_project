@@ -3,6 +3,72 @@
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="approvalMapper">
+
+	<resultMap type="kh.study.intranet.approval.vo.ApprovalVO" id="approval">
+		<id column="APP_SEQ" 		property="appSeq"/>
+		<result column="APP_WRITE_DATE" 		property="appWriteDate"/>
+		<result column="FIRST_TIME_APPROVER" 		property="firstTimeApprover"/>
+		<result column="INTERMIDIATE_APPROVER" 		property="intermidiateApprover"/>
+		<result column="FINAL_APPROVER" 		property="finalApprover"/>
+		<result column="APP_CHECK_DATE" 		property="appCheckDate"/>
+		<result column="APP_RESON" 		property="appReson"/>
+		<result column="APP_ORIGIN_FILENAME" 		property="appOriginFilename"/>
+		<result column="APP_REFILE_FILENAME" 		property="appRefileFilename"/>
+		<result column="APP_WRITER_EMP_NUM" 		property="appWriterEmpNum"/>
+		<result column="APP_CHECK_PROGRESS" 		property="appCheckProgress"/>
+		<result column="APP_CATE_CODE" 		property="appCateCode"/>
+	</resultMap>
+	
+	
+	<resultMap type="kh.study.intranet.approval.vo.VacationVO" id="vacation">
+		<id column="VACATION_SEQ" 		property="vacationSeq"/>
+		<result column="VACATION_APP_SEQ" 		property="vacationAppSeq"/>
+		<result column="VACATION_CONTENT" 		property="vacationContent"/>
+		<result column="VACATION_STATUS" 		property="vacationStatus"/>
+		<result column="VACATION_PRESENT" 		property="vacationPresent"/>
+		<result column="VACATION_STRAT_DATE" 		property="vacationStratDate"/>
+		<result column="VACATION_END_DATE" 		property="vacationEndDate"/>
+		<result column="DEPT_CODE" 		property="deptCode"/>
+		<result column="USER_ID" 		property="userId"/>
+		<result column="APP_CATE_CODE" 		property="appCateCode"/>
+  		<association property="deptVO" resultMap="empMapper.dept"/>
+	</resultMap>
+	
+	<select id="getAppSeq" resultType="String">
+		SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) 
+		FROM APP_FORM_VACATION
+	</select>
+	
+	
+	<!-- <select id="selectCommonForm" resultMap="commonForm">
+		SELECT COMMON_APP_SEQ.NEXTVAL
+			, USER_NAME
+			, DEPT_NAME
+			, APP_CHECK_DATE
+		FROM COMMON_APP_FORM COMMON, EMP, DEPT, APPROVAL
+		WHERE COMMON.USER_ID = EMP.USER_ID
+		AND COMMON.DEPT_CODE = DEPT.DEPT_CODE
+		AND COMMON.APP_SEQ = APPROVAL.APP_SEQ
+		AND COMMON_APP_FORM = #{commonAppSeq}
+	</select> -->
+	
+	
+	<!-- <select id="selectVacationReport" resultMap="vacation">
+		SELECT VACATION.USER_ID
+			, EMP.USER_NAME
+			, VACATION.DEPT_NAME
+			, VACATION.VACATION_APP_SEQ
+			, APPROVAL.APP_CHECK_DATE
+		FROM APP_FORM_VACATION VACATION , APPROVAL ,EMP, DEPT
+		WHERE EMP.USER_ID = #{userId}
+		AND VACATION.DEPT_CODE= (SELECT DEPT_CODE FROM EMP WHERE USER_ID=#{userId})
+		AND VACATION.DEPT_CODE = DEPT.DEPT_CODE
+		AND EMP.EMP_NUM = APPROVAL.EMP_NUM
+		AND VACATION.VACATION_APP_SEQ = APPROVAL.APP_SEQ
+	
+	</select>
+	 -->
+	
 	
 </mapper>
 

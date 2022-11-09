@@ -4,6 +4,12 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="empMapper">
 	
+	<resultMap type="kh.study.intranet.emp.vo.DeptVO" id="dept">
+		<id column="DEPT_CODE" 		property="deptCode"/>
+		<result column="DEPT_NAME" 		property="deptName"/>
+		<result column="DEPT_TELL" 		property="deptTell"/>
+		<result column="DEPT_PEOPLE_CNT" 		property="deptPeopleCnt"/>
+	</resultMap>
 </mapper>
 
 

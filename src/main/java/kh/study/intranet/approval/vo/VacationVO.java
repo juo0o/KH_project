@@ -1,10 +1,13 @@
 package kh.study.intranet.approval.vo;
 
+import kh.study.intranet.emp.vo.DeptVO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class VacationVO {
 	private String vacationSeq;
 	private String vacationAppSeq;
@@ -17,4 +20,5 @@ public class VacationVO {
 	private String userId;
 	private String appCateCode;
 	ApprovalVO approvalVO;
+	DeptVO deptVO;
 }
