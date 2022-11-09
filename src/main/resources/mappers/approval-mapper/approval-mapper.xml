@@ -19,6 +19,25 @@
 		<result column="APP_CATE_CODE" 		property="appCateCode"/>
 	</resultMap>
 	
+	<resultMap type="kh.study.intranet.emp.vo.EmpVO" id="emp">
+		<id column="USER_ID" 		property="userId"/>
+		<result column="USER_PW" 		property="userPw"/>
+		<result column="EMP_NUM" 		property="empNum"/>
+		<result column="EMP_NAME" 		property="empName"/>
+		<result column="EMP_GENDER" 		property="empGender"/>
+		<result column="EMP_BIRTHDAY" 		property="empBirthDay"/>
+		<result column="EMP_TELL" 		property="empTell"/>
+		<result column="EMP_ADDR" 		property="empAddr"/>
+		<result column="EMP_DETAIL_ADDR" 		property="empDetailAddr"/>
+		<result column="EMP_EMAIL" 		property="empEmail"/>
+		<result column="DEPT_CODE" 		property="deptCode"/>
+		<result column="DEPT_NAME" 		property="deptName"/>
+		<result column="EMP_ROLE" 		property="empRole"/>
+		<result column="EMP_PICTURE_ORIGIN_NAME" 		property="empPictureOriginName"/>
+		<result column="EMP_PICTURE_REFILE_NAME" 		property="empPictureRefileName"/>
+		<result column="EMP_HIRE_DATE" 		property="empHireDate"/>
+	</resultMap>
+	
 	
 	<resultMap type="kh.study.intranet.approval.vo.VacationVO" id="vacation">
 		<id column="VACATION_SEQ" 		property="vacationSeq"/>
@@ -34,40 +53,32 @@
   		<association property="deptVO" resultMap="empMapper.dept"/>
 	</resultMap>
 	
-	<select id="getAppSeq" resultType="String">
-		SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) 
-		FROM APP_FORM_VACATION
+	<select id="getAppSeq" resultMap="approval">
+		SELECT (SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) FROM APPROVAL) APP_SEQ
+        ,TO_CHAR(SYSDATE,'YYYY-MM-DD') AS APP_WRITE_DATE
+		FROM DUAL
+		
 	</select>
 	
+	<select id="selectAppEmp" resultMap="emp">
+		SELECT EMP_NAME
+			, EMP.DEPT_NAME
+		FROM EMP, DEPT
+		WHERE EMP.DEPT_CODE = DEPT.DEPT_CODE
+		AND USER_ID = #{userId}
+	</select>
 	
-	<!-- <select id="selectCommonForm" resultMap="commonForm">
-		SELECT COMMON_APP_SEQ.NEXTVAL
-			, USER_NAME
-			, DEPT_NAME
-			, APP_CHECK_DATE
-		FROM COMMON_APP_FORM COMMON, EMP, DEPT, APPROVAL
-		WHERE COMMON.USER_ID = EMP.USER_ID
-		AND COMMON.DEPT_CODE = DEPT.DEPT_CODE
-		AND COMMON.APP_SEQ = APPROVAL.APP_SEQ
-		AND COMMON_APP_FORM = #{commonAppSeq}
+	<!-- <select id="" resultMap="">
+		
+		<if test="fromDate != null and !fromDate.equals('')">
+			AND TO_CHAR(REG_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}
+		</if>
+		<if test="toDate != null and !toDate.equals('')">
+			AND TO_CHAR(REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>		
+		
 	</select> -->
 	
-	
-	<!-- <select id="selectVacationReport" resultMap="vacation">
-		SELECT VACATION.USER_ID
-			, EMP.USER_NAME
-			, VACATION.DEPT_NAME
-			, VACATION.VACATION_APP_SEQ
-			, APPROVAL.APP_CHECK_DATE
-		FROM APP_FORM_VACATION VACATION , APPROVAL ,EMP, DEPT
-		WHERE EMP.USER_ID = #{userId}
-		AND VACATION.DEPT_CODE= (SELECT DEPT_CODE FROM EMP WHERE USER_ID=#{userId})
-		AND VACATION.DEPT_CODE = DEPT.DEPT_CODE
-		AND EMP.EMP_NUM = APPROVAL.EMP_NUM
-		AND VACATION.VACATION_APP_SEQ = APPROVAL.APP_SEQ
-	
-	</select>
-	 -->
 	
 	
 </mapper>

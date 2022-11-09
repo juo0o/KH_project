@@ -16,6 +16,7 @@ import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.CommonFormVO;
 import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.emp.vo.DeptVO;
+import kh.study.intranet.emp.vo.EmpVO;
 
 @Controller
 @RequestMapping("/approval")
@@ -41,21 +42,38 @@ public class ApprovalController {
 	
 	
 	//휴가신청 작성페이지
-	@GetMapping("/writeApproval")
-	public String writeApproval(ApprovalVO approvalVO, Model model,Authentication authentication) {
+	@GetMapping("/vacationReport")
+	public String vacationReport(ApprovalVO approvalVO, Model model,Authentication authentication,EmpVO empVO) {
 		
-		/*
-		 * User user = (User)authentication.getPrincipal();
-		 * commonFormVO.setUserId(user.getUsername());
-		 */
 		
-		String appSeq = vacationApprovalService.getAppSeq();
-		approvalVO.setAppSeq(appSeq);
+		  User user = (User)authentication.getPrincipal();
+		  empVO.setUserId(user.getUsername());
 		
-		model.addAttribute("appSeq",approvalVO);
+		 model.addAttribute("empInfo", vacationApprovalService.selectAppEmp(empVO));
 		 
 		
-		return "pages/approval/write_approval";
+		/*
+		 * String appSeq = vacationApprovalService.getAppSeq();
+		 * approvalVO.setAppSeq(appSeq);
+		 */
+		
+		
+		model.addAttribute("appSeq",vacationApprovalService.getAppSeq());
+		
+		/*
+		 * String nowDate = ShopDateUtil.getNowDateToString("-");//2020-10-10 //한달 전날짜
+		 * String beforeDate = ShopDateUtil.getBeforeMonthDateToString();
+		 * 
+		 * //넘어오는 fromDate가 없다면 한달 전 날짜로 세팅 if(paramMap.get("fromDate") == null) {
+		 * paramMap.put("fromDate", beforeDate); } if(paramMap.get("toDate") == null){
+		 * paramMap.put("toDate", nowDate); }
+		 */
+		
+		//model.addAttribute("paramMap", paramMap);
+		
+		 
+		
+		return "pages/approval/vacation_report";
 	}
 	@GetMapping("/nomalReport")
 	public String nomalReport () {
