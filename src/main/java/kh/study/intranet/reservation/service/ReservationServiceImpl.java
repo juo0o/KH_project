@@ -20,6 +20,12 @@ public class ReservationServiceImpl implements ReservationService{
 		return sqlSession.selectList("reservationMapper.selectMeetingRoom");
 	}
 
+	@Override
+	public void regReservation(MeetingRoomVO meetingRoomVO) {
+		sqlSession.insert("reservationMapper.regReservation",meetingRoomVO);
+		
+	}
+
 	
 	
 	

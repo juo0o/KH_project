@@ -1,7 +1,7 @@
  function showRoomInfoAjax(dateStr) {
 
       //alert('ajax실행함수 실행 : ' + dateStr)
-         
+       
          
             $.ajax({
                url: '/', //요청경로
@@ -11,7 +11,13 @@
                contentType: false,
                cache: false,
                success: function(result) {
-               
+               		 //모달창띄운다
+            $('#createEventModal').modal('show');
+           
+            
+               			
+               			
+               			
                
                memberInfo.innerHTML ='';
                let str='';
@@ -54,5 +60,42 @@
             });
       
           $('#createEventModal').modal('hide');
+          
          
       }
+      
+function goReserve(){
+
+	
+	
+	$.ajax({
+               url: '/reservation/regReservation', //요청경로
+               type: 'post',
+               data: {}, //필요한 데이터
+               
+               success: function(result) {
+            
+           		alert('aaa');
+            
+               			
+               			
+               			
+               
+               },
+               error: function() {
+                  alert('ajax 실패');
+         
+               }
+               
+               
+            });
+	
+	
+	
+	
+}
+
+      
+      
+      
+      

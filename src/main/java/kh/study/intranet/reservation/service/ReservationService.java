@@ -7,5 +7,7 @@ import kh.study.intranet.reservation.vo.MeetingRoomVO;
 public interface ReservationService {
 	
 	List<MeetingRoomVO> selectMeetingRoom();
+	
+	void regReservation(MeetingRoomVO meetingRoomVO);
 
 }

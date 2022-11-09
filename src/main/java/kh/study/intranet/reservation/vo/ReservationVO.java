@@ -10,9 +10,10 @@ import lombok.ToString;
 
 public class ReservationVO  {
 	private String reserveCode;
-	private String reserveRoomCode;
+	private String roomCode;
 	private String reserveDate;
-	private String reserveTime;
+	private String startTime;
+	private String endTime;
 	private String reserveUserId;
 	private String reserveAvailable;
 	
