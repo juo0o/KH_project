@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+	<div layout:fragment="content">
+	
+		<div class="container" style="border: 1px solid black">
+		
+	            <div class="col-12 center">
+	                <h1>[[${roomName}]]</h1>
+	            </div>
+            
+          	    <!-- db에서 조회한 메세지 영역 -->
+                <div id="msgAreaSelect" class="col-12 align-self-start">
+					<th:block th:each="message : ${messageList}">
+                	  <div class='col-3 '>
+	                      <div class='alert alert-secondary' style="word-break:break-all" >
+	                           [[${message.userId}]]   :   [[${message.message}]]
+	                      </div>
+	                  </div>
+					</th:block>
+                </div>
+                
+                <!-- 입력메세지영역 -->
+                <div id="msgArea" class="col-12 align-self-end" style="word-break:break-all"></div>
+     
+                
+                <div class="col-12">
+                    <div class="input-group mb-3">
+                        <input type="text" id="msg" class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        
+        
+        <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+        
+    	<script type="text/javascript" th:inline="javascript">
+    	
+    	 $(document).ready(function(){
+
+             var roomName = [[${roomName}]];
+             var roomId = [[${roomId}]];
+             var myUserId = [[${#authentication.principal.username}]];
+
+             console.log(roomName + ", " + roomId + ", " + myUserId);
+
+             var sockJs = new SockJS("/stomp/chat");
+             //1. SockJS를 내부에 들고있는 stomp를 내어줌
+             var stomp = Stomp.over(sockJs);
+
+             //2. connection이 맺어지면 실행
+             stomp.connect({}, function (){
+                console.log("!!!!!!!!!!STOMP Connection")
+
+                //4. subscribe(path, callback)으로 메세지를 받을 수 있음
+                stomp.subscribe("/subscribe/chat/room/" + roomId, function (chat) {
+             	   
+             	   console.log("@@@@@@@@@@@@@@@/subscribe/chat/room/" + roomId);
+                    var content = JSON.parse(chat.body);
+                    
+                    
+                    var writer = content.userId;
+                    var message = content.message;
+                    
+                    var str = '';
+						
+                    
+//                     alert("!!!!!!!!!!"+writer);
+//                     alert("!!!!!!!!!!"+username);
+                    
+                    /* 내가보낸 메세지 */
+                    if(writer === myUserId){
+                        str = "<div class='col-3'>";
+                        str += "<div class='alert alert-warning '>";
+                        str += "<b>" + myUserId  + " : " + message + "</b>";
+                        str += "</div></div>";
+                        $("#msgArea").append(str);
+                        
+                    }
+                    else{
+                 	/* 상대방이보낸 메세지 */
+                        str = "<div class='col-3'>";
+                        str += "<div class='alert alert-warning'>";
+                        str += "<b>" + writer + " : " + message + "</b>";
+                        str += "</div></div>";
+                        $("#msgArea").append(str);
+                    }
+
+//                     $("#msgArea").append(str);
+                });
+
+                //3. send(path, header, message)로 메세지를 보낼 수 있음
+                stomp.send('/publish/chat/enter', {}, JSON.stringify({roomId: roomId, userId: myUserId}))
+             });
+
+             $("#button-send").on("click", function(e){
+                 var msg = document.querySelector("#msg");
+                 
+                 console.log(myUserId + ":" + msg.value);
+                // send(path, header, message)로 메세지를 보낼 수 있음
+                 stomp.send('/publish/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, userId: myUserId}));
+                 msg.value = '';
+             });
+             
+           
+           
+             
+         });
+    	 
+    	  //송신기능  엔터적용====================================================
+         $("#button-send").addEventListener("keypress", function(event){
+		      if (event.keyCode === 13) {
+	 		        document.querySelector("#button-send").click();
+		      }
+	 	 });
+    	
+    	</script>
+    	
+    	
+    	
+
+	</div>
+</html>

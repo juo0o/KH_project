@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="chatMapper">
+	
+	<!-- 회의실 테이블 -->
+	<resultMap type="kh.study.intranet.chat.vo.ChatRoomVO" id="chatRoom">
+		<id column="ROOM_ID" property="roomId"/>
+		<result column="ROOM_NAME" property="roomName"/>
+		
+	
+	</resultMap>
+	
+	
+	<!-- 회의실 예약 테이블 -->
+	<resultMap type="kh.study.intranet.chat.vo.ChatMessageVO" id="chatMessage">
+		<id column="MESSAGE_NUM" property="messageNum"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="MESSAGE" property="message"/>
+		<result column="ROOM_ID" property="roomId"/>
+	</resultMap>
+		
+	
+	
+	<!-- 채팅룸리스트 조회 -->
+	<select id="selectChatRoom" resultMap="chatRoom">
+	SELECT ROOM_ID
+		, ROOM_NAME
+		FROM CHAT_ROOM
+	</select>
+	
+	<!-- 채팅룸 조회 -->
+	
+	<select id="selectOneChat" resultMap="chatRoom">
+	SELECT ROOM_ID
+		, ROOM_NAME
+	FROM CHAT_ROOM
+	WHERE ROOM_ID = #{roomId}
+		
+	</select>
+	
+	<!-- 메세지입력 -->
+	
+	<insert id="insertMessage">
+	INSERT INTO CHAT_MESSAGE( MESSAGE_NUM
+							  , USER_ID
+							  , MESSAGE
+							  , ROOM_ID )
+	VALUES( (SELECT NVL(MAX(MESSAGE_NUM), 0) + 1 FROM CHAT_MESSAGE)
+			, #{userId}
+			, #{message}
+			, #{roomId}
+		   )			
+	</insert>
+	
+	<!-- 채팅방 메세지 조회 -->
+	<select id="selectMessageList" resultMap="chatMessage">
+	SELECT * FROM CHAT_MESSAGE
+	WHERE ROOM_ID = #{roomId}
+	ORDER BY MESSAGE_NUM
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+
+
