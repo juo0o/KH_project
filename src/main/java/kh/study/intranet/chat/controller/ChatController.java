@@ -57,13 +57,7 @@ public class ChatController {
 	    //채팅메세지 보내주기
 	    model.addAttribute("messageList", chatService.selectListChatMessage(roomId));
 	    
-	    System.out.println(chatService.selectListChatMessage(roomId).size());
-	    System.out.println(chatService.selectListChatMessage(roomId).size());
-	    System.out.println(chatService.selectListChatMessage(roomId).size());
-//	    for(ChatMessageVO e : chatService.selectListChatMessage(roomId)) {
-//	    	System.out.println(e);
-//	    }
-	    
+
 	    
 	    return "/pages/chat/chat_room";
 	}

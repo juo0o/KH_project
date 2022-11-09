@@ -7,25 +7,44 @@ layout:decorate="~{layout/base_layout}">
 
 	<div layout:fragment="content">
 	
-		<div class="container" style="border: 1px solid black">
-		
-	            <div class="col-12 center">
+	
+	    <div align="center" class="col-12 center" >
 	                <h1>[[${roomName}]]</h1>
-	            </div>
+	    </div>
+	    
+		<div class="container" style="border: 1px solid black; height: 600px;" id="scroll" >
+		
+	          
             
           	    <!-- db에서 조회한 메세지 영역 -->
-                <div id="msgAreaSelect" class="col-12 align-self-start">
-					<th:block th:each="message : ${messageList}">
-                	  <div class='col-3 '>
-	                      <div class='alert alert-secondary' style="word-break:break-all" >
-	                           [[${message.userId}]]   :   [[${message.message}]]
-	                      </div>
-	                  </div>
-					</th:block>
-                </div>
+				
+				<th:block th:each="message : ${messageList}">
+				
+        	    <!-- 내가보낸영역 -->
+	          	    <th:block th:if="${message.userId == #authentication.name}">
+		                <div align="right" id="msgAreaSelect" class="col-12 align-self-start">
+			                	  <div class='col-3' align="left">
+				                      <div class='alert alert-warning' style="word-break:break-all;" >
+				                           [[${message.userId}]]   :   [[${message.message}]]
+				                      </div>
+				                  </div>
+		                </div>
+	                </th:block>
+	                
+	                 <!-- 다른사람이 보낸영역 -->
+	                <th:block th:unless="${message.userId == #authentication.name}">
+	                	 <div align='left' id="msgAreaSelect" class="col-12 align-self-start">
+		                	  <div class='col-3' >
+			                      <div class='alert alert-secondary' style="word-break:break-all;" >
+			                           [[${message.userId}]]   :   [[${message.message}]]
+			                      </div>
+			                  </div>
+			             </div>
+	                </th:block>
+				</th:block>
                 
                 <!-- 입력메세지영역 -->
-                <div id="msgArea" class="col-12 align-self-end" style="word-break:break-all"></div>
+                <div align='right' id="msgArea" class="col-12 align-self-start"  style="word-break:break-all; text-align: left;"></div>
      
                 
                 <div class="col-12">
@@ -49,8 +68,16 @@ layout:decorate="~{layout/base_layout}">
         
     	<script type="text/javascript" th:inline="javascript">
     	
+    	 
+    	 //스크롤 밑으로 유지
+		 $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+    	
+    	 // 메세지 보내는 함수
     	 $(document).ready(function(){
 
+    		 
+    		
+    		 
              var roomName = [[${roomName}]];
              var roomId = [[${roomId}]];
              var myUserId = [[${#authentication.principal.username}]];
@@ -83,23 +110,47 @@ layout:decorate="~{layout/base_layout}">
                     
                     /* 내가보낸 메세지 */
                     if(writer === myUserId){
-                        str = "<div class='col-3'>";
-                        str += "<div class='alert alert-warning '>";
-                        str += "<b>" + myUserId  + " : " + message + "</b>";
-                        str += "</div></div>";
-                        $("#msgArea").append(str);
-                        
+//                      str = "<div  class='col-3 alert alert-warning'>";
+//                      str += "<div class='alert alert-warning'>";
+//                      str += "<b>" + myUserId  + " : " + message + "</b>";
+//                      str += "</div></div>";
+//                      $("#msgArea").append(str);
+                    	
+                     
+                     str = "  <div align='right' class='col-12 align-self-start'>                  " ;
+                     str += "    <div class='col-3' >                 ";
+                     str += "      <div align='left' class='alert alert-warning' style='word-break:break-all ;background-color:#FDE234;  ' >   ";
+                     str +=        "<b>" + myUserId + " : " + message + "</b>";
+                     str += "      </div>                ";
+                     str += "    </div>                ";
+                     str += "  </div>                ";
+                     $("#msgArea").append(str);
+                     
+                     $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
+                     
                     }
                     else{
                  	/* 상대방이보낸 메세지 */
-                        str = "<div class='col-3'>";
-                        str += "<div class='alert alert-warning'>";
-                        str += "<b>" + writer + " : " + message + "</b>";
-                        str += "</div></div>";
+//                         str = "<div class='col-3'>";
+//                         str += "<div class='alert alert-warning'>";
+//                         str += "<b>" + writer + " : " + message + "</b>";
+//                         str += "</div></div>";
+//                         $("#msgArea").append(str);
+                        
+                        str = "  <div align='left' class='col-12'>                  " ;
+                        str += "    <div class='col-3' >                 ";
+                        str += "      <div class='alert alert-secondary' style='word-break:break-all;' >   ";
+                        str += "       <b>" + writer + " : " + message + "</b>                ";
+                        str += "      </div>                ";
+                        str += "    </div>                ";
+                        str += "  </div>                ";
+                  
                         $("#msgArea").append(str);
+                         
+                        $("#scroll").scrollTop($("#scroll")[0].scrollHeight);
                     }
-
-//                     $("#msgArea").append(str);
+                    
+                    
                 });
 
                 //3. send(path, header, message)로 메세지를 보낼 수 있음
@@ -115,17 +166,16 @@ layout:decorate="~{layout/base_layout}">
                  msg.value = '';
              });
              
-           
-           
+	         //송신기능  엔터적용====================================================
+	         $("#msg").on("keypress", function (e){
+			      if (e.keyCode === 13){
+			        document.querySelector("#button-send").click();
+			      }
+			    });
              
+	         
          });
     	 
-    	  //송신기능  엔터적용====================================================
-         $("#button-send").addEventListener("keypress", function(event){
-		      if (event.keyCode === 13) {
-	 		        document.querySelector("#button-send").click();
-		      }
-	 	 });
     	
     	</script>
     	
