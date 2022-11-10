@@ -123,7 +123,7 @@
 			  </div>
 	          <div class="form-group">
 				<label for="">예약 가능 시간</label>
-				<select class="form-select" id=""  name="reserveTime">
+				<select class="form-select" id="reserveTime"  name="reserveTime">
 				
 					<th:block th:each="reserve:${reservation}">
 						<option th:text="${reserve.reserveTime}" th:value="${reserve.reserveTime}"></option>
