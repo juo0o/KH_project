@@ -46,7 +46,7 @@ public class ReservationController {
 		//reservationService.regReservation(meetingRoomVO);
 		
 		
-//		model.addAttribute("reservation", reservationService.selectReservation());
+		//model.addAttribute("reservation", reservationService.selectReservation());
 		
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
 		
@@ -57,18 +57,16 @@ public class ReservationController {
 	@PostMapping("/selectReserve")
 	public List<ReservationVO> selectReserve(String reserveDate, Model model) {
 		
-		System.out.println(reserveDate);
-		System.out.println(reserveDate);
-		System.out.println(reserveDate);
-		System.out.println(reserveDate);
+		
+		//System.out.println(reserveDate);
 		
 		
 //		System.out.println("@@@@@@@@");
 //		System.out.println(meetingRoomVO);
 //		System.out.println(reservationVO);
-		System.out.println(reservationService.selectReservation(reserveDate));
-		System.out.println(reservationService.selectReservation(reserveDate));
-		System.out.println(reservationService.selectReservation(reserveDate));
+//		System.out.println(reservationService.selectReservation(reserveDate));
+//		System.out.println(reservationService.selectReservation(reserveDate));
+//		System.out.println(reservationService.selectReservation(reserveDate));
 		System.out.println(reservationService.selectReservation(reserveDate));
 		
 		
@@ -85,7 +83,7 @@ public class ReservationController {
 	@PostMapping("/regReservation")
 	public void regReservation(MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) {
 		
-		System.out.println("!!!!");
+		//System.out.println("!!!!");
 //		System.out.println(meetingRoomVO);
 		System.out.println(meetingRoomVO);
 		System.out.println(reservationVO);

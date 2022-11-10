@@ -124,9 +124,9 @@
 	          <div class="form-group">
 				<label for="">예약 가능 시간</label>
 				<select class="form-select" id=""  name="reserveTime">
+				
 					<th:block th:each="reserve:${reservation}">
 						<option th:text="${reserve.reserveTime}" th:value="${reserve.reserveTime}"></option>
-						
 					</th:block>
 				</select>
 				<!-- <input type="hidden" value="${meeting.roomCode}">	 -->

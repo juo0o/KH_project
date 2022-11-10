@@ -2,7 +2,7 @@
 
  		var reservation;
       alert('ajax실행함수 실행 : ' + dateStr)
-       
+       		
          //alert(dateStr);
             $.ajax({
                url: '/reservation/selectReserve', //요청경로
@@ -16,13 +16,14 @@
                		 //모달창띄운다
                		 
                  reservation = result;
-           	   
+	           	   
+	           document.querySelector('select').value;   
+	           	   
                
 //               memberInfo.innerHTML ='';
-//               let str='';
-//               
-//
-//               str +=   `        `
+              	//let str='';
+              	 //str +=   `        `;
+
 //               str +=  `        `
 //               str +=  `        `
 //               str +=  `        `
