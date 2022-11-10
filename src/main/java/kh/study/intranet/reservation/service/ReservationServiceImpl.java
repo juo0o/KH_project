@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.study.intranet.reservation.vo.MeetingRoomVO;
+import kh.study.intranet.reservation.vo.ReservationVO;
 
 @Service("reservationService")
 public class ReservationServiceImpl implements ReservationService{
@@ -23,6 +24,18 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public void regReservation(MeetingRoomVO meetingRoomVO) {
 		sqlSession.insert("reservationMapper.regReservation",meetingRoomVO);
+		
+	}
+
+	@Override
+	public List<ReservationVO> selectReservation(String reserveDate) {
+		
+		return sqlSession.selectList("reservationMapper.selectReservation", reserveDate);
+	}
+
+	@Override
+	public void reserveUpdate(ReservationVO reservationVO) {
+		sqlSession.update("reservationMapper.reserveUpdate",reservationVO);
 		
 	}
 

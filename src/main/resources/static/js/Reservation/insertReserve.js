@@ -1,55 +1,54 @@
  function showRoomInfoAjax(dateStr) {
 
-      //alert('ajax실행함수 실행 : ' + dateStr)
+ 		var reservation;
+      alert('ajax실행함수 실행 : ' + dateStr)
        
-         
+         //alert(dateStr);
             $.ajax({
-               url: '/', //요청경로
+               url: '/reservation/selectReserve', //요청경로
                type: 'post',
-               data: new FormData(form), //필요한 데이터
-               processData: false,
-               contentType: false,
-               cache: false,
+               data: {  'reserveDate' : dateStr },
+//               processData: false,
+//               contentType: false,
+//               cache: false,
+				async: false,
                success: function(result) {
                		 //모달창띄운다
-            $('#createEventModal').modal('show');
-           
-            
-               			
-               			
-               			
+               		 
+                 reservation = result;
+           	   
                
-               memberInfo.innerHTML ='';
-               let str='';
-               
-
-               str +=   `        `
-               str +=  `        `
-               str +=  `        `
-               str +=  `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `  
-               str +=  `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `
-               str +=  `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `
-               str +=  `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `    
-               str +=  `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `
-               str +=   `        `
-
-
-                memberInfo.insertAdjacentHTML('afterbegin', str);
+//               memberInfo.innerHTML ='';
+//               let str='';
+//               
+//
+//               str +=   `        `
+//               str +=  `        `
+//               str +=  `        `
+//               str +=  `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `  
+//               str +=  `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=  `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=  `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `    
+//               str +=  `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `
+//               str +=   `        `
+//
+//
+//                memberInfo.insertAdjacentHTML('afterbegin', str);
                },
                error: function() {
                   alert('ajax 실패');
@@ -58,24 +57,35 @@
                
                
             });
+            
+      $('#createEventModal').modal('show');
+      console.log(reservation);
+      return reservation;
       
-          $('#createEventModal').modal('hide');
+      
+//          $('#createEventModal').modal('hide');
           
          
       }
       
-function goReserve(){
-
+function goReserve(formTag){
 	
+	//alert('aaa');
+		var formTag = $("form[name=regReserve]").serialize();
+		
+		
+	alert(formTag)
 	
 	$.ajax({
                url: '/reservation/regReservation', //요청경로
                type: 'post',
-               data: {}, //필요한 데이터
+               data: formTag, //필요한 데이터
                
                success: function(result) {
+           			alert('등록완료')
             
-           		alert('aaa');
+           		
+           		
             
                			
                			
@@ -90,7 +100,8 @@ function goReserve(){
                
             });
 	
-	
+               $('#createEventModal').modal('hide');
+			
 	
 	
 }

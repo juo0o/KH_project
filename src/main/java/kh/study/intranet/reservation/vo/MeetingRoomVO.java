@@ -10,8 +10,8 @@ import lombok.ToString;
 public class MeetingRoomVO {
 	private String roomCode;
 	private String roomName;
-	private int maxRoomCnt;
 	private String available;
+	
 	
 	
 }

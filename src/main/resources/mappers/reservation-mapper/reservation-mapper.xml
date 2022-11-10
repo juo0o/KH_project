@@ -8,8 +8,8 @@
 	<resultMap type="kh.study.intranet.reservation.vo.MeetingRoomVO" id="meeting">
 		<id column="ROOM_CODE" property="roomCode"/>
 		<result column="ROOM_NAME" property="roomName"/>
-		<result column="MAX_ROOM_CNT" property="maxRoomCnt"/>
 		<result column="AVAILABLE" property="available"/>
+		
 		
 	
 	</resultMap>
@@ -18,51 +18,77 @@
 	<!-- 회의실 예약 테이블 -->
 	<resultMap type="kh.study.intranet.reservation.vo.ReservationVO" id="reservation">
 		<id column="RESERVE_CODE" property="reserveCode"/>
+		<result column="RESERVE_USER_ID" property="reserveUserId"/>
 		<result column="ROOM_CODE" property="roomCode"/>
 		<result column="RESERVE_DATE" property="reserveDate"/>
-		<result column="START_TIME" property="startTime"/>
-		<result column="END_TIME" property="endTime"/>
-		<result column="RESERVE_USER_ID" property="reserveUserId"/>
+		<result column="RESERVE_TIME" property="reserveTime"/>
 		<result column="RESERVE_AVAILABLE" property="reserveAvailable"/>
+		
 	</resultMap>
 		
 	
 	
 	<select id="selectMeetingRoom" resultMap="meeting">
-	SELECT M.ROOM_CODE
-		, RESERVE_CODE
+	SELECT ROOM_CODE
 		, ROOM_NAME
-		, MAX_ROOM_CNT
 		, AVAILABLE
-		, RESERVE_DATE
-		, START_TIME
-		, END_TIME
+		FROM MEETING_ROOM
+		
+	</select>
+		
+	<select id="selectReservation" resultMap="reservation">
+	SELECT M.ROOM_CODE
+		, ROOM_NAME
+		, AVAILABLE
+		, RESERVE_CODE
 		, RESERVE_USER_ID
+		, RESERVE_DATE
+		, RESERVE_TIME
 		, RESERVE_AVAILABLE
 		FROM MEETING_ROOM M , RESERVATION_MEETING_ROOM R
 		WHERE M.ROOM_CODE = R.ROOM_CODE
+		AND RESERVE_DATE = #{reserveDate}
+		
+		
+		
+		
+		
+	
+	</select>	
+	
+	<update id="reserveUpdate">
+	UPDATE RESERVATION_MEETING_ROOM
+	SET
+	RESERVE_DATE = #{reserveDate}
+	WHERE
+	RESERVE_CODE = #{reserveCode}
+	
+	
+	
+	
+	</update>
+	
 		
 		
 		
 	
 	
 	
-	</select>
 	
 	<insert id="regReservation">
 	INSERT INTO MEETING_ROOM (
 			ROOM_CODE
 			,ROOM_NAME
-			,MAX_ROOM_CNT
 			,AVAILABLE
+			
 	
 	
 	) 
 	VALUES (
 			#{roomCode}
 			,#{roomName}
-			,#{maxRoomCnt}
 			,#{available}
+			
 	
 	
 	
@@ -72,6 +98,9 @@
 	</insert>
 	
 	
+	
+
+
 	
 	
 	

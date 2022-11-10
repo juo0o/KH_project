@@ -1,15 +1,17 @@
+
 <!DOCTYPE html>
 <html lang='en'
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/base_layout}">
+	layout:decorate="~{layout/base_layout}"
+	>
   
   
     
- 
     
     <div layout:fragment="content">
     
+ 
     
     
   
@@ -23,26 +25,44 @@
     <div class="row">
     	
     	<div class="col">
-	    
+	    	회의실 정보
     	</div>
+    	<!-- <div th:each="meeting:${meetingRoom}">
+			<div th:text="${meeting.roomCode}"></div>    	
+    	</div> -->
     	
     </div>
     	
    
     
     <script>
-
+		
+    
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
+        
+        
+        
+        
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          
+        	
+            
+        	locale : 'ko',
+        	
         	headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
-         
-        	
+         	
+     
+              
+              
+             
+              
+              
+            
+      
           //initialView: 'dayGridMonth',
           
           height: '550px',
@@ -54,7 +74,7 @@
 //          //모달창띄운다
             $('#createEventModal').modal('show');
            
-            showRoomInfoAjax(info.dateStr)
+            showRoomInfoAjax(info.dateStr);
     
             
               
@@ -84,76 +104,60 @@
         </div>
         
         <!-- Modal body -->
-        <div class="modal-body">
-          <div class="form-group">
-			<label for="">회의실</label>
-			<select class="form-select" id="" onchange="startChange()" name="" >
-				
-				<option value="">1회의실</option>
-				
-				
-			</select>
-		  </div>
-		  <br>
-          <div class="form-group">
-			<label for="">예약자</label>
-			<input type="text" class="form-control" placeholder="" id="reserveMember" name="" value="">
-		  </div>
-          <div class="form-group">
-			<label for="">날짜</label>
-			<input type="date" class="form-control" placeholder="" id="reserveTime" name="" value="">
-		  </div>
-		  <div class="form-group">
-			<label for="start">시작시간</label>
-			<select class="form-control" id="" onchange="startChange()" name="" >
-				<option value="">09:00</option>
-				<option value="">09:30</option>
-				<option value="">10:00</option>
-				<option value="">10:30</option>
-				<option value="">11:00</option>
-				<option value="">11:30</option>
-				<option value="">12:00</option>
-				
-			</select>
-		  </div>
-		   <div class="form-group">
-			<label for="end">종료시간</label>
-			<select class="form-control" id="end" name="">
-				<option value="">09:30</option>
-				<option value="">10:00</option>
-				<option value="">10:30</option>
-				<option value="">11:00</option>
-				<option value="">11:30</option>
-				<option value="">12:00</option>
-				
-			</select>
-		  </div>
-		   <div class="form-group">
-			<label for="">회의내용</label>
-			<input type="text" class="form-control" placeholder="" id="" name="" value="">
-		  </div>
-		
-		<!--   <div class="form-group">
-			  <label for="allDay">참여인원</label>
-			  <div class="form-check">
-				<label class="form-check-label">
-					<input type="text"  class="form-check-input" value="" name="allDay">명
-				</label>
-			  </div>
-		
-		
-			</div> -->
-        </div>
-        <!-- Modal footer -->
-       <div class="modal-footer">
-		 
-		  
-		  <button type="button" class="btn btn-dark  float-right deleteBtn" onclick="goReserve();">등록</button>
-		  <button type="button" class="btn btn-warning float-right insertBtn"
-							data-bs-dismiss="modal">취소</button>
-		  <!-- <button type="button" class="btn btn-warning float-right insertBtn" onclick="">취소</button> -->
-        </div>
+        <form name="regReserve" id="regReserve">
         
+	        <div class="modal-body">
+	          <div class="form-group">
+					
+				<label for="">회의실</label>
+				<select class="form-select" id=""  name="roomCode">
+					<th:block th:each="meeting:${meetingRoom}">
+						<option th:text="${meeting.roomName}" th:value="${meeting.roomCode}">1회의실</option>
+					</th:block>
+				</select>
+			  </div>
+			  <br>
+	          <div class="form-group">
+				<label for="">예약자</label>
+				<input type="text" class="form-control" placeholder="" id="" name="reserveUser" value="">
+			  </div>
+	          <div class="form-group">
+				<label for="">예약 가능 시간</label>
+				<select class="form-select" id=""  name="reserveTime">
+					<th:block th:each="reserve:${reservation}">
+						<option th:text="${reserve.reserveTime}" th:value="${reserve.reserveTime}"></option>
+						
+					</th:block>
+				</select>
+				<!-- <input type="hidden" value="${meeting.roomCode}">	 -->
+			  </div>
+			  
+			   <div class="form-group">
+				<label for="">예약 사유</label>
+				<input type="text" class="form-control" placeholder="" id="" name="meetingContent" value="">
+			  </div>
+			
+			<!--   <div class="form-group">
+				  <label for="allDay">참여인원</label>
+				  <div class="form-check">
+					<label class="form-check-label">
+						<input type="text"  class="form-check-input" value="" name="allDay">명
+					</label>
+				  </div>
+			
+			
+				</div> -->
+	        </div>
+	        <!-- Modal footer -->
+	       <div class="modal-footer">
+			 
+			  
+			  <button type="button" class="btn btn-dark  float-right deleteBtn" onclick="goReserve()">등록</button>
+			  <button type="button" class="btn btn-warning float-right insertBtn"
+								data-bs-dismiss="modal">취소</button>
+			  <!-- <button type="button" class="btn btn-warning float-right insertBtn" onclick="">취소</button> -->
+	        </div>
+        </form>
       </div>
     </div>
   </div>
