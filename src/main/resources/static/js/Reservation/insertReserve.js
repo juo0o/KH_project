@@ -1,7 +1,7 @@
  function showRoomInfoAjax(dateStr) {
 
  		var reservation;
-      alert('ajax실행함수 실행 : ' + dateStr)
+      //alert('ajax실행함수 실행 : ' + dateStr)
        		
          //alert(dateStr);
             $.ajax({
@@ -17,7 +17,7 @@
                		 
                  reservation = result;
 	           	   
-	           document.querySelector('select').value;   
+	           //document.querySelector('select').value;   
 	           	   
                
 //               memberInfo.innerHTML ='';
@@ -68,14 +68,15 @@
           
          
       }
-      
+ 
+//등록 눌렀을시 실행되는 함수      
 function goReserve(formTag){
 	
-	//alert('aaa');
-		var formTag = $("form[name=regReserve]").serialize();
+		//alert('aaa');
+		//alert(formTag);
+		//var formTag = $("form[name=regReserve]").serialize();
 		
 		
-	alert(formTag)
 	
 	$.ajax({
                url: '/reservation/regReservation', //요청경로
@@ -83,6 +84,10 @@ function goReserve(formTag){
                data: formTag, //필요한 데이터
                
                success: function(result) {
+           			
+           			
+           			
+           			
            			alert('등록완료')
             
            		
@@ -103,6 +108,60 @@ function goReserve(formTag){
 	
                $('#createEventModal').modal('hide');
 			
+	
+	
+}
+
+//회의실 선택시 변경되는 함수
+function selectChange(info){
+	
+	
+	var roomCode = document.querySelector('#meetingRoom').value;
+	
+	//alert("roomCode : " + roomCode);
+	//alert(sysdate);
+	
+	
+	$.ajax({
+               url: '/reservation/selectChange', //요청경로
+               type: 'post',
+               data: {'roomCode': roomCode,
+               		  'reserveDate' : sysdate}, //필요한 데이터
+               
+               success: function(result) {
+           			
+           		
+           			const selectBox = document.querySelector('#reserveTime');
+           		    
+           		   
+           		    
+           		    selectBox.innerHTML = '';
+           		    
+           		    
+           		    $("#reserveTime option").remove();
+           		    
+           		    
+           		    let str = '';
+           		    
+           		    for(let reserve of result){
+						str += `<option th:value="${reserve.reserveTime}">${reserve.reserveTime}</option>`;
+					}
+           			
+           			selectBox.insertAdjacentHTML('beforeend',str);
+           			
+           			
+           			
+               
+               },
+               error: function() {
+                  alert('ajax 실패');
+         
+               }
+               
+               
+            });
+	
+               //$('#createEventModal').modal('hide');
 	
 	
 }

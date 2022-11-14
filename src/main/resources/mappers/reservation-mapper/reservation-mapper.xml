@@ -42,19 +42,61 @@
 		, AVAILABLE
 		, RESERVE_CODE
 		, RESERVE_USER_ID
-		, RESERVE_DATE
+		, TO_CHAR(RESERVE_DATE,'YYYY-MM-DD') AS RESERVE_DATE
 		, RESERVE_TIME
 		, RESERVE_AVAILABLE
 		FROM MEETING_ROOM M , RESERVATION_MEETING_ROOM R
 		WHERE M.ROOM_CODE = R.ROOM_CODE
 		AND RESERVE_DATE = #{reserveDate}
 		
-		
-		
-		
+	</select>	
 		
 	
-	</select>	
+	
+	
+	
+		
+	
+	
+		
+	<select id="selectAvailableReservation" resultMap="reservation">	
+	SELECT RESERVE_TIME 
+		FROM RESERVATION_MEETING_ROOM
+		WHERE ROOM_CODE = #{roomCode}
+		AND RESERVE_DATE = #{reserveDate}
+		AND RESERVE_AVAILABLE = 'Y'
+	
+	
+	</select>		
+	
+	
+	<!-- 등록쿼리 초안  -->
+	
+	<!-- <insert id="regReservation">
+	INSERT INTO RESERVATION_MEETING_ROOM (
+			RESERVE_CODE
+			,ROOM_CODE
+			,RESERVE_DATE
+			,RESERVE_TIME
+			,RESERVE_AVAILABLE
+			
+	
+	
+	) 
+	VALUES (
+			#{reserveCode}
+			,#{roomCode}
+			,#{reserveDate}
+			,#{reserveTime}
+			,#{reserveAvailable}
+			
+	
+	)
+	
+	
+	
+	</insert>
+	 -->
 	
 	<update id="reserveUpdate">
 	UPDATE RESERVATION_MEETING_ROOM
@@ -67,35 +109,6 @@
 	
 	
 	</update>
-	
-		
-		
-		
-	
-	
-	
-	
-	<insert id="regReservation">
-	INSERT INTO MEETING_ROOM (
-			ROOM_CODE
-			,ROOM_NAME
-			,AVAILABLE
-			
-	
-	
-	) 
-	VALUES (
-			#{roomCode}
-			,#{roomName}
-			,#{available}
-			
-	
-	
-	
-	)
-	
-	
-	</insert>
 	
 	
 	

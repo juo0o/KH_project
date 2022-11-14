@@ -46,16 +46,22 @@ public class ReservationController {
 		//reservationService.regReservation(meetingRoomVO);
 		
 		
-		//model.addAttribute("reservation", reservationService.selectReservation());
+		//model.addAttribute("reservation", reservationService.selectReservationInfo());
+		
 		
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
+		
+		//System.out.println(reservationService.selectMeetingRoom());
+		//System.out.println(reservationService.selectMeetingRoom());
 		
 		return "pages/reservation/insertReserve";
 	
 	}
+	
+	
 	@ResponseBody
 	@PostMapping("/selectReserve")
-	public List<ReservationVO> selectReserve(String reserveDate, Model model) {
+	public List<ReservationVO> selectReserve(String reserveDate, Model model,String roomCode) {
 		
 		
 		//System.out.println(reserveDate);
@@ -65,9 +71,8 @@ public class ReservationController {
 //		System.out.println(meetingRoomVO);
 //		System.out.println(reservationVO);
 //		System.out.println(reservationService.selectReservation(reserveDate));
-//		System.out.println(reservationService.selectReservation(reserveDate));
-//		System.out.println(reservationService.selectReservation(reserveDate));
-		System.out.println(reservationService.selectReservation(reserveDate));
+
+		//System.out.println(reservationService.selectReservation(reserveDate));
 		
 		
 		
@@ -77,23 +82,45 @@ public class ReservationController {
 	}
 	
 	
+	//회의실 선택시 변경되는 ajax
+	@ResponseBody
+	@PostMapping("/selectChange")
+	public List<ReservationVO> selectChange(ReservationVO reservationVO,Authentication authentication) {
+//		System.out.println("!!!!!!!");
+//		System.out.println(reservationVO);
+//		System.out.println(reservationVO);
+		
+		
+		
+		List<ReservationVO> list = reservationService.selectAvailableReservation(reservationVO);
+		
+		//User user = (User)authentication.getPrincipal();
+		
+		return list;
+		
+		
+		
+		
+	}
 	
 	
+	//등록 눌렀을때 실행되는 ajax
 	@ResponseBody
 	@PostMapping("/regReservation")
 	public void regReservation(MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) {
 		
 		//System.out.println("!!!!");
 //		System.out.println(meetingRoomVO);
-		System.out.println(meetingRoomVO);
-		System.out.println(reservationVO);
+		//System.out.println(meetingRoomVO);
+		//System.out.println(reservationVO);
 		
 		User user = (User)authentication.getPrincipal();
 		
 		reservationVO.setReserveUserId(user.getUsername());
 		
 		
-		reservationService.reserveUpdate(reservationVO);
+		
+		
 		
 		
 		
