@@ -14,15 +14,16 @@ layout:decorate="~{layout/base_layout}">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><input type="button" value="연차신청서"
-					onclick="location.href='/approval/writeApproval';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					onclick="location.href='/approval/vacationReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><input type="button" value="일반품의서"
 					onclick="location.href='/approval/nomalReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span><input type="button" value="회계품의서"
-					onclick="location.href='/approval/orderReport';"></span>
+					onclick="location.href='/approval/accountingReport';"></span>
 			</div>
 
 
 		<div>
+		<form th:action="@{/approval/regNomal}" method="post">
 	<!-- 문서 헤더 시작-->
 		<div style="margin-top: 27px; ">
 			<table style="width: 1000px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
@@ -49,8 +50,8 @@ layout:decorate="~{layout/base_layout}">
 
 <!-- 							</div> -->
 <!-- 						</td> -->
-						<td>a</td>
-						<td>b</td>
+						<td></td>
+						<td></td>
 						<td colspan="2" >
 							<table style="border: 1px solid black; height: 135px; width: 100%; text-align: center; ">
 							
@@ -94,22 +95,23 @@ layout:decorate="~{layout/base_layout}">
 						</td>
 						
 						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<span >[기안부서]</span>
+							<span th:text="${empInfo.deptName}"></span>
 						</td>
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							기 안 일
 						</td>
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<span >[기안일]</span>
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+							<span th:text="${appSeq.appWriteDate}"></span>
 						</td>
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							문서번호
 						</td>
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left; font-size: 12px;">
-							<span >[문서번호]</span>
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left; font-size: 12px;">
+							<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
+							<span th:text="${appSeq.appSeq}"></span>
 						</td>
 					</tr>
 					<tr>
@@ -117,22 +119,22 @@ layout:decorate="~{layout/base_layout}">
 							기 안 자
 						</td>
 						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<span >[기안자]</span>
+							<span th:text="${empInfo.empName}"></span>
 						</td>
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							보존년한
-						</td>
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+						</td> -->
+						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
 							<span>[보존연한]</span>
-						</td>
+						</td> -->
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							문서종류
-						</td>
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+						</td> -->
+						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
 							<span>[문서종류]</span>
-						</td>
+						</td> -->
 					</tr>
 				</tbody>
 			</table> <!-- 문서 헤더 끝--> <!-- 마진 시작-->
@@ -163,11 +165,11 @@ layout:decorate="~{layout/base_layout}">
 
 				<tbody>
 					<tr>
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
+						<td style="padding: 3px; width:100px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							제  &nbsp;&nbsp;&nbsp; 목
 						</td>
 						<td>
-							<input type="text">
+							<input style="border: none; width:900px;" type="text" name="nomalTitle">
 						</td>
 							
 					</tr>
@@ -175,14 +177,15 @@ layout:decorate="~{layout/base_layout}">
 					<tr>
 					<!-- 본문내용 -->
 						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
-						aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+							<textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"> 불라불라</textarea>
 						</td>
 					</tr>
 				</tbody>
 			</table> <!-- 제목 및 내용 끝 --> 
 				<div style="margin-top: 20px; text-align:center; ">
-						<input style="margin-right: 540px; margin-bottom: 25px;" type="button" value="결재요청">
+						<input style="margin-right: 540px; margin-bottom: 25px;" type="submit" value="결재요청">
 				</div>
+			</form>
 		</div>	
 
 

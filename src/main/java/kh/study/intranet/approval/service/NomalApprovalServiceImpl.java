@@ -9,16 +9,14 @@ import kh.study.intranet.approval.vo.CommonFormVO;
 import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.emp.vo.EmpVO;
 
-@Service("vacationApprovalService")
-public class VacationApprovalServiceImpl implements VacationApprovalService{
+@Service("nomalApprovalService")
+public class NomalApprovalServiceImpl implements NomalApprovalService{
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 
 	
-
-
 	
 	
 		

@@ -16,14 +16,14 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<span><input type="button" value="연차신청서" ></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<span><input type="button" value="일반품의서" onclick="location.href='/approval/nomalReport';"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span><input type="button" value="회계품의서" onclick="location.href='/approval/orderReport';"></span>
+		<span><input type="button" value="회계품의서" onclick="location.href='/approval/accountingReport';"></span>
 	</div>
 	<br>
-	<div style="width:60%; height:100%;" align="center">
+<div>
+		<form th:action="@{/approval/regVacation}" method="post" >
+	<div style="width:60%; height:700px;" align="center">
 		<div class="approval_import ie9-scroll-fix" style="width:100%; height:100%; border: 1px solid black;"  align="center">
 		<!-- 문서 내용 표시 테스트 -->
-		<form id="document_content" class="form_doc_editor editor_view"
-			onsubmit="return false;">
 				<span style="line-height: normal; font-family: 맑은 고딕; font-size: 10pt; margin-top: 0px; margin-bottom: 0px;"></span>
 					<div style="width: 100%" >
 						<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; width: 800px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important;" >
@@ -49,6 +49,7 @@
 														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;">
 														<span th:text="${empInfo.empName}">
 														</span> 
+														<input type="hidden" th:value="${empInfo.empName}" name="empName">
 													</td>
 												</tr>
 												<tr>
@@ -79,6 +80,7 @@
 														문서번호</td>
 													<td
 														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;">
+														<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
 														<span th:text="${appSeq.appSeq}"></span></td>
 												</tr>
 											</tbody>
@@ -163,7 +165,7 @@
 					<br>
 					<br>
 				<div>
-				<table class="__se_tbl" style="background: white; border: 1px solid black; border-image: none; width: 830px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; margin-top: 0px; border-collapse: collapse !important;">
+				<table class="__se_tbl" style="background: white; border: 1px solid black; border-image: none; width: 800px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; margin-top: 0px; border-collapse: collapse !important;">
 					<tbody>
 						<tr>
 							<td
@@ -186,14 +188,14 @@
 							<td
 								style="background: rgb(255, 255, 255); padding: 3px; border: 1px solid black; border-image: none; width: 700px; height: 22px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: middle;">
 								<span>
-									<input type="date" name="startDate" id="startDate" value="">
+									<input type="date" name="vacationStartDate" id="startDate" value="">
 								</span>&nbsp;~&nbsp;
 								<span>
-									<input type="date" name="endDate" id="endDate" value="">
+									<input type="date" name="vacationEndDate" id="endDate" value="">
 								</span>
 								<span style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;">
 									<b>사용일수 : 
-										<input id="vacationPeriod" value=""></th:block>
+										<input id="vacationPeriod" name="vacationPeriodDate" value=""></th:block>
 									 </b> 
 									<span class="editor_num" data-type="num">0.5</span> 
 									<b style="font-weight: bold; color: red">신청가능일을 초과하였습니다.</b> 
@@ -211,8 +213,8 @@
 										: </b></span> <span
 									style="font-weight: bold; color: red"> </span><span
 								style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;"><b>신청연차
-									1.5	: </b> <span>
-									0.5</span> <b
+									1.5	: </b>
+										<span id="vacationPeriod"></span> <b
 									style="font-weight: bold; color: red"></b> </span></td>
 						</tr>
 						<tr>
@@ -221,7 +223,7 @@
 								style="color: rgb(255, 0, 0);">*</b>&nbsp;휴가&nbsp;사유
 							</td>
 							<td>
-								<textarea cols="115" rows="6" style="resize: none;"> 불라불라</textarea>
+								<textarea style="border: none" cols="115" rows="6" name="vacationContent"> 불라불라</textarea>
 							</td>	
 								
 							<!-- <td
@@ -243,13 +245,13 @@
 					</tbody>
 				</table>
 				</div>
-			</form>
 			</div>
 			<div style="margin-top: 20px; text-align:center;">
-				<input style="margin-bottom: 25px;" type="button" value="결재요청">
+				<input style="margin-bottom: 25px;" type="submit" value="결재요청">
 			</div>
-			</div>
-			
+		</div>	
+			</form>
+	</div>			
 			<script type="text/javascript" th:src="@{/js/approval/vacation_report.js}"></script>
 			
 		</div>

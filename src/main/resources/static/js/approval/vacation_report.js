@@ -1,7 +1,8 @@
+//연차수 계싼
+
 var startDate = document.querySelector('#startDate');
 var endDate = document.querySelector('#endDate');
 var vacationPeriod = document.querySelector('#vacationPeriod');
-
 
 
 
@@ -13,6 +14,7 @@ endDate.addEventListener('change', function(event) {
 	const date = getDateDiff(startDate.value, endDate.value);
 	
 	vacationPeriod.value = date;
+	
 });
 
 	

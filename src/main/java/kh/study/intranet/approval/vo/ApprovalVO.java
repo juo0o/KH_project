@@ -1,5 +1,6 @@
 package kh.study.intranet.approval.vo;
 
+import kh.study.intranet.emp.vo.EmpVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +12,8 @@ public class ApprovalVO  {
 	private String firstTimeApprover;
 	private String intermidiateApprover;
 	private String finalApprover;
-	private String appCheckDate;
-	private String appReson;
-	private String appOriginFilename;
-	private String appRefileFilename;
-	private String appWriterEmpNum;
-	private String appCheckProgress;
-	private String appCateCode;
+	private String appCheckStatus;
+	private String userId;
+	private EmpVO empVO;
+	
 }
