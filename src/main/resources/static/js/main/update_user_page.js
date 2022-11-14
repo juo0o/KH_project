@@ -1,0 +1,136 @@
+//==============회원정보변경 모달 실행-===================
+function launchModal(keyVariable){
+	//클릭시 함수실행
+	$('#launchModal').modal('show');
+	
+	//매개변수따라서 다르게 실행시켜줌
+	switch(keyVariable) {
+		
+	  case 'password': 
+	  	    $('#launchModalLabel').html('비밀번호를 변경해주세요');
+	  	    $('#modal-text').html('변경하실 비밀번호를 입력해주세요:');
+	  	    $('input[name=keyVariable]').val('User_PW');
+	  	    
+	  		break;
+	
+	  case 'name':  
+	  		$('#launchModalLabel').html('이름을 변경해주세요');
+	  		$('#modal-text').html('변경하실 이름을 입력해주세요:');
+	  		$('input[name=keyVariable]').val('EMP_NAME');
+	   		break;
+	
+	  case 'addr':  
+	  		$('#launchModalLabel').html('주소를 변경해주세요');
+	  		$('#modal-text').html('변경하실 주소를 입력해주세요:');
+	  		$('input[name=keyVariable]').val('EMP_ADDR');
+	  		$('input[name=valueVariable]').attr('onclick','searchAddr();');
+	    	break;
+	
+	  case 'detailAddr':  
+	  		$('#launchModalLabel').html('상세주소를 변경해주세요');
+	  		$('#modal-text').html('변경하실 상세주소를 입력해주세요:');
+	  		$('input[name=keyVariable]').val('EMP_DETAIL_ADDR');
+	    	break;
+	
+	  case 'email':  
+	  		$('#launchModalLabel').html('이메일을 변경해주세요');
+	  		$('#modal-text').html('변경하실 이메일을 입력해주세요:');
+	  		$('input[name=keyVariable]').val('EMP_EMAIL');
+	    	break;
+	
+	  default: 
+	  		alert('다시다시다시')
+	   		break;
+	}
+}
+
+
+//==============회원정보 변경하고 화면 다시뿌려줌==================
+function updateUserInfo() {
+	let form = $('#updateInfo')[0];
+	
+	
+		$.ajax({
+			url: '/user/updateUserInfo', //요청경로
+			type: 'post',
+			data: new FormData(form), //필요한 데이터
+			
+			processData: false,
+			contentType: false,
+			cache: false,
+			success: function(userInfo) {
+			
+			
+			// 회원정보 만들어줌
+			let userInfoPage = document.querySelector('#userInfo');
+				
+			userInfoPage.innerHTML ='';
+			let str='';
+			
+ 
+				str = `<div class="col-4 memDiv">사진</div>                                                                                                      `
+			    str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                   `
+			    str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                   `
+		        str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">아이디</div>                                                                                                  `
+			    str += `<div class="col-4 memDiv">${userInfo.userId} </div>                                                                                  `
+			    str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                  `
+			    str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">비밀번호</div>                                                                                                `
+				str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                  `
+				str += `<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('password')"> </div>     `
+			    str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">이름</div>                                                                                                    `
+				str += `<div class="col-4 memDiv">${userInfo.empName}</div>                                                                                 `
+				str += `<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('name')"> </div>         `
+			    str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">주소</div>                                                                                                    `
+				str += `<div class="col-4 memDiv">${userInfo.empAddr}</div>                                                                                 `
+				str += `<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('addr')"> </div>         `
+			    str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">상세주소</div>                                                                                                `
+				str += `<div class="col-4 memDiv">${userInfo.empDetailAddr}</div>                                                                           `
+				str += `<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('detailAddr')"> </div>   `
+			    str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">이메일</div>                                                                                                  `
+				str += `<div class="col-4 memDiv">${userInfo.empEmail}</div>                                                                                `
+				str += `<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('email')">  </div>       `
+				str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">소속부서</div>                                                                                                `
+				str += `<div class="col-4 memDiv">${userInfo.deptName}</div>                                                                                `
+				str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                  `
+				str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">직급</div>                                                                                                    `
+				str += `<div class="col-4 memDiv">${userInfo.empPosition}</div>                                                                             `
+				str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                  `
+				str += `                                                                                                                                        `
+				str += `<div class="col-4 memDiv">입사일</div>                                                                                                  `
+				str += `<div class="col-4 memDiv">${userInfo.empHireDate}</div>                                                                             `
+				str += `<div class="col-4 memDiv">&nbsp;</div>                                                                                                  `
+                                                                                                                                                                
+			userInfoPage.insertAdjacentHTML('afterbegin', str);                                                                                                   
+			},                                                                                                                                                  
+			error: function() {                                                                                                                                 
+				alert('ajax 실패');                                                                                                                             
+	
+			}
+		});
+	$('#launchModal').modal('hide');
+	
+	
+}
+//주소변경
+function searchAddr(){
+	 new daum.Postcode({
+        oncomplete: function(data) {
+			//도로명 주소
+        	const roadAddr = data.roadAddress;
+        	document.querySelector('#valueVariable').value = roadAddr;
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.d
+        }
+    }).open();
+}
+
+
+

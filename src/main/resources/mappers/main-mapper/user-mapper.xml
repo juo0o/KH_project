@@ -13,7 +13,7 @@
 		<result column="EMP_BIRTHDAY" 				property="empBirthDay"/>
 		<result column="EMP_TELL" 					property="empTell"/>
 		<result column="EMP_ADDR" 					property="empAddr"/>
-		<result column="EMP_DEATAIL_ADDR" 			property="empDetailAddr"/>
+		<result column="EMP_DETAIL_ADDR" 			property="empDetailAddr"/>
 		<result column="EMP_EMAIL" 					property="empEmail"/>
 		<result column="DEPT_CODE" 					property="deptCode"/>
 		<result column="DEPT_NAME" 					property="deptName"/>
@@ -61,6 +61,39 @@
                          )
 	</insert>
 	
+	<!-- 내정보조회 -->
+	<select id="selectUserInfo" resultMap="userInfo">
+		SELECT USER_ID
+			   , EMP_NUM
+			   , EMP_NAME
+			   , EMP_GENDER
+			   , EMP_BIRTHDAY
+			   , EMP_TELL
+			   , EMP_ADDR
+			   , EMP_DETAIL_ADDR
+			   , EMP_EMAIL
+			   , DEPT_NAME
+			   , EMP_ROLE
+			   , TO_CHAR(EMP_HIRE_DATE, 'YYYY-MM-DD') AS EMP_HIRE_DATE
+			   , EMP_PICTURE_REFILE_NAME
+			   
+				
+		FROM EMP
+		WHERE USER_ID = #{userId}
+		
+	</select>
+	
+	<!-- 내정보 업데이트 -->
+	
+	<update id="updateUserInfo" parameterType="HashMap">
+		<if test="valueVariable != null and valueVariable">
+			UPDATE EMP
+			SET  
+				${keyVariable} = #{valueVariable}
+			WHERE USER_ID = #{userId}
+		</if>
+	
+	</update>
 </mapper>
 
 

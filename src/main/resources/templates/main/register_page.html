@@ -15,8 +15,9 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     <title>register</title>
 
     <!-- Custom fonts for this template-->
-   <link href="/js//common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+   <link href="/js/common/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Custom styles for this template-->
     <link href="/css/common/sb-admin-2.min.css" rel="stylesheet">
 
@@ -26,6 +27,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
 <!--     <div style="width: 700px; height: 500px; margin: auto; margin-top: 15%; background-color: white; " > -->
 
+
+<style>
+
+.hasError{
+	color:red;
+	font-style: italic;
+}
+</style>
 
 <script type="text/javascript">
 
@@ -64,6 +73,19 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		const userPw =document.querySelector('#userPw'); 
 		userPw.value = '';
 	}
+	
+	//주소검색 api
+	function searchAddr(){
+		 new daum.Postcode({
+	        oncomplete: function(data) {
+				//도로명 주소
+	        	const roadAddr = data.roadAddress;
+	        	document.querySelector('#empAddr').value = roadAddr;
+	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.d
+	        }
+	    }).open();
+	}
 
 
 </script>
@@ -85,20 +107,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                 <h1 class="h4 text-white-900 mb-4" style="color: white;">회원가입</h1>
                             </div>
                             
-                            <form class="user" action="/user/registerUser">
+                            <form class="user" method="post" action="/user/registerUser" th:object="${userVO}">
                             
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user w-75" name="userId" id="userId" placeholder="아이디">
+                                        <input type="text" class="form-control form-control-user w-75" th:field="*{userId}"  placeholder="아이디">
+                                   	    <div class="hasError" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user w-75" name="empNum" id="empNum"  placeholder="사번">
+                                        <input type="text" class="form-control form-control-user w-75" th:field="*{empNum}"  placeholder="사번">
+                                    	<div class="hasError" th:if="${#fields.hasErrors('empNum')}" th:errors="*{empNum}"></div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" name="userPw" id="userPw" placeholder="비밀번호">
+                                        <input type="password" class="form-control form-control-user"  name="userPw" id="userPw" placeholder="비밀번호">
                                     </div>
 <!--                                     <div class="col-sm-6"> -->
 <!--                                         <input type="password" class="form-control form-control-user" id="repeatPassword" placeholder="비밀번호 확인"> -->
@@ -107,7 +131,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="empName" id="empName" placeholder="이름">
+                                        <input type="text" class="form-control form-control-user" th:field="*{empName}" name="empName" id="empName" placeholder="이름">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" name="empTell" id="empTell"  placeholder="전화번호 -없이 숫자만">
@@ -119,11 +143,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                 </div>
                                 
                                  <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="empAddr" name="empAddr" placeholder="주소">
+	                                 <div class="row">
+	                                 	<div class="col-sm-9 mb-3 mb-sm-0">
+		                                    <input type="text" class="form-control form-control-user" id="empAddr" name="empAddr" placeholder="주소">
+	                              		</div>
+	                                 	<div class="col-sm-3"> 
+	                                 		<button class="btn btn-info btn-user btn-block" type="button"  onclick="searchAddr()">변경</button> 
+	                                 	</div>     
+	                                 </div>
                                 </div>
                                 
                                  <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="empDetailAddr" name="empDetailAddr" placeholder="상세주소">
+	                                 <div class="row">
+	                                 	<div class="col-sm-9 mb-3 mb-sm-0"> 
+	                                   	    <input type="text" class="form-control form-control-user" id="empDetailAddr" name="empDetailAddr" placeholder="상세주소">
+	                                 	</div>
+	                                 </div>
                                 </div>
                                 
 <!--                                 <div class="form-group row"> -->

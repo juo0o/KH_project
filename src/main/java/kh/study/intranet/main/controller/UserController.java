@@ -1,11 +1,22 @@
 package kh.study.intranet.main.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.intranet.main.service.UserService;
 import kh.study.intranet.main.vo.UserVO;
@@ -32,19 +43,76 @@ public class UserController {
 	
 	//회원가입화면으로간다
 	@RequestMapping("/register")
-	public String register() {
+	public String register(UserVO userVO) {
 		
 		return "/main/register_page";
 	}
 		
+	
+	
+	// @Valid : post로 전달된 데이터가 검증 규칙을 따르는지 확인
+	// @BindingResult : 검증대상 객체와 검증 결과에 대한 정보를 담고 있는 객체
+	//					검증 객체 바로 다음 순서에 선언되어야 한다......
+	// Valid 쓸거면 사실상 두개는 묶여있다!?
+	
 	//회원가입
-	@RequestMapping("/registerUser")
-	public String registerUser(UserVO userVO) {
+	@PostMapping("/registerUser")
+	public String registerUser(@Valid UserVO userVO, BindingResult bindingResult) {
 		
+		
+		if(bindingResult.hasErrors()) {
+			System.out.println("error");
+			return "/main/register_page";
+		}
 		userService.registerUser(userVO);
 		
 		
 		
 		return "redirect:/user/login";
 	}
+	
+	
+	//내정보 조회
+	
+    //내정보 수정 페이지로 이동
+	
+	@RequestMapping("/updateUserForm")
+	public String updateUserForm(UserVO userVO, Model model, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		userVO.setUserId(user.getUsername());
+		
+		
+		model.addAttribute("userInfo", userService.selectUserInfo(userVO));
+		
+		return "/main/update_user_page";
+	}
+	
+	
+	//내정보 수정
+	@PostMapping("/updateUserInfo")
+	@ResponseBody
+	public UserVO updateUserInfo(UserVO userVO, String keyVariable,String valueVariable,Authentication authentication) {
+		
+		Map<String, String> variableMap = new HashMap<>();
+		
+		variableMap.put("keyVariable", keyVariable);
+		
+		User user = (User)authentication.getPrincipal();
+		userVO.setUserId(user.getUsername());
+		variableMap.put("userId", user.getUsername());
+		
+		if(keyVariable.equals("USER_PW")) {
+			variableMap.put("valueVariable", encoder.encode(valueVariable));
+		}else {
+			variableMap.put("valueVariable", valueVariable);
+		}
+		
+		//업데이트 쿼리 실행
+		userService.updateUserInfo(variableMap);
+		
+		return userService.selectUserInfo(userVO);
+		
+	}
+	
 }

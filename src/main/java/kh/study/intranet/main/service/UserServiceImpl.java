@@ -1,5 +1,7 @@
 package kh.study.intranet.main.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,5 +37,21 @@ public class UserServiceImpl implements UserService{
 		sqlSession.insert("userMapper.joinMember", userVO);
 		
 	}
+	//회원정보조회
+	@Override
+	public UserVO selectUserInfo(UserVO userVO) {
+		
+		return sqlSession.selectOne("userMapper.selectUserInfo",userVO );
+	}
+
+	//회원정보 수정쿼리
+	@Override
+	public void updateUserInfo(Map<String, String> variableMap) {
+		sqlSession.update("userMapper.updateUserInfo", variableMap);
+		
+	}
+	
+	
+	
 
 }

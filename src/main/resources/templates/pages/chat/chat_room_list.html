@@ -12,7 +12,6 @@ layout:decorate="~{layout/base_layout}">
                 <ul th:each="room : ${list}">
                     <li>
                     	<a th:href="|/chat/chat_room?roomName=${room.roomName}&roomId=${room.roomId}|">[[${room.roomName}]]</a>
-                    	<input type="text" th:value="${room.roomId}">
                     </li>
                     
                 </ul>

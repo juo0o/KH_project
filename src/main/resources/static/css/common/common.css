@@ -74,6 +74,11 @@ a {
   color: black;
 }
       
+      
+.hasError{
+	color:red;
+	font-style: italic;
+}
 
 
 

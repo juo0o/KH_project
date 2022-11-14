@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+	<div layout:fragment="content" align="center">
+	
+	
+		<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		<script type="text/javascript" th:src="@{/js/main/update_user_page.js}"></script>
+		
+
+
+		<style>
+			.memDiv{
+			margin-top: 30px;
+			border-bottom: 1px solid #EAEAEA;
+			
+			}
+		</style>
+	
+			
+
+
+		<div  id="userInfo" class="row" style="text-align: center; width: 80% ">
+		
+				<div class="col-4 memDiv">사진</div>      
+			    <div class="col-4 memDiv">&nbsp;</div>     
+			    <div class="col-4 memDiv">&nbsp;</div>    
+		
+				<div class="col-4 memDiv">아이디</div>      
+			    <div class="col-4 memDiv">[[${userInfo.userId}]]</div>     
+			    <div class="col-4 memDiv">&nbsp;</div>     
+			
+				<div class="col-4 memDiv">비밀번호</div>     
+				<div class="col-4 memDiv">&nbsp;</div>     
+				<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('password')"> </div>     
+			 
+				<div class="col-4 memDiv">이름</div>     
+				<div class="col-4 memDiv">[[${userInfo.empName}]]</div>     
+				<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('name')"> </div>     
+			
+				<div class="col-4 memDiv">주소</div>     
+				<div class="col-4 memDiv">[[${userInfo.empAddr}]]</div>     
+				<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('addr')"> </div>     
+			
+				<div class="col-4 memDiv">상세주소</div>     
+				<div class="col-4 memDiv">[[${userInfo.empDetailAddr}]]</div>     
+				<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('detailAddr')"> </div>     
+			
+				<div class="col-4 memDiv">이메일</div>     
+				<div class="col-4 memDiv">[[${userInfo.empEmail}]]</div>     
+				<div class="col-4 memDiv"> <input class="btn btn-outline-dark" type="button" value="변경" onclick="launchModal('email')">  </div>    
+				
+				<div class="col-4 memDiv">소속부서</div>     
+				<div class="col-4 memDiv">[[${userInfo.deptName}]]</div>   
+				<div class="col-4 memDiv">&nbsp;</div>     
+				
+				<div class="col-4 memDiv">직급</div>     
+				<div class="col-4 memDiv">[[${userInfo.empPosition}]]</div>     
+				<div class="col-4 memDiv">&nbsp;</div>      
+				
+				<div class="col-4 memDiv">입사일</div>     
+				<div class="col-4 memDiv">[[${userInfo.empHireDate}]]</div>     
+				<div class="col-4 memDiv">&nbsp;</div>      
+		</div>
+		
+		<!-- Modal -->
+			<div class="modal fade" id="launchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="launchModalLabel">Modal title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						
+						<div class="modal-body">
+							<form name="updateInfo" id="updateInfo" method="post">
+								
+								<span id="modal-text"></span>
+								<input name="keyVariable" class="form-control" type="hidden" >
+								<input name="valueVariable" id="valueVariable" onclick="" class="form-control" type="text" style="width: 200px; display: inline-block;">
+								
+							</form>
+					    </div>
+						
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-outline-danger" onclick="updateUserInfo()">변경</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+
+	
+	
+	
+	
+
+	</div>
+</html>
