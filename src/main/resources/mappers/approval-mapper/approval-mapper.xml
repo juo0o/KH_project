@@ -5,13 +5,18 @@
 <mapper namespace="approvalMapper">
 
 	<resultMap type="kh.study.intranet.approval.vo.ApprovalVO" id="approval">
-		<id column="APP_SEQ" 		property="appSeq"/>
+		<id column="APP_SEQ" 					property="appSeq"/>
 		<result column="APP_WRITE_DATE" 		property="appWriteDate"/>
-		<result column="FIRST_TIME_APPROVER" 		property="firstTimeApprover"/>
-		<result column="INTERMIDIATE_APPROVER" 		property="intermidiateApprover"/>
+		<result column="TITLE" 					property="title"/>
+		<result column="APP_CATE" 				property="appCate"/>
+		<result column="FIRST_TIME_APPROVER" 	property="firstTimeApprover"/>
+		<result column="INTERMIDIATE_APPROVER" 	property="intermidiateApprover"/>
 		<result column="FINAL_APPROVER" 		property="finalApprover"/>
 		<result column="APP_CHECK_STATUS" 		property="appCheckStatus"/>
 		<association property="empVO" resultMap="empMapper.emp"/>
+		<association property="vacationVO" resultMap="empMapper.emp"/>
+		<association property="nomalVO" resultMap="empMapper.emp"/>
+		<association property="accountingVO" resultMap="empMapper.emp"/>
 	</resultMap>
 	
 	
@@ -27,7 +32,6 @@
 	
 	<resultMap type="kh.study.intranet.approval.vo.NomalVO" id="nomal">
 		<id column="NOMAL_SEQ" 		property="nomalSeq"/>
-		<result column="NOMAL_TITLE" 		property="nomalTitle"/>
 		<result column="NOMAL_CONTENT" 		property="nomalContent"/>
 		<result column="APP_SEQ" 		property="appSeq"/>
 		<result column="USER_ID" 		property="userId"/>
@@ -52,9 +56,13 @@
 		INSERT INTO APPROVAL(
 			APP_SEQ
             ,USER_ID
+            ,TITLE
+            ,APP_CATE
 		) VALUES(
 			(SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) FROM APPROVAL)
             ,#{userId}
+            ,#{title}
+            ,#{appCate}
 		)
 	</insert>
 	
@@ -90,13 +98,11 @@
 		INSERT INTO APP_FORM_NOMAL (
 			APP_SEQ
 			, NOMAL_SEQ
-			, NOMAL_TITLE
 			, NOMAL_CONTENT
 			, USER_ID
 		)VALUES (
 			#{appSeq}
 			, #{nomalSeq}
-			, #{nomalTitle}
 			, #{nomalContent}
 			, #{userId}
 		)
@@ -115,7 +121,6 @@
 			, ACCOUNT
 			, BUSINESS_REGISTRATION_NUMBER
 			, AMOUNT
-			, ACCOUNTING_TITLE
 			, ACCOUNTING_CONTENT
 			, ACCOUNTING_CATEGORY
 			, APP_SEQ
@@ -128,13 +133,32 @@
 			, #{account}
 			, #{businessRegistrationNumber}
 			, #{amount}
-			, #{accountingTitle}
 			, #{accountingContent}
 			, #{accountingCategory}
 			, #{appSeq}
 			, #{userId}
 		)
 	</insert>
+	
+	<select id="selectApp" resultMap="approval">
+		SELECT APP_WRITE_DATE
+			, APP_SEQ
+			, TITLE
+			, APP_CATE
+		FROM APPROVAL
+	</select>
+	
+	<select id="selectBoxList" resultMap="approval">
+		SELECT APP_CATE
+		FROM APPROVAL
+	</select>
+	
+	<select id="selectAppCateBoard" resultMap="approval">
+		SELECT APP_WRITE_DATE
+			, APP_CATE
+			, TITLE
+		FROM APPROVAL 
+	</select>
 	
 	
 </mapper>
