@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.intranet.approval.service.ApprovalService;
 import kh.study.intranet.approval.service.NomalApprovalService;
 import kh.study.intranet.approval.service.VacationApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
-import kh.study.intranet.approval.vo.CommonFormVO;
 import kh.study.intranet.approval.vo.NomalVO;
 import kh.study.intranet.approval.vo.VacationVO;
-import kh.study.intranet.emp.vo.DeptVO;
 import kh.study.intranet.emp.vo.EmpVO;
 
 @Controller
@@ -38,11 +37,22 @@ public class ApprovalController {
 	
 	//결재리스트게시판
 	@GetMapping("/approvalBoard")
-	public String approvalBoard() {
+	public String approvalBoard(Model model, ApprovalVO approvalVO) {
 		
-	
+		System.out.println(approvalVO);
+		System.out.println(approvalVO);
+		System.out.println(approvalVO);
 		
+		model.addAttribute("appList", approvalService.selectApp(approvalVO));
+		model.addAttribute("appBoxList", approvalService.selectBoxList());
 		return "pages/approval/approval_board";
+	}
+	
+	@ResponseBody
+	@PostMapping("/selectAppCate")
+	public String selectAppCate() {
+		
+		return "";
 	}
 	
 	//---------결재양식작성페이지----------------------
@@ -134,4 +144,6 @@ public class ApprovalController {
 		
 		return "redirect:/approval/accountingReport";
 	}
+	
+	
 }

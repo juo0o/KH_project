@@ -1,5 +1,7 @@
 package kh.study.intranet.approval.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,18 @@ public class ApprovalServiceImpl implements ApprovalService{
 			sqlSession.insert("approvalMapper.insertAccounting",accountingVO);
 			
 		}
+	}
+
+
+	@Override
+	public List<ApprovalVO> selectApp(ApprovalVO approvalVO) {
+		return sqlSession.selectList("approvalMapper.selectApp",approvalVO);
+	}
+
+
+	@Override
+	public List<ApprovalVO> selectBoxList() {
+		return sqlSession.selectList("approvalMapper.selectBoxList");
 	}
 
 	

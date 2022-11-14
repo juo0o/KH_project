@@ -15,7 +15,6 @@ public class AccountingVO {
 	private String account;
 	private String businessRegistrationNumber;
 	private int amount;
-	private String accountingTitle;
 	private String accountingContent;
 	private String accountingCategory;
 	private String userId;

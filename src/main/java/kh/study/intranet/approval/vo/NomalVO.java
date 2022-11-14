@@ -9,7 +9,6 @@ import lombok.ToString;
 @ToString
 public class NomalVO {
 	private String nomalSeq;
-	private String nomalTitle;
 	private String nomalContent;
 	private String appSeq;
 	private String userId;
