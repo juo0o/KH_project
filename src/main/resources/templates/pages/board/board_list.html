@@ -15,19 +15,20 @@
 						<th>글제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
-						<th>조회수</th>
+						<!-- <th>조회수</th> -->
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="board: ${boardList}">
+					<th:block th:each="board : ${list}">
 						<tr>
 							<td th:text="${board.boardNum}"></td>
-							<td th:href="@{board/boardDetail(boardNum=${board.boardNum})}">
-								<span th:text="${board.boardTitle}"></span>
+							<td>
+								<a th:href="@{/board/boardDetail(boardNum=${board.boardNum})}">
+									<span th:text="${board.boardTitle}"></span>
+								</a>
 							</td>
-							<td th:text="${board.boardWriter}"></td>
-							<td th:text="${board.bordRegDate}"></td>
-							<td th:text="${board.boardReadCnt}"></td>
+							<td th:text="${board.userId}"></td>
+							<td th:text="${board.boardRegDate}"></td>
 						</tr>
 					</th:block>
 				</tbody>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="replyMapper">
+	<resultMap type="kh.study.intranet.board.vo.ReplyVO" id="reply">
+		<id column="REPLY_NUM"     property="replyNum"/>
+		<result column="REPLY_CONTENT"     property="replyContent"/>
+		<result column="BOARD_NUM"     property="boardNum"/>
+		<result column="USER_ID"     property="userId"/>
+		<result column="REPLY_REG_DATE"     property="replyRegDate"/>
+	</resultMap>
+	
+	<!--댓글 등록  -->
+	<insert id="insertReply">
+		INSERT INTO BOARD_REPLY(
+			REPLY_NUM
+			, REPLY_CONTENT
+			, BOARD_NUM
+			, USER_ID
+		) VALUES(
+			(SELECT NVL(MAX(REPLY_NUM),0)+1 FROM BOARD_REPLY)
+			, #{replyContent}
+			, #{boardNum}
+			, #{userId}
+		)
+	</insert>
+	
+	
+	<!-- 댓글 조회 -->
+	<select id="selectReply" resultMap="reply">
+		SELECT REPLY_NUM
+				, REPLY_CONTENT
+				, USER_ID
+				, REPLY_REG_DATE 
+		FROM BOARD_REPLY
+		WHERE BOARD_NUM = #{boardNum}
+		ORDER BY REPLY_NUM DESC
+	</select>
+	
+	
+	
+	
+</mapper>
+

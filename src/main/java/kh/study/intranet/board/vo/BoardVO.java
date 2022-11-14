@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class BoardVO  {
 	private String boardNum;
-	private String boardWriter;
+	private String userId;
 	private String boardTitle;
 	private String boardContent;
 	private String isSecret;
