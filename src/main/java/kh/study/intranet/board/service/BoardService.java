@@ -20,5 +20,8 @@ public interface BoardService {
 	
 	//게시글 삭제
 	void deleteBoard(BoardVO boardVO);
+	
+	//댓글수 업데이트
+	/* void updateReplyCount(int board_num); */
 
 }

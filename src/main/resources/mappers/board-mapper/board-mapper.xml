@@ -11,20 +11,34 @@
 		<result column="IS_SECRET"     property="isSecret"/>
 		<result column="SECRET_PW"     property="secretPw"/>
 		<result column="BOARD_READ_CNT"     property="boardReadCnt"/>
-		<result column="REPLY_NUM"     property="replyNum"/>
 		<result column="BOARD_REG_DATE"     property="boardRegDate"/>
+		<result column="REPLY_COUNT"     property="replyCount"/>
 	</resultMap>
 	
-	<!--게시글 조회  -->
+	<!--게시글 목록 조회  -->
 	<select id="selectBoardList" resultMap="board">
-		SELECT BOARD_NUM
+		SELECT DISTINCT BO.BOARD_NUM
 				, BOARD_TITLE
-				, USER_ID
+				, BO.USER_ID
 				, TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') AS BOARD_REG_DATE
-				<!-- , BOARD_READ_CNT -->
-		FROM BOARD
-		ORDER BY BOARD_NUM DESC
+				, (SELECT COUNT(REPLY_NUM)
+				   FROM BOARD_REPLY
+			 	   WHERE BOARD_NUM = BO.BOARD_NUM 
+                   ) AS REPLY_COUNT
+		FROM BOARD BO, BOARD_REPLY RE
+        WHERE BO.BOARD_NUM = RE.BOARD_NUM
+		ORDER BY BO.BOARD_NUM DESC 
 	</select>
+	
+	
+	<!-- 댓글수 업데이트 -->
+<!-- 	<update id="updateReplyCount">
+	UPDATE BOARD
+	SET REPLY_COUNT = (SELECT COUNT(REPLY_NUM)
+					   FROM BOARD_REPLY
+					   WHERE BOARD_NUM = #{boardNum})
+    WHERE BOARD_NUM = #{boardNum}
+	</update> -->
 	
 	<!-- 게시글 상세조회 -->
 	<select id="selectBoardDetail" resultMap="board">
@@ -46,16 +60,12 @@
 			, USER_ID
 			, BOARD_TITLE
 			, BOARD_CONTENT
-		<!-- 	, IS_SECRET
-			, SECRET_PW -->
 
 		) VALUES (
 			(SELECT NVL(MAX(BOARD_NUM),0)+1 FROM BOARD)
 			, #{userId}
 			, #{boardTitle}
 			, #{boardContent}
-		<!-- 	, #{isSecret}
-			, #{secretPw} -->
 		)
 	</insert>
 	
@@ -72,6 +82,7 @@
 	DELETE FROM BOARD WHERE BOARD_NUM = #{boardNum}
 	</delete>
 	
+
 	
 	
 	

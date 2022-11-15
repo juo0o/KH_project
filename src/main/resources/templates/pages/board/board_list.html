@@ -9,6 +9,13 @@
 	<div class="row">
 		<div class="col-12">
 			<table class="table table-bordered">
+			
+				<colgroup>
+					<col width="10%">
+					<col width="50%">
+					<col width="20%">
+					<col width="20%">
+				</colgroup>
 				<thead>
 					<tr>
 						<th>글번호</th>
@@ -24,7 +31,18 @@
 							<td th:text="${board.boardNum}"></td>
 							<td>
 								<a th:href="@{/board/boardDetail(boardNum=${board.boardNum})}">
-									<span th:text="${board.boardTitle}"></span>
+									<span th:text="${board.boardTitle}">
+									</span>
+									&nbsp; 
+									
+										<th:block th:if="${board.replyCount ne 0}">
+											[
+											<span th:text="${board.replyCount}"></span>
+											]
+										</th:block>
+										<th:block th:unless="${board.replyCount ne 0}">
+											<!-- 댓글없을시 아무것도 표시X -->
+										</th:block>
 								</a>
 							</td>
 							<td th:text="${board.userId}"></td>

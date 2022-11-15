@@ -4,68 +4,110 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{layout/base_layout}">
 
-<div layout:fragment="content" class="text-center">
-	<div class="col-12">
-		<div class="row" >
-			<div class="top">
-				<div>
+<div layout:fragment="content">
+	<!-- 모든 내용이 들어오는 영역 -->
+	<div class="row justify-content-center">
+		<div class="col-8">
+			<!-- 게시글 상세 정보 영역 -->
+			<div class="row">
+				<div class="col-2 mb-3 mt-3">
+					글 제목
+				</div>
+				<div class="col-10 mb-3 mt-3">
 					<span th:text="${detail.boardTitle}"></span>
 				</div>
-				<div>
-					<span style="display: inline-block;" th:text="${detail.userId}"></span>
+				<div class="col-2 mb-3 mt-3">
+					작성자
 				</div>
-				<div>
+				<div class="col-10 mb-3 mt-3">
+					<span th:text="${detail.userId}"></span>
+				</div>
+				<div class="col-2 mb-3 mt-3">
+					등록일
+				</div>
+				<div class="col-10 mb-3 mt-3">
 					<span th:text="${detail.boardRegDate}"></span>
 				</div>
+				<!-- <div class="col-2 mb-3 mt-3">
+					댓글수
+				</div>
+				<div class="col-2 mb-3 mt-3">
+					<span th:text="${detail.boardRegDate}"></span>
+				</div> -->
+				<div class="col-2 mb-3 mt-3">
+					내 용
+				</div>
+				<div class="col-10 mb-3 mt-3">
+					<span th:text="${detail.boardContent}"></span>
+				</div>
 			</div>
-			<div class="content" style="padding: 10">
-				<span style="width: 100" th:text="${detail.boardContent}"></span>
+
+			<!-- 댓글 등록 영역 -->
+			<div class="row mb-3 mt-3">
+				<div class="col">
+					<form th:action="@{/board/regReply}" method="post" th:object="${replyVO}">
+						<input type="hidden" name="boardNum" th:value="${detail.boardNum}">
+						<div class="row">
+							<div class="col-10">
+								<textarea class="form-control" th:field="*{replyContent}" rows="3" style="resize: none;"></textarea>
+							</div>
+							<div class="col-2">
+								<button type="submit" class="btn btn-primary replyWriteBtn" style="width: 100%; height: 100%;">댓글등록</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
-		<div>
-			<div class="row"><!--댓글목록  -->
-				<table class="table table-bordered">
-					<th:block th:each="reply :${reply}">
-						<tr>
-							<td>작성자</td>
-							<td th:text="${reply.userId}"></td>
-						</tr>
-						<tr>
-							<td>작성일</td>
-							<td th:text="${reply.replyRegDate}"></td>
-						</tr>
-						<tr>
-							<td th:text="${reply.replyContent}"></td>
-						</tr>
-					</th:block>
-				</table>
-			</div>
-			<div class="row">
-				<form th:action="@{/board/regReply}" method="post" th:object="${replyVO}">
-					<div>
-						<label for="writer">댓글작성자</label>
-							<div th:text="${#authentication.name}"></div>
-						<label for="content">댓글 내용</label>
-						<input type="text" th:field="*{replyContent}">
+			
+			<!-- 댓글 목록 영역 -->
+			<div class="row mb-3 mt-3">
+				<th:block th:each="reply :${reply}">
+					<div class="col">
+						
 					</div>
-					<div>
-						<button type="submit" class="replyWriteBtn">등록</button>
-					</div>
-				</form>
+				</th:block>
 			</div>
-		</div>	
-		<div class="row justify-content-center">
-			<button class="btn btn_primary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
-			뒤로가기
-			</button>
-			<button class="btn btn_primary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
-			글수정
-			</button>
-			<button class="btn btn_primary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
-			글삭제
-			</button> 
+			
+			
+			
+			<div style="height: 30px;"></div>
+			<!-- 버튼 영역 -->
+			<div class="row text-end mb-3 mt-3">
+				<div class="col-12">
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
+						뒤로가기
+					</button>
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
+						글수정
+					</button>
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
+						글삭제
+					</button> 
+				</div>
+			</div>
 		</div>
 	</div>
+	<div>
+		<div class="row"><!--댓글목록  -->
+			<table class="table table-bordered">
+				<th:block th:each="reply :${reply}">
+					<tr>
+						<td>작성자</td>
+						<td th:text="${reply.userId}"></td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td th:text="${reply.replyRegDate}"></td>
+					</tr>
+					<tr>
+						<td th:text="${reply.replyContent}"></td>
+					</tr>
+				</th:block>
+			</table>
+		</div>
+		
+	</div>	
+
 	
 	<script type="text/javascript" th:src="@{/js/board/reply.js}"></script>
 </div>

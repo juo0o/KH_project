@@ -15,7 +15,7 @@ public class BoardVO  {
 	private String isSecret;
 	private String secretPw;
 	private int boardReadCnt;
-	private String replyNum;
 	private String boardRegDate;
+	private int replyCount;
 	
 }

@@ -36,10 +36,25 @@ public class BoardController {
 	//게시글 목록 조회
 	@GetMapping("/boardList")
 	public String boardList(BoardVO boardVO, Model model) {
+		
+		
+		
 		List<BoardVO> list = boardService.boardList(boardVO);
+		
+//		for(BoardVO e : list) {
+//			System.out.println(e);
+//			System.out.println(e);
+//			System.out.println(e);
+//		}
 		model.addAttribute("list",list);
+		
+		
 		return "pages/board/board_list";
 	}
+	//댓글수 업데이트
+	//model.addAttribute("replyCount",boardService.updateReplyCount(boardNum)) ;
+	
+	//boardService.updateReplyCount(boardNum);
 	
 	//상세 게시글 조회
 	@GetMapping("/boardDetail")
@@ -48,17 +63,31 @@ public class BoardController {
 		model.addAttribute("detail", boardService.boardDetail(boardNum));
 		
 		//댓글 조회
-//		System.out.println(replyService.replyList(replyVO));
+		
 		model.addAttribute("reply", replyService.replyList(boardNum));
+
+		
+		
 		return "pages/board/board_detail";
+		
 	}
 	
-	//댓글 작성
+	//댓글 등록
 	@PostMapping("/regReply")
-	public String regReply(ReplyVO replyVO) {
+	public String regReply(ReplyVO replyVO, Authentication authentication) {
+		//userId
+		User user = (User)authentication.getPrincipal();
+		
+		replyVO.setUserId(user.getUsername());
+		
+		
+		
 		replyService.regReply(replyVO);
-		return"redirect:/board/boardDetail";
+		return"redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
 	}
+	
+	
+	
 	
 
 	
@@ -77,12 +106,7 @@ public class BoardController {
 		//아이디 호출
 		User user = (User)authentication.getPrincipal();
 		boardVO.setUserId(user.getUsername());
-		
-//		System.out.println(user.getUsername());
-//		System.out.println(user.getPassword());
-//		System.out.println(user.getAuthorities());
-//		
-//		System.out.println("board :  " + boardVO);
+
 		
 		//게시글 등록메소드 실행
 		boardService.regBoard(boardVO);
@@ -114,7 +138,7 @@ public class BoardController {
 	
 //---------------------------------------
 	
-
+	
 	
 	
 	
