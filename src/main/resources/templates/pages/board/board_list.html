@@ -36,12 +36,12 @@
 									&nbsp; 
 									
 										<th:block th:if="${board.replyCount ne 0}">
-											[
-											<span th:text="${board.replyCount}"></span>
-											]
+											<span style="color: #f56642;">[</span> 
+											<span style="color: #f56642;" th:text="${board.replyCount}"></span>
+											<span style="color: #f56642;">]</span> 
 										</th:block>
-										<th:block th:unless="${board.replyCount ne 0}">
-											<!-- 댓글없을시 아무것도 표시X -->
+										<th:block th:unless="${board.replyCount ne 0}" >
+											
 										</th:block>
 								</a>
 							</td>

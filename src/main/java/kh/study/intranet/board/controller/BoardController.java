@@ -13,14 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.intranet.board.service.BoardService;
 import kh.study.intranet.board.service.BoardServiceImpl;
 import kh.study.intranet.board.service.ReplyService;
 import kh.study.intranet.board.vo.BoardVO;
 import kh.study.intranet.board.vo.ReplyVO;
-import kh.study.intranet.main.vo.UserVO;
 
 @Controller
 @RequestMapping("/board")
