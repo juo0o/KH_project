@@ -1,6 +1,7 @@
 package kh.study.intranet.approval.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -52,10 +53,15 @@ public class ApprovalController {
 	//품의서별 게시판 출력
 	@ResponseBody
 	@PostMapping("/selectAppCate")
-	public String selectAppCate() {
+	public List<ApprovalVO> selectAppCate(ApprovalVO approvalVO) {
 		
-		
-		return "";
+		System.out.println(approvalVO.getAppCate());
+		System.out.println(approvalVO.getAppCate());
+		System.out.println(approvalVO.getAppCate());
+		System.out.println(approvalVO.getAppCate());
+		System.out.println(approvalVO.getAppCate());
+	List<ApprovalVO>appCateBoard = approvalService.selectAppCateBoard(approvalVO);
+		return appCateBoard;
 	}
 	
 	//---------결재양식작성페이지----------------------------------------------------------------

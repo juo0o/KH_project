@@ -14,9 +14,9 @@
 		<result column="FINAL_APPROVER" 		property="finalApprover"/>
 		<result column="APP_CHECK_STATUS" 		property="appCheckStatus"/>
 		<association property="empVO" resultMap="empMapper.emp"/>
-		<association property="vacationVO" resultMap="empMapper.emp"/>
-		<association property="nomalVO" resultMap="empMapper.emp"/>
-		<association property="accountingVO" resultMap="empMapper.emp"/>
+		<association property="vacationVO" resultMap="vacation"/>
+		<association property="nomalVO" resultMap="nomal"/>
+		<association property="accountingVO" resultMap="accounting"/>
 	</resultMap>
 	
 	
@@ -35,6 +35,20 @@
 		<result column="NOMAL_CONTENT" 		property="nomalContent"/>
 		<result column="APP_SEQ" 		property="appSeq"/>
 		<result column="USER_ID" 		property="userId"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.intranet.approval.vo.AccountingVO" id="accounting">
+		<id column="ACCOUNTING_SEQ" 		property="accountingSeq"/>
+		<result column="PAYMENT_REQUEST_DATE" 		property="paymentRequestDate"/>
+		<result column="ACCOUNTING_CLIENT" 		property="accountingClient"/>
+		<result column="ACCOUNT_NUMBER" 		property="accountNumber"/>
+		<result column="ACCOUNT" 		property="account"/>
+		<result column="BUSINESS_REGISTRATION_NUMBER" 		property="businessRegistrationNumber"/>
+		<result column="AMOUNT" 		property="amount"/>
+		<result column="ACCOUNTING_CONTENT" 		property="accountingContent"/>
+		<result column="ACCOUNTING_CATEGORY" 		property="accountingCategory"/>
+		<result column="USER_ID" 		property="userId"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
 	</resultMap>
 	
 	<select id="getAppSeq" resultMap="approval">
@@ -156,7 +170,7 @@
 	</select>
 	
 	<select id="selectBoxList" resultMap="approval">
-		SELECT APP_CATE
+		SELECT DISTINCT APP_CATE
 		FROM APPROVAL
 	</select>
 	
@@ -173,8 +187,9 @@
 	
 	<select id="selectAppCateBoard" resultMap="approval">
 		<choose>
-			<when test='appCate == "휴가신청서"'>
+			<when test='appCate.equals("연차신청서")'>
 				SELECT VACATION_SEQ
+					, APP_CATE
 					, APP_WRITE_DATE
 			        , TITLE
 		            , APPROVAL.USER_ID
@@ -183,8 +198,9 @@
 		        FROM APPROVAL , APP_FORM_VACATION VACATION
 		        WHERE APPROVAL.APP_SEQ = VACATION.APP_SEQ
 			</when>
-			<when test='appCate == "일반품의서"'>
+			<when test='appCate.equals("일반품의서")'>
 				SELECT NOMAL_SEQ
+					, APP_CATE
 					, APP_WRITE_DATE
 			        , TITLE
 		            , APPROVAL.USER_ID
@@ -193,8 +209,9 @@
 		        FROM APPROVAL , APP_FORM_NOMAL NOMAL
 		        WHERE APPROVAL.APP_SEQ = NOMAL.APP_SEQ
 			</when>
-			<when test='appCate == "회계품의서"'>
+			<when test='appCate.equals("회계품의서")'>
 				SELECT ACCOUNTING_SEQ
+					, APP_CATE
 					, APP_WRITE_DATE
 			        , TITLE
 		            , APPROVAL.USER_ID

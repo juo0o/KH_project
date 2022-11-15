@@ -68,5 +68,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return sqlSession.selectList("approvalMapper.selectBoxList");
 	}
 
+
+	@Override
+	public List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO) {
+		return sqlSession.selectList("approvalMapper.selectAppCateBoard",approvalVO);
+	}
+
 	
 }

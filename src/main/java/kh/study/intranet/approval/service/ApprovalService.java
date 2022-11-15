@@ -19,6 +19,7 @@ public interface ApprovalService {
 	List<ApprovalVO> selectApp(ApprovalVO approvalVO);
 	List<ApprovalVO> selectBoxList();
 	
+	List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO);
 	
 	
 	
