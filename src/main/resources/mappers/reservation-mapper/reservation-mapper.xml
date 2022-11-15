@@ -61,10 +61,10 @@
 		
 	<select id="selectAvailableReservation" resultMap="reservation">	
 	SELECT RESERVE_TIME 
-		FROM RESERVATION_MEETING_ROOM
-		WHERE ROOM_CODE = #{roomCode}
-		AND RESERVE_DATE = #{reserveDate}
-		AND RESERVE_AVAILABLE = 'Y'
+			FROM RESERVATION_MEETING_ROOM
+			WHERE ROOM_CODE = #{roomCode}
+			AND RESERVE_DATE = #{reserveDate}
+			AND RESERVE_AVAILABLE = 'Y'
 	
 	
 	</select>		
@@ -82,6 +82,7 @@
 			,RESERVE_TIME
 			,RESERVE_AVAILABLE
 			
+			
 	
 	) 
 	VALUES (
@@ -90,24 +91,30 @@
 			,#{reserveTime}
 			,'N'
 			
-	)
 			
+	)
+	</insert>
+			
+	<!-- <insert id="">
+
 	
 	
 	</insert>
+	 -->
 	
+	<!--업데이트 초안  -->
 	
-	<update id="reserveUpdate">
+	<!-- <update id="reserveUpdate">
 	UPDATE RESERVATION_MEETING_ROOM
 	SET
-	RESERVE_DATE = #{reserveDate}
+	RESERVE_TIME = #{reserveTime}
 	WHERE
 	RESERVE_CODE = #{reserveCode}
 	
+	</update> -->
 	
 	
 	
-	</update>
 	
 	
 	

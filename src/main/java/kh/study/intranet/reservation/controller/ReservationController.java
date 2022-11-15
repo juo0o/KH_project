@@ -95,7 +95,7 @@ public class ReservationController {
 		
 		List<ReservationVO> list = reservationService.selectAvailableReservation(reservationVO);
 		
-		System.out.println(list);
+		//System.out.println(list);
 		//User user = (User)authentication.getPrincipal();
 		
 		return list;
@@ -122,12 +122,13 @@ public class ReservationController {
 		//reservationVO.setReserveDate();
 		
 		
-		 System.out.println("!!!!!!!!");
+		 //System.out.println("!!!!!!!!");
 		 
 		 reservationService.regReservation(reservationVO);
+		 //reservationService.reserveUpdate(reservationVO); 
+		
+		 //System.out.println(reservationVO);
 		 
-		 System.out.println(reservationVO);
-		 //System.out.println("?????????");
 		
 		
 		

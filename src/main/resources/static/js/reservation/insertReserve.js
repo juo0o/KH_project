@@ -71,24 +71,27 @@
  
 //등록 눌렀을시 실행되는 함수      
 function goReserve(){
-	
+		
+		
+		//alert(selectedTag);
 		//alert('aaa');
 		//var formTag = $("#regReserve").serialize();
 		//alert(formTag);
-		var roomCode = document.querySelector('#meetingRoom').value;
+		
 		//alert(roomCode);
-		var reserveTime = document.querySelector('#reserveTime').value;
+		
 		//alert(reserveTime);
 	
 		
 		$.ajax({
                url: '/reservation/regReservation', //요청경로
                type: 'post',
-               data: {'roomCode':roomCode ,'reserveTime':reserveTime}, //필요한 데이터
+               data: {'roomCode':document.querySelector('#meetingRoom').value 
+               ,'reserveTime':document.querySelector('#reserveTime').value}, //필요한 데이터
                //async: false,
                success: function(result) {
            			alert('등록완료');
-           		
+           			
            		
            			
            			
