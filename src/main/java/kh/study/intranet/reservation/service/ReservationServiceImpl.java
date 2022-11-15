@@ -22,8 +22,8 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public void regReservation(MeetingRoomVO meetingRoomVO) {
-		sqlSession.insert("reservationMapper.regReservation",meetingRoomVO);
+	public void regReservation(ReservationVO reservationVO) {
+		sqlSession.insert("reservationMapper.regReservation",reservationVO);
 		
 	}
 

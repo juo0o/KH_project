@@ -72,31 +72,30 @@
 	
 	<!-- 등록쿼리 초안  -->
 	
-	<!-- <insert id="regReservation">
+	<insert id="regReservation">
+	
+	
+	
 	INSERT INTO RESERVATION_MEETING_ROOM (
 			RESERVE_CODE
 			,ROOM_CODE
-			,RESERVE_DATE
 			,RESERVE_TIME
 			,RESERVE_AVAILABLE
 			
 	
-	
 	) 
 	VALUES (
-			#{reserveCode}
+			(SELECT 'RESERVE_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RESERVE_CODE,9))),0) +1,3,0) FROM RESERVATION_MEETING_ROOM)
 			,#{roomCode}
-			,#{reserveDate}
 			,#{reserveTime}
-			,#{reserveAvailable}
+			,'N'
 			
-	
 	)
-	
+			
 	
 	
 	</insert>
-	 -->
+	
 	
 	<update id="reserveUpdate">
 	UPDATE RESERVATION_MEETING_ROOM

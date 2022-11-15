@@ -10,7 +10,7 @@ public interface ReservationService {
 	//회의실 조회
 	List<MeetingRoomVO> selectMeetingRoom();
 	
-	void regReservation(MeetingRoomVO meetingRoomVO);
+	void regReservation(ReservationVO reservationVO);
 	
 	//날짜정보
 	List<ReservationVO> selectReservation(String reserveDate);

@@ -11,16 +11,6 @@
     
     <div layout:fragment="content">
     
- 
-    
-    
-  
-    
-    
-    
-    
-    
-    
     
     <div class="row">
     	
@@ -57,14 +47,6 @@
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
               },
          	
-     
-              
-              
-             
-              
-              
-            
-      
           //initialView: 'dayGridMonth',
           
           height: '550px',
@@ -82,9 +64,6 @@
               
               
       }
-          
-             
-          
           
         });
         calendar.render();
@@ -107,13 +86,13 @@
         </div>
         
         <!-- Modal body -->
-        <form name="regReserve" id="regReserve">
+        <!-- <form name="regReserve" id="regReserve"> -->
         
 	        <div class="modal-body">
 	          <div class="form-group">
 					
 				<label for="">회의실</label>
-				<select class="form-select" id="meetingRoom"  name="roomCode" onchange="selectChange(this);">
+				<select class="form-select" id="meetingRoom"  name="roomCode" onchange="selectChange();">
 					<option selected>회의실을 선택해주세요</option>
 					<option th:each="meeting:${meetingRoom}" th:text="${meeting.roomName}" th:value="${meeting.roomCode}"></option>
 					
@@ -127,7 +106,7 @@
 	          <div class="form-group">
 				<label for="">예약 가능 시간</label>
 				<select class="form-select" id="reserveTime"  name="reserveTime">
-				
+					
 					<option value="">회의실을 선택해주세요</option>
 					
 				</select>
@@ -160,7 +139,7 @@
 								data-bs-dismiss="modal">취소</button>
 			  <!-- <button type="button" class="btn btn-warning float-right insertBtn" onclick="">취소</button> -->
 	        </div>
-        </form>
+       <!-- </form>  -->
       </div>
     </div>
   </div>

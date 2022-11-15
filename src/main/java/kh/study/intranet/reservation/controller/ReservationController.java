@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,6 +95,7 @@ public class ReservationController {
 		
 		List<ReservationVO> list = reservationService.selectAvailableReservation(reservationVO);
 		
+		System.out.println(list);
 		//User user = (User)authentication.getPrincipal();
 		
 		return list;
@@ -117,7 +119,15 @@ public class ReservationController {
 		User user = (User)authentication.getPrincipal();
 		
 		reservationVO.setReserveUserId(user.getUsername());
+		//reservationVO.setReserveDate();
 		
+		
+		 System.out.println("!!!!!!!!");
+		 
+		 reservationService.regReservation(reservationVO);
+		 
+		 System.out.println(reservationVO);
+		 //System.out.println("?????????");
 		
 		
 		

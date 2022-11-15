@@ -70,33 +70,28 @@
       }
  
 //등록 눌렀을시 실행되는 함수      
-function goReserve(formTag){
+function goReserve(){
 	
 		//alert('aaa');
+		//var formTag = $("#regReserve").serialize();
 		//alert(formTag);
-		//var formTag = $("form[name=regReserve]").serialize();
-		
-		
+		var roomCode = document.querySelector('#meetingRoom').value;
+		//alert(roomCode);
+		var reserveTime = document.querySelector('#reserveTime').value;
+		//alert(reserveTime);
 	
-	$.ajax({
+		
+		$.ajax({
                url: '/reservation/regReservation', //요청경로
                type: 'post',
-               data: formTag, //필요한 데이터
-               
+               data: {'roomCode':roomCode ,'reserveTime':reserveTime}, //필요한 데이터
+               //async: false,
                success: function(result) {
-           			
-           			
-           			
-           			
-           			alert('등록완료')
-            
+           			alert('등록완료');
            		
            		
-            
-               			
-               			
-               			
-               
+           			
+           			
                },
                error: function() {
                   alert('ajax 실패');
@@ -105,12 +100,19 @@ function goReserve(formTag){
                
                
             });
-	
                $('#createEventModal').modal('hide');
-			
-	
-	
+           			
 }
+           			
+           			
+            
+           		
+           		
+            
+               			
+               			
+               			
+               
 
 //회의실 선택시 변경되는 함수
 function selectChange(info){
@@ -144,6 +146,7 @@ function selectChange(info){
            		    let str = '';
            		    
            		    for(let reserve of result){
+						
 						str += `<option th:value="${reserve.reserveTime}">${reserve.reserveTime}</option>`;
 					}
            			
