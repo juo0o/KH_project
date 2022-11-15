@@ -27,47 +27,6 @@
     
     <script>
     
-    	var sysdate = 0;
-		
-    
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        
-        
-        
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-        	
-            
-        	locale : 'ko',
-        	
-        	headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-              },
-         	
-          //initialView: 'dayGridMonth',
-          
-          height: '550px',
-          
-          expandRows: true ,
-          
-          dateClick: function (info) {
-              
-//          //모달창띄운다
-            $('#createEventModal').modal('show');
-           
-            showRoomInfoAjax(info.dateStr);
-    
-            sysdate = info.dateStr;
-              
-              
-      }
-          
-        });
-        calendar.render();
-      });
 	
       
     </script>
@@ -134,7 +93,7 @@
 	       <div class="modal-footer">
 			 
 			  
-			  <button type="button" class="btn btn-dark  float-right deleteBtn" onclick="goReserve(this)">등록</button>
+			  <button type="button" class="btn btn-dark  float-right deleteBtn" onclick="goReserve()">등록</button>
 			  <button type="button" class="btn btn-warning float-right insertBtn"
 								data-bs-dismiss="modal">취소</button>
 			  <!-- <button type="button" class="btn btn-warning float-right insertBtn" onclick="">취소</button> -->

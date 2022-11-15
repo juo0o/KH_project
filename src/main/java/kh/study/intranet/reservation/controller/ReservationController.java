@@ -48,6 +48,7 @@ public class ReservationController {
 		
 		
 		//model.addAttribute("reservation", reservationService.selectReservationInfo());
+		//model.addAttribute("reserve", reservationService.selectReserve());
 		
 		
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
@@ -124,23 +125,21 @@ public class ReservationController {
 		
 		 //System.out.println("!!!!!!!!");
 		 
-		 reservationService.regReservation(reservationVO);
-		 //reservationService.reserveUpdate(reservationVO); 
+		 //reservationService.regReservation(reservationVO);
+		 reservationService.reserveUpdate(reservationVO); 
 		
-		 //System.out.println(reservationVO);
-		 
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		 System.out.println(reservationVO);
 		
 		
 	}
+	
+//	회의실 예약조회 눌렀을시
+//	@GetMapping("/selectReserve")
+//	public String selectReserve() {
+//		
+//		
+//		return "";
+//	}
 	
 	
 }

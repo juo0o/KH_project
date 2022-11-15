@@ -22,7 +22,8 @@ public interface ReservationService {
 	List<ReservationVO> selectAvailableReservation(ReservationVO reservationVO);
 	
 	
-	
+	//예약정보
+	//List<ReservationVO> selectReserve();
 	
 	
 	

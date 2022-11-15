@@ -45,6 +45,8 @@ public class ReservationServiceImpl implements ReservationService{
 		return sqlSession.selectList("reservationMapper.selectAvailableReservation",reservationVO);
 	}
 
+	
+
 
 
 	

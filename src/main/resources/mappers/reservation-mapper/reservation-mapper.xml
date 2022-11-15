@@ -49,10 +49,21 @@
 		WHERE M.ROOM_CODE = R.ROOM_CODE
 		AND RESERVE_DATE = #{reserveDate}
 		
+		
 	</select>	
 		
+	<!-- <select id="selectReserve" resultMap="reservation">
+	SELECT RESERVE_CODE
+		 , RESERVE_USER_ID
+		 , ROOM_CODE
+		 , RESERVE_DATE
+		 , RESERVE_TIME
+		 , RESERVE_AVAILABLE
+		 FROM RESERVATION_MEETING_ROOM
 	
 	
+	</select>
+	 -->
 	
 	
 		
@@ -72,7 +83,7 @@
 	
 	<!-- 등록쿼리 초안  -->
 	
-	<insert id="regReservation">
+	<!-- <insert id="regReservation">
 	
 	
 	
@@ -93,25 +104,25 @@
 			
 			
 	)
-	</insert>
+	</insert> -->
 			
-	<!-- <insert id="">
-
 	
-	
-	</insert>
-	 -->
 	
 	<!--업데이트 초안  -->
 	
-	<!-- <update id="reserveUpdate">
+	<update id="reserveUpdate">
 	UPDATE RESERVATION_MEETING_ROOM
 	SET
-	RESERVE_TIME = #{reserveTime}
+	RESERVE_AVAILABLE = 'N'
 	WHERE
-	RESERVE_CODE = #{reserveCode}
+	ROOM_CODE = #{roomCode}
+	AND
+	RESERVE_DATE = #{reserveDate}
+	AND RESERVE_TIME = #{reserveTime}
 	
-	</update> -->
+	<!-- AND RESERVE_CODE = #{reserveCode} -->
+	
+	</update>
 	
 	
 	
