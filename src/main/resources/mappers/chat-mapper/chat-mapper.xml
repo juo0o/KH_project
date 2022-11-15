@@ -19,6 +19,7 @@
 		<result column="USER_ID" property="userId"/>
 		<result column="MESSAGE" property="message"/>
 		<result column="ROOM_ID" property="roomId"/>
+		<result column="MESSAGE_TIME" property="messageTime"/>
 	</resultMap>
 		
 	
@@ -56,7 +57,12 @@
 	
 	<!-- 채팅방 메세지 조회 -->
 	<select id="selectMessageList" resultMap="chatMessage">
-	SELECT * FROM CHAT_MESSAGE
+	SELECT MESSAGE_NUM
+		   , USER_ID
+		   , MESSAGE
+		   , ROOM_ID
+		   , TO_CHAR(MESSAGE_TIME,'HH24:MM:DD') AS MESSAGE_TIME
+	FROM CHAT_MESSAGE
 	WHERE ROOM_ID = #{roomId}
 	ORDER BY MESSAGE_NUM
 	

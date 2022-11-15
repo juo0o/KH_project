@@ -7,56 +7,120 @@ layout:decorate="~{layout/base_layout}">
 
 	<div layout:fragment="content">
 	
+	<div class="container-fluid">
 	
-	    <div align="center" class="col-12 center" >
-	                <h1>[[${roomName}]]</h1>
-	    </div>
-	    
-		<div class="container" style="border: 1px solid black; height: 600px;" id="scroll" >
+		<div class="row">
 		
-	          
-            
-          	    <!-- db에서 조회한 메세지 영역 -->
-				
-				<th:block th:each="message : ${messageList}">
-				
-        	    <!-- 내가보낸영역 -->
-	          	    <th:block th:if="${message.userId == #authentication.name}">
-		                <div align="right" id="msgAreaSelect" class="col-12 align-self-start">
-			                	  <div class='col-3' align="left">
-				                      <div class='alert alert-warning' style="word-break:break-all;" >
-				                           [[${message.userId}]]   :   [[${message.message}]]
-				                      </div>
-				                  </div>
+			<div class="col-4">
+			
+			
+			<div align="center" class="col-12 center"  style="height: 75px;">
+	                <h1>채팅방 목록</h1>
+			    </div>
+			
+				<div>
+					<table class="table table-striped" style=" width: 350px;" >
+					
+					<colgroup>
+						<col width="10%">
+						<col width="30%">
+						<col width="30%">
+						<col width="30%">
+					</colgroup>
+						<tr>
+							<td>NO</td>
+							<td>채팅방이름</td>
+							<td>접속자수</td>
+							<td>최근채팅시간</td>
+						</tr>
+						
+						<tr th:each="room : ${list}">
+							<td th:text="${roomStat.count}"></td>
+							<td><a th:href="|/chat/chat_room?roomName=${room.roomName}&roomId=${room.roomId}|">[[${room.roomName}]]</a></td>
+							<td>...</td>
+							<td>...</td>
+						</tr>
+						
+						
+					
+					</table>
+					
+				</div>
+			
+			
+			</div>
+			
+			<div align="center" class="col-8" th:if="${roomId == null}">채팅방을선택하세요</div>
+			
+			
+			<div class="col-8" th:unless="${roomId == null}">
+			
+				 <div align="center" class="col-12 center"  style="height: 75px;">
+	                <h1>[[${roomName}]]</h1>
+			    </div>
+			    
+				<div class="container" style="border: 1px solid black; height: 600px;" id="scroll" >
+		            
+		          	    <!-- db에서 조회한 메세지 영역 -->
+						
+						<th:block th:each="message : ${messageList}">
+						
+		        	    <!-- 내가보낸영역 -->
+			          	    <th:block th:if="${message.userId == #authentication.name}">
+				                <div align="right" id="msgAreaSelect" class="col-12 align-self-start">
+				                
+						                  <div style="display: inline-block;">
+										      <span th:text="${message.messageTime}"></span>						                  
+						                  </div>
+					                	  
+					                	  <div class='col-3' align="left" style="display: inline-block;">
+						                      <div class='alert alert-warning' style="word-break:break-all;" >
+						                           [[${message.userId}]]   :   [[${message.message}]]
+						                      </div>
+						                  </div>
+						                  
+				                </div>
+			                </th:block>
+			                
+			                 <!-- 다른사람이 보낸영역 -->
+			                <th:block th:unless="${message.userId == #authentication.name}">
+			                	 <div align='left' id="msgAreaSelect" class="col-12 align-self-start">
+				                	  <div class='col-3' style="display: inline-block;" >
+					                      <div class='alert alert-secondary' style="word-break:break-all;" >
+					                           [[${message.userId}]]   :   [[${message.message}]]
+					                      </div>
+					                  </div>
+					                  
+					                  <div style="display: inline-block;">
+										      <span th:text="${message.messageTime}"></span>						                  
+						              </div>
+					             </div>
+			                </th:block>
+						</th:block>
+		                
+		                <!-- 입력메세지영역 -->
+		                <div align='right' id="msgArea" class="col-12 align-self-start"  style="word-break:break-all; text-align: left;"></div>
+		     
+		                
+		                <div class="col-12">
+		                    <div class="input-group mb-3">
+		                        <input type="text" id="msg" class="form-control">
+		                        <div class="input-group-append">
+		                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+		                        </div>
+		                    </div>
 		                </div>
-	                </th:block>
-	                
-	                 <!-- 다른사람이 보낸영역 -->
-	                <th:block th:unless="${message.userId == #authentication.name}">
-	                	 <div align='left' id="msgAreaSelect" class="col-12 align-self-start">
-		                	  <div class='col-3' >
-			                      <div class='alert alert-secondary' style="word-break:break-all;" >
-			                           [[${message.userId}]]   :   [[${message.message}]]
-			                      </div>
-			                  </div>
-			             </div>
-	                </th:block>
-				</th:block>
-                
-                <!-- 입력메세지영역 -->
-                <div align='right' id="msgArea" class="col-12 align-self-start"  style="word-break:break-all; text-align: left;"></div>
-     
-                
-                <div class="col-12">
-                    <div class="input-group mb-3">
-                        <input type="text" id="msg" class="form-control">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
+		                
+	            </div>
+				
+			</div>
+				
+				
+		</div>
+	</div>
+	
+	
+	  
             
         
         

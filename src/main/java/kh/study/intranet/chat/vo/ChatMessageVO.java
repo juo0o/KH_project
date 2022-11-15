@@ -30,4 +30,11 @@ public class ChatMessageVO {
     * 채팅방 id
     */
     private String roomId;
+    
+    /**
+     * 메세지 시간
+     */
+    
+    private String messageTime;
 }
+

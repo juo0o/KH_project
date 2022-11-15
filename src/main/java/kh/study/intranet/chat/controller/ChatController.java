@@ -36,11 +36,14 @@ public class ChatController {
 	
 	//채팅방 목록페이지로 이동
 	@GetMapping("/chat_room_list")
-	public String chat_loom_list(Model model) {
+	public String chat_loom_list(Model model, String roomId,String roomName) {
 		
-		System.out.println("시행??");
 		
 		model.addAttribute("list", chatService.selectChatRoomList());
+		
+		
+		 model.addAttribute("roomId", roomId);
+		 model.addAttribute("roomName", roomName);
 		
 		return "/pages/chat/chat_room_list";
 	}
@@ -49,14 +52,20 @@ public class ChatController {
 	public String getRoom(String roomId,String roomName, Model model){
 	
 	    log.info("# get Chat Room, roomID : " + roomId);
+	    
+	    //채팅방 목록조회
+	    model.addAttribute("list", chatService.selectChatRoomList());
 	
 //	    model.addAttribute("room", repository.findRoomById(roomId));
 	    model.addAttribute("roomId", roomId);
 	    model.addAttribute("roomName", roomName);
 	    
 	    //채팅메세지 보내주기
-	    model.addAttribute("messageList", chatService.selectListChatMessage(roomId));
+	    if(roomId !=null) {
+	    	model.addAttribute("messageList", chatService.selectListChatMessage(roomId));
+	    }
 	    
+	    System.out.println("@@@@@@"+chatService.selectListChatMessage(roomId));
 
 	    
 	    return "/pages/chat/chat_room";

@@ -94,7 +94,7 @@ public class UserController {
 	@ResponseBody
 	public UserVO updateUserInfo(UserVO userVO, String keyVariable,String valueVariable,Authentication authentication) {
 		
-		Map<String, String> variableMap = new HashMap<>();
+		Map<String, String> variableMap = new HashMap<>();  
 		
 		variableMap.put("keyVariable", keyVariable);
 		

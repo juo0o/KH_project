@@ -7,15 +7,28 @@ layout:decorate="~{layout/base_layout}">
 
 	<div layout:fragment="content">
 	
-		<div class="container">
-            <div>
-                <ul th:each="room : ${list}">
-                    <li>
-                    	<a th:href="|/chat/chat_room?roomName=${room.roomName}&roomId=${room.roomId}|">[[${room.roomName}]]</a>
-                    </li>
-                    
-                </ul>
-            </div>
+		<div class="container-fluid" >
+			<div class="row">
+	            <div class="col-3">
+	                <ul th:each="room : ${list}">
+	                    <li>
+	                    	<a th:href="|/chat/chat_room?roomName=${room.roomName}&roomId=${room.roomId}|">[[${room.roomName}]]</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <div class="col-9" >
+
+					a
+					<br>
+					b
+					<br>
+					c
+					<br>
+					d
+					<br>
+					e
+	            </div>
+			</div>
         </div>
         <form th:action="@{/chat/room}" method="post">
             <input type="text" name="name" class="form-control">
