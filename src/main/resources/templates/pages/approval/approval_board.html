@@ -41,6 +41,7 @@
 	<div>결재 수신목록 &nbsp;&nbsp;
 		<span>
 			<select style="border: none;">
+				<option>전체</option>
 				<option id="selectAppCate" th:each="appBoxList : ${appBoxList}" th:value="${appBoxList.appCate}" th:text="${appBoxList.appCate}"></option>
 			</select>
 		</span>
@@ -49,18 +50,20 @@
 		<table class="table">
 			<thead>
 				<tr bordercolor="sold 1px;">
-					<th scope="col">NO</th>
-					<th scope="col">기안일
-					<th scope="col">제목</th>
 					<th scope="col">문서번호</th>
+					<th scope="col">기안자</th>
+					<th scope="col">제목</th>
+					<th scope="col">기안부서</th>
+					<th scope="col">기안일
 				</tr>
 			</thead>
 			<tbody>
 				<tr  th:each="app : ${appList}">
-					<td th:text="${#lists.size(appList) - appStat.index}">1</td>
-					<td th:text="${app.appWriteDate}">Mark</td>
-					<td th:text="${app.title}">Otto</td>
 					<td th:text="${app.appSeq}">@mdo</td>
+					<td th:text="${app.empVO.empName}">@mdo</td>
+					<td th:text="${app.title}">Otto</td>
+					<td th:text="${app.empVO.deptName}">@mdo</td>
+					<td th:text="${app.appWriteDate}">Mark</td>
 				</tr>
 				
 			</tbody>

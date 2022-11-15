@@ -1,5 +1,7 @@
 package kh.study.intranet.approval.controller;
 
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 
 import org.springframework.security.core.Authentication;
@@ -47,15 +49,16 @@ public class ApprovalController {
 		model.addAttribute("appBoxList", approvalService.selectBoxList());
 		return "pages/approval/approval_board";
 	}
-	
+	//품의서별 게시판 출력
 	@ResponseBody
 	@PostMapping("/selectAppCate")
 	public String selectAppCate() {
 		
+		
 		return "";
 	}
 	
-	//---------결재양식작성페이지----------------------
+	//---------결재양식작성페이지----------------------------------------------------------------
 	
 	
 	//휴가신청 작성페이지
@@ -79,6 +82,7 @@ public class ApprovalController {
 		
 		return "pages/approval/vacation_report";
 	}
+	//휴가신청서 등록
 	@PostMapping("/regVacation")
 	public String regVacation(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,Authentication authentication,NomalVO nomalVO,AccountingVO accountingVO) {
 		
@@ -94,7 +98,7 @@ public class ApprovalController {
 		
 		return "redirect:/approval/vacationReport";
 	}
-	
+	//일반품의서 작성페이지
 	@GetMapping("/nomalReport")
 	public String nomalReport (Model model,Authentication authentication,EmpVO empVO) {
 		
@@ -106,7 +110,7 @@ public class ApprovalController {
 		
 		return "pages/approval/nomal_report";
 	}
-	
+	//일반품의서 등록
 	@PostMapping("/regNomal")
 	public String regNomal(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO) {
 		
@@ -119,7 +123,7 @@ public class ApprovalController {
 		return "redirect:/approval/nomalReport";
 	}
 	
-	
+	//회계품의서 작성페이지
 	@GetMapping("/accountingReport")
 	public String orderReport (EmpVO empVO,Authentication authentication, Model model ) {
 		
@@ -131,7 +135,7 @@ public class ApprovalController {
 		
 		return "pages/approval/accounting_report";
 	}
-	
+	//회계품의서 등록
 	@PostMapping("/regAccounting")
 	public String regAccounting(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO) {
 		

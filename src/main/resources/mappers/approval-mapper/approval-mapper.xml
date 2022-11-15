@@ -141,11 +141,18 @@
 	</insert>
 	
 	<select id="selectApp" resultMap="approval">
-		SELECT APP_WRITE_DATE
-			, APP_SEQ
-			, TITLE
-			, APP_CATE
-		FROM APPROVAL
+		SELECT APPROVAL.APP_SEQ
+			, APP_WRITE_DATE
+	        , TITLE
+            , APPROVAL.USER_ID
+            ,(SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME 
+            ,(SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME 
+		FROM APPROVAL , APP_FORM_VACATION VACATION, APP_FORM_NOMAL NOMAL, APP_FORM_ACCOUNTING ACCOUNTING
+		WHERE APPROVAL.USER_ID = VACATION.USER_ID
+		AND APPROVAL.USER_ID = NOMAL.USER_ID
+		AND APPROVAL.USER_ID = ACCOUNTING.USER_ID
+		ORDER BY APPROVAL.APP_SEQ DESC
+		
 	</select>
 	
 	<select id="selectBoxList" resultMap="approval">
@@ -153,11 +160,50 @@
 		FROM APPROVAL
 	</select>
 	
+	<!-- <select id="selectAppCateBoard" parameterType="HashMap">
+		<if test="valueAppCate == '일반품의서'">
+			
+			SELECT 
+				
+			FROM APPROVAL 
+			WHERE APP_CATE = #{appCate}
+		</if>
+	</select> -->
+	
+	
 	<select id="selectAppCateBoard" resultMap="approval">
-		SELECT APP_WRITE_DATE
-			, APP_CATE
-			, TITLE
-		FROM APPROVAL 
+		<choose>
+			<when test='appCate == "휴가신청서"'>
+				SELECT VACATION_SEQ
+					, APP_WRITE_DATE
+			        , TITLE
+		            , APPROVAL.USER_ID
+		            , (SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME
+		            , (SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME
+		        FROM APPROVAL , APP_FORM_VACATION VACATION
+		        WHERE APPROVAL.APP_SEQ = VACATION.APP_SEQ
+			</when>
+			<when test='appCate == "일반품의서"'>
+				SELECT NOMAL_SEQ
+					, APP_WRITE_DATE
+			        , TITLE
+		            , APPROVAL.USER_ID
+		            , (SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME
+		            , (SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME
+		        FROM APPROVAL , APP_FORM_NOMAL NOMAL
+		        WHERE APPROVAL.APP_SEQ = NOMAL.APP_SEQ
+			</when>
+			<when test='appCate == "회계품의서"'>
+				SELECT ACCOUNTING_SEQ
+					, APP_WRITE_DATE
+			        , TITLE
+		            , APPROVAL.USER_ID
+		            , (SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME
+		            , (SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME
+		        FROM APPROVAL , APP_FORM_ACCOUNTING ACCOUNTING
+		        WHERE APPROVAL.APP_SEQ = ACCOUNTING.APP_SEQ
+			</when>
+		</choose>
 	</select>
 	
 	
