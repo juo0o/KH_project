@@ -17,4 +17,7 @@ public interface UserService {
 	
 	//유저정보 업데이트
 	void updateUserInfo(Map<String, String> variableMap);
+	
+	//사진등록
+	void regEmpPicture(UserVO userVO);
 }

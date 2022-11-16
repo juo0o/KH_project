@@ -17,7 +17,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import kh.study.intranet.config.uploadFileUtil;
 import kh.study.intranet.main.service.UserService;
 import kh.study.intranet.main.vo.UserVO;
 
@@ -113,6 +115,25 @@ public class UserController {
 		
 		return userService.selectUserInfo(userVO);
 		
+	}
+	
+	// 사진등록
+	@PostMapping("/regPicture")
+	@ResponseBody
+	public UserVO regPicture( MultipartFile empPictureOriginName, Authentication authentication) {
+		
+		UserVO userVO = uploadFileUtil.uploadFile(empPictureOriginName);
+		
+		User user = (User)authentication.getPrincipal();
+		userVO.setUserId(user.getUsername());
+		
+		System.out.println("@@@@@@@@@" + userVO);
+		System.out.println("@@@@@@@@@" + userVO);
+		System.out.println("@@@@@@@@@" + userVO);
+		
+		userService.regEmpPicture(userVO);
+		
+		return userVO;
 	}
 	
 }

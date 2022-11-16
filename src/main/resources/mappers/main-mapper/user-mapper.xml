@@ -94,6 +94,16 @@
 		</if>
 	
 	</update>
+	
+	<!-- 사진등록 -->
+	
+	<insert id="regEmpPicture">
+		UPDATE EMP
+		SET 
+			EMP_PICTURE_ORIGIN_NAME = #{empPictureOriginName}
+			, EMP_PICTURE_REFILE_NAME = #{empPictureRefileName}
+		WHERE USER_ID = #{userId}
+	</insert>
 </mapper>
 
 

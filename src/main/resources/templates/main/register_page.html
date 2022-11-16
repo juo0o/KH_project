@@ -86,6 +86,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	        }
 	    }).open();
 	}
+	
+	//====================아이디 중복확인====================
+	function alert(){
+		swal('로그인 성공', '로그인되었습니다.', 'success');
+	}
 
 
 </script>
@@ -110,9 +115,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                             <form class="user" method="post" action="/user/registerUser" th:object="${userVO}">
                             
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user w-75" th:field="*{userId}"  placeholder="아이디">
+                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user " th:field="*{userId}"  placeholder="아이디">
+                                   		
                                    	    <div class="hasError" th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></div>
+                                    </div>
+                                    <div class="col-sm-2 mb-3 mb-sm-0">
+                                    	<button type="button" class="btn btn-info btn-user btn-block" onclick="alert()">확인</button>
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user w-75" th:field="*{empNum}"  placeholder="사번">
@@ -148,7 +157,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		                                    <input type="text" class="form-control form-control-user" id="empAddr" name="empAddr" placeholder="주소">
 	                              		</div>
 	                                 	<div class="col-sm-3"> 
-	                                 		<button class="btn btn-info btn-user btn-block" type="button"  onclick="searchAddr()">변경</button> 
+	                                 		<button class="btn btn-info btn-user btn-block" type="button"  onclick="searchAddr()">검색</button> 
 	                                 	</div>     
 	                                 </div>
                                 </div>
@@ -199,16 +208,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
 
-
 		
 		
 		
 		
 		
 		
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </body>
 
 </html>

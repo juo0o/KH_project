@@ -40,6 +40,10 @@ public class WebSocketChatt {
 		}else {
 			System.out.println("이미 연결된 session");
 		}
+		
+		System.out.println(clients.size());
+		System.out.println(clients.size());
+		System.out.println(clients.size());
 
 	}
 	

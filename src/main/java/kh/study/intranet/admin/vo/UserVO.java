@@ -1,4 +1,4 @@
-package kh.study.intranet.main.vo;
+package kh.study.intranet.admin.vo;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

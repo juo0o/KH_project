@@ -65,7 +65,6 @@ public class ChatController {
 	    	model.addAttribute("messageList", chatService.selectListChatMessage(roomId));
 	    }
 	    
-	    System.out.println("@@@@@@"+chatService.selectListChatMessage(roomId));
 
 	    
 	    return "/pages/chat/chat_room";

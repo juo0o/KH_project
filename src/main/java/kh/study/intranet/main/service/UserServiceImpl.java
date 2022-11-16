@@ -50,6 +50,13 @@ public class UserServiceImpl implements UserService{
 		sqlSession.update("userMapper.updateUserInfo", variableMap);
 		
 	}
+
+	//사진등록
+	@Override
+	public void regEmpPicture(UserVO userVO) {
+		sqlSession.update("userMapper.regEmpPicture", userVO);
+		
+	}
 	
 	
 	
