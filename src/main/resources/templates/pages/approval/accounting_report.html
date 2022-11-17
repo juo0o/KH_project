@@ -36,7 +36,6 @@
 								<tr>
 									<td class="detailColumn" width="800px"><b>*
 										제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 :&nbsp;</b>
-										<input type="hidden" value="회계품의서" name="appCate">
 										<input type="text" class="ipt_editor" id="subject" name="title" value="" style="width: 600px; border: none;">
 									</td>
 								</tr>
@@ -151,6 +150,7 @@
 									<td class="subjectColumn">지급요청일</td>
 									<td colspan="5" class="detailColumn">
 										<input type="date" name="paymentRequestDate" id="" value="">
+										<input type="hidden" name="appCateCode" value="ACCOUNTING">
 									</td>
 								</tr>
 								<!-- <tr>
@@ -339,9 +339,29 @@
 				<p style="font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;">&nbsp;</p>
 	</div>
 	<div style="margin-top: 20px; text-align: center;">
-		<input style="margin-bottom: 25px; margin-right: 600px;" type="submit" value="결재요청" >
+		<input style="margin-bottom: 25px; margin-right: 600px;" id="accountingButton" type="button" value="결재요청" onclick="Confirm();">
 	</div>
 </form>
 </div>
+	<script type="text/javascript">
+					function Confirm(){
+			            Swal.fire({
+			              title: '결재하시겠습니까?',
+			              icon: 'warning',
+			              showCancelButton: true,
+			              confirmButtonColor: '#3085d6',
+			              cancelButtonColor: '#d33',
+			              confirmButtonText: '결재',
+			              cancelButtonText: '취소'
+			            }).then((result) => {
+			              if (result.isConfirmed) {
+			                $('#accountingButton').attr('type','submit');
+			                $('#accountingButton').attr('onclick','')
+			                $('#accountingButton').click();
+			                
+			              }
+			            })
+			         }
+			</script>
 </div>
 </html>

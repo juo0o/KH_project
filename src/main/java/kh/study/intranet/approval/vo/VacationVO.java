@@ -16,4 +16,6 @@ public class VacationVO {
 	private String userId;
 	private String appSeq;
 	
+	
+	
 }

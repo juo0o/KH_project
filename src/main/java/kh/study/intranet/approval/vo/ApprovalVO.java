@@ -12,7 +12,7 @@ public class ApprovalVO  {
 	private String appSeq;
 	private String appWriteDate;
 	private String title;
-	private String appCate;
+	private String appCateCode;
 	private String firstTimeApprover;
 	private String intermidiateApprover;
 	private String finalApprover;
@@ -22,6 +22,7 @@ public class ApprovalVO  {
 	private VacationVO vacationVO;
 	private NomalVO nomalVO;
 	private AccountingVO accountingVO;
+	private AppCategoryVO appCategoryVO;
 	
 	
 }

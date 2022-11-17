@@ -11,7 +11,7 @@ public class AccountingVO {
 	private String accountingSeq;
 	private String paymentRequestDate;
 	private String accountingClient;
-	private int accountNumber;
+	private String accountNumber;
 	private String account;
 	private String businessRegistrationNumber;
 	private int amount;

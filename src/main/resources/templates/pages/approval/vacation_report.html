@@ -8,7 +8,6 @@
 
 
 
-
 	<div>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -20,7 +19,7 @@
 	</div>
 	<br>
 <div>
-		<form th:action="@{/approval/regVacation}" method="post" >
+		<form th:action="@{/approval/regVacation}" method="post" id="vacationForm" >
 	<div style="width:60%; height:700px;" align="center">
 		<div class="approval_import ie9-scroll-fix" style="width:100%; height:100%; border: 1px solid black;"  align="center">
 		<!-- 문서 내용 표시 테스트 -->
@@ -81,12 +80,12 @@
 													<td
 														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;">
 														<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
+														<input type="hidden" name="appCateCode" value="VACATION">
 														<span th:text="${appSeq.appSeq}"></span></td>
 												</tr>
 											</tbody>
 										</table>
 									</td>
-
 									<td style="padding: 0px ; border: 1px currentColor;  border-image: none; width: 500px; text-align: right; vertical-align: top" class="">
 									 	<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important; float:right;" >
 											<tr>
@@ -171,7 +170,6 @@
 							<td class="detailColumn" ><b>* 제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 :&nbsp;</b></td>
 							
 							<td>
-								 <input type="hidden" value="연차신청서" name="appCate">
 								 <input type="text"	class="ipt_editor" id="subject" name="title" value="" style="border: none; width: 720px;">
 							</td>
 						</tr>
@@ -203,7 +201,7 @@
 								</span>
 								<span style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;">
 									<b>사용일수 : 
-										<input id="vacationPeriod" name="vacationPeriodDate" value=""></th:block>
+										<input id="vacationPeriod" name="vacationPeriodDate" value="" style="border: none;"></th:block>
 									 </b> 
 									<span class="editor_num" data-type="num">0.5</span> 
 									<b style="font-weight: bold; color: red">신청가능일을 초과하였습니다.</b> 
@@ -231,7 +229,7 @@
 								style="color: rgb(255, 0, 0);">*</b>&nbsp;휴가&nbsp;사유
 							</td>
 							<td>
-								<textarea style="border: none" cols="115" rows="6" name="vacationContent"> 불라불라</textarea>
+								<textarea style="border: none" cols="115" rows="6" name="vacationContent"></textarea>
 							</td>	
 								
 							<!-- <td
@@ -255,13 +253,34 @@
 				</div>
 			</div>
 			<div style="margin-top: 20px; text-align:center;">
-				<input style="margin-bottom: 25px;" type="submit" value="결재요청">
+				<input style="margin-bottom: 25px;" id="vacationButton" type="button" value="결재요청" onclick="Confirm()">
 			</div>
 		</div>	
 			</form>
 	</div>			
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 			<script type="text/javascript" th:src="@{/js/approval/vacation_report.js}"></script>
-			
+			<script type="text/javascript">
+					function Confirm(){
+			             
+			            Swal.fire({
+			              title: '결재하시겠습니까?',
+			              icon: 'warning',
+			              showCancelButton: true,
+			              confirmButtonColor: '#3085d6',
+			              cancelButtonColor: '#d33',
+			              confirmButtonText: '결재',
+			              cancelButtonText: '취소'
+			            }).then((result) => {
+			              if (result.isConfirmed) {
+			                $('#vacationButton').attr('type','submit');
+			                $('#vacationButton').attr('onclick','')
+			                $('#vacationButton').click();
+			                
+			              }
+			            })
+			         }
+			</script>
 		</div>
 </html>
 

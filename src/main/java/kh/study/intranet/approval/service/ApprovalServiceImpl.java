@@ -1,6 +1,7 @@
 package kh.study.intranet.approval.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.intranet.approval.vo.AccountingVO;
+import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.NomalVO;
 import kh.study.intranet.approval.vo.VacationVO;
@@ -58,8 +60,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 
 	@Override
-	public List<ApprovalVO> selectApp(ApprovalVO approvalVO) {
-		return sqlSession.selectList("approvalMapper.selectApp",approvalVO);
+	public List<ApprovalVO> selectApp(Map<String, String> map) {
+		return sqlSession.selectList("approvalMapper.selectApp",map);
 	}
 
 
@@ -69,10 +71,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 
-	@Override
-	public List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO) {
-		return sqlSession.selectList("approvalMapper.selectAppCateBoard",approvalVO);
-	}
+	/*
+	 * @Override public List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO) {
+	 * 
+	 * System.out.println(approvalVO); System.out.println(approvalVO);
+	 * System.out.println(approvalVO); System.out.println(approvalVO); return
+	 * sqlSession.selectList("approvalMapper.selectAppCateBoard",approvalVO); }
+	 */
 
 	
 }

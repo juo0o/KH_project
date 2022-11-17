@@ -6,7 +6,7 @@ layout:decorate="~{layout/base_layout}">
 
 
 
-			<div layout:fragment="content">
+<div layout:fragment="content">
 
 			<div>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -24,6 +24,7 @@ layout:decorate="~{layout/base_layout}">
 
 		<div>
 		<form th:action="@{/approval/regNomal}" method="post">
+			<input type="hidden" name="appCateCode" value="NOMAL">
 	<!-- 문서 헤더 시작-->
 		<div style="margin-top: 27px; ">
 			<table style="width: 1000px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
@@ -169,7 +170,6 @@ layout:decorate="~{layout/base_layout}">
 							제  &nbsp;&nbsp;&nbsp; 목
 						</td>
 						<td>
-							<input type="hidden" value="일반품의서" name="appCate">
 							<input style="border: none; width:900px;" type="text" name="title" value="">
 						</td>
 							
@@ -178,17 +178,37 @@ layout:decorate="~{layout/base_layout}">
 					<tr>
 					<!-- 본문내용 -->
 						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
-							<textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"> 불라불라</textarea>
+							<textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"></textarea>
 						</td>
 					</tr>
 				</tbody>
 			</table> <!-- 제목 및 내용 끝 --> 
 				<div style="margin-top: 20px; text-align:center; ">
-						<input style="margin-right: 540px; margin-bottom: 25px;" type="submit" value="결재요청">
+						<input style="margin-right: 540px; margin-bottom: 25px;" id="nomalButton" type="button" value="결재요청" onclick="Confirm();">
 				</div>
 			</form>
 		</div>	
-
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+			<script type="text/javascript">
+					function Confirm(){
+			            Swal.fire({
+			              title: '결재하시겠습니까?',
+			              icon: 'warning',
+			              showCancelButton: true,
+			              confirmButtonColor: '#3085d6',
+			              cancelButtonColor: '#d33',
+			              confirmButtonText: '결재',
+			              cancelButtonText: '취소'
+			            }).then((result) => {
+			              if (result.isConfirmed) {
+			                $('#nomalButton').attr('type','submit');
+			                $('#nomalButton').attr('onclick','')
+			                $('#nomalButton').click();
+			                
+			              }
+			            })
+			         }
+			</script>
 
 </div>
 </html>

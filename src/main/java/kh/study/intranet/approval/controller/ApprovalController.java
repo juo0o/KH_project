@@ -2,6 +2,7 @@ package kh.study.intranet.approval.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,9 +20,11 @@ import kh.study.intranet.approval.service.ApprovalService;
 import kh.study.intranet.approval.service.NomalApprovalService;
 import kh.study.intranet.approval.service.VacationApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
+import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.NomalVO;
 import kh.study.intranet.approval.vo.VacationVO;
+import kh.study.intranet.config.appDateUtil;
 import kh.study.intranet.emp.vo.EmpVO;
 
 @Controller
@@ -39,30 +42,50 @@ public class ApprovalController {
 	
 	
 	//결재리스트게시판
-	@GetMapping("/approvalBoard")
-	public String approvalBoard(Model model, ApprovalVO approvalVO) {
+	@RequestMapping("/approvalBoard")
+	public String approvalBoard(@RequestParam Map<String, String> paramMap,Model model, ApprovalVO approvalVO) {
+		
+		
+		model.addAttribute("appList", approvalService.selectApp(paramMap));
+		
+		//현재 날짜
+		String nowDate = appDateUtil.getNowDateToString("-");//2020-10-10
+		//한달 전날짜
+		String beforeDate = appDateUtil.getBeforeMonthDateToString();
+		
+		//넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
+		if(paramMap.get("fromDate") == null) {
+			paramMap.put("fromDate", beforeDate);
+		}
+		if(paramMap.get("toDate") == null){
+			paramMap.put("toDate", nowDate);
+		}
+		
+		model.addAttribute("paramMap", paramMap);
+		
 		
 		System.out.println(approvalVO);
 		System.out.println(approvalVO);
 		System.out.println(approvalVO);
 		
-		model.addAttribute("appList", approvalService.selectApp(approvalVO));
 		model.addAttribute("appBoxList", approvalService.selectBoxList());
 		return "pages/approval/approval_board";
 	}
-	//품의서별 게시판 출력
-	@ResponseBody
-	@PostMapping("/selectAppCate")
-	public List<ApprovalVO> selectAppCate(ApprovalVO approvalVO) {
-		
-		System.out.println(approvalVO.getAppCate());
-		System.out.println(approvalVO.getAppCate());
-		System.out.println(approvalVO.getAppCate());
-		System.out.println(approvalVO.getAppCate());
-		System.out.println(approvalVO.getAppCate());
-	List<ApprovalVO>appCateBoard = approvalService.selectAppCateBoard(approvalVO);
-		return appCateBoard;
-	}
+	/*
+	 * //품의서별 게시판 출력
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @PostMapping("/selectAppCate") public List<ApprovalVO>
+	 * selectAppCate(ApprovalVO approvalVO) {
+	 * 
+	 * List<ApprovalVO>appCateBoard = approvalService.selectApp(approvalVO); return
+	 * appCateBoard; }
+	 */
+	
+	
+	
+	
 	
 	//---------결재양식작성페이지----------------------------------------------------------------
 	
@@ -74,7 +97,6 @@ public class ApprovalController {
 		
 		  User user = (User)authentication.getPrincipal();
 		  empVO.setUserId(user.getUsername());
-		  
 		  
 		 model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
 		 
@@ -153,6 +175,13 @@ public class ApprovalController {
 		
 		
 		return "redirect:/approval/accountingReport";
+	}
+	//결재 목록 승인페이지
+	@GetMapping("/requestApproval")
+	public String requestAPproval(ApprovalVO approvalVO,Model model) {
+		
+		
+		return "pages/approval/request_approval";
 	}
 	
 	
