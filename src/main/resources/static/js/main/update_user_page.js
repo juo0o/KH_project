@@ -120,12 +120,20 @@ function updateUserInfo() {
 			                                                                                        
 			},                                                                                                                                                  
 			error: function() {         
-				swal('변경에 실패하였습니다..','', 'success');                                                                                                                             
+				Swal.fire({
+				  icon: 'error',
+				  title: '변경실패',
+				  text: '',
+				});                                                                                                                         
 				return;
 			}
 		});
 		
-	swal('변경되었습니다.','', 'success');    	
+	Swal.fire({
+	  icon: 'success',
+	  title: '변경성공',
+	  text: '',
+	}); 	
 	$('#launchModal').modal('hide');
 	
 	

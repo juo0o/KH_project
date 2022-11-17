@@ -38,7 +38,7 @@ layout:decorate="~{layout/base_layout}">
 		
 				<div class="col-4 memDiv">아이디</div>      
 			    <div class="col-4 memDiv">[[${userInfo.userId}]]</div>     
-			    <div class="col-4 memDiv">&nbsp;</div>     
+			    <div class="col-4 memDiv" style="margin-top: 20px;"></div>     
 			
 				<div class="col-4 memDiv">비밀번호</div>     
 				<div class="col-4 memDiv">&nbsp;</div>     
@@ -93,8 +93,8 @@ layout:decorate="~{layout/base_layout}">
 					    </div>
 						
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" >닫기</button>
-							<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" onclick="updateUserInfo()">변경</button>
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
+							<button type="button" class="btn btn-outline-danger" onclick="updateUserInfo()">변경</button>
 						</div>
 					</div>
 				</div>
