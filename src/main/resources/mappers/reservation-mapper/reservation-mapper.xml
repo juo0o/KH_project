@@ -15,6 +15,16 @@
 	</resultMap>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 회의실 예약 테이블 -->
 	<resultMap type="kh.study.intranet.reservation.vo.ReservationVO" id="reservation">
 		<id column="RESERVE_CODE" property="reserveCode"/>
@@ -26,6 +36,25 @@
 		
 	</resultMap>
 		
+	   <!-- 예약가능날짜 조회 -->   
+   <select id="availableDay" resultType="String">
+      SELECT 
+            DISTINCT ( TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      		FROM RESERVATION_MEETING_ROOM
+     		 WHERE RESERVE_AVAILABLE = 'Y'
+   </select>
+   
+   <!-- 예약 불가능 날짜 조회 -->
+   <select id="disAvailableDay" resultType="String">
+      SELECT     
+              DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      FROM RESERVATION_MEETING_ROOM
+          MINUS
+      SELECT     
+              DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      FROM RESERVATION_MEETING_ROOM
+      WHERE RESERVE_AVAILABLE = 'Y'
+   </select>
 	
 	
 	<select id="selectMeetingRoom" resultMap="meeting">
@@ -35,6 +64,43 @@
 		FROM MEETING_ROOM
 		
 	</select>
+	
+	
+	<!-- 모든 데이터 조회 -->
+	<select id="selectReserveAll" resultMap="reservation">
+		SELECT R.ROOM_CODE
+	     , ROOM_NAME
+	     , RESERVE_CODE
+	     , RESERVE_USER_ID
+	     , TO_CHAR(RESERVE_DATE,'YYYY-MM-DD') AS RESERVE_DATE
+	     , RESERVE_TIME
+	     , RESERVE_AVAILABLE
+	     FROM MEETING_ROOM M , RESERVATION_MEETING_ROOM R
+	     WHERE M.ROOM_CODE = R.ROOM_CODE
+	     <!-- AND RESERVE_USER_ID = #{reserveUserId} -->
+	     AND RESERVE_AVAILABLE = 'N'	
+	
+	</select>
+	
+	
+	
+	<!-- 날짜에 사용가능한 예약 조회 -->
+	<select id="availableReserve" resultMap="reservation">
+	SELECT DISTINCT RESERVE_DATE 
+			FROM RESERVATION_MEETING_ROOM 
+			WHERE RESERVE_AVAILABLE = 'N'
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 	<select id="selectReservation" resultMap="reservation">
 	SELECT M.ROOM_CODE
@@ -115,7 +181,9 @@
 	SET
 	RESERVE_AVAILABLE = 'N'
 	WHERE
+	
 	ROOM_CODE = #{roomCode}
+	
 	AND
 	RESERVE_DATE = #{reserveDate}
 	AND RESERVE_TIME = #{reserveTime}

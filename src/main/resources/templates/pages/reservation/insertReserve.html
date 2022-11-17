@@ -11,15 +11,25 @@
     
     <div layout:fragment="content">
     
+
+    
+    
     
     <div class="row">
     	
-    	<div class="col">
-	    	회의실 정보(날짜 선택시 예약가능)
+    	<div class="col" style="font-size: 20px;">
+	    	회의실 예약(날짜 선택시 예약가능)
     	</div>
+    	
+    	 <!-- <div th:each="ava : ${available}">
+    		<div class="aaa" th:text="${ava.reserveDate}"></div>
+    		
+    	</div> -->
+    	
     	<!-- <div th:each="meeting:${meetingRoom}">
 			<div th:text="${meeting.roomCode}"></div>    	
-    	</div> -->
+    	</div> 
+    	 -->
     	
     </div>
     	
@@ -27,8 +37,6 @@
     
     <script>
     
-	
-      
     </script>
       
       
@@ -52,7 +60,7 @@
 					
 				<label for="">회의실</label>
 				<select class="form-select" id="meetingRoom"  name="roomCode" onchange="selectChange();">
-					<option selected>회의실을 선택해주세요</option>
+					<option selected>회의실을 선택해주세요.</option>
 					<option th:each="meeting:${meetingRoom}" th:text="${meeting.roomName}" th:value="${meeting.roomCode}"></option>
 					
 				</select>
@@ -66,7 +74,7 @@
 				<label for="">예약 가능 시간</label>
 				<select class="form-select" id="reserveTime" name="reserveTime">
 					
-					<option value="">회의실을 선택해주세요</option>
+					<option value="">회의실을 선택해주세요.</option>
 					
 				</select>
 					
@@ -109,6 +117,18 @@
     <div id='calendar'>
           
     </div>
+  
+     <div class="row" align="right" style="padding: 10px;">
+     	<div class="col-8"></div>
+	      <div class="col-1" >
+	         <canvas id="redBox" style="background-color: #F9CCCC; width: 50px; height: 40px; "></canvas>
+	      </div>
+	      <div class="col-1" style="padding:auto;">예약불가</div>
+	      <div class="col-1">
+	         <canvas id="redBox" style="background-color: #B7C5F4; width: 50px; height: 40px; "></canvas>
+	      </div>
+	      <div class="col-1" style="padding:auto;">예약가능</div>
+     </div>
   
   
    		

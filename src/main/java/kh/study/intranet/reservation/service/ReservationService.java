@@ -25,6 +25,21 @@ public interface ReservationService {
 	//예약정보
 	//List<ReservationVO> selectReserve();
 	
+	//모든 정보 조회
+	List<Object> selectReserveAll();
+	
+	//<!-- 날짜에 사용가능한 예약 조회 -->
+	List<ReservationVO> availableReserve();
+	
+	
+	//예약가능날짜조회
+   List<Object> availableDay();
+   
+   //예약불가능 잘짜 조회
+   
+   List<Object> disAvailableDay();
+   
+	
 	
 	
 }

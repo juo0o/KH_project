@@ -2,6 +2,7 @@ package kh.study.intranet.reservation.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,24 @@ public class ReservationController {
 	@Resource(name = "reservationService")
 	private ReservationService reservationService;
 	
+	@RequestMapping("/insertReserveAjax")
+   @ResponseBody
+   public Map<String, List<Object>> insertReserveAjX(){
+
+      Map<String, List<Object>> dateList = new HashMap<>();
+      
+      //이용가능한 날짜
+      dateList.put("avaDate", reservationService.availableDay());
+      //이용 불가능한 날짜
+      dateList.put("disDate", reservationService.disAvailableDay());
+      
+      
+      return dateList;
+   }
+
+	
+	
+	
 	@RequestMapping("/insertReserve")
 	public String insertReserve(MeetingRoomVO meetingRoomVO,Model model,ReservationVO reservationVO,Authentication authentication,UserVO userVO) {
 		
@@ -50,7 +69,10 @@ public class ReservationController {
 		//model.addAttribute("reservation", reservationService.selectReservationInfo());
 		//model.addAttribute("reserve", reservationService.selectReserve());
 		
+		model.addAttribute("available", reservationService.availableReserve());
 		
+		
+		//---회의실 조회---//
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
 		
 		//System.out.println(reservationService.selectMeetingRoom());
@@ -133,13 +155,58 @@ public class ReservationController {
 		
 	}
 	
-//	회의실 예약조회 눌렀을시
-//	@GetMapping("/selectReserve")
-//	public String selectReserve() {
-//		
-//		
-//		return "";
-//	}
+	//회의실 예약조회 눌렀을시 페이지 이동
+	@GetMapping("/selectReserve")
+	public String selectReserve() {
+		
+		
+		return "pages/reservation/selectReserve";
+	}
+	
+	//회의실 예약현황 조회하고 ajax
+	@ResponseBody
+	@RequestMapping("/selectAjax")
+	public Map<String, List<Object>> selectAjax() {
+		
+		Map<String, List<Object>> reserveList = new HashMap<>();
+		
+		//User user = (User)authentication.getPrincipal();
+		
+		//reservationVO.setReserveUserId(user.getUsername());
+		
+		ReservationVO reservationVO = new ReservationVO();
+		
+        
+       
+//        for(ReservationVO e : reservationService.selectReserveAll()) {
+//        	System.out.println(e);
+//        	System.out.println(e.getReserveTime());
+//        }
+//        
+		
+		
+		
+		
+		
+//		reserveList.put("reserveList", reservationService.selectReserveAll());
+		//System.out.println(reservationService.selectReserveAll());
+		
+		return reserveList;
+		
+		//System.out.println(map);
+		
+		//System.out.println(reservationVO);
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	
 	
 }
