@@ -28,12 +28,12 @@
 				<div class="col-10 mb-3 mt-3">
 					<span th:text="${detail.boardRegDate}"></span>
 				</div>
-				<!-- <div class="col-2 mb-3 mt-3">
-					댓글수
-				</div>
 				<div class="col-2 mb-3 mt-3">
-					<span th:text="${detail.boardRegDate}"></span>
-				</div> -->
+					조회수
+				</div>
+				<div class="col-10 mb-3 mt-3">
+					<span th:text="${detail.boardReadCnt}"></span>
+				</div>
 				<div class="col-2 mb-3 mt-3">
 					내 용
 				</div>
@@ -42,8 +42,34 @@
 				</div>
 			</div>
 
+			<!-- 버튼 영역 -->
+			<div class="row text-end mb-3 mt-3">
+				<div class="col-12">
+						<!-- 게시글 좋아요 버튼 -->
+					<a th:href="@{/board/insertLike}">
+						<!-- <th:block th:if="${detail.userId eq}"> -->
+							<img src="/imgs/board/좋아요하트.png" height="30" width="30">
+						<!-- </th:block> -->
+						<!-- <th:block th:unless="${detail.userId eq}">
+							<img src="/imgs/board/좋아요하트.png">
+						</th:block> -->
+					</a>
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
+						뒤로가기
+					</button>
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
+						글수정
+					</button>
+					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
+						글삭제
+					</button> 
+				</div>
+			</div>
+			
+			<div style="height: 20px;"></div>
+			
 			<!-- 댓글 등록 영역 -->
-			<div class="row mb-3 mt-3">
+			<div class="row mb-3 mt-3" style="width: 80%;">
 				<div class="col">
 					<form th:action="@{/board/regReply}" method="post" th:object="${replyVO}">
 						<input type="hidden" name="boardNum" th:value="${detail.boardNum}">
@@ -60,56 +86,26 @@
 			</div>
 			
 			<!-- 댓글 목록 영역 -->
-			<div class="row mb-3 mt-3">
-				<th:block th:each="reply :${reply}">
-					<div class="col">
-						
-					</div>
-				</th:block>
-			</div>
-			
-			
-			
-			<div style="height: 30px;"></div>
-			<!-- 버튼 영역 -->
-			<div class="row text-end mb-3 mt-3">
-				<div class="col-12">
-					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
-						뒤로가기
-					</button>
-					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
-						글수정
-					</button>
-					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
-						글삭제
-					</button> 
+			<div class="row mb-3 mt-3" style="width: 80%;">
+				<div class="col">
+					<th:block th:each="reply :${reply}">
+						<div class="col-12">
+							<span th:text="${reply.userId}" style="font-weight: bold;"></span>
+						</div>
+						<div class="col-12">
+							<span th:text="${reply.replyContent}"></span>
+						</div>
+						<div class="col-12 mb-3">
+							<span th:text="${reply.replyRegDate}" style="color:#a7a7a7;"></span>
+						</div>
+					</th:block>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div>
-		<div class="row"><!--댓글목록  -->
-			<table class="table table-bordered">
-				<th:block th:each="reply :${reply}">
-					<tr>
-						<td>작성자</td>
-						<td th:text="${reply.userId}"></td>
-					</tr>
-					<tr>
-						<td>작성일</td>
-						<td th:text="${reply.replyRegDate}"></td>
-					</tr>
-					<tr>
-						<td th:text="${reply.replyContent}"></td>
-					</tr>
-				</th:block>
-			</table>
-		</div>
-		
-	</div>	
 
 	
-	<script type="text/javascript" th:src="@{/js/board/reply.js}"></script>
+	<script type="text/javascript" th:src="@{/js/board/like.js}"></script>
 </div>
 
 

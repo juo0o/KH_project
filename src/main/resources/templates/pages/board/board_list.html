@@ -12,9 +12,10 @@
 			
 				<colgroup>
 					<col width="10%">
-					<col width="50%">
+					<col width="40%">
 					<col width="20%">
 					<col width="20%">
+					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
@@ -22,6 +23,7 @@
 						<th>글제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+						<th>조회수</th>
 						<!-- <th>조회수</th> -->
 					</tr>
 				</thead>
@@ -34,19 +36,26 @@
 									<span th:text="${board.boardTitle}">
 									</span>
 									&nbsp; 
+									<th:block th:if="${board.replyCount ne 0}">
+										<span style="color: #f56642;">[</span> 
+										<span style="color: #f56642;" th:text="${board.replyCount}"></span>
+										<span style="color: #f56642;">]</span> 
+									</th:block>
+									<th:block th:unless="${board.replyCount ne 0}" >
+									</th:block>
 									
-										<th:block th:if="${board.replyCount ne 0}">
-											<span style="color: #f56642;">[</span> 
-											<span style="color: #f56642;" th:text="${board.replyCount}"></span>
-											<span style="color: #f56642;">]</span> 
-										</th:block>
-										<th:block th:unless="${board.replyCount ne 0}" >
-											
-										</th:block>
+									<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq board.boardRegDate}">
+		                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+	                            		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
+		                            </th:block>
+		                              
+		                            <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq board.boardRegDate}">
+		                            </th:block>
 								</a>
 							</td>
 							<td th:text="${board.userId}"></td>
-							<td th:text="${board.boardRegDate}"></td>
+							<td th:text="${#strings.substring(board.boardRegDate,0,10)}"></td>
+							<td th:text="${board.boardReadCnt}"></td>
 						</tr>
 					</th:block>
 				</tbody>

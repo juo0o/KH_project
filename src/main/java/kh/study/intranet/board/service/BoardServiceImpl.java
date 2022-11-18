@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kh.study.intranet.board.vo.BoardVO;
 
@@ -22,7 +23,11 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시글 상세조회
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public BoardVO boardDetail(int boardNum) {
+		
+		sqlSession.update("boardMapper.updateReadCnt", boardNum);
+				
 		return sqlSession.selectOne("boardMapper.selectBoardDetail", boardNum);
 	}
 	
@@ -45,11 +50,17 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
-	//댓글 업데이트
+
+}
+	
+//	//게시글 조회수 증가
 //	@Override
-//	public void updateReplyCount(int board_num) {
-//		sqlSession.update("boardMapper.updateReplyCount", board_num);}
-	}
+//	public int updateReadCnt(int boardNum) {
+//		return 1;
+//	}
+// 트랜잭션처리로 메소드 자체가 필요없음(쿼리문을 바로 serviceImpl로 가져다 쓰기때문)
+
+	
 	
 	
 

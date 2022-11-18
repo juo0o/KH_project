@@ -21,7 +21,8 @@ public interface BoardService {
 	//게시글 삭제
 	void deleteBoard(BoardVO boardVO);
 	
-	//댓글수 업데이트
-	/* void updateReplyCount(int board_num); */
-
+//	//게시글 조회수 증가
+//	List<BoardVO> updateReadCnt( BoardVO boardVO, int boardNum);
+// 트랜잭션처리로 메소드 자체가 필요없음(쿼리문을 바로 serviceImpl로 가져다 쓰기때문)
+	
 }

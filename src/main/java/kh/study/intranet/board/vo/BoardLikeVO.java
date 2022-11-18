@@ -7,11 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ReplyVO  {
-	private int replyNum;
-	private String replyContent;
+public class BoardLikeVO  {
+	private int likeNum;
 	private int boardNum;
 	private String userId;
-	private String replyRegDate;
-
 }

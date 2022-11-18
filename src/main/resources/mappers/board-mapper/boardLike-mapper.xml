@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="boardLikeMapper">
+	<resultMap type="kh.study.intranet.board.vo.BoardLikeVO" id="boardLike">
+		<id column="LIKE_NUM" property="likeNum" />
+		<result column="BOARD_NUM" property="boardNum" />
+		<result column="LIKE_CHECK" property="likeCheck" />
+	</resultMap>
+
+	<!-- 좋아요 확인체크 -->
+<!-- 	<select id="boardLikeCheck" resultMap="boardLike">
+		SELECT COUNT(*)
+		FROM
+		BOARD_LIKE
+		WHERE BOARD_NUM = #{boardNum}
+		AND USER_ID = #{userId}
+	</select> -->
+
+	<!-- 게시글 좋아요 기능(추천,취소) -->
+	<insert id="insertLike">
+		MERGE INTO BOARD_LIKE
+		USING DUAL
+		ON (BOARD_NUM = #{boardNum} AND USER_ID = #{userId})
+		WHEN MATCHED THEN
+			UPDATE 
+		    SET LIKE_NUM = LIKE_NUM
+		    WHERE BOARD_NUM = #{boardNum} AND USER_ID = #{userId}
+				
+			DELETE 
+			WHERE BOARD_NUM = #{boardNum} AND USER_ID = #{userId}
+		WHEN NOT MATCHED THEN
+			INSERT(
+				LIKE_NUM
+				, BOARD_NUM
+				, USER_ID
+			) VALUES (
+				(SELECT NVL(MAX(LIKE_NUM), 0) + 1 FROM BOARD_LIKE)
+				, #{boardNum}
+				, #{userId}
+			)
+	</insert>
+
+
+
+
+
+</mapper>
+

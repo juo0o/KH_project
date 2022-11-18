@@ -13,6 +13,7 @@
 		<result column="BOARD_READ_CNT"     property="boardReadCnt"/>
 		<result column="BOARD_REG_DATE"     property="boardRegDate"/>
 		<result column="REPLY_COUNT"     property="replyCount"/>
+		<result column="LIKE_NUM"     property="likeNum"/>
 	</resultMap>
 	
 	<!--게시글 목록 조회  -->
@@ -20,11 +21,12 @@
 		SELECT DISTINCT BO.BOARD_NUM
 				, BOARD_TITLE
 				, BO.USER_ID
-				, TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') AS BOARD_REG_DATE
+				,  TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD HH24') AS BOARD_REG_DATE
 				, (SELECT COUNT(REPLY_NUM)
 				   FROM BOARD_REPLY
 			 	   WHERE BOARD_NUM = BO.BOARD_NUM 
                    ) AS REPLY_COUNT
+                , BOARD_READ_CNT
 		FROM BOARD BO LEFT JOIN BOARD_REPLY RE
         ON BO.BOARD_NUM = RE.BOARD_NUM
 		ORDER BY BO.BOARD_NUM DESC 
@@ -46,7 +48,7 @@
 				, BOARD_TITLE 
 				, BOARD_CONTENT
 				, USER_ID
-				<!-- , BOARD_READ_CNT -->
+				, BOARD_READ_CNT
 				<!-- , REPLY_NUM -->
 				, TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') AS BOARD_REG_DATE
 		FROM BOARD
@@ -82,7 +84,15 @@
 	DELETE FROM BOARD WHERE BOARD_NUM = #{boardNum}
 	</delete>
 	
-
+	
+	<!-- 게시글 조회수증가 -->
+	<update id="updateReadCnt">
+		UPDATE BOARD
+		SET BOARD_READ_CNT = BOARD_READ_CNT + 1 
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
+	
 	
 	
 	
