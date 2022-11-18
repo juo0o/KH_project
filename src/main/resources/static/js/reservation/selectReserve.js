@@ -33,18 +33,26 @@ document.addEventListener('DOMContentLoaded', function() {
 			//ajax start
 			$.ajax({
 				type: 'POST'
-				, cache: false
+				 ,cache: false
 				, url: '/reservation/selectAjax'
 				, dataType: 'json'
-				, processData: false
-				, contentType: false
-				, cache: false
+				//, processData: false
+				//, contentType: false
+				//, cache: false
 				//,data: {}, //필요한 데이터
-				, success: function(resultMap) {
+				, success: function(result) {
 					var events = [];
-					console.log(resultMap);
-	
-					for (var reserve of resultMap.reserveList) {
+					console.log(result);
+			
+			
+						
+						
+						
+						
+					
+				 	
+					
+					/*for (var reserve of resultMap.reserveList) {
 						events.push({
 							title: 'reserve.roomName',
 							start: reserve.reserveDate,
@@ -52,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							//display: 'background',
 							//backgroundColor: "#EB5353"
 						})
-					}
+					}*/
 					/*events:[
 						{
 							title: 'wns0901',
@@ -73,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
 							
 							
 					})*/
-	
 					successCallback(events);
+	
 				}
 			});
 		}

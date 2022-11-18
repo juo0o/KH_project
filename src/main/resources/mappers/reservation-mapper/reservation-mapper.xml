@@ -78,7 +78,8 @@
 	     FROM MEETING_ROOM M , RESERVATION_MEETING_ROOM R
 	     WHERE M.ROOM_CODE = R.ROOM_CODE
 	     <!-- AND RESERVE_USER_ID = #{reserveUserId} -->
-	     AND RESERVE_AVAILABLE = 'N'	
+	     AND RESERVE_AVAILABLE = 'N'
+	     <!-- AND RESERVE_DATE = '2022-11-11' -->	
 	
 	</select>
 	

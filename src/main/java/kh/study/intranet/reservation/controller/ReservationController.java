@@ -166,15 +166,15 @@ public class ReservationController {
 	//회의실 예약현황 조회하고 ajax
 	@ResponseBody
 	@RequestMapping("/selectAjax")
-	public Map<String, List<Object>> selectAjax() {
+	public Map<String, Object> selectAjax() {
 		
-		Map<String, List<Object>> reserveList = new HashMap<>();
+		Map<String, Object> reserveList = new HashMap<>();
 		
 		//User user = (User)authentication.getPrincipal();
 		
 		//reservationVO.setReserveUserId(user.getUsername());
 		
-		ReservationVO reservationVO = new ReservationVO();
+		//ReservationVO reservationVO = new ReservationVO();
 		
         
        
@@ -182,13 +182,12 @@ public class ReservationController {
 //        	System.out.println(e);
 //        	System.out.println(e.getReserveTime());
 //        }
-//        
+        
 		
 		
 		
 		
-		
-//		reserveList.put("reserveList", reservationService.selectReserveAll());
+		reserveList.put("reserveList", reservationService.selectReserveAll());
 		//System.out.println(reservationService.selectReserveAll());
 		
 		return reserveList;
