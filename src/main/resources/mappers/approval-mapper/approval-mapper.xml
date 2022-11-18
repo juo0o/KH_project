@@ -177,16 +177,17 @@
             , APP_CHECK_STATUS
             ,(SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME 
             ,(SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME 
-		FROM APPROVAL , APP_CATEGORY CATEGORY
+		FROM APPROVAL , APP_CATEGORY CATEGORY , EMP
 		WHERE APPROVAL.APP_CATE_CODE = CATEGORY.APP_CATE_CODE
+		AND APPROVAL.USER_ID = EMP.USER_ID
 		<if test="appSeq != null and !appSeq.equals('')">
 		AND APPROVAL.APP_SEQ = #{app_seq}
 		</if>
 		<if test="title != null and !title.equals('')">
 		AND UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')
 		</if>		
-		<if test="userId != null and !userId.equals('')">
-		AND APPROVAL.USER_ID = #{userId}
+		<if test="empName != null and !empName.equals('')">
+		AND EMP_NAME LIKE ('%'||#{empName}||'%')
 		</if>
 		<if test="appCateCode != null and !appCateCode.equals('')">
 		AND APPROVAL.APP_CATE_CODE = #{appCateCode}
@@ -206,7 +207,7 @@
 	</select>
 	
 	<select id="selectBoxList" resultMap="approval"> 
-		SELECT DISTINCT APP_CATE_NAME
+		SELECT DISTINCT APP_CATE_NAME, APPROVAL.APP_CATE_CODE
 		FROM APPROVAL,APP_CATEGORY
 		WHERE APPROVAL.APP_CATE_CODE = APP_CATEGORY.APP_CATE_CODE 
 		<!-- DISTINCT -->

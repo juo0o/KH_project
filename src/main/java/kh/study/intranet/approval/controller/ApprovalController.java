@@ -45,8 +45,16 @@ public class ApprovalController {
 	@RequestMapping("/approvalBoard")
 	public String approvalBoard(@RequestParam Map<String, String> paramMap,Model model, ApprovalVO approvalVO) {
 		
+		System.out.println("상품명 : " + paramMap.get("title"));
+		System.out.println("카테고리코드 : " + paramMap.get("appCateCode"));
+		System.out.println("사원 : " + paramMap.get("empName"));
+		System.out.println("fromDate : " + paramMap.get("fromDate"));
+		System.out.println("toDate : " + paramMap.get("toDate"));
+		System.out.println("상태 : " + paramMap.get("appCheckStatus"));
+		
 		
 		model.addAttribute("appList", approvalService.selectApp(paramMap));
+		model.addAttribute("appBoxList", approvalService.selectBoxList());
 		
 		//현재 날짜
 		String nowDate = appDateUtil.getNowDateToString("-");//2020-10-10
@@ -64,24 +72,9 @@ public class ApprovalController {
 		model.addAttribute("paramMap", paramMap);
 		
 		
-		System.out.println(approvalVO);
-		System.out.println(approvalVO);
-		System.out.println(approvalVO);
-		
-		model.addAttribute("appBoxList", approvalService.selectBoxList());
 		return "pages/approval/approval_board";
 	}
-	/*
-	 * //품의서별 게시판 출력
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("/selectAppCate") public List<ApprovalVO>
-	 * selectAppCate(ApprovalVO approvalVO) {
-	 * 
-	 * List<ApprovalVO>appCateBoard = approvalService.selectApp(approvalVO); return
-	 * appCateBoard; }
-	 */
+	
 	
 	
 	
@@ -176,12 +169,28 @@ public class ApprovalController {
 		
 		return "redirect:/approval/accountingReport";
 	}
-	//결재 목록 승인페이지
-	@GetMapping("/requestApproval")
-	public String requestAPproval(ApprovalVO approvalVO,Model model) {
+//--------------------------품의서별 승인페이지-------------------------------	
+	//연차신청서 결재 목록 승인페이지
+	@GetMapping("/requestVacation")
+	public String requestVacation(ApprovalVO approvalVO,Model model,VacationVO vacationVO) {
 		
 		
-		return "pages/approval/request_approval";
+		
+		return "pages/approval/vacation_requestPage";
+	}
+	//일반신청서 결재 목록 승인페이지
+	@GetMapping("/requestNomal")
+	public String requestNomal(ApprovalVO approvalVO,Model model,NomalVO nomalVO) {
+		
+		
+		return "pages/approval/nomal_requestPage";
+	}
+	//회계신청서 결재 목록 승인페이지
+	@GetMapping("/requestAccounting")
+	public String requestAccounting(ApprovalVO approvalVO,Model model,AccountingVO accountingVO) {
+		
+		
+		return "pages/approval/accounting_requestPage";
 	}
 	
 	

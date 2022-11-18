@@ -58,20 +58,20 @@
 					</div>
 				</td>
 				<td class="searchTitle">기안서</td>
-				<td><select class="form-select" name="cateCode" style="border: none;">
+				<td><select class="form-select" name="appCateCode" style="border: none;">
 						<option value="" th:selected="${paramMap['appCateCode'] == null or paramMap['appCateCode'] eq ''}">전체</option>
-						<option th:each="appBoxList : ${appBoxList}"
-							th:text="${appBoxList.appCategoryVO.appCateName}"
-							th:value="${appBoxList.appCategoryVO.appCateCode}"
-							th:selected="${paramMap['appCateCode'] eq appBoxList.appCategoryVO.appCateCode}"></option>
+						<option th:each="appBox : ${appBoxList}"
+							th:text="${appBox.appCategoryVO.appCateName}"
+							th:value="${appBox.appCategoryVO.appCateCode}"
+							th:selected="${paramMap['appCateCode'] eq appBox.appCategoryVO.appCateCode}"></option>
 				</select></td>
 				<td class="searchTitle">제목</td>
 				<td colspan="2"><input class="form-control" type="text"
 					name="title" id="" th:value="${paramMap['title']}">
 				</td>
 				<td class="searchTitle">사원</td>
-				<td><input class="form-control" type="text" name="userId"
-					id="" th:value="${paramMap['userId']}"></td>
+				<td><input class="form-control" type="text" name="empName"
+					id="" th:value="${paramMap['empName']}"></td>
 				<td rowspan="2">
 					<button type="submit" class="btn btn-outline-info" style="height: 90px;">검색</button>
 				</td>
@@ -131,7 +131,7 @@
 				</tr>
 			</thead>
 			<tbody id="appList">
-				<tr  th:each="app : ${appList}">
+				<tr  th:each="app : ${appList}" th:onclick="requestApproval([[${app.appSeq}]],[[${app.appCateCode}]]);">
 					<td th:text="${app.appSeq}">@mdo</td>
 					<td th:text="${app.empVO.empName}">@mdo</td>
 					<td th:text="${app.title}">Otto</td>

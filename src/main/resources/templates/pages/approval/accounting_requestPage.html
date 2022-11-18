@@ -4,18 +4,12 @@
 	layout:decorate="~{layout/base_layout}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
-
+<th:block layout:fregment="css">
+	<link href="/css/layout/common.css" rel="stylesheet">
+</th:block>	
+	
 <div layout:fragment="content">
-
-	<div class="input-group mb-3">
-		<button class="btn btn-outline-secondary dropdown-toggle"
-			type="button" data-bs-toggle="dropdown" aria-expanded="false">기안서 종류</button>
-		<ul class="dropdown-menu">
-			<li><a class="dropdown-item" href="/approval/vacationReport">연차신청서</a></li>
-			<li><a class="dropdown-item" href="/approval/nomalReport">일반품의서</a></li>
-			<li><a class="dropdown-item" href="/approval/accountingReport">회계품의서</a></li>
-		</ul>
-	</div>
+ 	
 <div>
 	<form id="document_content" class="form_doc_editor editor_view" th:action="@{/approval/regAccounting}" method="post">
 	<div class="approval_import ie9-scroll-fix" style="border: 1px solid black; width:60%; margin-top: 20px;" align="center">
@@ -53,27 +47,27 @@
 										<tr>
 											<td class="subjectColumn" width="80px">기안자</td>
 											<td class="detailColumn" width="170px">
-												<span th:text="${empInfo.empName}"></span>
-												<input type="hidden" th:value="${empInfo.empName}" name="empName">
+												<!-- <span th:text="${empInfo.empName}"></span>
+												<input type="hidden" th:value="${empInfo.empName}" name="empName"> -->
 											</td>
 										</tr>
 										<tr style="border: 1px solid black;">
 											<td class="subjectColumn">소 속</td>
 											<td class="">
-												<span th:text="${empInfo.deptName}"></span>
+												<!-- <span th:text="${empInfo.deptName}"></span> -->
 											</td>
 										</tr>
 										<tr>
 											<td class="subjectColumn">기안일</td>
 											<td class="">
-												<span th:text="${appSeq.appWriteDate}"></span>
+												<!-- <span th:text="${appSeq.appWriteDate}"></span> -->
 											</td>
 										</tr>
 										<tr>
 											<td class="subjectColumn">문서번호</td>
 											<td class="detailColumn">
-												<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
-												<span th:text="${appSeq.appSeq}"></span>
+											<!-- 	<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
+												<span th:text="${appSeq.appSeq}"></span> -->
 											</td>
 										</tr>
 									</tbody>
@@ -146,8 +140,8 @@
 								<tr>
 									<td class="subjectColumn">지급요청일</td>
 									<td colspan="5" class="detailColumn">
-										<input type="date" name="paymentRequestDate" id="" value="">
-										<input type="hidden" name="appCateCode" value="ACCOUNTING">
+										<!-- <input type="date" name="paymentRequestDate" id="" value="">
+										<input type="hidden" name="appCateCode" value="ACCOUNTING"> -->
 									</td>
 								</tr>
 								<!-- <tr>
@@ -167,15 +161,17 @@
 								<tr>
 									<td class="subjectColumn">금 액</td>
 									<td class="detailColumn">
-											<input style="border: none" type="number" name="amount" id="" value="">&nbsp;
+											<!-- <input style="border: none" type="number" name="amount" id="" value="">&nbsp; -->
 									</td>
 									<td class="subjectColumn">사업자<br>등록번호
 									</td>
 									<td class="detailColumn">
-										<input style="border: none" type="text" class="ipt_editor" name="businessRegistrationNumber" id="" value=""><br></td>
+										<!-- <input style="border: none" type="text" class="ipt_editor" name="businessRegistrationNumber" id="" value=""> --><br>
+									</td>
 									<td class="subjectColumn">거래처</td>
 									<td class="detailColumn">
-										<input style="border: none" type="text" class="ipt_editor" name="accountingClient" id="" value=""><br></td>
+										<!-- <input style="border: none" type="text" class="ipt_editor" name="accountingClient" id="" value=""> -->
+									<br></td>
 								</tr>
 							</tbody>
 						</table>
@@ -206,17 +202,17 @@
 								<tr>
 									<td class="subjectColumn">계좌번호</td>
 									<td class="detailColumn">
-										<input style="border: none" type="text" class="ipt_editor" name="accountNumber" id="" value=""><br>
+										<!-- <input style="border: none" type="text" class="ipt_editor" name="accountNumber" id="" value=""> --><br>
 									</td>
 									<td class="subjectColumn">지급은행</td>
 									<td class="detailColumn">
-										<input style="border: none" type="text" class="ipt_editor"name="account" id="" value=""><br>
+									<!-- 	<input style="border: none" type="text" class="ipt_editor"name="account" id="" value=""> --><br>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="4" class="detailColumn">
 											<div style="width: 100%; height: 450px;">
-												<textarea style="border: none" cols="127" rows="25" name="accountingContent"> </textarea>
+												<!-- <textarea style="border: none" cols="127" rows="25" name="accountingContent"> </textarea> -->
 											</div>
 										<br>
 									</td>
@@ -335,30 +331,8 @@
 			<!-- Custom style -->
 				<p style="font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;">&nbsp;</p>
 	</div>
-	<div style="margin-top: 20px; text-align: center;">
-		<input style="margin-bottom: 25px; margin-right: 600px;" id="accountingButton" type="button" value="결재요청" onclick="Confirm();">
-	</div>
 </form>
 </div>
-	<script type="text/javascript">
-					function Confirm(){
-			            Swal.fire({
-			              title: '결재하시겠습니까?',
-			              icon: 'warning',
-			              showCancelButton: true,
-			              confirmButtonColor: '#3085d6',
-			              cancelButtonColor: '#d33',
-			              confirmButtonText: '결재',
-			              cancelButtonText: '취소'
-			            }).then((result) => {
-			              if (result.isConfirmed) {
-			                $('#accountingButton').attr('type','submit');
-			                $('#accountingButton').attr('onclick','')
-			                $('#accountingButton').click();
-			                
-			              }
-			            })
-			         }
-			</script>
+	
 </div>
 </html>

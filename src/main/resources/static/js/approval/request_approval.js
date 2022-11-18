@@ -1,7 +1,25 @@
-
-function requestApproval() {
+function requestApproval(appSeq, appCateCode) {
 	
-	location.href="/approval/requestApproval";
+	
+	
+	if(appCateCode == 'VACATION') {
+		
+		location.href='/approval/requestVacation';
+		
+	} else if(appCateCode == 'NOMAL') {
+		
+		location.href='/approval/requestNomal';
+	} else if(appCateCode == 'ACCOUNTING') {
+		
+		location.href='/approval/requestAccounting';
+	}
+	
+	
 	
 }
+
+
+
+
+
 
