@@ -5,6 +5,47 @@
 <mapper namespace="mainMapper">
 
 
+
+	<resultMap type="kh.study.intranet.board.vo.BoardVO" id="board">
+		<id column="BOARD_NUM"     property="boardNum"/>
+		<result column="USER_ID"     property="userId"/>
+		<result column="BOARD_TITLE"     property="boardTitle"/>
+		<result column="BOARD_CONTENT"     property="boardContent"/>
+		<result column="IS_SECRET"     property="isSecret"/>
+		<result column="SECRET_PW"     property="secretPw"/>
+		<result column="BOARD_READ_CNT"     property="boardReadCnt"/>
+		<result column="BOARD_REG_DATE"     property="boardRegDate"/>
+		<result column="REPLY_COUNT"     property="replyCount"/>
+	</resultMap>
+	
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 최근 5 개 게시글 -->
+	<select id="selectRecentBoard" resultMap="board">
+		SELECT * FROM(        
+		                SELECT DISTINCT BO.BOARD_NUM
+		                                , BOARD_TITLE
+		                                , BO.USER_ID
+		                                , TO_CHAR(BOARD_REG_DATE, 'MM-DD') AS BOARD_REG_DATE
+		                                , (SELECT COUNT(REPLY_NUM)
+		                                   FROM BOARD_REPLY
+		                                   WHERE BOARD_NUM = BO.BOARD_NUM 
+		                                   ) AS REPLY_COUNT
+		                        FROM BOARD BO LEFT JOIN BOARD_REPLY RE
+		                        ON BO.BOARD_NUM = RE.BOARD_NUM
+		                        ORDER BY BO.BOARD_NUM DESC 
+		             )
+		             WHERE ROWNUM BETWEEN 1 AND 5
+	</select>
 	
 </mapper>
 

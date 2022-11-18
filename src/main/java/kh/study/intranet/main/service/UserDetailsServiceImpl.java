@@ -30,17 +30,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("아이디를 찾을수 없습니다.");
 		}
 		
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println(userVO);
+	
 		
 		UserDetails userDetail = User.withUsername(userVO.getUserId())
 									 .password(userVO.getUserPw())
 									 .roles(userVO.getEmpRole())
 									 .build();
-		
 		
 		
 		

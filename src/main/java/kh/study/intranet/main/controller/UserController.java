@@ -104,12 +104,13 @@ public class UserController {
 		userVO.setUserId(user.getUsername());
 		variableMap.put("userId", user.getUsername());
 		
+		
+//		나중에 사용
 		if(keyVariable.equals("USER_PW")) {
 			variableMap.put("valueVariable", encoder.encode(valueVariable));
 		}else {
 			variableMap.put("valueVariable", valueVariable);
 		}
-		
 		//업데이트 쿼리 실행
 		userService.updateUserInfo(variableMap);
 		

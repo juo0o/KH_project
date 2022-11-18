@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+
+.box {
+    width: 150px;
+    height: 150px; 
+    border-radius: 70%;
+    overflow: hidden;
+}
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+
+.MI img {
+    transition: all 0.2s linear;
+}
+.MI:hover img {
+    transform: scale(1.4);
+}
+.MI{
+	overflow: hidden;
+}

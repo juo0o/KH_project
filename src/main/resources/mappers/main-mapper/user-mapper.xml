@@ -74,6 +74,7 @@
 			   , EMP_EMAIL
 			   , DEPT_NAME
 			   , EMP_ROLE
+			   , EMP_POSITION
 			   , TO_CHAR(EMP_HIRE_DATE, 'YYYY-MM-DD') AS EMP_HIRE_DATE
 			   , EMP_PICTURE_REFILE_NAME
 			   
