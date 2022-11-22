@@ -1,5 +1,6 @@
 package kh.study.intranet.admin.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +12,17 @@ import kh.study.intranet.main.vo.UserVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
+	
+	@Autowired
+	SqlSessionTemplate sqlSession;
+	
+
+
+	@Override
+	public List<UserVO> selectEmpList() {
+		
+		return sqlSession.selectList("adminMapper.selectEmpList");
+	}
 
 	
 	

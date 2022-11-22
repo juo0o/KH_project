@@ -82,7 +82,7 @@
 <!--                 Addons -->
 <!--             </div> -->
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Side Nav Item - 관리자기능 -->
             <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseAdmin"
                     aria-expanded="true" aria-controls="collapseChatting">
@@ -93,7 +93,7 @@
                 <div id="collapseAdmin" class="collapse" aria-labelledby="headingChatting" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="">사원관리</a>
+                        <a class="collapse-item" href="/admin/selectEmpList">사원조회</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="#">404 Page</a>
@@ -102,8 +102,15 @@
                 </div>
                 
             </li>
+            
+            <!-- Side Nav Item - 주소록 -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/address/addressList">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>주소록</span></a>
+            </li>
 
-            <!-- Nav Item - 채팅 -->
+            <!-- Side Nav Item - 채팅 -->
             
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseChatting"
@@ -125,7 +132,7 @@
                 
             </li>
             
-            <!-- Nav Item - 전자결재 -->
+            <!-- Side Nav Item - 전자결재 -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseApproval"
                     aria-expanded="true" aria-controls="collapseApproval">
@@ -149,7 +156,7 @@
             </li>
             
             
-            <!-- Nav Item - 게시판 -->
+            <!--  Side Nav Item - 게시판 -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseBoard"
                     aria-expanded="true" aria-controls="collapseBoard">
@@ -172,7 +179,7 @@
                 
             </li>
 
-            <!-- Nav Item - 예약 -->
+            <!-- Side Nav Item - 예약 -->
             <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseReservation"
                     aria-expanded="true" aria-controls="collapseReservation">

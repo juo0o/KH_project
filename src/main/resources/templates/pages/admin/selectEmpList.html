@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+	<div layout:fragment="content">
+			조회조회
+			
+			<div>결재현황</div>
+			<div class="row">
+				<div class="col-4">
+					<div class="card text-center text-success" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">결재대기</h5>
+							<br> <br>
+							<h3 class="card-subtitle mb-2 text-muted">1 건</h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="card text-center text-success" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">결재중</h5>
+							<br> <br>
+							<h3 class="card-subtitle mb-2 text-muted">2 건</h3>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class="card text-center text-success" style="width: 18rem;">
+						<div class="card-body">
+							<h5 class="card-title">결재완료</h5>
+							<br> <br>
+							<h3 class="card-subtitle mb-2 text-muted">3 건</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<!-- 리스트 -->
+			<div>결재 수신목록 &nbsp;&nbsp;
+				<span>
+					<select style="border: none;"id="selectAppCate" >
+						<option>전체</option>
+						<option class="app" th:each="appBoxList : ${appBoxList}" th:value="${appBoxList.appCate}" th:text="${appBoxList.appCate}"></option>
+					</select>
+				</span>
+			</div>
+			<div>
+				<table class="table">
+					<thead>
+						<tr bordercolor="sold 1px;">
+							<th scope="col">이름</th>
+							<th scope="col">직위</th>
+							<th scope="col">휴대폰</th>
+							<th scope="col">이메일</th>
+							<th scope="col">부서</th>
+							<th scope="col">아이디</th>
+						</tr>
+					</thead>
+					<tbody id="appList">
+						<th:block th:each="emp : ${empList}">
+							<tr th:onclick="|location.href='@{/admin/adminUpdateUserForm(userId=${emp.userId})}'|">
+								<td th:text="${emp.empName}">@mdo</td>
+								<td th:text="${emp.empPosition}">@mdo</td>
+								<td th:text="${emp.empTell}">Otto</td>
+								<td th:text="${emp.empEmail}">@mdo</td>
+								<td th:text="${emp.deptCode}">Mark</td>
+								<td th:text="${emp.userId}">Mark</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+	</div>
+</html>

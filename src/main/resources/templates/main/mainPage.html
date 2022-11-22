@@ -5,17 +5,17 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 layout:decorate="~{layout/base_layout}">
 
 
-	<div layout:fragment="content">
+	<th:block layout:fragment="content">
 	
 	
 		
-		 <!-- Main Content -->
-            <div id="content">
+		 <!-- Main Content
+            <div id="content" style="background-color: skyblue;"> -->
             
                 
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" >
                 
                 
                 		
@@ -483,8 +483,8 @@ layout:decorate="~{layout/base_layout}">
                 </div>
                 <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
+       <!--        </div>
+          End of Main Content -->
 				
 				
 				
@@ -507,5 +507,5 @@ layout:decorate="~{layout/base_layout}">
     <script src="/testjs/demo/chart-pie-demo.js"></script>
 				
 				
-	</div>
+	</th:block>
 </html>
