@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	>
+  
+  
+    <div layout:fragment="content">
+    		<!-- 리스트 -->
+			<div>공용 주소록 &nbsp;&nbsp;
+				<span>
+					<select style="border: none;"id="">
+						<option>전체</option>
+						<option class=""></option>
+					</select>
+				</span>
+			</div>
+			<div>
+				<table class="table">
+					<thead>
+						<tr bordercolor="sold 1px;">
+							<th scope="col">이름(표시명)</th>
+							<th scope="col">직위</th>
+							<th scope="col">휴대폰</th>
+							<th scope="col">이메일</th>
+							<th scope="col">부서</th>
+							<th scope="col">주소</th>
+							<th scope="col">메모</th>
+							<th scope="col">그룹</th>
+						</tr>
+					</thead>
+					<tbody id="">
+						<th:block >
+							<tr th:each="address:${addressList}">
+								<td th:text="${address.empName}"></td>
+								<td th:text="${address.empPosition}"></td>
+								<td th:text="${address.empTell}"></td>
+								<td th:text="${address.empEmail}"></td>
+								<td th:text="${address.deptName}"></td>
+								<td th:text="${address.empAddr}"></td>
+								
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+	</div>
+    	
+    	
+    	
+    	
+    	
+    	
+    
+    </div>
+    
+    
+</html>

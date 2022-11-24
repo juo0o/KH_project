@@ -111,7 +111,7 @@ var sysdate = 0;
 	                              console.log(resultMap);
 	                  
 	                           //예약불가능한날 선택해서 색바꾸어준다
-	                              for(var date of resultMap.disDate){
+                              for(var date of resultMap.disDate){
 	                              
 	                              events.push({
 	                                 title : 'ccc',
@@ -122,7 +122,7 @@ var sysdate = 0;
 	                              })
 	                           }
 	                           //예약가능한 날 선택해서 색바꾸어준다
-	                              for(var date of resultMap.avaDate){
+                              for(var date of resultMap.avaDate){
 	                              
 	                              events.push({
 	                                 title : 'ccc',
@@ -235,14 +235,10 @@ function goReserve(){
 		//const roomCode = document.querySelectorAll('#roomCode').value;
 		const reserveTime = document.querySelector('#reserveTime').value;
 		
-		if(reserveTime == 0 ,reserveTime == ''){
-			swal('먼저 회의실을 선택해주세요');
+		if(reserveTime == 0 ,reserveTime ==''){
+			alert('먼저 회의실을 선택해주세요');
 			return;
 		}
-		
-		
-		
-	
 		
 		
 		//alert(sysdate);
@@ -265,7 +261,7 @@ function goReserve(){
                ,'reserveDate':sysdate}, //필요한 데이터
                //async: false,
                success: function(result) {
-           			swal('등록완료');
+           			alert('등록완료');
            			
            		
            			

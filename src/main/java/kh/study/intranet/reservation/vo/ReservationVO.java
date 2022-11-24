@@ -16,6 +16,11 @@ public class ReservationVO  {
 	private String reserveTime;
 	private String reserveAvailable;
 	
+	private String startTime;
+	private String endTime;
+	
+	private String roomName;
+	
 	
 		
 }

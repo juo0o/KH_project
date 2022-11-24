@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="addressMapper">
+	
+	<resultMap type="kh.study.intranet.address.vo.AddressListVO" id="addressList">
+		<id column="LIST_PK" property="listPk"/>
+		<result column="BOOK_OWNER_ID" property="bookOwnerId"/>
+		<result column="BOOK_NAME" property="bookName"/>
+	</resultMap>
+		
+	<resultMap type="kh.study.intranet.address.vo.AddressVO" id="address">
+		<id column="LIST_PK" property="listPk"/>
+		<result column="REG_USER_ID" property="regUserId"/>
+		<result column="EMP_NAME" property="empName"/>
+		<result column="EMP_TELL" property="empTell"/>
+		<result column="EMP_ADDR" property="empAddr"/>
+		<result column="EMP_DETAIL_ADDR" property="empDetailAddr"/>
+		<result column="EMP_EMAIL" property="empEmail"/>
+		<result column="DEPT_CODE" property="deptCode"/>
+		<result column="DEPT_NAME" property="deptName"/>
+		<result column="EMP_POSITION" property="empPosition"/>
+		<association property="empVO" resultMap="empMapper.emp"></association>
+	</resultMap>	
+	
+	<resultMap type="kh.study.intranet.emp.vo.EmpVO" id="emp">
+		<id column="USER_ID" 						property="userId"/>
+		<result column="USER_PW" 					property="userPw"/>
+		<result column="EMP_NUM" 					property="empNum"/>
+		<result column="EMP_NAME" 					property="empName"/>
+		<result column="EMP_GENDER" 				property="empGender"/>
+		<result column="EMP_BIRTHDAY" 				property="empBirthDay"/>
+		<result column="EMP_TELL" 					property="empTell"/>
+		<result column="EMP_ADDR" 					property="empAddr"/>
+		<result column="EMP_DEATAIL_ADDR" 			property="empDetailAddr"/>
+		<result column="EMP_EMAIL" 					property="empEmail"/>
+		<result column="DEPT_CODE" 					property="deptCode"/>
+		<result column="DEPT_NAME" 					property="deptName"/>
+		<result column="EMP_POSITION" 				property="empPosition"/>
+		<result column="EMP_ROLE" 					property="empRole"/>
+		<result column="EMP_PICTURE_ORIGIN_NAME" 	property="empPictureOriginName"/>
+		<result column="EMP_PICTURE_REFILE_NAME" 	property="empPictureRefileName"/>
+		<result column="EMP_HIRE_DATE" 				property="empHireDate"/>
+	</resultMap>
+		
+	<select id="addressList" resultMap="emp">
+	SELECT * FROM EMP
+					
+			
+	
+	
+	</select>
+	
+		
+	
+	
+
+	
+	
+	
+	
+</mapper>
+
+
+

@@ -33,6 +33,7 @@
 		<result column="RESERVE_DATE" property="reserveDate"/>
 		<result column="RESERVE_TIME" property="reserveTime"/>
 		<result column="RESERVE_AVAILABLE" property="reserveAvailable"/>
+		<result column="ROOM_NAME" property="roomName"/>
 		
 	</resultMap>
 		

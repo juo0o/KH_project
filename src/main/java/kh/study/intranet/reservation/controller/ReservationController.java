@@ -3,6 +3,7 @@ package kh.study.intranet.reservation.controller;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,31 +167,39 @@ public class ReservationController {
 	//회의실 예약현황 조회하고 ajax
 	@ResponseBody
 	@RequestMapping("/selectAjax")
-	public Map<String, Object> selectAjax() {
+	public Map<String, List<ReservationVO>> selectAjax() {
 		
-		Map<String, Object> reserveList = new HashMap<>();
+		Map<String, List<ReservationVO>> listMap = new HashMap<>();
 		
-		//User user = (User)authentication.getPrincipal();
+	
+        List<ReservationVO> reservedList = new ArrayList<>();
+        reservedList = reservationService.selectReserveAll();
 		
-		//reservationVO.setReserveUserId(user.getUsername());
+        String[] date;
+		for(ReservationVO e : reservedList ){
+			
+			date = e.getReserveTime().split("-");
+			e.setStartTime(date[0]);
+			e.setEndTime(date[1]);
+			
+//			System.out.println(e);
+		}
 		
-		//ReservationVO reservationVO = new ReservationVO();
-		
-        
+		listMap.put("reservedList", reservedList);
        
 //        for(ReservationVO e : reservationService.selectReserveAll()) {
 //        	System.out.println(e);
 //        	System.out.println(e.getReserveTime());
 //        }
+//        reserveList.put("reserveList", reservationService.selectReserveAll());
         
 		
 		
 		
 		
-		reserveList.put("reserveList", reservationService.selectReserveAll());
 		//System.out.println(reservationService.selectReserveAll());
 		
-		return reserveList;
+		return listMap;
 		
 		//System.out.println(map);
 		

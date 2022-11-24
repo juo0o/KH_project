@@ -46,7 +46,7 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public List<Object> selectReserveAll() {
+	public List<ReservationVO> selectReserveAll() {
 		
 		return sqlSession.selectList("reservationMapper.selectReserveAll");
 	}

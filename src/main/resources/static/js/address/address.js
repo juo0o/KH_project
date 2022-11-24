@@ -1,0 +1,1 @@
+var sysdate = 0;

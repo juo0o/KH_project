@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		},
-		initialView: 'dayGridMonth',
+		//initialView: 'dayGridWeek',
 		height: '550px',
 		expandRows: true,
 		/*events:[
@@ -36,22 +36,25 @@ document.addEventListener('DOMContentLoaded', function() {
 				 ,cache: false
 				, url: '/reservation/selectAjax'
 				, dataType: 'json'
-				//, processData: false
-				//, contentType: false
+				, processData: false
+				, contentType: false
 				//, cache: false
 				//,data: {}, //필요한 데이터
 				, success: function(result) {
 					var events = [];
 					console.log(result);
-			
-			
-						
-						
-						
-						
 					
-				 	
-					
+					for(var date of result.reservedList){
+	                              
+                          events.push({
+                             title : date.roomName,
+                             start : date.reserveDate +"T"+  date.startTime  ,
+                             end : date.reserveDate +"T"+ date.endTime  ,
+                             
+                          })
+                       }
+                       
+                       console.log(events);
 					/*for (var reserve of resultMap.reserveList) {
 						events.push({
 							title: 'reserve.roomName',
@@ -83,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					})*/
 					successCallback(events);
 	
-				}
+				},
 			});
 		}
 	});
