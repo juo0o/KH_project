@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.intranet.approval.service.ApprovalService;
-import kh.study.intranet.approval.service.NomalApprovalService;
-import kh.study.intranet.approval.service.VacationApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.NomalVO;
+import kh.study.intranet.approval.vo.ReceiveRefVO;
 import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.config.appDateUtil;
 import kh.study.intranet.emp.vo.EmpVO;
@@ -34,11 +33,6 @@ public class ApprovalController {
 	@Resource(name = "approvalService")
 	private ApprovalService approvalService;
 	
-	@Resource(name = "vacationApprovalService")
-	private VacationApprovalService vacationApprovalService;
-	
-	@Resource(name = "nomalApprovalService")
-	private NomalApprovalService nomalApprovalService;
 	
 	
 	//결재리스트게시판
@@ -93,8 +87,7 @@ public class ApprovalController {
 		  
 		 model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
 		 
-		
-		
+		model.addAttribute("empRole", approvalService.selectRole());
 		
 		model.addAttribute("appSeq",approvalService.getAppSeq());
 		
@@ -105,14 +98,14 @@ public class ApprovalController {
 	}
 	//휴가신청서 등록
 	@PostMapping("/regVacation")
-	public String regVacation(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,Authentication authentication,NomalVO nomalVO,AccountingVO accountingVO) {
+	public String regVacation(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,Authentication authentication,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		vacationVO.setUserId(user.getUsername());
 		  
 		
-		  approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO);
+		  approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
 		
 		//vacationApprovalService.insertVacation(vacationVO);
 		
@@ -127,19 +120,20 @@ public class ApprovalController {
 		 empVO.setUserId(user.getUsername());
 		 
 		 model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
+		 model.addAttribute("empRole", approvalService.selectRole());
 		 model.addAttribute("appSeq",approvalService.getAppSeq());
 		
 		return "pages/approval/nomal_report";
 	}
 	//일반품의서 등록
 	@PostMapping("/regNomal")
-	public String regNomal(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO) {
+	public String regNomal(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
 		
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		nomalVO.setUserId(user.getUsername());
 		
-		 approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO);
+		 approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
 		
 		return "redirect:/approval/nomalReport";
 	}
@@ -152,46 +146,59 @@ public class ApprovalController {
 		empVO.setUserId(user.getUsername());
 		
 		model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
+		model.addAttribute("empRole", approvalService.selectRole());
 		model.addAttribute("appSeq", approvalService.getAppSeq());
 		
 		return "pages/approval/accounting_report";
 	}
 	//회계품의서 등록
 	@PostMapping("/regAccounting")
-	public String regAccounting(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO) {
+	public String regAccounting(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
 		
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		accountingVO.setUserId(user.getUsername());
 		
-		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO);
+		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
 		
 		
 		return "redirect:/approval/accountingReport";
 	}
 //--------------------------품의서별 승인페이지-------------------------------	
 	//연차신청서 결재 목록 승인페이지
-	@GetMapping("/requestVacation")
-	public String requestVacation(ApprovalVO approvalVO,Model model,VacationVO vacationVO) {
+	@GetMapping("/appDocuments")
+	public String appDocuments(ApprovalVO approvalVO,Model model,VacationVO vacationVO,ReceiveRefVO receiveRefVO) {
+		System.out.println(approvalVO);
+		Map<String, Object> ref= new HashMap<>();
+		ref = approvalService.selectReciveRef(receiveRefVO);
+		
+		if(approvalVO.getAppCateCode().equals("VACATION")) {
+			approvalVO.setTable("APP_FORM_VACATION");
+			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+			model.addAttribute("ref", ref);
+			
+			return "pages/approval/vacation_requestPage";
+		}else if(approvalVO.getAppCateCode().equals("NOMAL")) {
+			approvalVO.setTable("APP_FORM_NOMAL");
+			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+//			model.addAttribute("receiveRefInfo", approvalService.selectReciveRef(receiveRefVO));
+			model.addAttribute("ref", ref);
+			
+			return "pages/approval/nomal_requestPage";
+		}else if(approvalVO.getAppCateCode().equals("ACCOUNTING")) {
+			approvalVO.setTable("APP_FORM_ACCOUNTING");
+			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+			model.addAttribute("ref", ref);
+			
+			return "pages/approval/accounting_requestPage";
+		}else {
+			
+			return "pages/main/mainPage";
+		}
 		
 		
-		
-		return "pages/approval/vacation_requestPage";
 	}
-	//일반신청서 결재 목록 승인페이지
-	@GetMapping("/requestNomal")
-	public String requestNomal(ApprovalVO approvalVO,Model model,NomalVO nomalVO) {
-		
-		
-		return "pages/approval/nomal_requestPage";
-	}
-	//회계신청서 결재 목록 승인페이지
-	@GetMapping("/requestAccounting")
-	public String requestAccounting(ApprovalVO approvalVO,Model model,AccountingVO accountingVO) {
-		
-		
-		return "pages/approval/accounting_requestPage";
-	}
+
 	
 	
 }

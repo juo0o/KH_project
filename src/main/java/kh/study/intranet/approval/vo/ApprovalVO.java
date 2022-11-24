@@ -13,16 +13,16 @@ public class ApprovalVO  {
 	private String appWriteDate;
 	private String title;
 	private String appCateCode;
-	private String firstTimeApprover;
-	private String intermidiateApprover;
-	private String finalApprover;
-	private String appCheckStatus;
 	private String userId;
 	private EmpVO empVO;
 	private VacationVO vacationVO;
 	private NomalVO nomalVO;
 	private AccountingVO accountingVO;
 	private AppCategoryVO appCategoryVO;
+	private ReceiveRefVO receiveRefVO;
+	
+	
+	private String table;
 	
 	
 }

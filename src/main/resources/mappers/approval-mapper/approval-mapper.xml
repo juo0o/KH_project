@@ -9,10 +9,7 @@
 		<result column="APP_WRITE_DATE" 		property="appWriteDate"/>
 		<result column="TITLE" 					property="title"/>
 		<result column="APP_CATE_CODE" 			property="appCateCode"/>
-		<result column="FIRST_TIME_APPROVER" 	property="firstTimeApprover"/>
-		<result column="INTERMIDIATE_APPROVER" 	property="intermidiateApprover"/>
-		<result column="FINAL_APPROVER" 		property="finalApprover"/>
-		<result column="APP_CHECK_STATUS" 		property="appCheckStatus"/>
+		<result column="USER_ID" 			property="userId"/>
 		<association property="empVO" resultMap="empMapper.emp"/>
 		<association property="appCategoryVO" resultMap="appCategory"/>
 		<association property="vacationVO" resultMap="vacation"/>
@@ -59,6 +56,19 @@
 		<result column="APP_SEQ" 		property="appSeq"/>
 	</resultMap>
 	
+	<resultMap type="kh.study.intranet.approval.vo.ReceiveRefVO" id="receiveRef">
+		<id column="RECEIVE_REF_NUM" 		property="receiveRefNum"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
+		<result column="FIRST_APPROVAL" 		property="firstApproval"/>
+		<result column="FIRST_APPROVAL_EMP" 		property="firstApprovalEmp"/>
+		<result column="FINAL_APPROVAL" 		property="finalApproval"/>
+		<result column="FINAL_APPROVAL_EMP" 		property="finalApprovalEmp"/>
+		<result column="APP_CATE_CODE" 		property="appCateCode"/>
+		<result column="APP_SEQ_STATUS" 		property="appSeqStatus"/>
+		<association property="approvalVO" resultMap="approval"/>
+		
+	</resultMap>
+	
 	<select id="getAppSeq" resultMap="approval">
 		SELECT (SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) FROM APPROVAL) APP_SEQ
         ,TO_CHAR(SYSDATE,'YYYY-MM-DD') AS APP_WRITE_DATE
@@ -74,6 +84,12 @@
 		AND USER_ID = #{userId}
 	</select>
 	
+	<select id="selectRole" resultMap="empMapper.emp">
+		SELECT EMP_ROLE, EMP_NAME, EMP_POSITION, EMP_NUM
+		FROM EMP
+		WHERE EMP.EMP_POSITION='팀장'
+		OR EMP.EMP_POSITION= '부장'
+	</select>
 	
 	<insert id="insertApproval">
 		INSERT INTO APPROVAL(
@@ -163,10 +179,31 @@
 		)
 	</insert>
 	
-	
-	
-	
-	
+	<insert id="insertReceiveRef">
+		<selectKey resultType="String" keyProperty="receiveRefNum" order="BEFORE">
+			SELECT 'RECEIVE_REF_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RECEIVE_REF_NUM, 13))), 0) + 1, 3, 0) 
+			FROM APP_RECEIVE_REF  
+		</selectKey>
+		INSERT INTO APP_RECEIVE_REF(
+			RECEIVE_REF_NUM
+			, APP_SEQ
+			, FIRST_APPROVAL
+			, FIRST_APPROVAL_EMP
+			, FINAL_APPROVAL
+			, FINAL_APPROVAL_EMP
+			, APP_CATE_CODE
+			, APP_SEQ_STATUS
+		) VALUES(
+			#{receiveRefNum}
+			, #{appSeq}
+			, #{firstApproval}
+			, #{firstApprovalEmp}
+			, #{finalApproval}
+			, #{finalApprovalEmp}
+			, #{appCateCode}
+			, #{appSeqStatus}
+		)
+	</insert>
 	
 	<select id="selectApp" resultMap="approval">
 		SELECT APPROVAL.APP_SEQ
@@ -174,7 +211,6 @@
 			, APPROVAL.APP_CATE_CODE
 	        , TITLE
             , APPROVAL.USER_ID
-            , APP_CHECK_STATUS
             ,(SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME 
             ,(SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME 
 		FROM APPROVAL , APP_CATEGORY CATEGORY , EMP
@@ -198,9 +234,6 @@
 		<if test="toDate != null and !toDate.equals('')">
 		AND TO_CHAR(APP_WRITE_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 		</if>		
-		<!-- <if test="appCheckStatus != null and !appCheckStatus.equals('')">
-		AND APP_CHECK_STATUS = #{appCheckStatus}
-		</if> -->
 		ORDER BY APPROVAL.APP_SEQ DESC
 		
 		
@@ -213,6 +246,25 @@
 		<!-- DISTINCT -->
 	</select> 
 	
+	<select id="appDocuments" resultMap="approval">
+      SELECT * 
+      FROM APPROVAL APP, EMP , ${table}
+      WHERE  APP.APP_SEQ = ${table}.APP_SEQ
+      AND APP.USER_ID = EMP.USER_ID
+      AND APP.APP_SEQ = #{appSeq}
+   </select>
+	
+	<select id="selectReciveRef" resultType="hashmap">
+		SELECT FIRST_APPROVAL_EMP
+			, (SELECT EMP_NAME
+			FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FIRST_APPROVAL_EMP) AS FIRST_EMP_NAME
+			
+			, FINAL_APPROVAL_EMP
+			, (SELECT EMP_NAME
+		FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FINAL_APPROVAL_EMP) AS FINAL_EMP_NAME
+		FROM APP_RECEIVE_REF
+		WHERE APP_SEQ = #{appSeq}
+	</select>
 	
 	
 </mapper>

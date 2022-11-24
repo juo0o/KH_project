@@ -1,5 +1,6 @@
 package kh.study.intranet.approval.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.NomalVO;
+import kh.study.intranet.approval.vo.ReceiveRefVO;
 import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.emp.vo.EmpVO;
 
@@ -32,9 +34,15 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return sqlSession.selectOne("approvalMapper.selectAppEmp",empVO);
 	}
 	
+	@Override
+	public List<EmpVO> selectRole() {
+		return sqlSession.selectList("approvalMapper.selectRole");
+	}
+	
+	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void insertApproval(ApprovalVO approvalVO,VacationVO vacationVO,NomalVO nomalVO,AccountingVO accountingVO) {
+	public void insertApproval(ApprovalVO approvalVO,VacationVO vacationVO,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
 		sqlSession.insert("approvalMapper.insertApproval",approvalVO);
 		
 		System.out.println(vacationVO);
@@ -45,6 +53,9 @@ public class ApprovalServiceImpl implements ApprovalService{
 		System.out.println("  ");
 		System.out.println(accountingVO);
 		System.out.println(accountingVO);
+		System.out.println();
+		System.out.println(receiveRefVO);
+		System.out.println(receiveRefVO);
 		
 		if(vacationVO.getUserId() != null) {
 			
@@ -56,6 +67,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 			sqlSession.insert("approvalMapper.insertAccounting",accountingVO);
 			
 		}
+		
+		sqlSession.insert("approvalMapper.insertReceiveRef",receiveRefVO);
 	}
 
 
@@ -69,6 +82,24 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public List<ApprovalVO> selectBoxList() {
 		return sqlSession.selectList("approvalMapper.selectBoxList");
 	}
+
+
+	@Override
+	public ApprovalVO appDocuments(ApprovalVO approvalVO) {
+		return sqlSession.selectOne("approvalMapper.appDocuments",approvalVO);
+	}
+
+
+	@Override
+	public HashMap<String, Object> selectReciveRef(ReceiveRefVO receiveRefVO) {
+		return sqlSession.selectOne("approvalMapper.selectReciveRef",receiveRefVO);
+	}
+
+
+	
+
+
+	
 
 
 	/*
