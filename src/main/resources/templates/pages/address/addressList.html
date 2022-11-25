@@ -7,15 +7,98 @@
   
   
     <div layout:fragment="content">
-    		<!-- 리스트 -->
-			<div>공용 주소록 &nbsp;&nbsp;
-				<span>
-					<select style="border: none;"id="">
-						<option>전체</option>
-						<option class=""></option>
-					</select>
-				</span>
-			</div>
+    	
+    	<section class="lnb" data-type="USER"><h1 class="user">
+    <a data-bypass="" class="side_toggle">
+        <ins class="ic"></ins>
+        <span class="ic_side ic_hide_up" title="접기"></span>
+        <span class="txt" title="개인 주소록">개인 주소록</span>
+    </a>
+    <span class="btn_wrap">
+        <span class="btn_ic_list_reorder normalmode">
+            <span class="ic_side ic_list_reorder" title="접기"></span>
+        </span>
+        <span class="ic_side ic_done editmode" title="접기" style="display:none;"></span>
+        <span class="ic_side ic_cancel editmode" title="접기" style="display:none;"></span>
+        <span class="groupManage ic_side ic_side_setting normalmode" title="접기"></span>
+    </span>
+</h1>
+
+<ul class="side_depth" style="display: block;">
+    <li class="group ui-state-disabled">
+        <p class="title on">
+            <a>
+                <ins class="ic"></ins>
+                <span class="contactTag" title="전체 주소록">전체 주소록</span>
+            </a>
+        </p>
+		
+    </li>
+	<li class="new">
+		<p class="title">
+			<ins class="ic"></ins>
+			
+			<span data-event="addGroup" class="">
+				<a href="#">연락처 주소록 </a>
+			</span>
+		</p>
+		
+		<div id="addList">
+			<th:block th:each="myAddress:${myAddressList}">
+				<div>
+					<a href="#" th:text="${myAddress.bookName}" th:onclick="location.href='@{/address/myAddress(listPk=${myAddress.listPk})}'"></a>
+				</div>
+			</th:block>
+			
+		</div>
+		
+	</li>
+</ul>
+
+<!-- <div id="컨트롤러에서 조회해서 뿌려준다.">11111 <br>22222 </div> -->
+
+
+
+<input type="text" placeholder="연락처 그룹 이름" name="bookName" id="groupName" value="">
+<input type="button" value="주소록 그룹 추가" onclick="goAddress();" id="groupAdd">
+<!-- <div id="등록할때마다 계속 조회를해서 다시ㅡㄱ려준다"></div> -->
+
+<!-- <div id="insertDiv"></div> -->
+
+</section>
+<!-- <input class="edit" type="text" placeholder="연락처 그룹 이름" > -->
+
+	
+    
+    		
+    		<!----------- 공용 주소록 리스트 ----------------->
+				<section class="lnb" data-type="USER"><h1 class="user">
+    <a data-bypass="" class="side_toggle">
+        <ins class="ic"></ins>
+        <span class="ic_side ic_hide_up" title="접기"></span>
+        <span class="txt" title="공용 주소록" >공용 주소록</span>
+    </a>
+    <span class="btn_wrap">
+        <span class="btn_ic_list_reorder normalmode">
+            <span class="ic_side ic_list_reorder" title="접기"></span>
+        </span>
+        <span class="ic_side ic_done editmode" title="접기" style="display:none;"></span>
+        <span class="ic_side ic_cancel editmode" title="접기" style="display:none;"></span>
+        <span class="groupManage ic_side ic_side_setting normalmode" title="접기"></span>
+    </span>
+</h1>
+
+<ul class="side_depth" style="display: block;">
+    <li class="group ui-state-disabled">
+        <p class="title on">
+            <a href="/address/addressList">
+                <ins class="ic"></ins>
+                <span class="contactTag" title="공용 주소록" >공용 주소록</span>
+            </a>
+        </p>
+    </li>
+</ul></section>
+			
 			<div>
 				<table class="table">
 					<thead>
@@ -38,7 +121,9 @@
 								<td th:text="${address.empTell}"></td>
 								<td th:text="${address.empEmail}"></td>
 								<td th:text="${address.deptName}"></td>
-								<td th:text="${address.empAddr}"></td>
+								<td th:text="${address.empAddr}+' '+${address.empDetailAddr}"></td>
+								<td></td>
+								<td></td>
 								
 							</tr>
 						</th:block>
@@ -48,8 +133,8 @@
     	
     	
     	
-    	
-    	
+    	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    	<script type="text/javascript" src="../js/address/address.js"></script>
     	
     
     </div>
