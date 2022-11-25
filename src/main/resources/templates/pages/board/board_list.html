@@ -6,15 +6,161 @@
 
 
 <div layout:fragment="content">
+	<!-- 게시판검색 -->
+ 	<div class="row mb-3">
+		<div class="col">
+			<form th:action="@{/board/boardList}" method="post">
+				<table class="table align-middle table-bordered text-center test"><!-- table-borderless -->
+					<colgroup>
+						<col width="8%">
+						<col width="8%">
+						<col width="15%">
+						<col width="8%">
+						<col width="19%">
+						<col width="8%">
+						<col width="8%">
+						<col width="18%">
+						<col width="8%">
+					</colgroup>
+					<tr>
+						<td rowspan="2">
+							<div class="row">
+								<div class="col-12">
+									검 색
+								</div>
+								<div class="col-12">
+									조 건
+								</div>
+							</div>
+						</td>
+						<td class="searchTitle">카테고리</td>
+						<td>
+						<!-- 	<select class="form-select" name="cateCode">
+								<option value="" th:selected="${paramMap['cateCode'] == null or paramMap['cateCode'] eq ''}">전체</option>
+								<option th:each="categoryInfo: ${categoryList}" th:text="${categoryInfo.cateName}" th:value="${categoryInfo.cateCode}" th:selected="${paramMap['cateCode'] eq categoryInfo.cateCode}"></option>
+							</select> -->
+						</td>
+						<td class="searchTitle">글제목</td>
+						<td colspan="2">
+							<input class="form-control" type="text" name="boardTitle" id="" th:value="${paramMap['boardTitle']}" >
+						</td>
+						<td class="searchTitle">작성자</td>
+						<td>
+							<input class="form-control" type="text" name="userId" id="" th:value="${paramMap['userId']}" >
+						</td>
+						<td rowspan="2">
+							<button type="submit" class="btn btn-primary" style="height: 90px;">Search</button>
+						</td>
+					</tr>
+					<tr>
+						<td class="searchTitle">작성일</td>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-6">
+									<input class="form-control" type="date" name="fromDate" id="" th:value="${paramMap['fromDate']}" >
+								</div>
+								<div class="col-6">
+									<input class="form-control" type="date" name="toDate" id="" th:value="${paramMap['toDate']}" >
+								</div>
+							</div>
+						</td>
+						<td class="searchTitle">상태</td>
+						<td colspan="2">
+							<!-- <div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
+							  <label class="form-check-label" for="">전체</label>
+							</div>
+				   			<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+							  <label class="form-check-label" for="">판매중</label>
+							</div>
+				   			<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
+							  <label class="form-check-label" for="">매진</label>
+							</div> -->
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+	
+	
 	<div class="row">
+		<div class="col">
+			<table class="table table-striped table-hover text-center align-middle">
+				<colgroup>
+					<col width="10%">
+					<col width="30%">
+					<col width="20%">
+					<col width="20%">
+					<col width="10%">
+					<col width="10%">
+				</colgroup>
+				<thead style="font-size: 1.1rem;">
+					<tr>
+						<td>글번호</td>
+						<td>글제목</td>
+						<td>작성자</td>
+						<td>작성일</td>
+						<td>조회수</td>
+						<td>추천수</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list : ${boardList}">
+						<td th:text="${list.boardNum}"></td>
+						<td>
+							<a th:href="@{/board/boardDetail(boardNum=${list.boardNum})}">
+								<span th:text="${list.boardTitle}">
+								</span>
+								&nbsp; 
+								<th:block th:if="${list.replyCount ne 0}">
+									<span style="color: #f56642;">[</span> 
+									<span style="color: #f56642;" th:text="${list.replyCount}"></span>
+									<span style="color: #f56642;">]</span> 
+								</th:block>
+								<th:block th:unless="${list.replyCount ne 0}" >
+								</th:block>
+								
+								<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
+	                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+	                           		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
+	                            </th:block>
+	                              
+	                            <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
+	                            </th:block>
+							</a>
+						</td>
+						<td th:text="${list.userId}"></td>
+						<td th:text="${#strings.substring(list.boardRegDate,0,10)}"></td>
+						<td th:text="${list.boardReadCnt}"></td>
+						<td th:text="${list.likeNum}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 게시판검색조회 -->
+	<div class="row">
+		<div class="row">
+			<div class="col-2">
+				<button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/regBoardForm}'|">글쓰기</button>
+			</div>
+		</div> 
+	</div>
+	
+	<!-- 게시판원본 -->
+	<!-- <div class="row">
 		<div class="col-12">
 			<table class="table table-bordered">
 			
 				<colgroup>
 					<col width="10%">
-					<col width="40%">
+					<col width="30%">
 					<col width="20%">
 					<col width="20%">
+					<col width="10%">
 					<col width="10%">
 				</colgroup>
 				<thead>
@@ -24,11 +170,12 @@
 						<th>작성자</th>
 						<th>작성일</th>
 						<th>조회수</th>
-						<!-- <th>조회수</th> -->
+						<th>추천수</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="board : ${list}">
+					<th:block th:each="board : ${list}" >
 						<tr>
 							<td th:text="${board.boardNum}"></td>
 							<td>
@@ -45,7 +192,7 @@
 									</th:block>
 									
 									<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq board.boardRegDate}">
-		                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+		                                 <span style="color: #DC3535;" th:text="N"></span>
 	                            		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
 		                            </th:block>
 		                              
@@ -56,6 +203,7 @@
 							<td th:text="${board.userId}"></td>
 							<td th:text="${#strings.substring(board.boardRegDate,0,10)}"></td>
 							<td th:text="${board.boardReadCnt}"></td>
+							<td th:text="${board.likeNum}"></td>
 						</tr>
 					</th:block>
 				</tbody>
@@ -66,7 +214,21 @@
 				<button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/regBoardForm}'|">글쓰기</button>
 			</div>
 		</div> 
-	</div>
+	</div> -->
+	<!-- 페이징 처리 -->
+<!-- 	<div class="row">
+		<div align="center">
+			<th:block th:if="${boardVO.prev}">
+				<a th:text="prev" th:href="@{/board/boardList(nowPage=${boardVO.beginPage - 1})}"></a>
+			</th:block>
+			<th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
+				<a th:text="${pageNum}" th:href="@{/board/boardList(nowPage=${pageNum})}"></a>
+			</th:block>
+			<th:block th:if="${boardVO.next}">
+				<a th:text="next" th:href="@{/board/boardList(nowPage=${boardVO.endPage + 1})}"></a>
+			</th:block>
+		</div>
+	</div> -->
 </div>
 
 </html>

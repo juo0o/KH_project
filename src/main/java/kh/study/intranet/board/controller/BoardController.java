@@ -1,6 +1,7 @@
 package kh.study.intranet.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.study.intranet.board.service.BoardLikeService;
 import kh.study.intranet.board.service.BoardService;
@@ -18,6 +21,7 @@ import kh.study.intranet.board.service.ReplyService;
 import kh.study.intranet.board.vo.BoardLikeVO;
 import kh.study.intranet.board.vo.BoardVO;
 import kh.study.intranet.board.vo.ReplyVO;
+import kh.study.intranet.config.appDateUtil;
 
 @Controller
 @RequestMapping("/board")
@@ -33,24 +37,49 @@ public class BoardController {
 	private BoardLikeService boardLikeService;
 
 	// 게시글 목록 조회
-	@GetMapping("/boardList")
-	public String boardList(BoardVO boardVO, Model model) {
+	@RequestMapping("/boardList")
+	public String boardList(@RequestParam Map<String, String> paramMap,BoardVO boardVO, Model model) {
 
-		List<BoardVO> list = boardService.boardList(boardVO);
+		model.addAttribute("boardList", boardService.selectBoardList(paramMap));
+		
+		
+		// 현재 날짜
+		String nowDate = appDateUtil.getNowDateToString("-");// 2020-10-10
+		// 한달 전날짜
+		String beforeDate = appDateUtil.getBeforeMonthDateToString();
 
-
-		model.addAttribute("list", list);
+		// 넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
+		if (paramMap.get("fromDate") == null) {
+			paramMap.put("fromDate", beforeDate);
+		}
+		if (paramMap.get("toDate") == null) {
+			paramMap.put("toDate", nowDate);
+		}
+		
+		
+		
+		
+		//전체 데이터 수
+		int totalCnt = boardService.selectBoardCnt();
+		
+		//페이지 정보세팅
+		boardVO.setTotalDataCnt(totalCnt);
+		boardVO.setPageInfo();
+		
+//		//게시판 목록 조회
+//		List<BoardVO> list = boardService.boardList(boardVO);
+//		model.addAttribute("list", list);
+		
+		model.addAttribute("paramMap", paramMap);
+		
 
 		return "pages/board/board_list";
 	}
-	// 댓글수 업데이트
-	// model.addAttribute("replyCount",boardService.updateReplyCount(boardNum)) ;
-
-	// boardService.updateReplyCount(boardNum);
+	
 
 	// 상세 게시글 조회
 	@GetMapping("/boardDetail")
-	public String boardDetail(int boardNum, ReplyVO replyVO, BoardLikeVO boardLikeVO, Model model) {
+	public String boardDetail(int boardNum,String aaa, ReplyVO replyVO, BoardLikeVO boardLikeVO, Authentication authentication , Model model) {
 	    
 		// 게시글 상세 조회
 		model.addAttribute("detail", boardService.boardDetail(boardNum));
@@ -59,17 +88,54 @@ public class BoardController {
 		model.addAttribute("reply", replyService.replyList(boardNum));
 		
 		
+		//좋아요 상태 확인
+		User user = (User)authentication.getPrincipal();
+		boardLikeVO.setUserId(user.getUsername());
+		
+		BoardLikeVO result = boardLikeService.boardLikeCheck(boardLikeVO);
 
+		boolean isLike;
+		
+		//좋아요가 눌리지 않은 상태
+		if(result == null) {
+			model.addAttribute("like", false);
+		}
+		else{
+		//좋아요를 누른상태
+			model.addAttribute("like", true);
+		}
+		
+		
 		return "pages/board/board_detail";
 		
 	}
 	
 	//게시글 좋아요 기능
+	@ResponseBody
 	@PostMapping("/insertLike")
-	public String insertLike(BoardLikeVO boardLikeVO, Model model) {
+	public boolean insertLike(BoardLikeVO boardLikeVO, Model model, Authentication authentication) {
+		//id확인
+		User user = (User)authentication.getPrincipal();
+		boardLikeVO.setUserId(user.getUsername());
+		
+		
 		boardLikeService.insertLike(boardLikeVO);
 		
-		return"redirect:/board/boardDetail";
+		//좋아요 상태 확인
+		BoardLikeVO isLike = boardLikeService.boardLikeCheck(boardLikeVO);
+
+		boolean result;
+		
+		//좋아요가 눌리지 않은 상태
+		if(isLike == null) {
+			result = false;
+		}
+		else{
+		//좋아요를 누른상태
+			result = true;
+		}
+		
+		return result;
 	}
 	
 
@@ -102,10 +168,7 @@ public class BoardController {
 		User user = (User) authentication.getPrincipal();
 		boardVO.setUserId(user.getUsername());
 
-		System.out.println("!!!!!" + boardVO);
-		System.out.println("!!!!!" + boardVO);
-		System.out.println("!!!!!" + boardVO);
-		System.out.println("!!!!!" + boardVO);
+	
 		// 게시글 등록메소드 실행
 		boardService.regBoard(boardVO);
 		return "redirect:/board/boardList";

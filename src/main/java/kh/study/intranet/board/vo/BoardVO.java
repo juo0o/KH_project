@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BoardVO  {
+public class BoardVO extends PageVO {
 	private int boardNum;
 	private String userId;
 	private String boardTitle;

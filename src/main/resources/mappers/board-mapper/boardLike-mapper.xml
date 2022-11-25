@@ -9,14 +9,14 @@
 		<result column="LIKE_CHECK" property="likeCheck" />
 	</resultMap>
 
-	<!-- 좋아요 확인체크 -->
-<!-- 	<select id="boardLikeCheck" resultMap="boardLike">
-		SELECT COUNT(*)
-		FROM
-		BOARD_LIKE
+	
+	<select id="boardLikeCheck" resultMap="boardLike">
+		SELECT LIKE_NUM
+			, BOARD_NUM 
+		FROM BOARD_LIKE
 		WHERE BOARD_NUM = #{boardNum}
 		AND USER_ID = #{userId}
-	</select> -->
+	</select>
 
 	<!-- 게시글 좋아요 기능(추천,취소) -->
 	<insert id="insertLike">
