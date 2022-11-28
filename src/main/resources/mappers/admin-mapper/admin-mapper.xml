@@ -13,7 +13,7 @@
 		<result column="EMP_BIRTHDAY" 				property="empBirthDay"/>
 		<result column="EMP_TELL" 					property="empTell"/>
 		<result column="EMP_ADDR" 					property="empAddr"/>
-		<result column="EMP_DEATAIL_ADDR" 			property="empDetailAddr"/>
+		<result column="EMP_DETAIL_ADDR" 			property="empDetailAddr"/>
 		<result column="EMP_EMAIL" 					property="empEmail"/>
 		<result column="DEPT_CODE" 					property="deptCode"/>
 		<result column="DEPT_NAME" 					property="deptName"/>
@@ -27,8 +27,37 @@
 	
 	
 	<select id="selectEmpList" resultMap="empVO">
-		SELECT * FROM EMP
+		SELECT USER_ID
+			   , EMP_NUM
+			   , EMP_NAME
+			   , EMP_GENDER
+			   , EMP_BIRTHDAY
+			   , EMP_TELL
+			   , EMP_ADDR
+			   , EMP_DETAIL_ADDR
+			   , EMP_EMAIL
+			   , DEPT_CODE
+			   , DEPT_NAME
+			   , EMP_POSITION
+			   , EMP_ROLE
+			   , EMP_PICTURE_REFILE_NAME
+			   , EMP_HIRE_DATE
+		FROM EMP
 	</select>
+	
+	<update id="updateEmpAdmin" parameterType="HashMap">
+		<if test='COLUMN != null and COLUMN.toString().equals("DEPT_CODE")' >
+			UPDATE EMP 
+			        SET ${COLUMN} = #{VALUE}
+			            , DEPT_NAME = (SELECT DEPT_NAME FROM DEPT WHERE DEPT_CODE =  #{VALUE})
+			WHERE USER_ID = #{USER_ID}
+		</if>
+		<if test='COLUMN != null and !COLUMN.toString().equals("DEPT_CODE")'>
+			UPDATE EMP 
+						SET ${COLUMN} = #{VALUE} 
+			WHERE USER_ID = #{USER_ID}
+		</if>
+	</update>
 	
 	
 </mapper>

@@ -1,6 +1,7 @@
 package kh.study.intranet.admin.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -56,21 +57,25 @@ public class AdminlController {
 	}
 	//사원정보수정
 	
+	@ResponseBody
 	@RequestMapping("/adminUpdateUser")
-	public String adminUpdateUser(UserVO userVO, Model model) {
+	public UserVO adminUpdateUser(UserVO userVO ,String adminUpdateKey,String adminModalSelect , Model model) {
 		
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println(userVO);
-		System.out.println("~~~~~~~~~~~~~~ ");
-		System.out.println("~~~~~~~~~~~~~~ ");
-		System.out.println("~~~~~~~~~~~~~~ ");
-		System.out.println("~~~~~~~~~~~~~~ ");
-		System.out.println("~~~~~~~~~~~~~~ ");
-		System.out.println("~~~~~~~~~~~~~~ ");
+		Map<String, Object> update = new HashMap<>();
 		
-		return "redirect:/admin/adminUpdateUserForm?userId=" + userVO.getUserId();
+		update.put("COLUMN", adminUpdateKey);
+		update.put("VALUE", adminModalSelect);
+		update.put("USER_ID", userVO.getUserId());
+		
+//		System.out.println(update.get("COLUMN"));
+//		System.out.println(update.get("VALUE"));
+//		System.out.println(update.get("USER_ID"));
+		
+		adminService.updateEmpAdmin(update);
+		
+		
+		
+		return userService.selectUserInfo(userVO);
 	}
 	
 	//직원등록

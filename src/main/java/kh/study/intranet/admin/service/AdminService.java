@@ -8,4 +8,6 @@ import kh.study.intranet.main.vo.UserVO;
 public interface AdminService {
 	
 	List<UserVO> selectEmpList();
+	
+	void updateEmpAdmin( Map<String, Object> update);
 }

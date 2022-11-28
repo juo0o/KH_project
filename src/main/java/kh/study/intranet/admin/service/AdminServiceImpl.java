@@ -16,15 +16,17 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
-
-
 	@Override
 	public List<UserVO> selectEmpList() {
 		
 		return sqlSession.selectList("adminMapper.selectEmpList");
 	}
 
-	
+	public void updateEmpAdmin(Map<String, Object> update) {
+		
+		sqlSession.insert("adminMapper.updateEmpAdmin", update);
+		
+	}
 	
 	
 

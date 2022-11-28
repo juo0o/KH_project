@@ -32,8 +32,11 @@ layout:decorate="~{layout/base_layout}">
 				<div class="col-4 memDiv" style="text-align: center; padding-top: 7%;">사진</div>      
 			    <div class="col-4 memDiv"> <img id="empImg" alt="" th:src="|/imgs/user/${userInfo.empPictureRefileName}|" style="width: 100%; height: 100%;"> </div> 
 			    
-			    <div class="col-4 memDiv" style="text-align: center; padding-top: 6%;" >
+			    <div class="col-4 memDiv" style="text-align: center; padding-top: 6%;"  th:if="${#authentication.name eq userInfo.userId}">
 				    <input class="btn btn-outline-info" type="button" value="변경" onclick="regPictureModal()" >   
+			    </div>    
+			    <div class="col-4 memDiv" style="text-align: center; padding-top: 6%;"  th:unless="${#authentication.name eq userInfo.userId}">
+				   	<span>&nbsp;</span> 
 			    </div>    
 		
 				<div class="col-4 memDiv">아이디</div>      
@@ -42,11 +45,21 @@ layout:decorate="~{layout/base_layout}">
 			
 				<div class="col-4 memDiv">비밀번호</div>     
 				<div class="col-4 memDiv">&nbsp;</div>     
-				<div class="col-4 memDiv"> <input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('password')"> </div>     
+				<div class="col-4 memDiv" th:if="${#authentication.name eq userInfo.userId}"> 
+					<input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('password')"> 
+				</div>     
+				<div class="col-4 memDiv" th:unless="${#authentication.name eq userInfo.userId}">
+					<span>&nbsp;</span>
+				</div>     
 			 
 				<div class="col-4 memDiv">이름</div>     
 				<div class="col-4 memDiv">[[${userInfo.empName}]]</div>     
-				<div class="col-4 memDiv"> <input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('name')"> </div>     
+				<div class="col-4 memDiv"  th:if="${#authentication.name eq userInfo.userId}"> 
+					<input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('name')"> 
+				</div>   
+				<div class="col-4 memDiv"  th:unless="${#authentication.name eq userInfo.userId}"> 
+					<span>&nbsp;</span>
+				</div>     
 				
 				<div class="row" style="text-align: center;" sec:authorize="hasRole('ROLE_ADMIN')">
 					<div class="col-4 memDiv" style="padding-left: 18px;">권한</div>     
@@ -73,21 +86,32 @@ layout:decorate="~{layout/base_layout}">
 					<span>&nbsp;</span>
 				</div>     
 				
-				
-				
 				<div class="col-4 memDiv">주소</div>     
 				<div class="col-4 memDiv">[[${userInfo.empAddr}]]</div>     
-				<div class="col-4 memDiv"> <input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('addr')"> </div>     
+				<div class="col-4 memDiv" th:if="${#authentication.name eq userInfo.userId}"> 
+					<input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('addr')"> 
+				</div>     
+				<div class="col-4 memDiv" th:unless="${#authentication.name eq userInfo.userId}"> 
+					<span>&nbsp;</span>
+				</div>     
 			
 				<div class="col-4 memDiv">상세주소</div>     
 				<div class="col-4 memDiv">[[${userInfo.empDetailAddr}]]</div>     
-				<div class="col-4 memDiv"> <input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('detailAddr')"> </div>     
+				<div class="col-4 memDiv" th:if="${#authentication.name eq userInfo.userId}">
+				 	<input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('detailAddr')">
+				</div>     
+				<div class="col-4 memDiv" th:unless="${#authentication.name eq userInfo.userId}">
+				 	<span>&nbsp;</span>
+				</div>     
 			
 				<div class="col-4 memDiv">이메일</div>     
 				<div class="col-4 memDiv">[[${userInfo.empEmail}]]</div>     
-				<div class="col-4 memDiv"> <input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('email')">  </div>    
-				
-				
+				<div class="col-4 memDiv" th:if="${#authentication.name eq userInfo.userId}"> 
+					<input class="btn btn-outline-info" type="button" value="변경" onclick="launchModal('email')">  
+				</div>    
+				<div class="col-4 memDiv" th:unless="${#authentication.name eq userInfo.userId}"> 
+					<span>&nbsp;</span>
+				</div>    
 				
 				<div class="col-4 memDiv">입사일</div>     
 				<div class="col-4 memDiv">[[${userInfo.empHireDate}]]</div>     
@@ -96,7 +120,7 @@ layout:decorate="~{layout/base_layout}">
 		
 		
 		
-		<!-- 부서,직급변경모달 -->
+		<!-- 관리자 모달 -->
 			<div class="modal fade" id="adminhModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -105,23 +129,22 @@ layout:decorate="~{layout/base_layout}">
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						
-					<form action="/admin/adminUpdateUser" name="updateUserInfoAdmin" id="updateInfo" method="post">
 						<div class="modal-body">
+					<form name="adminUpdateUserForm" id="adminUpdateUserForm" method="post">
 								
 								<span id="admin-modal-text"></span>
 								
-								<input id="userId" name="userId" class="form-control" type="text" th:value="${userInfo.userId}" >
+								<input id="userId" name="userId" class="form-control" type="hidden" th:value="${userInfo.userId}" >
 								<input id="adminUpdateKey" name="adminUpdateKey" class="form-control" type="hidden" >
 								
 								<select class="form-select w-25" id="adminModalSelect" name="adminModalSelect" style="display: inline-block;">
 								</select>
+					</form>
 					    </div>
-						
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
-							<button type="submit" class="btn btn-outline-danger">변경</button>
+							<button type="button" class="btn btn-outline-danger" onclick="adminUpdateUser()" >변경</button>
 						</div>
-					</form>
 					</div>
 				</div>
 			</div>
@@ -147,7 +170,7 @@ layout:decorate="~{layout/base_layout}">
 						
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >닫기</button>
-							<button type="button" class="btn btn-outline-danger" onclick="updateUserInfo()">변경</button>
+							<button type="submit" class="btn btn-outline-danger" onclick="updateUserInfo()">변경</button>
 						</div>
 					</div>
 				</div>
@@ -177,13 +200,6 @@ layout:decorate="~{layout/base_layout}">
 					</div>
 				</div>
 			</div>
-		
-		
-
-	
-	
-	
-	
 
 	</div>
 </html>
