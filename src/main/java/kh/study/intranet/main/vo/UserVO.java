@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UserVO  {
+public class UserVO extends PageVO  {
 	
 //		@NotBlank(message= "ID는 필수입력사항입니다.")
 		private String userId;

@@ -6,52 +6,227 @@ layout:decorate="~{layout/base_layout}">
 
 
 	<div layout:fragment="content">
-			조회조회
 			
-			<div>결재현황</div>
-			<div class="row">
-				<div class="col-4">
-					<div class="card text-center text-success" style="width: 18rem;">
-						<div class="card-body">
-							<h5 class="card-title">결재대기</h5>
-							<br> <br>
-							<h3 class="card-subtitle mb-2 text-muted">1 건</h3>
-						</div>
-					</div>
-				</div>
-				<div class="col-4">
-					<div class="card text-center text-success" style="width: 18rem;">
-						<div class="card-body">
-							<h5 class="card-title">결재중</h5>
-							<br> <br>
-							<h3 class="card-subtitle mb-2 text-muted">2 건</h3>
-						</div>
-					</div>
-				</div>
-				<div class="col-4">
-					<div class="card text-center text-success" style="width: 18rem;">
-						<div class="card-body">
-							<h5 class="card-title">결재완료</h5>
-							<br> <br>
-							<h3 class="card-subtitle mb-2 text-muted">3 건</h3>
-						</div>
-					</div>
-				</div>
-			</div>
+			<form th:action="@{/admin/selectEmpList}" method="post">
+				<table class="table align-middle table-bordered text-center test">
+					<colgroup>
+						<col width="8%">
+						<col width="8%">
+						<col width="15%">
+						<col width="8%">
+						<col width="19%">
+						<col width="8%">
+						<col width="8%">
+						<col width="18%">
+						<col width="8%">
+					</colgroup>
+					<tr>
+						<td rowspan="2">
+							<div class="row">
+								<div class="col-12">
+									검 색
+								</div>
+								<div class="col-12">
+									조 건
+								</div>
+							</div>
+						</td>
+						<td class="searchTitle">부서</td>
+						<td>
+							<select class="form-select" name="deptCode">
+								<option value="" th:selected="${paramMap['deptCode'] == null or paramMap['deptCode'] eq ''}">전체</option>
+								<option th:each="deptInfo: ${deptList}" th:text="${deptInfo.deptName}" th:value="${deptInfo.deptCode}" th:selected="${paramMap['deptCode'] eq deptInfo.deptCode}"></option>
+							</select>
+						</td>
+						<td class="searchTitle">이름</td>
+						<td colspan="2">
+							<input class="form-control" type="text" name="empName" id="" th:value="${paramMap['empName']}" >
+						</td>
+						<td class="searchTitle">직위</td>
+						<td>
+							<input class="form-control" type="text" name="empPosition" id="" th:value="${paramMap['empPosition']}" >
+						</td>
+						<td rowspan="2">
+							<button type="submit" class="btn btn-primary" style="height: 90px;">Search</button>
+						</td>
+					</tr>
+					<tr>
+						<td class="searchTitle">입사일</td>
+						<td colspan="3">
+							<div class="row">
+								<div class="col-6">
+									<input class="form-control" type="date" name="fromDate" id="" th:value="${paramMap['fromDate']}" >
+								</div>
+								<div class="col-6">
+									<input class="form-control" type="date" name="toDate" id="" th:value="${paramMap['toDate']}" >
+								</div>
+							</div>
+						</td>
+						<td class="searchTitle">상태</td>
+						<td colspan="2">
+							<!-- <div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
+							  <label class="form-check-label" for="">전체</label>
+							</div>
+				   			<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+							  <label class="form-check-label" for="">판매중</label>
+							</div>
+				   			<div class="form-check form-check-inline">
+							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
+							  <label class="form-check-label" for="">매진</label>
+							</div> -->
+						</td>
+					</tr>
+				</table>
+			</form>
 			<br>
-			<!-- 리스트 -->
-			<div>결재 수신목록 &nbsp;&nbsp;
-				<span>
-					<select style="border: none;"id="selectAppCate" >
-						<option>전체</option>
-						<option class="app" th:each="appBoxList : ${appBoxList}" th:value="${appBoxList.appCate}" th:text="${appBoxList.appCate}"></option>
-					</select>
-				</span>
-			</div>
+		
 			<div>
+				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regEmpModal">
+				  사원등록
+				</button>
+				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regDeptModal">
+				  부서등록
+				</button>
+			</div>
+			<!-- 회원등록 모달 -->
+			<div class="modal fade" id="regEmpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">사원등록</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form action="" id="regNewEmp">
+								이름
+								<input type="text" name="newEmpName" >
+								<br>
+								부서
+								<input type="text" name="newDept">
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" onclick="regNewUser()">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- 부서등록 모달 -->
+			<div class="modal fade" id="regDeptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">사원등록</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form action="" id="regDept">
+								부서이름
+								<input type="text" name="deptName" >
+								<br>
+								부서전화번호
+								<input type="text" name="deptTell">
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary" onclick="regDept()">등록</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+			//==============회원정보 변경하고 화면 다시뿌려줌==================
+			function regNewUser() {
+				let form = $('#regNewEmp')[0];
+				
+					$.ajax({
+						url: '/admin/regNewEmp', //요청경로
+						type: 'post',
+						data: new FormData(form), //필요한 데이터
+						
+						processData: false,
+						contentType: false,
+						cache: false,
+						success: function(result) {
+//						// 회원정보 만들어줌
+//						let userInfoPage = document.querySelector('#userInfo');
+//						userInfoPage.innerHTML ='';
+//						let str='';
+                                                                                                                                             
+//						userInfoPage.insertAdjacentHTML('afterbegin', str);       
+						                                                                                        
+						},                                                                                                                                                  
+						error: function() {         
+							Swal.fire({
+							  icon: 'error',
+							  title: '변경실패',
+							  text: '',
+							});                                                                                                                         
+							return;
+						}
+					});
+					
+					Swal.fire({
+						  icon: 'success',
+						  title: '사원등록성공',
+						  text: '',
+						}).then((result) => {
+// 					       location.href="/user/updateUserForm";
+							$('#regEmpModal').modal('hide');
+					        }); 
+			}
+			
+			function regDept() {
+				let form = $('#regDept')[0];
+				
+					$.ajax({
+						url: '/admin/regDept', //요청경로
+						type: 'post',
+						data: new FormData(form), //필요한 데이터
+						
+						processData: false,
+						contentType: false,
+						cache: false,
+						success: function(result) {
+//						// 회원정보 만들어줌
+//						let userInfoPage = document.querySelector('#userInfo');
+//						userInfoPage.innerHTML ='';
+//						let str='';
+                                                                                                                                             
+//						userInfoPage.insertAdjacentHTML('afterbegin', str);       
+						                                                                                        
+						},                                                                                                                                                  
+						error: function() {         
+							Swal.fire({
+							  icon: 'error',
+							  title: '변경실패',
+							  text: '',
+							});                                                                                                                         
+							return;
+						}
+					});
+					
+					Swal.fire({
+						  icon: 'success',
+						  title: '부서등록성공',
+						  text: '',
+						}).then((result) => {
+// 					       location.href="/user/updateUserForm";
+							$('#regDeptModal').modal('hide');
+					        }); 
+			}
+			
+			</script>				
 				<table class="table">
 					<thead>
 						<tr bordercolor="sold 1px;">
+							<th scope="col">사번</th>
 							<th scope="col">이름</th>
 							<th scope="col">직위</th>
 							<th scope="col">휴대폰</th>
@@ -63,6 +238,7 @@ layout:decorate="~{layout/base_layout}">
 					<tbody id="appList">
 						<th:block th:each="emp : ${empList}">
 							<tr th:onclick="|location.href='@{/admin/adminUpdateUserForm(userId=${emp.userId})}'|">
+								<td th:text="${emp.empNum}">@mdo</td>
 								<td th:text="${emp.empName}">@mdo</td>
 								<td th:text="${emp.empPosition}">@mdo</td>
 								<td th:text="${emp.empTell}">Otto</td>
@@ -73,5 +249,22 @@ layout:decorate="~{layout/base_layout}">
 						</th:block>
 					</tbody>
 				</table>
+				
+				
+	<!-- 페이징 처리 -->
+    <div class="row">
+		<div align="center">
+			<th:block th:if="${pageVO.prev}">
+				<a th:text="prev" th:href="@{/admin/selectEmpList(nowPage=${pageVO.beginPage - 1})}"></a>
+			</th:block>
+			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+				<a th:text="${pageNum}" th:href="@{/admin/selectEmpList(nowPage=${pageNum})}"></a>
+			</th:block>
+			<th:block th:if="${pageVO.next}">
+				<a th:text="next" th:href="@{/admin/selectEmpList(nowPage=${pageVO.endPage + 1})}"></a>
+			</th:block>
+		</div>
+	</div>  
+				
 	</div>
 </html>

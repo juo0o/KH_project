@@ -24,7 +24,19 @@
 		<result column="EMP_HIRE_DATE" 				property="empHireDate"/>
 	</resultMap>
 	
+	<resultMap type="kh.study.intranet.emp.vo.DeptVO" id="deptVO">
+		<id column="DEPT_CODE" 						property="deptCode"/>
+		<result column="DEPT_NAME" 					property="deptName"/>
+		<result column="DEPT_TELL" 					property="deptTell"/>
 	
+	</resultMap>
+	
+	<select id="selectDeptList" resultMap="deptVO">
+		SELECT DEPT_CODE
+		       , DEPT_NAME
+		       , DEPT_TELL
+		FROM DEPT
+	</select>
 	
 	<select id="selectEmpList" resultMap="empVO">
 		SELECT USER_ID
@@ -45,6 +57,65 @@
 		FROM EMP
 	</select>
 	
+	<select id="selectEmpListSearchAndPage" resultMap="empVO">
+	
+		SELECT RN
+				, USER_ID
+				, EMP_NUM
+				, EMP_NAME
+				, EMP_TELL
+				, EMP_ADDR
+				, EMP_DETAIL_ADDR
+                , EMP_EMAIL
+                , DEPT_CODE
+                , DEPT_NAME
+                , EMP_ROLE
+                , EMP_POSITION
+                , EMP_PICTURE_ORIGIN_NAME
+                , EMP_PICTURE_REFILE_NAME
+                , EMP_HIRE_DATE
+		FROM		
+		(
+		SELECT ROWNUM AS RN
+				, USER_ID
+				, EMP_NUM
+				, EMP_NAME
+				, EMP_TELL
+				, EMP_ADDR
+				, EMP_DETAIL_ADDR
+                , EMP_EMAIL
+                , DEPT_CODE
+                , DEPT_NAME
+                , EMP_ROLE
+                , EMP_POSITION
+                , EMP_PICTURE_ORIGIN_NAME
+                , EMP_PICTURE_REFILE_NAME
+                , EMP_HIRE_DATE
+		FROM EMP
+        WHERE 1 = 1
+        <if test="deptCode != null and !deptCode.equals('')">
+		AND UPPER(DEPT_CODE) LIKE UPPER('%'||#{deptCode}||'%')
+		</if>		
+		<if test= "empName != null and !empName.equals('')">
+		AND UPPER(EMP_NAME) LIKE UPPER('%'||#{empName}||'%')
+		</if>
+		<if test= "empPosition != null and !empPosition.equals('')">
+		AND UPPER(EMP_POSITION) LIKE UPPER('%'||#{empPosition}||'%')
+		</if>
+		<if test="fromDate != null and !fromDate.equals('')">
+		AND TO_CHAR(EMP_HIRE_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
+		</if>		
+		<if test="toDate != null and !toDate.equals('')">
+		AND TO_CHAR(EMP_HIRE_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+		</if>	
+		ORDER BY EMP_NUM DESC 	
+        )
+        <if test ="startNum !=null and endNum != null">
+        WHERE RN &gt;= #{startNum} AND RN &lt;= #{endNum}
+        </if>
+	
+	</select>
+	
 	<update id="updateEmpAdmin" parameterType="HashMap">
 		<if test='COLUMN != null and COLUMN.toString().equals("DEPT_CODE")' >
 			UPDATE EMP 
@@ -58,6 +129,22 @@
 			WHERE USER_ID = #{USER_ID}
 		</if>
 	</update>
+	
+	<insert id="regNewEmp">
+		INSERT INTO REG_EMP VALUES( 
+									(SELECT 'EMP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(NEW_EMP_NUM, 5))), 0) + 1, 3, 0) FROM REG_EMP)
+									, #{newEmpName}
+									, #{newDept}
+								    )
+	</insert>
+	
+	<insert id="regDept">
+		INSERT INTO DEPT VALUES(
+							    (SELECT 'DEPT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(DEPT_CODE, 6))), 0) + 1, 3, 0) FROM DEPT)
+								, #{deptName}
+								, #{deptTell}
+								)
+	</insert>
 	
 	
 </mapper>
