@@ -1,9 +1,10 @@
 package kh.study.intranet.address.vo;
 
-import groovy.transform.ToString;
+
 import kh.study.intranet.emp.vo.EmpVO;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -20,6 +21,6 @@ public class AddressVO {
 	private String deptName;
 	private String empPosition;
 	
-	private EmpVO empVO;
+//	private EmpVO empVO;
 	
 }

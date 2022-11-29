@@ -14,6 +14,10 @@ public interface AddressService {
 	
 	List<AddressListVO> insertAddressList(String bookOwnerId);
 	
+	List<AddressVO> selectListPk(String listPk);
+	
+	void regMyAddress(AddressVO addressVO);
+	
 	
 	
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	>
+  
+<div layout:fragment="content">
+
+ <ul class="side_depth" style="display: block;">
+    <li class="group ui-state-disabled">
+        <p class="title on">
+            <a>
+                <ins class="ic"></ins>
+                <span class="contactTag" title="공용 주소록" >in 개인 주소록</span>
+            </a>
+        </p>
+    </li>
+</ul> 
+			
+			<div>
+				<table class="table">
+					<thead>
+						<tr bordercolor="sold 1px;">
+							<th scope="col">이름(표시명)</th>
+							<th scope="col">직위</th>
+							<th scope="col">휴대폰</th>
+							<th scope="col">이메일</th>
+							<th scope="col">부서</th>
+							<th scope="col">주소</th>
+							<th scope="col">메모</th>
+							<th scope="col">그룹</th>
+						</tr>
+					</thead>
+					<tbody >
+						 <th:block th:each="myAddress : ${myAddressList}" >
+						 	<tr> 
+								<td th:text="${myAddress.empName}"></td> 
+							 	<td >aa</td>
+								<td ></td>
+								<td ></td>
+								<td ></td>
+								<td ></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</th:block> 
+					</tbody>
+					
+				</table>
+<div style="text-align: center;">
+	<input type="button" value="연락처 추가하기" th:onclick="|location.href='@{/address/addAddress(listPk=${listPk})}'|">
+	
+</div>
+
+</div>
+</div>
+</html>

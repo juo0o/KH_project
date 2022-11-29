@@ -34,7 +34,6 @@ public class AddressController {
 		
 		model.addAttribute("myAddressList", addressService.insertAddressList(addressListVO.getBookOwnerId()));
 		
-		//System.out.println(addressService.insertAddressList(bookOwnerId));
 		
 		model.addAttribute("addressList", addressService.addressList());
 		
@@ -48,6 +47,7 @@ public class AddressController {
 		
 		User user = (User)authentication.getPrincipal();
 		addressListVO.setBookOwnerId(user.getUsername());
+		addressListVO.setBookName(addressListVO.getBookName());
 		
 		addressService.insertAddress(addressListVO);
 		
@@ -58,10 +58,28 @@ public class AddressController {
 
 	}
 	@GetMapping("/myAddress")
-	public String myAddress() {
+	public String myAddress(String listPk, Model model) {
 		
-		return "";
+		model.addAttribute("myAddressList", addressService.selectListPk(listPk));
+		model.addAttribute("listPk", listPk);
+		return "pages/address/myAddressList";
 	}
+	
+	//연락처 추가 클릭시
+	@GetMapping("/addAddress")
+	public String addAddress(String listPk,Model model) {
+
+		model.addAttribute("listPk", listPk);
+		
+		return "pages/address/insertAddress";
+	}
+	//연락처 등록
+	@PostMapping("/regAddress")
+	public String regAddress(String listPk,AddressVO addressVO,Model model) {
+		addressService.regMyAddress(addressVO);
+		return "redirect:/address/myAddress?listPk=" + listPk;
+	}
+	
 	
 	
 	

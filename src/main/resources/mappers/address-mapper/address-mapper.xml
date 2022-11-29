@@ -8,6 +8,7 @@
 		<id column="LIST_PK" property="listPk"/>
 		<result column="BOOK_OWNER_ID" property="bookOwnerId"/>
 		<result column="BOOK_NAME" property="bookName"/>
+		
 	</resultMap>
 		
 	<resultMap type="kh.study.intranet.address.vo.AddressVO" id="address">
@@ -21,7 +22,7 @@
 		<result column="DEPT_CODE" property="deptCode"/>
 		<result column="DEPT_NAME" property="deptName"/>
 		<result column="EMP_POSITION" property="empPosition"/>
-		<association property="empVO" resultMap="empMapper.emp"></association>
+
 	</resultMap>	
 	
 	<resultMap type="kh.study.intranet.emp.vo.EmpVO" id="emp">
@@ -64,11 +65,20 @@
 	FROM ADDRESS_BOOK_LIST
 	WHERE BOOK_OWNER_ID = #{bookOwnerId}
 	ORDER BY BOOK_NAME ASC
-	
-	
 	</select>
 					
-			
+	<select id="selectListPk" resultMap="address">
+	SELECT LIST_PK
+		, EMP_NAME
+		, EMP_TELL
+		, EMP_ADDR
+		, EMP_EMAIL
+		, DEPT_NAME
+		, EMP_POSITION
+		FROM ADDRESS_BOOK
+		WHERE LIST_PK = #{listPk} 		
+	</select>
+		
 	<insert id="insertAddress">
 	INSERT INTO ADDRESS_BOOK_LIST (
 			LIST_PK
@@ -81,17 +91,31 @@
 			,#{bookOwnerId}
 			,#{bookName}
 	)
-	
-	
 	</insert>
 	
-	
-		
-	
-	
-
-	
-	
+	<insert id="regMyAddress">
+	INSERT INTO ADDRESS_BOOK (
+				LIST_PK
+				,EMP_NAME
+				,EMP_TELL
+				,EMP_ADDR
+				,EMP_EMAIL
+				,DEPT_NAME
+				,EMP_POSITION
+	) 
+	VALUES (
+			(SELECT LIST_PK 
+					FROM 
+					ADDRESS_BOOK_LIST 
+					WHERE LIST_PK = #{listPk})
+			,#{empName}
+			,#{empTell}
+			,#{empAddr}
+			,#{empEmail}
+			,#{deptName}
+			,#{empPosition}
+	)
+	</insert>
 	
 	
 </mapper>

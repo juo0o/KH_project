@@ -46,7 +46,7 @@
 		<div id="addList">
 			<th:block th:each="myAddress:${myAddressList}">
 				<div>
-					<a href="#" th:text="${myAddress.bookName}" th:onclick="location.href='@{/address/myAddress(listPk=${myAddress.listPk})}'"></a>
+					<a href="#" th:text="${myAddress.bookName}" th:onclick="|location.href='@{/address/myAddress(listPk=${myAddress.listPk})}'|"></a>
 				</div>
 			</th:block>
 			

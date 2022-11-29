@@ -33,6 +33,24 @@ public class AddressServiceImpl implements AddressService{
 		
 		return sqlSession.selectList("addressMapper.insertAddressList",bookOwnerId);
 	}
+
+	
+
+	@Override
+	public void regMyAddress(AddressVO addressVO) {
+		sqlSession.insert("addressMapper.regMyAddress",addressVO);
+		
+	}
+
+	@Override
+	public List<AddressVO> selectListPk(String listPk) {
+		
+		System.out.println("!!!!!!!"+listPk);
+		System.out.println("!!!!!!!"+listPk);
+		System.out.println("!!!!!!!"+listPk);
+		System.out.println("!!!!!!!"+listPk);
+		return sqlSession.selectList("addressMapper.selectListPk",listPk);
+	}
 	
 	
 	
