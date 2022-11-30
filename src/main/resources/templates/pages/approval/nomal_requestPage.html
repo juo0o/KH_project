@@ -10,18 +10,11 @@
 	
 <div layout:fragment="content">
  	<div>
-		<form th:action="@{/approval/regNomal}" method="post">
+		<form th:action="@{/approval/approvalMark}" method="post">
 			<input type="hidden" name="appCateCode" value="NOMAL">
 	<!-- 문서 헤더 시작-->
 		<div style="margin-top: 27px; ">
 			<table style="width: 1000px; border-collapse: collapse !important; color: black; background: white; border: 1px solid black; font-size: 12px; font-family: malgun gothic, dotum, arial, tahoma;">
-				<colgroup>
-					<col style="width: 90px;">
-					<col style="width: 180px;">
-					<col style="width: 90px;">
-					<col style="width: 120px;">
-					<col style="width: 90px;">
-				</colgroup>
 
 				<tbody>
 					<tr>
@@ -47,30 +40,66 @@
 								<col style="width: 10%;">
 								<col style="width: 30%;">
 								<col style="width: 30%;">
-								<col style="width: 30%;">
 							</colgroup>
 							
 							
 								<tr style="border: 1px solid black; height: 17%; text-align: center;">
 									<td rowspan="3">결 <br> 재 <br> 선</td>
-									<td style="border: 1px solid black;">직책</td>
-									<td style="border: 1px solid black;">직책</td>
-									<td style="border: 1px solid black;">직책</td>
+									<td  style="border: 1px solid black;">팀장</td>
+									<td  style="border: 1px solid black;">부장</td>						
 								</tr>
 								
 								<tr style="border: 1px solid black; height: 17%">
 <!-- 									<td>a</td> -->
-									<td style="border: 1px solid black;">이름</td>
-									<td style="border: 1px solid black;">이름</td>
-									<td style="border: 1px solid black;">이름5</td>
+									<td style="border: 1px solid black;"> 
+										[[${ref.FIRST_EMP_NAME}]]
+									</td>
+									<!-- <td style="border: 1px solid black;" th:if="${receiveRefInfo.approvalVO.empVO.empPosition eq '팀장'}"
+										th:text="${receiveRefInfo.approvalVO.empVO.empName}">이름</td> -->
+								<!-- 	<td style="border: 1px solid black;" th:if="${receiveRefInfo.approvalVO.empVO.empPosition eq '부장'}"
+										th:text="${receiveRefInfo.approvalVO.empVO.empName}">이름</td> -->
+									<td style="border: 1px solid black;">
+										[[${ref.FINAL_EMP_NAME}]]
+									</td> 
 								</tr>
+								<tr style="border: 1px solid black;" >
 								
-								<tr style="border: 1px solid black;">
-<!-- 									<td>a</td> -->
-									<td style="border: 1px solid black;">도장</td>
-									<td style="border: 1px solid black;">도장</td>
-									<td style="border: 1px solid black;">도장</td>
+									<th:block th:if="${#authentication.name eq ref.FIRST_USER_ID}">
+										<td style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'Y'}">
+											<img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width:100PX;">
+										</td>
+										<td style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'N'}">
+											<input type="button" value="결재승인"
+											th:onclick="approvalMark([[${ref.FIRST_APPROVAL_EMP}]],[[${document.appSeq}]]);">
+										</td>
+									</th:block>
+									<th:block th:unless="${#authentication.name eq ref.FIRST_USER_ID}">
+										<td style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'Y'}">
+											<img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width:100PX;">
+										</td>
+										<td style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'N'}">
+										</td>
+									</th:block>
+									
+									
+									<th:block th:if="${#authentication.name eq ref.FINAL_USER_ID}">
+											<td style="border: 1px solid black;" id="approvalButton2" th:if="${ref.FINAL_APPROVAL == 'Y'}">
+												<img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width: 100px;">
+											</td>
+											<td style="border: 1px solid black;" id="approvalButton2" th:if="${ref.FINAL_APPROVAL == 'N'}">
+												<input type="button" value="결재승인"
+												th:onclick="approvalFinalMark([[${ref.FINAL_APPROVAL_EMP}]],[[${document.appSeq}]]);">
+											</td>
+									</th:block>
+									<th:block th:unless="${#authentication.name eq ref.FINAL_USER_ID}">
+											<td style="border: 1px solid black;" id="approvalButton2" th:if="${ref.FINAL_APPROVAL == 'Y'}">
+												<img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width: 50px;">
+											</td>
+											<td style="border: 1px solid black;" id="approvalButton2" th:if="${ref.FINAL_APPROVAL == 'N'}">
+											</td>
+									</th:block>
 								</tr>
+							
 								
 							</table>
 						</td>
@@ -83,7 +112,7 @@
 						</td>
 						
 						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-						<!-- 	<span th:text="${empInfo.deptName}"></span> -->
+							<span th:text="${document.empVO.deptName}"></span>
 						</td>
 						
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
@@ -91,15 +120,15 @@
 						</td>
 						
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<!-- <span th:text="${appSeq.appWriteDate}"></span> -->
+							<span th:text="${document.appWriteDate}"></span>
 						</td>
 						
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							문서번호
 						</td>
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left; font-size: 12px;">
-						<!-- 	<input type="hidden" th:value="${appSeq.appSeq}" name="appSeq">
-							<span th:text="${appSeq.appSeq}"></span> -->
+							<!-- <input type="hidden" th:value="${appSeq.appSeq}" name="appSeq"> -->
+							<span th:text="${document.appSeq}"></span>
 						</td>
 					</tr>
 					<tr>
@@ -107,7 +136,7 @@
 							기 안 자
 						</td>
 						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<!-- <span th:text="${empInfo.empName}"></span> -->
+							<span th:text="${document.empVO.empName}"></span>
 						</td>
 						
 						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
@@ -157,6 +186,7 @@
 							제  &nbsp;&nbsp;&nbsp; 목
 						</td>
 						<td>
+							<span th:text="${document.title}"></span>
 							<!-- <input style="border: none; width:900px;" type="text" name="title" value=""> -->
 						</td>
 							
@@ -165,6 +195,7 @@
 					<tr>
 					<!-- 본문내용 -->
 						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
+							<span th:text="${document.nomalVO.nomalContent}"></span>
 							<!-- <textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"></textarea> -->
 						</td>
 					</tr>
@@ -172,6 +203,8 @@
 			</table> <!-- 제목 및 내용 끝 --> 
 			</form>
 		</div>	
+	
+	<script type="text/javascript" th:src="@{/js/approval/request_approval.js}"></script>
 	
 </div>
 </html>

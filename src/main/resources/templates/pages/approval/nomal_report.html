@@ -58,32 +58,45 @@ layout:decorate="~{layout/base_layout}">
 								<col style="width: 10%;">
 								<col style="width: 30%;">
 								<col style="width: 30%;">
-								<col style="width: 30%;">
 							</colgroup>
 							
 							
 								<tr style="border: 1px solid black; height: 17%; text-align: center;">
 									<td rowspan="3">결 <br> 재 <br> 선</td>
-									<td style="border: 1px solid black;">직책</td>
-									<td style="border: 1px solid black;">직책</td>
-									<td style="border: 1px solid black;">직책</td>
+									<td  style="border: 1px solid black;">팀장</td>
+									<td  style="border: 1px solid black;">부장</td>
 								</tr>
 								
 								<tr style="border: 1px solid black; height: 17%">
 <!-- 									<td>a</td> -->
-									<td style="border: 1px solid black;">이름</td>
-									<td style="border: 1px solid black;">이름</td>
-									<td style="border: 1px solid black;">이름5</td>
-								</tr>
+										<td
+											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+											<select name="firstApprovalEmp" style="border: none;">
+												<option th:each="role : ${empRole}"
+													th:value="${role.empNum}" th:text="${role.empName}"
+													th:if="${role.empPosition eq '팀장'}"></option>
+										</select>
+										</td>
+										<!-- 부장 -->
+										<td
+											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+											<select name="finalApprovalEmp" style="border: none;">
+												<option th:each="role : ${empRole}"
+													th:value="${role.empNum}" th:text="${role.empName}"
+													th:if="${role.empPosition eq '부장'}"></option>
+										</select>
+										</td>
+									</tr>
 								
 								<tr style="border: 1px solid black;">
 <!-- 									<td>a</td> -->
 									<td style="border: 1px solid black;">도장</td>
 									<td style="border: 1px solid black;">도장</td>
-									<td style="border: 1px solid black;">도장</td>
 								</tr>
-								
 							</table>
+							<input type="hidden" value="N" name="firstApproval">
+							<input type="hidden" value="N" name="finalApproval">
+							<input type="hidden" value="결재대기" name="appSeqStatus">
 						</td>
 					
 					</tr>

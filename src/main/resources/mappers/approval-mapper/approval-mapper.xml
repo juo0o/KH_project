@@ -15,6 +15,7 @@
 		<association property="vacationVO" resultMap="vacation"/>
 		<association property="nomalVO" resultMap="nomal"/>
 		<association property="accountingVO" resultMap="accounting"/>
+		<association property="receiveRefVO" resultMap="receiveRef"/>
 	</resultMap>
 	
 	
@@ -206,38 +207,61 @@
 	</insert>
 	
 	<select id="selectApp" resultMap="approval">
-		SELECT APPROVAL.APP_SEQ
-			, APP_WRITE_DATE
-			, APPROVAL.APP_CATE_CODE
-	        , TITLE
+      SELECT RN
+         , APP_SEQ
+         , APP_WRITE_DATE
+         , APP_CATE_CODE
+           , TITLE
+            , USER_ID
+            , EMP_NAME 
+            , DEPT_NAME 
+            , APP_SEQ_STATUS
+            , APP_CATE_NAME
+      FROM 
+      (
+      SELECT ROWNUM AS RN
+         , APPROVAL.APP_SEQ
+         , APP_WRITE_DATE
+         , APPROVAL.APP_CATE_CODE
+           , TITLE
             , APPROVAL.USER_ID
             ,(SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME 
             ,(SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME 
-		FROM APPROVAL , APP_CATEGORY CATEGORY , EMP
-		WHERE APPROVAL.APP_CATE_CODE = CATEGORY.APP_CATE_CODE
-		AND APPROVAL.USER_ID = EMP.USER_ID
-		<if test="appSeq != null and !appSeq.equals('')">
-		AND APPROVAL.APP_SEQ = #{app_seq}
-		</if>
-		<if test="title != null and !title.equals('')">
-		AND UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')
-		</if>		
-		<if test="empName != null and !empName.equals('')">
-		AND EMP_NAME LIKE ('%'||#{empName}||'%')
-		</if>
-		<if test="appCateCode != null and !appCateCode.equals('')">
-		AND APPROVAL.APP_CATE_CODE = #{appCateCode}
-		</if>
-		<if test="fromDate != null and !fromDate.equals('')">
-		AND TO_CHAR(APP_WRITE_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
-		</if>		
-		<if test="toDate != null and !toDate.equals('')">
-		AND TO_CHAR(APP_WRITE_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-		</if>		
-		ORDER BY APPROVAL.APP_SEQ DESC
-		
-		
-	</select>
+            , APP_SEQ_STATUS
+            , APP_CATE_NAME
+      FROM APPROVAL , APP_CATEGORY CATEGORY , EMP , APP_RECEIVE_REF
+      WHERE APPROVAL.APP_CATE_CODE = CATEGORY.APP_CATE_CODE
+      AND APPROVAL.USER_ID = EMP.USER_ID
+      AND APPROVAL.APP_SEQ = APP_RECEIVE_REF.APP_SEQ
+      <if test="appSeqStatus != null and !appSeqStatus.equals('')">
+      AND APP_SEQ_STATUS = #{appSeqStatus}
+      </if>
+      <if test="appSeq != null and !appSeq.equals('')">
+      AND APPROVAL.APP_SEQ = #{appSeq}
+      </if>
+      <if test="title != null and !title.equals('')">
+      AND UPPER(TITLE) LIKE UPPER('%'||#{title}||'%')
+      </if>      
+      <if test="empName != null and !empName.equals('')">
+      AND EMP_NAME LIKE ('%'||#{empName}||'%')
+      </if>
+      <if test="appCateCode != null and !appCateCode.equals('')">
+      AND APPROVAL.APP_CATE_CODE = #{appCateCode}
+      </if>
+      <if test="fromDate != null and !fromDate.equals('')">
+      AND TO_CHAR(APP_WRITE_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
+      </if>      
+      <if test="toDate != null and !toDate.equals('')">
+      AND TO_CHAR(APP_WRITE_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+      </if>      
+      ORDER BY APPROVAL.APP_SEQ DESC
+      )
+      <if test ="startNum !=null and endNum != null">
+        WHERE RN &gt;= #{startNum} AND RN &lt;= #{endNum}
+        </if>
+      
+      
+   </select>
 	
 	<select id="selectBoxList" resultMap="approval"> 
 		SELECT DISTINCT APP_CATE_NAME, APPROVAL.APP_CATE_CODE
@@ -255,19 +279,54 @@
    </select>
 	
 	<select id="selectReciveRef" resultType="hashmap">
-		SELECT FIRST_APPROVAL_EMP
+		SELECT FIRST_APPROVAL
+		 	, FINAL_APPROVAL
+			, FIRST_APPROVAL_EMP
 			, (SELECT EMP_NAME
 			FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FIRST_APPROVAL_EMP) AS FIRST_EMP_NAME
-			
+			, (SELECT USER_ID FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FIRST_APPROVAL_EMP) AS FIRST_USER_ID
 			, FINAL_APPROVAL_EMP
 			, (SELECT EMP_NAME
-		FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FINAL_APPROVAL_EMP) AS FINAL_EMP_NAME
+			FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FINAL_APPROVAL_EMP) AS FINAL_EMP_NAME
+			, (SELECT USER_ID FROM EMP WHERE EMP_NUM = APP_RECEIVE_REF.FINAL_APPROVAL_EMP) AS FINAL_USER_ID
 		FROM APP_RECEIVE_REF
 		WHERE APP_SEQ = #{appSeq}
 	</select>
 	
+	<update id="updateApproval">
+		UPDATE APP_RECEIVE_REF
+			SET FIRST_APPROVAL = 'Y'
+				, APP_SEQ_STATUS = '결재중'
+		WHERE FIRST_APPROVAL_EMP = #{firstApprovalEmp}
+        AND APP_SEQ = #{appSeq}
+	</update> 
+	<update id="updateFinalApproval">
+		UPDATE APP_RECEIVE_REF
+			SET FINAL_APPROVAL = 'Y'
+				, APP_SEQ_STATUS = '결재완료'
+		WHERE FINAL_APPROVAL_EMP = #{finalApprovalEmp}
+        AND APP_SEQ = #{appSeq}
+	</update> 
+	
+	<select id="selectAppCount" resultType="hashmap">
+		SELECT DISTINCT (SELECT COUNT(APP_SEQ_STATUS) FROM APP_RECEIVE_REF 
+				WHERE APP_SEQ_STATUS = '결재대기') AS SEQ_STATUS_ONE
+			, (SELECT COUNT(APP_SEQ_STATUS) FROM APP_RECEIVE_REF 
+				WHERE APP_SEQ_STATUS = '결재중') AS SEQ_STATUS_TWO
+			, (SELECT COUNT(APP_SEQ_STATUS) FROM APP_RECEIVE_REF 
+				WHERE APP_SEQ_STATUS = '결재완료') AS SEQ_STATUS_TREE
+		FROM APP_RECEIVE_REF
+		
+	</select>
+	
+	
 	
 </mapper>
+
+	
+
+
+<!--  -->
 
 
 

@@ -73,7 +73,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 
 	@Override
-	public List<ApprovalVO> selectApp(Map<String, String> map) {
+	public List<ApprovalVO> selectApp(Map<String, Object> map) {
 		return sqlSession.selectList("approvalMapper.selectApp",map);
 	}
 
@@ -94,6 +94,27 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public HashMap<String, Object> selectReciveRef(ReceiveRefVO receiveRefVO) {
 		return sqlSession.selectOne("approvalMapper.selectReciveRef",receiveRefVO);
 	}
+
+	@Override
+	public void updateApproval(ReceiveRefVO receiveRefVO) {
+		sqlSession.update("approvalMapper.updateApproval",receiveRefVO);
+		
+		
+	}
+
+
+	@Override
+	public void updateFinalApproval(ReceiveRefVO receiveRefVO) {
+		sqlSession.update("approvalMapper.updateFinalApproval",receiveRefVO);
+	}
+
+
+	@Override
+	public HashMap<String, Object> selectAppCount(String appSeqStatus) {
+		return sqlSession.selectOne("approvalMapper.selectAppCount",appSeqStatus);
+	}
+
+
 
 
 	

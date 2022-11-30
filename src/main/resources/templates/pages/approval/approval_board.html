@@ -13,7 +13,11 @@
 				<div class="card-body">
 					<h5 class="card-title">결재대기</h5>
 					<br> <br>
-					<h3 class="card-subtitle mb-2 text-muted">1 건</h3>
+					<th:block>
+							<h3 class="card-subtitle mb-2 text-muted" >
+								<a th:href="@{/approval/approvalBoard(appSeqStatus=결재대기, nowPage=1)}" th:text="${countApp.SEQ_STATUS_ONE} + '건'" id="statusOne">1 건</a>
+							</h3>
+					</th:block>
 				</div>
 			</div>
 		</div>
@@ -22,7 +26,7 @@
 				<div class="card-body">
 					<h5 class="card-title">결재중</h5>
 					<br> <br>
-					<h3 class="card-subtitle mb-2 text-muted">2 건</h3>
+					<h3 class="card-subtitle mb-2 text-muted" ><a th:href="@{/approval/approvalBoard(appSeqStatus=결재중, nowPage=1)}" th:text="${countApp.SEQ_STATUS_TWO} + '건'">2 건</a></h3>
 				</div>
 			</div>
 		</div>
@@ -31,7 +35,7 @@
 				<div class="card-body">
 					<h5 class="card-title">결재완료</h5>
 					<br> <br>
-					<h3 class="card-subtitle mb-2 text-muted">3 건</h3>
+					<h3 class="card-subtitle mb-2 text-muted"> <a th:href="@{/approval/approvalBoard(appSeqStatus=결재완료, nowPage=1)}" th:text="${countApp.SEQ_STATUS_TREE} + '건'">3 건</a></h3>
 				</div>
 			</div>
 		</div>
@@ -73,7 +77,7 @@
 				<td><input class="form-control" type="text" name="empName"
 					id="" th:value="${paramMap['empName']}"></td>
 				<td rowspan="2">
-					<button type="submit" class="btn btn-outline-info" style="height: 90px;">검색</button>
+					<button type="submit" id="searchButton"  class="btn btn-outline-info" style="height: 90px;">검색</button>
 				</td>
 			</tr>
 			<tr>
@@ -93,24 +97,25 @@
 				 <td class="searchTitle">상태</td>
 				<td colspan="2">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="appCheckStatus"
-							id="" value="N"
-							th:checked="${paramMap['appCheckStatus'] eq 'N'}">
+						<input class="form-check-input" type="radio" name="appSeqStatus"
+							id="" value="결재대기"
+							th:checked="${paramMap['appSeqStatus'] eq '결재대기'}">
 						<label class="form-check-label" for="">결재대기</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="appCheckStatus" id="" value="N"	th:checked="${paramMap['appCheckStatus'] eq 'N'}">
+						<input class="form-check-input" type="radio" name="appSeqStatus" id="" value="결재중"	th:checked="${paramMap['appSeqStatus'] eq '결재중'}">
 						 <label	class="form-check-label" for="">결재중</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="appCheckStatus"
-							id="" value="N"
-							th:checked="${paramMap['appCheckStatus'] eq 'N'}"> <label
+						<input class="form-check-input" type="radio" name="appSeqStatus"
+							id="" value="결재완료"
+							th:checked="${paramMap['appSeqStatus'] eq '결재완료'}"> <label
 							class="form-check-label" for="">결재완료</label>
 					</div>
 				</td>
 			</tr>
 		</table>
+		<input type="hidden" id="nowPage" value="1"  name="nowPage" >
 		</form>
 	</div>
 	
@@ -126,6 +131,7 @@
 					<th scope="col">문서번호</th>
 					<th scope="col">기안자</th>
 					<th scope="col">제목</th>
+					<th scope="col">기안서</th>
 					<th scope="col">기안부서</th>
 					<th scope="col">기안일
 				</tr>
@@ -135,12 +141,29 @@
 					<td th:text="${app.appSeq}">@mdo</td>
 					<td th:text="${app.empVO.empName}">@mdo</td>
 					<td th:text="${app.title}">Otto</td>
-					<td th:text="${app.empVO.deptName}">@mdo</td>
+					<td th:text="${app.appCategoryVO.appCateName}">Otto</td>
+					<td th:text="${app.empVO.deptName}">Otto</td>
 					<td th:text="${app.appWriteDate}">Mark</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+	
+	<!-- 페이징 처리 -->
+    <div class="row">
+		<div align="center">
+			<th:block th:if="${pageVO.prev}">
+				<a th:text="prev" th:onclick="|movePage(${pageVO.beginPage-1})|"></a>
+			</th:block>
+			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+				<a th:text="${pageNum}" th:onclick="|movePage(${pageNum})|"></a>
+			</th:block>
+			<th:block th:if="${pageVO.next}">
+				<a th:text="next" th:onclick="|movePage(${pageVO.endPage+1})|"></a>
+			</th:block>
+		</div>
+	</div>   
+	
 <script type="text/javascript" th:src="@{/js/approval/approval_board.js}"></script>
 <script type="text/javascript" th:src="@{/js/approval/request_approval.js}"></script>
 </div>

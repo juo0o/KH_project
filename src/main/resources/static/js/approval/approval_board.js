@@ -49,3 +49,35 @@ selectBox.addEventListener('change',function(){
 	});
 	//ajax end
 });
+
+//페이지이동시 검색기능 유지하는 함수
+function movePage(nowPage){
+	
+	$("#nowPage").attr("value", nowPage)
+	$("#searchButton").click();
+	
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+

@@ -46,8 +46,7 @@
 														기안자</td>
 													<td
 														style="padding: 3px !important; border: 1px solid black; border-image: none; width: 200px; height: 22px; text-align: left; vertical-align: middle;">
-														<span th:text="${empInfo.empName}">
-														</span> 
+														<span th:text="${empInfo.empName}"></span> 
 														<input type="hidden" th:value="${empInfo.empName}" name="empName">
 													</td>
 												</tr>
@@ -92,44 +91,43 @@
 												<td
 													style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="4">승인</td>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
+												<td 
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">팀장</td>
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">부장</td>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">팀원</td>
 											</tr>
 											<tr>
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
 													<div>그림</div>
-													<div>승인자</div>
+													<div>그림</div>
 												</td>
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
 													<div>그림</div>
-													<div>승인자</div>
-												</td>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-													rowspan="2">
 													<div>그림</div>
-													<div>승인자</div>
 												</td>
 											</tr>
 											<tr>
 											</tr>
 											<tr>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
-												<td
-													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
-											</tr>
+											<!-- 팀장 -->	<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+															>
+															<select name="firstApprovalEmp" style="border: none;">
+																<option th:each="role : ${empRole}" th:value="${role.empNum}" th:text="${role.empName}" th:if="${role.empPosition eq '팀장'}"></option>
+															</select>
+														</td>
+											<!-- 부장 --><td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+															<select name="finalApprovalEmp" style="border: none;">
+																<option th:each="role : ${empRole}" th:value="${role.empNum}" th:text="${role.empName}" th:if="${role.empPosition eq '부장'}"></option>
+															</select>
+														</td>
 										</table> 
+										<input type="hidden" value="N" name="firstApproval">
+										<input type="hidden" value="N" name="finalApproval">
+										<input type="hidden" value="결재대기" name="appSeqStatus">
 									</td>
 
 								</tr>
@@ -160,8 +158,6 @@
 								</tr>
 						</table>  -->
 					</div>
-					<br>
-					<br>
 					<br>
 				<div>
 				<table class="__se_tbl" style="background: white; border: 1px solid black; border-image: none; width: 800px; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; margin-top: 0px; border-collapse: collapse !important;">
@@ -229,7 +225,7 @@
 								style="color: rgb(255, 0, 0);">*</b>&nbsp;휴가&nbsp;사유
 							</td>
 							<td>
-								<textarea style="border: none" cols="115" rows="6" name="vacationContent"></textarea>
+								<textarea style="border: none" cols="115" rows="8" name="vacationContent"></textarea>
 							</td>	
 								
 							<!-- <td

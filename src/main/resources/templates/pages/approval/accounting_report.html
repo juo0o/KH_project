@@ -81,40 +81,60 @@
 							</div>
 							<!-- 2.1 Drafter Information (end) -->
 							<!-- 2.2 Draft Line(start) -->
-							<div class="right" style="font-size: 9pt; line-height: normal; margin-top: 20px; margin-bottom: 0px; margin-left: 30px;">
-							<div style="padding: 0px ; border: 1px currentColor;  border-image: none; width: 300px;  vertical-align: top; text-align: right;" >
+							<div class="right" style="font-size: 9pt; line-height: normal; margin-bottom: 0px; margin-left: 30px;">
+							<div style="padding: 0px ; border: 1px currentColor;  border-image: none; width: 200px;  vertical-align: top; text-align: right;" >
 							
-								<table>
-								<tr>
-									<td	style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold;"
-										rowspan="4">승인</td>
-									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
-									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">부장</td>
-									<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">팀원</td>
-								</tr>
-								<tr>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-										rowspan="2">
-										<div>그림</div>
-										<div>승인자</div>
-									</td>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-										rowspan="2">
-										<div>그림</div>
-										<div>승인자</div>
-									</td>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-										rowspan="2">
-										<div>그림</div>
-										<div>승인자</div>
-									</td>
-								</tr>
-								</table>
-							
+								<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important; float:right;" >
+											<tr>
+												<td
+													style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+													rowspan="4">승인</td>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">팀장</td>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">부장</td>
+											</tr>
+											<tr>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+													rowspan="2">
+													<div>그림</div>
+													<div>그림</div>
+												</td>
+												<td
+													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
+													rowspan="2">
+													<div>그림</div>
+													<div>그림</div>
+												</td>
+											</tr>
+											<tr>
+											</tr>
+											<tr>
+										<td
+											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+											<select name="firstApprovalEmp" style="border: none;">
+												<option th:each="role : ${empRole}"
+													th:value="${role.empNum}" th:text="${role.empName}"
+													th:if="${role.empPosition eq '팀장'}"></option>
+										</select>
+										</td>
+										<!-- 부장 -->
+										<td
+											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
+											<select name="finalApprovalEmp" style="border: none;">
+												<option th:each="role : ${empRole}"
+													th:value="${role.empNum}" th:text="${role.empName}"
+													th:if="${role.empPosition eq '부장'}"></option>
+										</select>
+										</td>
+									</tr>
+										</table> 
+											<input type="hidden" value="N" name="firstApproval">
+											<input type="hidden" value="N" name="finalApproval">
+											<input type="hidden" value="결재대기" name="appSeqStatus">
 							</div>
+							
 						 <br>
 							</div>
 							<!-- 2.2 Draft Line(end) -->

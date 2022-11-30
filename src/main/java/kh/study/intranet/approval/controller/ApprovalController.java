@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.study.intranet.admin.service.AdminService;
 import kh.study.intranet.approval.service.ApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
@@ -25,6 +27,7 @@ import kh.study.intranet.approval.vo.ReceiveRefVO;
 import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.config.appDateUtil;
 import kh.study.intranet.emp.vo.EmpVO;
+import kh.study.intranet.main.vo.PageVO;
 
 @Controller
 @RequestMapping("/approval")
@@ -33,22 +36,40 @@ public class ApprovalController {
 	@Resource(name = "approvalService")
 	private ApprovalService approvalService;
 	
+	@Resource(name="adminService")
+	AdminService adminService;
+	
+	
 	
 	
 	//결재리스트게시판
 	@RequestMapping("/approvalBoard")
-	public String approvalBoard(@RequestParam Map<String, String> paramMap,Model model, ApprovalVO approvalVO) {
+	public String approvalBoard(@RequestParam Map<String, Object> paramMap,Model model, ApprovalVO approvalVO,String appSeqStatus,PageVO pageVO) {
 		
-		System.out.println("상품명 : " + paramMap.get("title"));
-		System.out.println("카테고리코드 : " + paramMap.get("appCateCode"));
-		System.out.println("사원 : " + paramMap.get("empName"));
-		System.out.println("fromDate : " + paramMap.get("fromDate"));
-		System.out.println("toDate : " + paramMap.get("toDate"));
-		System.out.println("상태 : " + paramMap.get("appCheckStatus"));
+		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
+		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
+		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
+		/*
+		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
+		 * );
+		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
+		 * );
+		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
+		 * );
+		 */
+		
+		Map<String, Object> countApp= new HashMap<>();
+		countApp = approvalService.selectAppCount(appSeqStatus);
 		
 		
-		model.addAttribute("appList", approvalService.selectApp(paramMap));
-		model.addAttribute("appBoxList", approvalService.selectBoxList());
+		model.addAttribute("countApp", countApp);
+		
+		
+		model.addAttribute("appBoxList",approvalService.selectBoxList());
+		
+		
+		
+		
 		
 		//현재 날짜
 		String nowDate = appDateUtil.getNowDateToString("-");//2020-10-10
@@ -63,7 +84,27 @@ public class ApprovalController {
 			paramMap.put("toDate", nowDate);
 		}
 		
-		model.addAttribute("paramMap", paramMap);
+		//조건검색결과 데이터 수
+				int totalDateCnt = approvalService.selectApp(paramMap).size();
+				
+				
+				//검색결과 전체데이터 수 넣어준다.
+				pageVO.setTotalDataCnt(totalDateCnt);
+				//실행
+				pageVO.setPageInfo();
+				
+				// 페이징에 따라 조회될 데이터를 넣어준다.
+
+				paramMap.put("startNum",pageVO.getStartNum());
+				paramMap.put("endNum", pageVO.getEndNum());
+				
+				//map 보내줌
+				model.addAttribute("paramMap", paramMap);
+				//검색결과 보내줌
+				model.addAttribute("appList", approvalService.selectApp(paramMap));
+				
+				//페이징처리 vo보내줌
+				model.addAttribute("pageVO", pageVO);
 		
 		
 		return "pages/approval/approval_board";
@@ -165,12 +206,21 @@ public class ApprovalController {
 		return "redirect:/approval/accountingReport";
 	}
 //--------------------------품의서별 승인페이지-------------------------------	
-	//연차신청서 결재 목록 승인페이지
+	// 결재 목록 승인페이지
 	@GetMapping("/appDocuments")
-	public String appDocuments(ApprovalVO approvalVO,Model model,VacationVO vacationVO,ReceiveRefVO receiveRefVO) {
-		System.out.println(approvalVO);
+	public String appDocuments(ApprovalVO approvalVO,Model model,VacationVO vacationVO,ReceiveRefVO receiveRefVO, Authentication authentication) {
+		User user = (User)authentication.getPrincipal();
+		approvalVO.setUserId(user.getUsername());
+		
+		System.out.println("시큐리티"+user.getUsername());
+		
 		Map<String, Object> ref= new HashMap<>();
 		ref = approvalService.selectReciveRef(receiveRefVO);
+		
+		
+		
+		
+		
 		
 		if(approvalVO.getAppCateCode().equals("VACATION")) {
 			approvalVO.setTable("APP_FORM_VACATION");
@@ -181,7 +231,6 @@ public class ApprovalController {
 		}else if(approvalVO.getAppCateCode().equals("NOMAL")) {
 			approvalVO.setTable("APP_FORM_NOMAL");
 			model.addAttribute("document", approvalService.appDocuments(approvalVO));
-//			model.addAttribute("receiveRefInfo", approvalService.selectReciveRef(receiveRefVO));
 			model.addAttribute("ref", ref);
 			
 			return "pages/approval/nomal_requestPage";
@@ -198,6 +247,36 @@ public class ApprovalController {
 		
 		
 	}
+//-------------------------------------------------------
+	//결재승인버튼 클릭시 에이작스
+	@ResponseBody
+	@PostMapping("/approvalMark")
+	public void approvalMark(ReceiveRefVO receiveRefVO) {
+		approvalService.updateApproval(receiveRefVO); 
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/updateFinalApproval")
+	public void approvalFinalMark(ReceiveRefVO receiveRefVO) {
+		approvalService.updateFinalApproval(receiveRefVO); 
+		
+	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/selectStatusApp") public List<ApprovalVO>
+	 * selectStatusApp(ApprovalVO approvalVO,@RequestParam Map<String, String>
+	 * paramMap) { return approvalService.selectApp(paramMap);
+	 * 
+	 * }
+	 */
+	
+	
+	
+	
+		
+	
 
 	
 	

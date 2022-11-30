@@ -23,7 +23,7 @@ public interface ApprovalService {
 	
 	void insertApproval(ApprovalVO approvalVO,VacationVO vacatioVO,NomalVO nomalVO
 			, AccountingVO accountingVO, ReceiveRefVO receiveRefVO);
-	List<ApprovalVO> selectApp(Map<String, String> map);
+	List<ApprovalVO> selectApp(Map<String, Object> map);
 	List<ApprovalVO> selectBoxList();
 	
 //	List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO);
@@ -31,5 +31,9 @@ public interface ApprovalService {
 	ApprovalVO appDocuments(ApprovalVO approvalVO);
 	
 	HashMap<String, Object> selectReciveRef(ReceiveRefVO receiveRefVO);
-
+	
+	void updateApproval(ReceiveRefVO receiveRefVO);
+	void updateFinalApproval(ReceiveRefVO receiveRefVO);
+	
+	HashMap<String, Object> selectAppCount(String appSeqStatus);
 }
