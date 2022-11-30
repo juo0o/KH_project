@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kh.study.intranet.board.vo.BoardVO;
 import kh.study.intranet.main.service.MainService;
@@ -16,6 +17,7 @@ import kh.study.intranet.main.vo.UserVO;
 
 @Controller
 @RequestMapping("/main")
+@SessionAttributes("userInfo") //얘로하면 클래스네에서 ModelMap으로 세션에저장된거 바로받아올수있음
 public class MainController {
 	
 	
