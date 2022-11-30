@@ -70,5 +70,28 @@ public class ChatController {
 	    return "/pages/chat/chat_room";
 	}
 	
+	//채팅방 조회2
+		@GetMapping("/chat_room2")
+		public String getRoom2(String roomId,String roomName, Model model){
+		
+		    log.info("# get Chat Room, roomID : " + roomId);
+		    
+		    //채팅방 목록조회
+		    model.addAttribute("list", chatService.selectChatRoomList());
+		
+//		    model.addAttribute("room", repository.findRoomById(roomId));
+		    model.addAttribute("roomId", roomId);
+		    model.addAttribute("roomName", roomName);
+		    
+		    //채팅메세지 보내주기
+		    if(roomId !=null) {
+		    	model.addAttribute("messageList", chatService.selectListChatMessage(roomId));
+		    }
+		    
+
+		    
+		    return "/pages/chat/chat_room2";
+		}
+	
 
 }

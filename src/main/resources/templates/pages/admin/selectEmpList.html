@@ -47,7 +47,7 @@ layout:decorate="~{layout/base_layout}">
 							<input class="form-control" type="text" name="empPosition" id="" th:value="${paramMap['empPosition']}" >
 						</td>
 						<td rowspan="2">
-							<button type="submit" class="btn btn-primary" style="height: 90px;">Search</button>
+							<button type="submit" id="searchButton" class="btn btn-primary" style="height: 90px;">Search</button>
 						</td>
 					</tr>
 					<tr>
@@ -79,6 +79,8 @@ layout:decorate="~{layout/base_layout}">
 						</td>
 					</tr>
 				</table>
+				
+				<input type="text" id="nowPage" value="1"  name="nowPage" >
 			</form>
 			<br>
 		
@@ -141,86 +143,7 @@ layout:decorate="~{layout/base_layout}">
 			</div>
 			
 			<script type="text/javascript">
-			//==============회원정보 변경하고 화면 다시뿌려줌==================
-			function regNewUser() {
-				let form = $('#regNewEmp')[0];
-				
-					$.ajax({
-						url: '/admin/regNewEmp', //요청경로
-						type: 'post',
-						data: new FormData(form), //필요한 데이터
-						
-						processData: false,
-						contentType: false,
-						cache: false,
-						success: function(result) {
-//						// 회원정보 만들어줌
-//						let userInfoPage = document.querySelector('#userInfo');
-//						userInfoPage.innerHTML ='';
-//						let str='';
-                                                                                                                                             
-//						userInfoPage.insertAdjacentHTML('afterbegin', str);       
-						                                                                                        
-						},                                                                                                                                                  
-						error: function() {         
-							Swal.fire({
-							  icon: 'error',
-							  title: '변경실패',
-							  text: '',
-							});                                                                                                                         
-							return;
-						}
-					});
-					
-					Swal.fire({
-						  icon: 'success',
-						  title: '사원등록성공',
-						  text: '',
-						}).then((result) => {
-// 					       location.href="/user/updateUserForm";
-							$('#regEmpModal').modal('hide');
-					        }); 
-			}
 			
-			function regDept() {
-				let form = $('#regDept')[0];
-				
-					$.ajax({
-						url: '/admin/regDept', //요청경로
-						type: 'post',
-						data: new FormData(form), //필요한 데이터
-						
-						processData: false,
-						contentType: false,
-						cache: false,
-						success: function(result) {
-//						// 회원정보 만들어줌
-//						let userInfoPage = document.querySelector('#userInfo');
-//						userInfoPage.innerHTML ='';
-//						let str='';
-                                                                                                                                             
-//						userInfoPage.insertAdjacentHTML('afterbegin', str);       
-						                                                                                        
-						},                                                                                                                                                  
-						error: function() {         
-							Swal.fire({
-							  icon: 'error',
-							  title: '변경실패',
-							  text: '',
-							});                                                                                                                         
-							return;
-						}
-					});
-					
-					Swal.fire({
-						  icon: 'success',
-						  title: '부서등록성공',
-						  text: '',
-						}).then((result) => {
-// 					       location.href="/user/updateUserForm";
-							$('#regDeptModal').modal('hide');
-					        }); 
-			}
 			
 			</script>				
 				<table class="table">
@@ -252,19 +175,35 @@ layout:decorate="~{layout/base_layout}">
 				
 				
 	<!-- 페이징 처리 -->
-    <div class="row">
+<!--     <div class="row"> -->
+<!-- 		<div align="center"> -->
+<!-- 			<th:block th:if="${pageVO.prev}"> -->
+<!-- 				<a th:text="prev" th:href="@{/admin/selectEmpList(nowPage=${pageVO.beginPage - 1})}"></a> -->
+<!-- 			</th:block> -->
+<!-- 			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}"> -->
+<!-- 				<a th:text="${pageNum}" th:href="@{/admin/selectEmpList(nowPage=${pageNum})}"></a> -->
+<!-- 			</th:block> -->
+<!-- 			<th:block th:if="${pageVO.next}"> -->
+<!-- 				<a th:text="next" th:href="@{/admin/selectEmpList(nowPage=${pageVO.endPage + 1})}"></a> -->
+<!-- 			</th:block> -->
+<!-- 		</div> -->
+<!-- 	</div>   -->
+
+	<div class="row">
 		<div align="center">
 			<th:block th:if="${pageVO.prev}">
-				<a th:text="prev" th:href="@{/admin/selectEmpList(nowPage=${pageVO.beginPage - 1})}"></a>
+				<a th:text="prev" th:onclick="|movePage(${pageVO.beginPage-1})|"></a>
 			</th:block>
 			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
-				<a th:text="${pageNum}" th:href="@{/admin/selectEmpList(nowPage=${pageNum})}"></a>
+				<a th:text="${pageNum}" th:onclick="|movePage(${pageNum})|"></a>
 			</th:block>
 			<th:block th:if="${pageVO.next}">
-				<a th:text="next" th:href="@{/admin/selectEmpList(nowPage=${pageVO.endPage + 1})}"></a>
+				<a th:text="next" th:onclick="|movePage(${pageVO.endPage+1})|"></a>
 			</th:block>
 		</div>
 	</div>  
+	
+	<script  src="/js/admin/selectEmpList.js"></script>
 				
 	</div>
 </html>

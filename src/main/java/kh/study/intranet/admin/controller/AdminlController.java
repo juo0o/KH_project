@@ -66,12 +66,12 @@ public class AdminlController {
 		// 한달 전날짜
 		String beforeDate = appDateUtil.getBeforeMonthDateToString();
 		// 넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
-		if (paramMap.get("fromDate") == null) {
-			paramMap.put("fromDate", beforeDate);
-		}
-		if (paramMap.get("toDate") == null) {
-			paramMap.put("toDate", nowDate);
-		}
+//		if (paramMap.get("fromDate") == null) {
+//			paramMap.put("fromDate", beforeDate);
+//		}
+//		if (paramMap.get("toDate") == null) {
+//			paramMap.put("toDate", nowDate);
+//		}
 		 
 		//조건검색결과 데이터 수
 		int totalDateCnt = adminService.selectEmpListSearchAndPage(paramMap).size();

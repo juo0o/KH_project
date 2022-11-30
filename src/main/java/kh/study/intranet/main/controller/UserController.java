@@ -49,14 +49,12 @@ public class UserController {
 		
 		return "/main/register_page";
 	}
-		
 	
 	
 	// @Valid : post로 전달된 데이터가 검증 규칙을 따르는지 확인
 	// @BindingResult : 검증대상 객체와 검증 결과에 대한 정보를 담고 있는 객체
 	//					검증 객체 바로 다음 순서에 선언되어야 한다......
 	// Valid 쓸거면 사실상 두개는 묶여있다!?
-	
 	//회원가입
 	@PostMapping("/registerUser")
 	public String registerUser(@Valid UserVO userVO, BindingResult bindingResult) {

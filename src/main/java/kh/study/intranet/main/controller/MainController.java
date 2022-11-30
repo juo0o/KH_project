@@ -35,8 +35,6 @@ public class MainController {
 		//유저정보 보내줌
 		model.addAttribute("userInfo", userService.selectUserInfo(userVO));
 		
-
-		
 		//최근5개 게시글 보여줌
 		model.addAttribute("recentBoard", mainService.selectRecentBoard());
 		

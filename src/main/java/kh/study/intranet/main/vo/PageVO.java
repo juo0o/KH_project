@@ -24,7 +24,7 @@ public class PageVO extends SearchVO {
 	//생성자
 	public PageVO()	{
 		nowPage = 1;
-		displayCnt = 5; //한 페이지에 보여지는 게시글 수
+		displayCnt = 1; //한 페이지에 보여지는 게시글 수
 		displayPageCnt = 5; //한 화면에 보여지는 페이지 수
 	}
 	
