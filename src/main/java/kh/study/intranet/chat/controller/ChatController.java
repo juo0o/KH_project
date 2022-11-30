@@ -50,6 +50,13 @@ public class ChatController {
 	//채팅방 조회
 	@GetMapping("/chat_room")
 	public String getRoom(String roomId,String roomName, Model model){
+		
+		System.out.println("아이디!!!!!!! : " + roomId);
+		System.out.println("아이디!!!!!!! : " + roomId);
+		System.out.println("아이디!!!!!!! : " + roomId);
+		System.out.println("이름!!!!!!! : " + roomName);
+		System.out.println("이름!!!!!!! : " + roomName);
+		System.out.println("이름!!!!!!! : " + roomName);
 	
 	    log.info("# get Chat Room, roomID : " + roomId);
 	    

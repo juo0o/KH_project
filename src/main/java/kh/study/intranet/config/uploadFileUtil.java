@@ -34,6 +34,11 @@ public class uploadFileUtil {
 			//첨부될 파일명
 			fileName = uuid + extension;
 			
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
 				try {
 					
 					//파일 객체를 생성한다, 예외처리가 없다면 문제가 생기기때문에 자동으로 오류를뱉는다

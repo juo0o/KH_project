@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
+
+
 <mapper namespace="mainMapper">
-
-
-
+	
 	<resultMap type="kh.study.intranet.board.vo.BoardVO" id="board">
 		<id column="BOARD_NUM"     property="boardNum"/>
 		<result column="USER_ID"     property="userId"/>
@@ -22,7 +22,13 @@
 
 
 
-
+ 	<resultMap type="kh.study.intranet.approval.vo.ApprovalVO" id="approval">
+		<id column="APP_SEQ" 					property="appSeq"/>
+		<result column="APP_WRITE_DATE" 		property="appWriteDate"/>
+		<result column="TITLE" 					property="title"/>
+		<result column="APP_CATE_CODE" 			property="appCateCode"/>
+		<result column="USER_ID" 			property="userId"/>
+	</resultMap>
 
 
 
@@ -47,6 +53,21 @@
 		             WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
+	<!-- 결재할 문서목록 -->
+	<select id="selectRecentApproval" resultMap="approval">
+		SELECT APP.APP_SEQ
+		       , APP_WRITE_dATE
+		       , TITLE
+		       , APP.APP_CATE_CODE
+		       , APP.USER_ID
+		FROM APPROVAL APP, APP_RECEIVE_REF REF
+		WHERE APP.APP_SEQ = REF.APP_SEQ
+		AND APP_SEQ_STATUS = #{appSeqStatus}
+		AND FIRST_APPROVAL_EMP = #{empNum}
+		OR FINAL_APPROVAL_EMP = #{empNum}
+				
+	
+	</select>
 </mapper>
 
 

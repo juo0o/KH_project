@@ -156,6 +156,8 @@ layout:decorate="~{layout/base_layout}">
 														<td th:text="${board.userId}"></td>
 														<td th:text="${board.boardRegDate}" ></td>
 													</tr>
+													
+													
 												</th:block>
 											</tbody>
 										</table>
@@ -186,7 +188,7 @@ layout:decorate="~{layout/base_layout}">
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -194,6 +196,40 @@ layout:decorate="~{layout/base_layout}">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Earnings (Annual)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div>
+                                            	<table class="table table-striped" style=" width: 350px;" >
+					
+													<colgroup>
+														<col width="10%">
+														<col width="30%">
+														<col width="30%">
+													</colgroup>
+													<tr>
+														<td>NO</td>
+														<td>채팅방이름</td>
+														<td>최근채팅시간</td>
+													</tr>
+													
+													<tr th:each="chatRoom : ${chatRoomList}">
+														<td th:text="${chatRoomStat.count}"></td>
+														<td><a th:href="|/chat/chat_room?roomName=${chatRoom.roomName}&roomId=${chatRoom.roomId}|">[[${chatRoom.roomName}]]</a></td>
+														<td>
+															<!-- <a th:onclick="window.open('/chat/chat_room2?roomName=[[${chatRoom.roomName}]]&roomId=[[${chatRoom.roomId}]]','exobud','width=500px, height=700px, resizable=yes');" style="cursor:hand;">[[${chatRoom.roomName}]]</a> -->
+															<!-- <a th:onclick="|@{window.open('/chat/chat_room2(roomName=chatRoom.roomName, roomId=chatRoom.roomId)','exobud','width=500px, height=700px, resizable=yes')}" style="cursor:hand;">[[${chatRoom.roomName}]]</a> -->
+															<a th:onclick="openWindow([[${chatRoom.roomName}]],[[${chatRoom.roomId}]])" style="cursor:hand;">[[${chatRoom.roomName}]]</a>
+														</td>
+													</tr>
+												</table>
+                                            	
+                                            	<script type="text/javascript">
+                                            		function openWindow(roomName,roomId){
+                                            			window.open('/chat/chat_room2?roomName' + roomName + "&roomId="+roomId , 'exobud','width=500px, height=700px, resizable=yes');
+                                            		}
+                                            	
+                                            	</script>
+                                            	
+                                            	
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
