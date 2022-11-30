@@ -7,11 +7,12 @@ import kh.study.intranet.board.vo.BoardVO;
 
 public interface BoardService {
 	
-//	//게시글 목록 조회(기존 메소드)
-//	List<BoardVO> boardList(BoardVO boardVO);
+	//게시판 추천글 상단 정렬
+	List<BoardVO> selectLikeBoardList (Map<String, Object> map);
 	
 	//게시글 검색 및 목록 조회 
-	List<BoardVO> selectBoardList(Map<String, String> map);
+	List<BoardVO> selectBoardListAndSearch(Map<String, Object> map);
+	
 	
 	//게시글 상세 조회
 	BoardVO boardDetail(int boardNum);
@@ -29,8 +30,7 @@ public interface BoardService {
 //	List<BoardVO> updateReadCnt( BoardVO boardVO, int boardNum);
 // 트랜잭션처리로 메소드 자체가 필요없음(쿼리문을 바로 serviceImpl로 가져다 쓰기때문)
 	
-	//게시글 검색
-	List<BoardVO> searchBoard(Map<String, String> map);
+	
 	
 	//게시글 총 개수 조회
 	int selectBoardCnt();

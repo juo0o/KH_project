@@ -16,16 +16,17 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-//	//게시글 목록 조회(기존메소드)
-//	@Override
-//	public List<BoardVO> boardList(BoardVO boardVO) {
-//		return sqlSession.selectList("boardMapper.selectBoardList", boardVO);
-//	}
+
+	//게시판 추천글 상단 정렬
+	@Override
+	public List<BoardVO> selectLikeBoardList(Map<String, Object> map) {
+		return sqlSession.selectList("boardMapper.selectLikeBoardList", map);
+	}
 	
 	//게시글 검색 및 목록 조회
 	@Override
-	public List<BoardVO> selectBoardList(Map<String, String> map) {
-		return sqlSession.selectList("boardMapper.selectBoardList", map);
+	public List<BoardVO> selectBoardListAndSearch(Map<String, Object> map) {
+		return sqlSession.selectList("boardMapper.selectBoardListAndSearch", map);
 	}
 
 	//게시글 상세조회
@@ -57,17 +58,15 @@ public class BoardServiceImpl implements BoardService {
 		
 	}
 
-	//게시글 검색
-	@Override
-	public List<BoardVO> searchBoard(Map<String, String> map) {
-		return sqlSession.selectList("boardMapper.searchBoard", map);
-	}
+
 
 	//게시글 총개수 조회
 	@Override
 	public int selectBoardCnt() {
 		return sqlSession.selectOne("boardMapper.selectBoardCnt");
 	}
+
+	
 
 
 

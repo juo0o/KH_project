@@ -1,5 +1,6 @@
 package kh.study.intranet.board.vo;
 
+import kh.study.intranet.main.vo.PageVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +18,7 @@ public class BoardVO extends PageVO {
 	private int boardReadCnt;
 	private String boardRegDate;
 	private int replyCount;
-	private int likeNum;
+	private int likeCount;
+	private int boardCateCode;
 	
 }

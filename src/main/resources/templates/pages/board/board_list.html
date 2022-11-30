@@ -10,7 +10,7 @@
  	<div class="row mb-3">
 		<div class="col">
 			<form th:action="@{/board/boardList}" method="post">
-				<table class="table align-middle table-bordered text-center test"><!-- table-borderless -->
+				<table class="table align-middle table-bordered text-center test">
 					<colgroup>
 						<col width="8%">
 						<col width="8%">
@@ -34,12 +34,12 @@
 							</div>
 						</td>
 						<td class="searchTitle">카테고리</td>
-						<td>
-						<!-- 	<select class="form-select" name="cateCode">
+						<!-- <td>
+						 	<select class="form-select" name="cateCode">
 								<option value="" th:selected="${paramMap['cateCode'] == null or paramMap['cateCode'] eq ''}">전체</option>
 								<option th:each="categoryInfo: ${categoryList}" th:text="${categoryInfo.cateName}" th:value="${categoryInfo.cateCode}" th:selected="${paramMap['cateCode'] eq categoryInfo.cateCode}"></option>
-							</select> -->
-						</td>
+							</select> 
+						</td> -->
 						<td class="searchTitle">글제목</td>
 						<td colspan="2">
 							<input class="form-control" type="text" name="boardTitle" id="" th:value="${paramMap['boardTitle']}" >
@@ -84,8 +84,63 @@
 			</form>
 		</div>
 	</div>
-	
-	
+	<!-- 게시판 추천글상단고정 -->
+	<div class="row">
+		<div class="col">
+			<table class="table table-striped table-hover text-center align-middle">
+				<colgroup>
+					<col width="10%">
+					<col width="30%">
+					<col width="20%">
+					<col width="20%">
+					<col width="10%">
+					<col width="10%">
+				</colgroup>
+				<thead style="font-size: 1.1rem;">
+					<tr>
+						<td>글번호</td>
+						<td>글제목</td>
+						<td>작성자</td>
+						<td>작성일</td>
+						<td>조회수</td>
+						<td>추천수</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="like : ${likeBoardList}">
+						<td th:text="${like.boardNum}"></td>
+						<td>
+							<a th:href="@{/board/boardDetail(boardNum=${like.boardNum})}">
+								<span th:text="${like.boardTitle}">
+								</span>
+								&nbsp; 
+								<th:block th:if="${like.replyCount ne 0}">
+									<span style="color: #f56642;">[</span> 
+									<span style="color: #f56642;" th:text="${like.replyCount}"></span>
+									<span style="color: #f56642;">]</span> 
+								</th:block>
+								<th:block th:unless="${like.replyCount ne 0}" >
+								</th:block>
+								
+								<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq like.boardRegDate}">
+	                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+	                           		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
+	                            </th:block>
+	                              
+	                            <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq like.boardRegDate}">
+	                            </th:block>
+							</a>
+						</td>
+						<td th:text="${like.userId}"></td>
+						<td th:text="${#strings.substring(like.boardRegDate,0,10)}"></td>
+						<td th:text="${like.boardReadCnt}"></td>
+						<td th:text="${like.likeCount}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 게시판 목록 -->
 	<div class="row">
 		<div class="col">
 			<table class="table table-striped table-hover text-center align-middle">
@@ -135,7 +190,7 @@
 						<td th:text="${list.userId}"></td>
 						<td th:text="${#strings.substring(list.boardRegDate,0,10)}"></td>
 						<td th:text="${list.boardReadCnt}"></td>
-						<td th:text="${list.likeNum}"></td>
+						<td th:text="${list.likeCount}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -148,6 +203,20 @@
 				<button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/board/regBoardForm}'|">글쓰기</button>
 			</div>
 		</div> 
+	</div>
+		<!-- 페이징 처리 -->
+ 	<div class="row">
+		<div align="center">
+			<th:block th:if="${pageVO.prev}">
+				<a th:text="prev" th:href="@{/board/boardList(nowPage=${pageVO.beginPage - 1})}"></a>
+			</th:block>
+			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+				<a th:text="${pageNum}" th:href="@{/board/boardList(nowPage=${pageNum})}"></a>
+			</th:block>
+			<th:block th:if="${pageVO.next}">
+				<a th:text="next" th:href="@{/board/boardList(nowPage=${pageVO.endPage + 1})}"></a>
+			</th:block>
+		</div>
 	</div>
 	
 	<!-- 게시판원본 -->
@@ -215,20 +284,7 @@
 			</div>
 		</div> 
 	</div> -->
-	<!-- 페이징 처리 -->
-<!-- 	<div class="row">
-		<div align="center">
-			<th:block th:if="${boardVO.prev}">
-				<a th:text="prev" th:href="@{/board/boardList(nowPage=${boardVO.beginPage - 1})}"></a>
-			</th:block>
-			<th:block th:each="pageNum : ${#numbers.sequence(boardVO.beginPage, boardVO.endPage)}">
-				<a th:text="${pageNum}" th:href="@{/board/boardList(nowPage=${pageNum})}"></a>
-			</th:block>
-			<th:block th:if="${boardVO.next}">
-				<a th:text="next" th:href="@{/board/boardList(nowPage=${boardVO.endPage + 1})}"></a>
-			</th:block>
-		</div>
-	</div> -->
+ 
 </div>
 
 </html>

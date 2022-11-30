@@ -1,6 +1,5 @@
 package kh.study.intranet.board.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,6 +21,7 @@ import kh.study.intranet.board.vo.BoardLikeVO;
 import kh.study.intranet.board.vo.BoardVO;
 import kh.study.intranet.board.vo.ReplyVO;
 import kh.study.intranet.config.appDateUtil;
+import kh.study.intranet.main.vo.PageVO;
 
 @Controller
 @RequestMapping("/board")
@@ -38,16 +38,15 @@ public class BoardController {
 
 	// 게시글 목록 조회
 	@RequestMapping("/boardList")
-	public String boardList(@RequestParam Map<String, String> paramMap,BoardVO boardVO, Model model) {
+	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model) {
 
-		model.addAttribute("boardList", boardService.selectBoardList(paramMap));
+	
 		
-		
+		//map에 날짜 세팅
 		// 현재 날짜
 		String nowDate = appDateUtil.getNowDateToString("-");// 2020-10-10
 		// 한달 전날짜
 		String beforeDate = appDateUtil.getBeforeMonthDateToString();
-
 		// 넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
 		if (paramMap.get("fromDate") == null) {
 			paramMap.put("fromDate", beforeDate);
@@ -55,28 +54,47 @@ public class BoardController {
 		if (paramMap.get("toDate") == null) {
 			paramMap.put("toDate", nowDate);
 		}
+		 
+		//조건검색결과 데이터 수
+		int totalDateCnt = boardService.selectBoardListAndSearch(paramMap).size();
 		
 		
 		
+		//검색결과 전체데이터 수 넣어준다.
+		pageVO.setTotalDataCnt(totalDateCnt);
+		//실행
+		pageVO.setPageInfo();
 		
-		//전체 데이터 수
-		int totalCnt = boardService.selectBoardCnt();
+		System.out.println(pageVO);
+		System.out.println(pageVO);
+		System.out.println(pageVO);
 		
-		//페이지 정보세팅
-		boardVO.setTotalDataCnt(totalCnt);
-		boardVO.setPageInfo();
 		
-//		//게시판 목록 조회
-//		List<BoardVO> list = boardService.boardList(boardVO);
-//		model.addAttribute("list", list);
+		// 페이징에 따라 조회될 데이터를 넣어준다.
+		paramMap.put("startNum",pageVO.getStartNum());
+		paramMap.put("endNum", pageVO.getEndNum());
 		
+		//map 보내줌
 		model.addAttribute("paramMap", paramMap);
+		
+		//검색결과 보내줌
+		model.addAttribute("boardList", boardService.selectBoardListAndSearch(paramMap));
+			//검색결과 상단정렬
+			model.addAttribute("likeBoardList", boardService.selectLikeBoardList(paramMap));
+		
+		
+		//페이징처리 vo보내줌
+		model.addAttribute("pageVO", pageVO);
+		
+		
 		
 
 		return "pages/board/board_list";
 	}
 	
 
+	
+	
 	// 상세 게시글 조회
 	@GetMapping("/boardDetail")
 	public String boardDetail(int boardNum,String aaa, ReplyVO replyVO, BoardLikeVO boardLikeVO, Authentication authentication , Model model) {
