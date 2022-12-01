@@ -319,8 +319,53 @@
 		
 	</select>
 	
-	
-	
+	<select id="selectReceiveApp" resultMap="approval">
+		SELECT ROWNUM AS RN
+        	 , APP_SEQ
+        	 , APP_WRITE_DATE
+       		 , APP_CATE_CODE
+          	 , TITLE
+          	 , USER_ID
+          	 , EMP_NAME 
+          	 , DEPT_NAME 
+          	 , APP_SEQ_STATUS
+             , APP_CATE_NAME
+             , FIRST_APPROVAL_EMP
+     		 , FINAL_APPROVAL_EMP
+     		 , EMP_POSITION
+      FROM (
+		SELECT DISTINCT ROWNUM AS RN
+        	 , APPROVAL.APP_SEQ
+        	 , APP_WRITE_DATE
+       		 , APPROVAL.APP_CATE_CODE
+          	 , TITLE
+          	 , APPROVAL.USER_ID
+          	 , (SELECT EMP_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS EMP_NAME 
+          	 , (SELECT DEPT_NAME FROM EMP WHERE EMP.USER_ID = APPROVAL.USER_ID) AS DEPT_NAME 
+          	 , APP_SEQ_STATUS
+             , APP_CATE_NAME
+             , FIRST_APPROVAL_EMP
+     		 , FINAL_APPROVAL_EMP
+     		 , EMP_POSITION
+      FROM APPROVAL , APP_CATEGORY CATEGORY , EMP , APP_RECEIVE_REF REF
+      WHERE APPROVAL.APP_CATE_CODE = CATEGORY.APP_CATE_CODE
+      AND APPROVAL.USER_ID = EMP.USER_ID
+      AND APPROVAL.APP_SEQ = REF.APP_SEQ
+      <if test="empPosition.equals('팀장') and !empPosition.equals('')">
+      AND (APP_SEQ_STATUS = '결재대기'
+      OR APP_SEQ_STATUS= '결재중')
+      </if>
+      <if test="empPosition.equals('부장') and !empPosition.equals('')">
+      AND (APP_SEQ_STATUS = '결재중'
+      OR APP_SEQ_STATUS = '결재완료')
+      </if>
+      AND (FIRST_APPROVAL_EMP = #{empNum}
+      OR FINAL_APPROVAL_EMP = #{empNum})
+      )
+      <if test ="startNum !=null and endNum != null">
+        WHERE RN &gt;= #{startNum} AND RN &lt;= #{endNum}
+       </if>
+	</select>
 </mapper>
 
 	

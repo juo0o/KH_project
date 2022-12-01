@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.Authentication;
@@ -28,6 +30,7 @@ import kh.study.intranet.approval.vo.VacationVO;
 import kh.study.intranet.config.appDateUtil;
 import kh.study.intranet.emp.vo.EmpVO;
 import kh.study.intranet.main.vo.PageVO;
+import kh.study.intranet.main.vo.UserVO;
 
 @Controller
 @RequestMapping("/approval")
@@ -247,30 +250,73 @@ public class ApprovalController {
 		
 		
 	}
+	//승인권자만 확인할 수 있는 결재목록 페이지
+	@GetMapping("/receiveAppPage")
+	public String receiveAppPage(@RequestParam Map<String, Object> map,PageVO pageVO,Model model,HttpSession session,ApprovalVO approvalVO) {
+		
+		System.out.println(session.getAttribute("userInfo")); 
+		System.out.println(session.getAttribute("userInfo")); 
+		System.out.println(session.getAttribute("userInfo")); 
+		System.out.println(); 
+		
+	UserVO userVO= (UserVO)session.getAttribute("userInfo");
+		
+		map.put("empPosition", userVO.getEmpPosition());
+		map.put("empNum", userVO.getEmpNum());
+		
+		
+		System.out.println(map.get("empPosition"));
+		System.out.println(map.get("empPosition"));
+		System.out.println(map.get("empPosition"));
+		System.out.println();
+		System.out.println(map.get("empNum"));
+		System.out.println(map.get("empNum"));
+		System.out.println(map.get("empNum"));
+	   
+	  
+	   
+	   List<ApprovalVO> reciveList = approvalService.selectReceiveApp(map);
+	   
+		int totalDateCnt = reciveList.size();
+		
+		System.out.println(totalDateCnt);
+		System.out.println(totalDateCnt);
+		System.out.println(totalDateCnt);
+		System.out.println(totalDateCnt);
+		System.out.println(totalDateCnt);
+	   //전체 데이터 수
+	 	pageVO.setTotalDataCnt(totalDateCnt);
+		//실행
+		pageVO.setPageInfo();
+		// 페이징에 따라 조회될 데이터를 넣어준다.
+		map.put("startNum",pageVO.getStartNum());
+		map.put("endNum", pageVO.getEndNum());
+		
+
+		model.addAttribute("reciveList",approvalService.selectReceiveApp(map));
+		
+		model.addAttribute("pageVO", pageVO);
+		
+		
+		return "pages/approval/receive_App";
+	}
 //-------------------------------------------------------
 	//결재승인버튼 클릭시 에이작스
+	
+	//첫번쨰 승인자가 결재승인 클릭시 도장찍힘
 	@ResponseBody
 	@PostMapping("/approvalMark")
 	public void approvalMark(ReceiveRefVO receiveRefVO) {
 		approvalService.updateApproval(receiveRefVO); 
 		
 	}
-	
+	//두번쨰 승인자가 결재승인 클릭시 도장찍힘
 	@ResponseBody
 	@PostMapping("/updateFinalApproval")
 	public void approvalFinalMark(ReceiveRefVO receiveRefVO) {
 		approvalService.updateFinalApproval(receiveRefVO); 
 		
 	}
-	/*
-	 * @ResponseBody
-	 * 
-	 * @GetMapping("/selectStatusApp") public List<ApprovalVO>
-	 * selectStatusApp(ApprovalVO approvalVO,@RequestParam Map<String, String>
-	 * paramMap) { return approvalService.selectApp(paramMap);
-	 * 
-	 * }
-	 */
 	
 	
 	

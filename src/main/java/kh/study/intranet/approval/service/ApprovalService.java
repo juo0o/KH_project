@@ -26,7 +26,6 @@ public interface ApprovalService {
 	List<ApprovalVO> selectApp(Map<String, Object> map);
 	List<ApprovalVO> selectBoxList();
 	
-//	List<ApprovalVO> selectAppCateBoard(ApprovalVO approvalVO);
 	
 	ApprovalVO appDocuments(ApprovalVO approvalVO);
 	
@@ -36,4 +35,7 @@ public interface ApprovalService {
 	void updateFinalApproval(ReceiveRefVO receiveRefVO);
 	
 	HashMap<String, Object> selectAppCount(String appSeqStatus);
+	
+	List<ApprovalVO> selectReceiveApp(Map<String, Object> map);
+	
 }

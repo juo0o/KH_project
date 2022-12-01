@@ -115,6 +115,14 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 
+	@Override
+	public List<ApprovalVO> selectReceiveApp(Map<String, Object> map) {
+		return sqlSession.selectList("approvalMapper.selectReceiveApp",map);
+	}
+
+	
+
+
 
 
 	

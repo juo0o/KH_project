@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/base_layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+<div layout:fragment="content">
+
+	<table class="table">
+			<thead>
+				<tr bordercolor="sold 1px;">
+					<th scope="col">문서번호</th>
+					<th scope="col">기안자</th>
+					<th scope="col">제목</th>
+					<th scope="col">기안서</th>
+					<th scope="col">기안부서</th>
+					<th scope="col">기안일
+				</tr>
+			</thead>
+			<tbody id="appList">
+				<tr  th:each="recive : ${reciveList}" th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
+					<td th:text="${recive.appSeq}">@mdo</td>
+					<td th:text="${recive.empVO.empName}">@mdo</td>
+					<td th:text="${recive.title}">Otto</td>
+					<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
+					<td th:text="${recive.empVO.deptName}">Otto</td>
+					<td th:text="${recive.appWriteDate}">Mark</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	
+	<!-- 페이징 처리 -->
+    <div class="row">
+		<div align="center">
+ 
+			<th:block th:if="${pageVO.prev}">
+				<a th:text="prev"
+					th:href="@{/approval/receiveAppPage(nowPage=${pageVO.beginPage - 1})}"></a>
+			</th:block>
+			<th:block
+				th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+				<a th:text="${pageNum}" th:href="@{/approval/receiveAppPage(nowPage=${pageNum})}"></a>
+			</th:block>
+			<th:block th:if="${pageVO.next}">
+				<a th:text="next"
+					th:href="@{/approval/receiveAppPage(nowPage=${pageVO.endPage + 1})}"></a>
+			</th:block>
+		</div>
+	</div>   
+	
+	<script type="text/javascript" th:src="@{/js/approval/request_approval.js}"></script>
+</div>	
+</html>
