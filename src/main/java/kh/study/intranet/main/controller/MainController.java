@@ -42,18 +42,16 @@ public class MainController {
 		//유저정보 보내줌
 		model.addAttribute("userInfo", userService.selectUserInfo(userVO));
 		
-		//유저정보 세션에담아준다
-		session.setAttribute("userInfo", userService.selectUserInfo(userVO));
-		//session시간 1일로 설정
-		session.setMaxInactiveInterval(86400);
-		
-		;
-		System.out.println(session.getAttribute("userInfo"));
-		System.out.println(session.getAttribute("userInfo"));
-		System.out.println(session.getAttribute("userInfo"));
-		System.out.println(session.getAttribute("userInfo"));
-		System.out.println(session.getAttribute("userInfo"));
-		System.out.println(session.getAttribute("userInfo"));
+		if(session.getAttribute("userInfoAll") == null) {
+			
+			//유저정보 세션에담아준다
+			session.setAttribute("userInfoAll", userService.selectUserInfo(userVO));
+			//session시간 1일로 설정
+			session.setMaxInactiveInterval(60*60*24);
+			System.out.println("!!!!!!세선저장!!!!!!!");
+		}else {
+			System.out.println("!!!!!세션 x!!!!");
+		}
 		
 		
 		

@@ -15,16 +15,6 @@
 	</resultMap>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- 회의실 예약 테이블 -->
 	<resultMap type="kh.study.intranet.reservation.vo.ReservationVO" id="reservation">
 		<id column="RESERVE_CODE" property="reserveCode"/>
@@ -85,7 +75,6 @@
 	</select>
 	
 	
-	
 	<!-- 날짜에 사용가능한 예약 조회 -->
 	<select id="availableReserve" resultMap="reservation">
 	SELECT DISTINCT RESERVE_DATE 
@@ -96,14 +85,6 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-		
 	<select id="selectReservation" resultMap="reservation">
 	SELECT M.ROOM_CODE
 		, ROOM_NAME
@@ -119,24 +100,7 @@
 		
 		
 	</select>	
-		
-	<!-- <select id="selectReserve" resultMap="reservation">
-	SELECT RESERVE_CODE
-		 , RESERVE_USER_ID
-		 , ROOM_CODE
-		 , RESERVE_DATE
-		 , RESERVE_TIME
-		 , RESERVE_AVAILABLE
-		 FROM RESERVATION_MEETING_ROOM
-	
-	
-	</select>
-	 -->
-	
-	
-		
-	
-	
+
 		
 	<select id="selectAvailableReservation" resultMap="reservation">	
 	SELECT RESERVE_TIME 
@@ -148,32 +112,6 @@
 	
 	</select>		
 	
-	
-	<!-- 등록쿼리 초안  -->
-	
-	<!-- <insert id="regReservation">
-	
-	
-	
-	INSERT INTO RESERVATION_MEETING_ROOM (
-			RESERVE_CODE
-			,ROOM_CODE
-			,RESERVE_TIME
-			,RESERVE_AVAILABLE
-			
-			
-	
-	) 
-	VALUES (
-			(SELECT 'RESERVE_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RESERVE_CODE,9))),0) +1,3,0) FROM RESERVATION_MEETING_ROOM)
-			,#{roomCode}
-			,#{reserveTime}
-			,'N'
-			
-			
-	)
-	</insert> -->
-			
 	
 	
 	<!--업데이트 초안  -->
@@ -195,15 +133,9 @@
 	</update>
 	
 	
+	<insert id="insertAllSchedules">
 	
-	
-	
-	
-
-
-	
-	
-	
+	</insert>
 	
 </mapper>
 

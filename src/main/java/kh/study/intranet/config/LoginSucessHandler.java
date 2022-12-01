@@ -25,14 +25,10 @@ public class LoginSucessHandler implements AuthenticationSuccessHandler   {
 //		break;
 //		}
 		
+		
 		request.getSession().setMaxInactiveInterval(60*60*24);
 		
-		System.out.println(url);
-		System.out.println(url);
-		System.out.println(url);
-		System.out.println(url);
-		System.out.println(url);
-		System.out.println(url);
+		request.setAttribute("userInfo", authentication);
 		
 		response.sendRedirect(url);
 		

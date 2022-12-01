@@ -56,28 +56,10 @@ public class ReservationController {
 	@RequestMapping("/insertReserve")
 	public String insertReserve(MeetingRoomVO meetingRoomVO,Model model,ReservationVO reservationVO,Authentication authentication,UserVO userVO) {
 		
-		
-		
-		
-		
-		//User user = (User)authentication.getPrincipal();
-		
-		//reservationVO.setReserveUserId(user.getUsername());
-		
-		//reservationService.regReservation(meetingRoomVO);
-		
-		
-		//model.addAttribute("reservation", reservationService.selectReservationInfo());
-		//model.addAttribute("reserve", reservationService.selectReserve());
-		
 		model.addAttribute("available", reservationService.availableReserve());
-		
 		
 		//---회의실 조회---//
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
-		
-		//System.out.println(reservationService.selectMeetingRoom());
-		//System.out.println(reservationService.selectMeetingRoom());
 		
 		return "pages/reservation/insertReserve";
 	
@@ -88,22 +70,7 @@ public class ReservationController {
 	@PostMapping("/selectReserve")
 	public List<ReservationVO> selectReserve(String reserveDate, Model model,String roomCode) {
 		
-		
-		//System.out.println(reserveDate);
-		
-		
-//		System.out.println("@@@@@@@@");
-//		System.out.println(meetingRoomVO);
-//		System.out.println(reservationVO);
-//		System.out.println(reservationService.selectReservation(reserveDate));
-
-		//System.out.println(reservationService.selectReservation(reserveDate));
-		
-		
-		
 		return reservationService.selectReservation(reserveDate);
-		
-		
 	}
 	
 	
@@ -111,16 +78,7 @@ public class ReservationController {
 	@ResponseBody
 	@PostMapping("/selectChange")
 	public List<ReservationVO> selectChange(ReservationVO reservationVO,Authentication authentication) {
-//		System.out.println("!!!!!!!");
-//		System.out.println(reservationVO);
-//		System.out.println(reservationVO);
-		
-		
-		
 		List<ReservationVO> list = reservationService.selectAvailableReservation(reservationVO);
-		
-		//System.out.println(list);
-		//User user = (User)authentication.getPrincipal();
 		
 		return list;
 		
@@ -134,24 +92,11 @@ public class ReservationController {
 	@ResponseBody
 	@PostMapping("/regReservation")
 	public void regReservation(MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) {
-		
-		//System.out.println("!!!!");
-//		System.out.println(meetingRoomVO);
-		//System.out.println(meetingRoomVO);
-		//System.out.println(reservationVO);
-		
 		User user = (User)authentication.getPrincipal();
 		
 		reservationVO.setReserveUserId(user.getUsername());
-		//reservationVO.setReserveDate();
 		
-		
-		 //System.out.println("!!!!!!!!");
-		 
-		 //reservationService.regReservation(reservationVO);
-		 reservationService.reserveUpdate(reservationVO); 
-		
-		 System.out.println(reservationVO);
+		reservationService.reserveUpdate(reservationVO); 
 		
 		
 	}
@@ -159,7 +104,6 @@ public class ReservationController {
 	//회의실 예약조회 눌렀을시 페이지 이동
 	@GetMapping("/selectReserve")
 	public String selectReserve() {
-		
 		
 		return "pages/reservation/selectReserve";
 	}
@@ -182,37 +126,20 @@ public class ReservationController {
 			e.setStartTime(date[0]);
 			e.setEndTime(date[1]);
 			
-//			System.out.println(e);
 		}
 		
 		listMap.put("reservedList", reservedList);
-       
-//        for(ReservationVO e : reservationService.selectReserveAll()) {
-//        	System.out.println(e);
-//        	System.out.println(e.getReserveTime());
-//        }
-//        reserveList.put("reserveList", reservationService.selectReserveAll());
-        
-		
-		
-		
-		
-		//System.out.println(reservationService.selectReserveAll());
 		
 		return listMap;
 		
-		//System.out.println(map);
-		
-		//System.out.println(reservationVO);
-		
-		
-		
-		
-		
-		
-		
-		
 	}
+	
+	//회의실 등록 
+//	@RequestMapping("/insertAllSchedules")
+//	public Map<String, String> insertAllSchedules(){
+//		
+//		
+//	}
 	
 	
 	
