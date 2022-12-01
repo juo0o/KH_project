@@ -18,6 +18,15 @@ public interface AddressService {
 	
 	void regMyAddress(AddressVO addressVO);
 	
+	AddressVO selectBookPk(String bookPk);
+	
+	void updateAddress(AddressVO addressVO);
+	
+	void deleteAddress(AddressVO addressVO);
+	
+	//다음에 들어갈 List_pk 조회
+	String selectNextListPk();
+	
 	
 	
 }

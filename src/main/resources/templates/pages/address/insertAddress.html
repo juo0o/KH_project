@@ -6,7 +6,9 @@
 	>
   
 <div layout:fragment="content">
-				<h3>연락처추가</h3>
+				<h1>
+					<a href="#">연락처추가</a>
+				</h1>
 <form th:action="@{/address/regAddress}" method="post" >
 <table class="form_type">
 				<colgroup>
@@ -58,15 +60,15 @@
 				</tr>
 				
 				
-				<tr>
+				<!-- <tr>
 					<th><span class="title">메모</span></th>
-					<td> <span th:text="${listPk}"></span> </td>
+					
 					<td>
 						<span class="textarea">
 							<textarea name="" class="edit w_max" style="margin-bottom: 10px;"></textarea>									
 						</span>
 					</td>
-				</tr>
+				</tr> -->
 			<!-- 	<tr class="line">
 					<th><span class="title">그룹</span></th>
 					<td>
@@ -97,12 +99,21 @@
 									
 				</tbody>
 			</table>
-	<div>
+	<div style="margin-top: 30px;" id="inputDiv">
 		<input type="hidden" th:value="${listPk}" name="listPk">
 	
-		<input type="submit" value="저장">
-		<input type="button" value="취소" >
+		<input type="submit" value="저장" class="btn btn-info">
+		<input type="button" value="취소" onclick="history.back(-1);" class="btn btn-secondary" id="cancel">
 	</div>		
 	</form>
+	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    	<script type="text/javascript" src="../js/address/address.js"></script>
+	
+	
+	
+	
+	
+	
 </div>
 </html>

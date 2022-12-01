@@ -10,6 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AddressVO {
+	private String bookPk;
 	private String listPk;
 	private String regUserId; //주소록에 등록한 사람
 	private String empName;

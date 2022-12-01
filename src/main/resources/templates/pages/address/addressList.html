@@ -7,46 +7,26 @@
   
   
     <div layout:fragment="content">
-    	
-    	<section class="lnb" data-type="USER"><h1 class="user">
-    <a data-bypass="" class="side_toggle">
-        <ins class="ic"></ins>
-        <span class="ic_side ic_hide_up" title="접기"></span>
-        <span class="txt" title="개인 주소록">개인 주소록</span>
-    </a>
-    <span class="btn_wrap">
-        <span class="btn_ic_list_reorder normalmode">
-            <span class="ic_side ic_list_reorder" title="접기"></span>
-        </span>
-        <span class="ic_side ic_done editmode" title="접기" style="display:none;"></span>
-        <span class="ic_side ic_cancel editmode" title="접기" style="display:none;"></span>
-        <span class="groupManage ic_side ic_side_setting normalmode" title="접기"></span>
-    </span>
-</h1>
+    	<div class="row">
+    	<div class="col-4">
+    
 
 <ul class="side_depth" style="display: block;">
-    <li class="group ui-state-disabled">
-        <p class="title on">
-            <a>
-                <ins class="ic"></ins>
-                <span class="contactTag" title="전체 주소록">전체 주소록</span>
-            </a>
-        </p>
-		
-    </li>
+  
 	<li class="new">
 		<p class="title">
 			<ins class="ic"></ins>
 			
-			<span data-event="addGroup" class="">
-				<a href="#">연락처 주소록 </a>
+			<span data-event="addGroup" class="" style="font-size: 20px; font-weight: bold;">
+				<a href="#">개인 주소록 </a>
 			</span>
 		</p>
 		
-		<div id="addList">
+		<div id="addList" style="font-size: 16px;">
 			<th:block th:each="myAddress:${myAddressList}">
 				<div>
-					<a href="#" th:text="${myAddress.bookName}" th:onclick="|location.href='@{/address/myAddress(listPk=${myAddress.listPk})}'|"></a>
+					<a th:text="${myAddress.bookName}" th:href="@{/address/myAddress(listPk=${myAddress.listPk})}"></a>
+					
 				</div>
 			</th:block>
 			
@@ -55,54 +35,125 @@
 	</li>
 </ul>
 
-<!-- <div id="컨트롤러에서 조회해서 뿌려준다.">11111 <br>22222 </div> -->
 
 
 
-<input type="text" placeholder="연락처 그룹 이름" name="bookName" id="groupName" value="">
-<input type="button" value="주소록 그룹 추가" onclick="goAddress();" id="groupAdd">
+<input type="text" placeholder="연락처 그룹 이름..." name="bookName" id="groupName" value="" style="margin-bottom: 25px;">
+<input class="btn btn-info" type="button" value="주소록 그룹 추가" onclick="goAddress();" id="groupAdd">
+
 <!-- <div id="등록할때마다 계속 조회를해서 다시ㅡㄱ려준다"></div> -->
 
 <!-- <div id="insertDiv"></div> -->
 
 </section>
+</div>
 <!-- <input class="edit" type="text" placeholder="연락처 그룹 이름" > -->
-
+<div class="col-7"><form th:action="@{/address/addressList}" method="post">
+			<table class="table align-middle table-bordered text-center test " style="width: 900px; height: 200px;">
+				<colgroup>
+					<col width="8%">
+					<col width="8%">
+					<col width="15%">
+					<col width="8%">
+					<col width="19%">
+					<col width="8%">
+					<col width="8%">
+					<col width="18%">
+					<col width="8%">
+				</colgroup>
+				<tr>
+					<td rowspan="2">
+						<div class="row" >
+							<div class="col-12" style="font-style: italic;">
+								검 색
+							</div>
+							<div class="col-12" style="font-style: italic;">
+								조 건
+							</div>
+						</div>
+					</td>
+					<td class="searchTitle">부서</td>
+					<td>
+						<select class="form-select" name="deptCode">
+							<option value="" th:selected="${paramMap['deptCode'] == null or paramMap['deptCode'] eq ''}">전체</option>
+							<option th:each="deptInfo: ${deptList}" th:text="${deptInfo.deptName}" th:value="${deptInfo.deptCode}" th:selected="${paramMap['deptCode'] eq deptInfo.deptCode}"></option>
+						</select>
+					</td>
+					<td class="searchTitle">이름</td>
+					<td colspan="2">
+						<input class="form-control" type="text" name="empName" id="" th:value="${paramMap['empName']}" >
+					</td>
+					<td class="searchTitle">직위</td>
+					<td>
+						<input class="form-control" type="text" name="empPosition" id="" th:value="${paramMap['empPosition']}" >
+					</td>
+					<td rowspan="2">
+						<button type="submit" id="searchButton" class="btn btn-primary" style="height: 90px;">Search</button>
+					</td>
+				</tr>
+				<tr>
+					<td class="searchTitle">입사일</td>
+					<td colspan="3">
+						<div class="row">
+							<div class="col-6">
+								<input class="form-control" type="date" name="fromDate" id="" th:value="${paramMap['fromDate']}" >
+							</div>
+							<div class="col-6">
+								<input class="form-control" type="date" name="toDate" id="" th:value="${paramMap['toDate']}" >
+							</div>
+						</div>
+					</td>
+					<td class="searchTitle">상태</td>
+					<td colspan="2">
+						<!-- <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
+						  <label class="form-check-label" for="">전체</label>
+						</div>
+			   			<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
+						  <label class="form-check-label" for="">판매중</label>
+						</div>
+			   			<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
+						  <label class="form-check-label" for="">매진</label>
+						</div> -->
+					</td>
+				</tr>
+			</table>
+			
+			<input type="hidden" id="nowPage" value="1"  name="nowPage" >
+		</form>
+		<br>
 	
-    
-    		
+		<!-- <div>
+			<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regEmpModal">
+			  사원등록
+			</button>
+			<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regDeptModal">
+			  부서등록
+			</button>
+		</div> -->
+</div>
+
+<div class="row">
     		<!----------- 공용 주소록 리스트 ----------------->
-				<section class="lnb" data-type="USER"><h1 class="user">
-    <a data-bypass="" class="side_toggle">
-        <ins class="ic"></ins>
-        <span class="ic_side ic_hide_up" title="접기"></span>
-        <span class="txt" title="공용 주소록" >공용 주소록</span>
-    </a>
-    <span class="btn_wrap">
-        <span class="btn_ic_list_reorder normalmode">
-            <span class="ic_side ic_list_reorder" title="접기"></span>
-        </span>
-        <span class="ic_side ic_done editmode" title="접기" style="display:none;"></span>
-        <span class="ic_side ic_cancel editmode" title="접기" style="display:none;"></span>
-        <span class="groupManage ic_side ic_side_setting normalmode" title="접기"></span>
-    </span>
-</h1>
+
 
 <ul class="side_depth" style="display: block;">
     <li class="group ui-state-disabled">
         <p class="title on">
             <a href="/address/addressList">
                 <ins class="ic"></ins>
-                <span class="contactTag" title="공용 주소록" >공용 주소록</span>
+                <span class="contactTag" title="공용 주소록" style="font-size: 20px; font-weight: bold;">공용 주소록</span>
             </a>
         </p>
     </li>
-</ul></section>
+</ul>
 			
 			<div>
-				<table class="table">
+				<table class="table" >
 					<thead>
-						<tr bordercolor="sold 1px;">
+						<tr bordercolor="sold 1px;" class="table-Light" >
 							<th scope="col">이름(표시명)</th>
 							<th scope="col">직위</th>
 							<th scope="col">휴대폰</th>
@@ -113,9 +164,9 @@
 							<th scope="col">그룹</th>
 						</tr>
 					</thead>
-					<tbody id="">
+					<tbody id="" >
 						<th:block >
-							<tr th:each="address:${addressList}">
+							<tr class="table-secondary" th:each="address:${addressList}">
 								<td th:text="${address.empName}"></td>
 								<td th:text="${address.empPosition}"></td>
 								<td th:text="${address.empTell}"></td>
@@ -130,7 +181,22 @@
 					</tbody>
 				</table>
 	</div>
-    	
+   </div>
+	
+    <div class="row">
+		<div align="center">
+			<th:block th:if="${pageVO.prev}">
+				<a th:text="prev" th:onclick="|movePage(${pageVO.beginPage-1})|"></a>
+			</th:block>
+			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.beginPage, pageVO.endPage)}">
+				<a th:text="${pageNum}" th:onclick="|movePage(${pageNum})|"></a>
+			</th:block>
+			<th:block th:if="${pageVO.next}">
+				<a th:text="next" th:onclick="|movePage(${pageVO.endPage+1})|"></a>
+			</th:block>
+		</div>
+	</div>  
+  	
     	
     	
     	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -139,5 +205,12 @@
     
     </div>
     
+    
+    
+    
+    
+    
+    
+    </div>
     
 </html>

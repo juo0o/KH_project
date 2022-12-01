@@ -47,7 +47,7 @@ public class MainController {
 			//유저정보 세션에담아준다
 			session.setAttribute("userInfoAll", userService.selectUserInfo(userVO));
 			//session시간 1일로 설정
-			session.setMaxInactiveInterval(60*60*24);
+			//session.setMaxInactiveInterval(60*60*24);
 			System.out.println("!!!!!!세선저장!!!!!!!");
 		}else {
 			System.out.println("!!!!!세션 x!!!!");

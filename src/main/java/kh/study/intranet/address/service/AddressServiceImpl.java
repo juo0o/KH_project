@@ -45,13 +45,34 @@ public class AddressServiceImpl implements AddressService{
 	@Override
 	public List<AddressVO> selectListPk(String listPk) {
 		
-		System.out.println("!!!!!!!"+listPk);
-		System.out.println("!!!!!!!"+listPk);
-		System.out.println("!!!!!!!"+listPk);
-		System.out.println("!!!!!!!"+listPk);
+		
 		return sqlSession.selectList("addressMapper.selectListPk",listPk);
 	}
-	
+
+	@Override
+	public AddressVO selectBookPk(String bookPk) {
+		
+		return sqlSession.selectOne("addressMapper.selectBookPk",bookPk);
+	}
+
+	@Override
+	public void updateAddress(AddressVO addressVO) {
+		sqlSession.update("addressMapper.updateAddress",addressVO);
+		
+	}
+
+	@Override
+	public void deleteAddress(AddressVO addressVO) {
+		sqlSession.delete("addressMapper.deleteAddress",addressVO);
+		
+	}
+
+	@Override
+	public String selectNextListPk() {
+		
+		return sqlSession.selectOne("addressMapper.selectNextListPk");
+	}
+
 	
 	
 }

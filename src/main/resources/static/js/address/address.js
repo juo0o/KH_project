@@ -29,6 +29,8 @@ function goAddress(){
                		 
                		 for(let myAddress of result){
 						str += `<div><a>${myAddress.bookName}</a></div>`	
+							
+						
 					}
                	
 					add.insertAdjacentHTML('beforeend',str)
@@ -46,4 +48,115 @@ function goAddress(){
 	
 	
 }
+
+//취소 버튼 클릭시
+function cancelbtn(){
+	
+	
+	
+	
+	
+	
+	/* $.ajax({
+               url: '/address/insertAddress', //요청경로
+               type: 'post',
+               data: {},
+//               processData: false,
+//               contentType: false,
+//               cache: false,
+				async: false,
+               success: function(result) {
+               		 alert('aaa');
+               		 
+               		
+               		 
+               		 
+               	
+               },
+               error: function() {
+                  
+                  alert('실패');
+         
+                  
+               }
+            });
+	*/
+}
+
+const deleteModal = document.querySelector('#deleteModal');
+
+//삭제 버튼 클릭시
+function deleteBtn(bookPk,listPk){
+	
+	var result =  confirm('삭제하시겠습니까?');
+	
+	if(result){
+		$.ajax({
+               url: '/address/deleteAddress', //요청경로
+               type: 'post',
+               data: {'bookPk':bookPk,'listPk':listPk},
+//               processData: false,
+//               contentType: false,
+//               cache: false,
+				async: false,
+               success: function(result) {
+               		alert('삭제완료');
+               		
+               		
+               		
+               		location.href = '/address/myAddress?listPk=' + listPk;
+               		 
+               		
+               		 
+               		 
+               	
+               },
+               error: function() {
+                  
+                  alert('실패');
+         
+                  
+               }
+            });
+	
+		
+		
+	}
+	
+	//console.log(bookPk);
+	//console.log(listPk);
+	
+	
+	
+	
+	
+}	
+//페이지이동시 검색기능 유지하는 함수
+function movePage(nowPage){
+	
+	$("#nowPage").attr("value", nowPage)
+	$("#searchButton").click();
+	
+}	
+	
+	
+	
+	
+	
+
+	
+
+	
+	
+	
+            
+	
+	
+	
+	
+	
+	
+	
+
+
 
