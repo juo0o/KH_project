@@ -4,16 +4,17 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="boardMapper">
 	<resultMap type="kh.study.intranet.board.vo.BoardVO" id="board">
-		<id column="BOARD_NUM"     property="boardNum"/>
-		<result column="USER_ID"     property="userId"/>
-		<result column="BOARD_TITLE"     property="boardTitle"/>
-		<result column="BOARD_CONTENT"     property="boardContent"/>
-		<result column="IS_SECRET"     property="isSecret"/>
-		<result column="SECRET_PW"     property="secretPw"/>
+		<id column="BOARD_NUM"     			property="boardNum"/>
+		<result column="USER_ID"     		property="userId"/>
+		<result column="BOARD_TITLE"        property="boardTitle"/>
+		<result column="BOARD_CONTENT"      property="boardContent"/>
+		<result column="IS_SECRET"     		property="isSecret"/>
+		<result column="SECRET_PW"     		property="secretPw"/>
 		<result column="BOARD_READ_CNT"     property="boardReadCnt"/>
 		<result column="BOARD_REG_DATE"     property="boardRegDate"/>
-		<result column="REPLY_COUNT"     property="replyCount"/>
-		<result column="LIKE_COUNT"     property="likeCount"/>
+		<result column="REPLY_COUNT"     	property="replyCount"/>
+		<result column="LIKE_COUNT"     	property="likeCount"/>
+		<result column="BOARD_CATE_NAME" 	property="boardCateName"/>
 	</resultMap>
 
 	<resultMap type="kh.study.intranet.board.vo.BoardCategoryVO" id="boardCategory">
@@ -29,7 +30,9 @@
 		       , BOARD_REG_DATE
 		       , REPLY_COUNT
 		       , BOARD_READ_CNT
-		       , LIKE_COUNT 
+		       , LIKE_COUNT
+		       , BOARD_CATE_CODE
+               , BOARD_CATE_NAME 
 		FROM (SELECT BOARD_NUM
 			       , BOARD_TITLE
 			       , USER_ID
@@ -37,7 +40,9 @@
 			       , REPLY_COUNT
 			       , BOARD_READ_CNT
 			       , LIKE_COUNT
-       			   , RANK() OVER(ORDER BY LIKE_COUNT DESC) AS RANK
+			       , BOARD_CATE_CODE
+                   , BOARD_CATE_NAME
+       			   , RANK() OVER(ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC) AS RANK
       		  FROM (SELECT DISTINCT BO.BOARD_NUM
                             		, BOARD_TITLE
                             		, BO.USER_ID
@@ -50,28 +55,14 @@
 		                            , (SELECT COUNT(LIKE_NUM)
 		                                FROM BOARD_LIKE
 		                                WHERE BOARD_NUM = BO.BOARD_NUM
-		                                ) AS LIKE_COUNT       
+		                                ) AS LIKE_COUNT
+	                                , CATE.BOARD_CATE_CODE
+                            		, CATE.BOARD_CATE_NAME
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
-           			WHERE 1 = 1
-           			 <!-- 안시조인조건때문에 if태그밖에서 where절이 없다. 그런데 첫 if조건문을 만족못하면 이후부터 where이 안먹힘 
-					 해결책 : 밖에다가 where 1 = 1을 걸어버림(무조건 만족하기때문!!!)  -->
-           			<!-- <if test= "userId != null and !userId.equals('')">
-					AND UPPER(USER_ID) LIKE UPPER('%'||#{userId}||'%')
-					</if>
-					<if test= "boardTitle != null and !boardTitle.equals('')">
-					AND UPPER(BOARD_TITLE) LIKE UPPER('%'||#{boardTitle}||'%')
-					</if>
-			        <if test="boardContent != null and !boardContent.equals('')">
-					AND UPPER(BOARD_CONTENT) LIKE UPPER('%'||#{boardContent}||'%')
-					</if>		
-					<if test="fromDate != null and !fromDate.equals('')">
-					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
-					</if>		
-					<if test="toDate != null and !toDate.equals('')">
-					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-					</if> -->
-           			ORDER BY LIKE_COUNT DESC)
+           			LEFT JOIN BOARD_CATEGORY CATE
+                    ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE			  
+           			ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC)
            				)
 			WHERE RANK &lt;= 3
 	</select>
@@ -88,6 +79,8 @@
 				, REPLY_COUNT
 				, BOARD_READ_CNT
                 , LIKE_COUNT
+                , BOARD_CATE_CODE
+                , BOARD_CATE_NAME
 			FROM (
 					SELECT ROWNUM AS RN
 					, BOARD_NUM
@@ -97,6 +90,8 @@
 					, REPLY_COUNT
 					, BOARD_READ_CNT
 	                , LIKE_COUNT
+	                , BOARD_CATE_CODE
+                    , BOARD_CATE_NAME
 				FROM (
 						    SELECT  DISTINCT BO.BOARD_NUM 
 							, BOARD_TITLE 
@@ -109,24 +104,31 @@
 			                , (SELECT COUNT(LIKE_NUM)
 		                       FROM BOARD_LIKE
 		                       WHERE BOARD_NUM = BO.BOARD_NUM) AS LIKE_COUNT
+	                        , CATE.BOARD_CATE_CODE
+                            , CATE.BOARD_CATE_NAME
 					FROM BOARD BO LEFT JOIN BOARD_REPLY RE
 					ON BO.BOARD_NUM = RE.BOARD_NUM
+					LEFT JOIN BOARD_CATEGORY CATE
+                    ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE 
 			        WHERE 1 = 1
-				<if test= "userId != null and !userId.equals('')">
-				AND UPPER(BO.USER_ID) LIKE UPPER('%'||#{userId}||'%')
-				</if>
-				<if test= "boardTitle != null and !boardTitle.equals('')">
-				AND UPPER(BO.BOARD_TITLE) LIKE UPPER('%'||#{boardTitle}||'%')
-				</if>
-		        <!-- <if test="boardContent != null and !boardContent.equals('')">
-				AND UPPER(BOARD_CONTENT) LIKE UPPER('%'||#{boardContent}||'%')
-				</if> -->		
-				<if test="fromDate != null and !fromDate.equals('')">
-				AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
-				</if>		
-				<if test="toDate != null and !toDate.equals('')">
-				AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
-				</if>	
+					<if test= "userId != null and !userId.equals('')">
+					AND UPPER(BO.USER_ID) LIKE UPPER('%'||#{userId}||'%')
+					</if>
+					<if test= "boardTitle != null and !boardTitle.equals('')">
+					AND UPPER(BO.BOARD_TITLE) LIKE UPPER('%'||#{boardTitle}||'%')
+					</if>
+					<if test= "boardCateCode != null and !boardCateCode.equals('')">
+					AND BO.BOARD_CATE_CODE = #{boardCateCode}
+					</if> 
+			        <!-- <if test="boardContent != null and !boardContent.equals('')">
+					AND UPPER(BOARD_CONTENT) LIKE UPPER('%'||#{boardContent}||'%')
+					</if> -->		
+					<if test="fromDate != null and !fromDate.equals('')">
+					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &gt;= #{fromDate}  
+					</if>		
+					<if test="toDate != null and !toDate.equals('')">
+					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
+					</if>	
 				ORDER BY BOARD_NUM DESC 	
 		        )
 	        )
@@ -137,6 +139,14 @@
 	</select>
 	
 	<!-- 게시판카테고리조회 -->
+ 	<select id="selectBoardCate" resultMap="boardCategory">
+		
+		SELECT BOARD_CATE_CODE
+				, BOARD_CATE_NAME
+		FROM BOARD_CATEGORY  
+		ORDER BY BOARD_CATE_CODE DESC
+	</select>
+	
 	
 	
 	
@@ -161,12 +171,18 @@
 			, USER_ID
 			, BOARD_TITLE
 			, BOARD_CONTENT
+			, BOARD_CATE_CODE
+			<!-- , IS_SECRET
+			, SECRET_PW -->
 
 		) VALUES (
 			(SELECT NVL(MAX(BOARD_NUM),0)+1 FROM BOARD)
 			, #{userId}
 			, #{boardTitle}
 			, #{boardContent}
+			, #{boardCateCode}
+		<!-- 	, #{isSecret}
+		    , #{secretPw}  -->
 		)
 	</insert>
 	

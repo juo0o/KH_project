@@ -36,6 +36,8 @@ public class BoardController {
 	@Resource(name = "boardLikeService")
 	private BoardLikeService boardLikeService;
 
+	
+	
 	// 게시글 목록 조회
 	@RequestMapping("/boardList")
 	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model) {
@@ -77,10 +79,16 @@ public class BoardController {
 		//map 보내줌
 		model.addAttribute("paramMap", paramMap);
 		
+		
+		
+		//게시판 카테고리조회
+		model.addAttribute("boardCate", boardService.selectBoardCate());
+
 		//검색결과 보내줌
 		model.addAttribute("boardList", boardService.selectBoardListAndSearch(paramMap));
-			//검색결과 상단정렬
-			model.addAttribute("likeBoardList", boardService.selectLikeBoardList(paramMap));
+		
+		//추천글 3개정렬
+		model.addAttribute("likeBoardList", boardService.selectLikeBoardList(paramMap));
 		
 		
 		//페이징처리 vo보내줌
@@ -91,6 +99,7 @@ public class BoardController {
 
 		return "pages/board/board_list";
 	}
+	
 	
 
 	
@@ -174,7 +183,13 @@ public class BoardController {
 
 	// 게시글 등록 페이지로이동
 	@GetMapping("/regBoardForm")
-	public String regBoardForm(BoardVO boardVO) {
+	public String regBoardForm(BoardVO boardVO, Model model) {
+		//boardcategory 테이블에서 카테고리 싹다 조회해
+		//리스트 model로 html로 보내서
+		// select박스 그려준다. 이름은 cateName value= catecode  
+
+		model.addAttribute("boardCate", boardService.selectBoardCate()); 
+		
 		return "pages/board/reg_Board";
 	}
 
@@ -189,6 +204,8 @@ public class BoardController {
 	
 		// 게시글 등록메소드 실행
 		boardService.regBoard(boardVO);
+		
+		
 		return "redirect:/board/boardList";
 	}
 //--------------------------------

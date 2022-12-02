@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kh.study.intranet.board.vo.BoardCategoryVO;
 import kh.study.intranet.board.vo.BoardVO;
 
 @Service("boardService")
@@ -28,6 +29,16 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> selectBoardListAndSearch(Map<String, Object> map) {
 		return sqlSession.selectList("boardMapper.selectBoardListAndSearch", map);
 	}
+	
+	//게시판 카테고리 조회
+	@Override
+	public List<BoardVO> selectBoardCate() {
+		return sqlSession.selectList("boardMapper.selectBoardCate");
+	}
+	
+	
+	
+	
 
 	//게시글 상세조회
 	@Override
@@ -65,6 +76,8 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardCnt() {
 		return sqlSession.selectOne("boardMapper.selectBoardCnt");
 	}
+
+	
 
 	
 

@@ -3,6 +3,7 @@ package kh.study.intranet.board.service;
 import java.util.List;
 import java.util.Map;
 
+import kh.study.intranet.board.vo.BoardCategoryVO;
 import kh.study.intranet.board.vo.BoardVO;
 
 public interface BoardService {
@@ -12,6 +13,9 @@ public interface BoardService {
 	
 	//게시글 검색 및 목록 조회 
 	List<BoardVO> selectBoardListAndSearch(Map<String, Object> map);
+	
+//	//게시판 카테고리 조회
+	List<BoardVO> selectBoardCate();
 	
 	
 	//게시글 상세 조회

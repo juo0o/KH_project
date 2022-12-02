@@ -17,16 +17,43 @@
 				<textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{boardContent}" rows="3"></textarea>
 			</div>
 			<div class="row">
-				<!-- <div class="form-check">
-			  		<input class="form-check-input" type="checkbox" th:value="${boardVO.isSecret}" th:name="isSecret" id="flexCheckIndeterminate">
-			  		<label class="form-check-label" for="flexCheckIndeterminate">비밀글여부</label>
+				<div class="col text-right">
+					<label for="Default select example" class="form-label">카테고리 선택</label>
+					<select class="form-select" aria-label="Default select example" name="boardCateCode">
+						<th:block th:each="cate: ${boardCate}" >
+						
+							<th:block  th:if="${cate.boardCateCode eq 5}" >
+								<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+					  				<option style="background-color: red;"  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
+								</th:block>
+							</th:block>
+							
+							<th:block  th:unless="${cate.boardCateCode eq 5}" >
+					  			<option  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
+							</th:block>		
+					  			
+						</th:block>
+					</select>
+				</div>
+
+				
+				<!-- 비밀글 여부 -->
+				<!-- <div>
+					<div class="form-check">
+				  		<input class="form-check-input" type="checkbox" name="isSecret" value="Y" id="flexCheckIndeterminate">
+				 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 여부</label>
+					</div>
+					<div class="mb-3 row">
+			    		<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호 지정</label>
+					    <div class="col-sm-4">
+				      		<input type="password" th:field="*{secretPw}" class="form-control" id="inputPassword">
+					    </div>
+		  			</div>
 				</div> -->
 				<div class="col text-right">
 					<button type="submit" class="btn btn-outline-info">
 					글 등록
 					</button>
-				</div>
-				<div class="col text-right">
 					<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/boardList}'|">
 					뒤로가기
 					</button>
