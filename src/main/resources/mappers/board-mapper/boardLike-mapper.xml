@@ -16,6 +16,7 @@
 		FROM BOARD_LIKE
 		WHERE BOARD_NUM = #{boardNum}
 		AND USER_ID = #{userId}
+		
 	</select>
 
 	<!-- 게시글 좋아요 기능(추천,취소) -->
