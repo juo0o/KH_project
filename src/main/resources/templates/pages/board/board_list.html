@@ -37,10 +37,10 @@
 						<td>
 						 	<select class="form-select" name="boardCateCode">
 								<option value="" th:selected="${paramMap['boardCateCode'] == null or paramMap['boardCateCode'] eq ''}">전체</option>
-								<option th:each="cate: ${boardCate}" 
-										th:text="${cate.boardCateName}" 
-										th:value="${cate.boardCateCode}" 
-										th:selected="${paramMap['boardCateCode'] eq cate.boardCateCode}"></option>
+								<option th:each="cateList: ${boardCate}" 
+										th:text="${cateList.boardCateName}" 
+										th:value="${cateList.boardCateCode}" 
+										th:selected="${paramMap['boardCateCode'] eq cateList.boardCateCode}"></option>
 							</select> 
 						</td>
 						<td class="searchTitle">글제목</td>
@@ -67,20 +67,20 @@
 								</div>
 							</div>
 						</td>
-						<td class="searchTitle">상태</td>
+						<td class="searchTitle">정렬</td>
 						<td colspan="2">
 							<!-- <div class="form-check form-check-inline">
-						  		<input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
-						  		<label class="form-check-label" for="">전체</label>
+						  		<input class="form-check-input" type="radio" name="readWay" id="" th:value="BOARD_NUM" th:checked="${paramMap['readWay'] == null or paramMap['readWay'] eq ''}">
+						  		<label class="form-check-label" for="">최신순</label>
 							</div>
 				   			<div class="form-check form-check-inline">
-						  		<input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
-						  		<label class="form-check-label" for="">판매중</label>
+						  		<input class="form-check-input" type="radio" name="readWay" id="" th:value="BOARD_READ_CNT" th:checked="${paramMap['readWay'] eq 'BOARD_READ_CNT'}">
+						  		<label class="form-check-label" for="">조회순</label>
 							</div>
 				   			<div class="form-check form-check-inline">
-						  		<input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
-						  		<label class="form-check-label" for="">매진</label>
-							</div> -->
+						  		<input class="form-check-input" type="radio" name="readWay" id="" th:value="LIKE_COUNT" th:checked="${paramMap['readWay'] eq 'LIKE_COUNT'}">
+						  		<label class="form-check-label" for="">추천순</label>
+							</div>  -->
 						</td>
 					</tr>
 				</table>
@@ -95,7 +95,6 @@
 		<div class="col">
 			<table class="table table-hover">
 				<colgroup>
-					
 					<col width="10%">
 					<col width="10%">
 					<col width="30%">
@@ -116,6 +115,41 @@
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
+					<!-- 최신 공지사항 3개 -->
+					<tr th:each="notice : ${noticeBoardList}" style="background-color:#E66D39;" >
+						<td th:text="${notice.boardCateName}"></td>
+						<td>
+							<div>
+								<span class="inner">공지</span>
+							</div>
+						</td>
+						<td>
+							<a th:href="@{/board/boardDetail(boardNum=${notice.boardNum})}">
+								<span th:text="${notice.boardTitle}">
+								</span>
+								&nbsp; 
+								<th:block th:if="${notice.replyCount ne 0}">
+									<span style="color: #f56642;">[</span> 
+									<span style="color: #f56642;" th:text="${notice.replyCount}"></span>
+									<span style="color: #f56642;">]</span> 
+								</th:block>
+								<th:block th:unless="${notice.replyCount ne 0}" >
+								</th:block>
+								
+								<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq notice.boardRegDate}">
+	                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+	                           		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
+	                            </th:block>
+	                              
+	                            <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq notice.boardRegDate}">
+	                            </th:block>
+							</a>
+						</td>
+						<td th:text="${notice.userId}"></td>
+						<td th:text="${#strings.substring(notice.boardRegDate,0,10)}"></td>
+						<td th:text="${notice.boardReadCnt}"></td>
+						<td th:text="${notice.likeCount}"></td>
+					</tr>
 					<!-- 추천글 3개 -->
 					<tr th:each="like : ${likeBoardList}" style="background-color:#EFF5F5;" >
 						<td th:text="${like.boardCateName}"></td>
@@ -156,26 +190,38 @@
 						<td th:text="${list.boardCateName}"></td>
 						<td th:text="${list.boardNum}"></td>
 						<td>
+						<th:block th:if="${list.isSecret eq 'N'}">
 							<a th:href="@{/board/boardDetail(boardNum=${list.boardNum})}">
-								<span th:text="${list.boardTitle}">
-								</span>
-								&nbsp; 
-								<th:block th:if="${list.replyCount ne 0}">
-									<span style="color: #f56642;">[</span> 
-									<span style="color: #f56642;" th:text="${list.replyCount}"></span>
-									<span style="color: #f56642;">]</span> 
-								</th:block>
-								<th:block th:unless="${list.replyCount ne 0}" >
-								</th:block>
-								
-								<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
-	                                 <!-- <span style="color: #DC3535;" th:text="N"></span> -->
-	                           		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
-	                            </th:block>
-	                              
-	                            <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
-	                            </th:block>
+								<span th:text="${list.boardTitle}"></span>
 							</a>
+						</th:block>
+						<th:block th:unless="${list.isSecret eq 'N'}">
+							<!-- 작성자본인과 관리자만 수정삭제가능 -->
+							<th:block th:if="${list.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+								<a th:href="@{/board/boardDetail(boardNum=${list.boardNum})}">
+									<span th:text="${list.boardTitle}"></span>
+								</a>
+							</th:block>
+							<th:block th:unless="${list.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+								<img src="/imgs/board/자물쇠.png" height="20" width="20">
+								<span>비밀글입니다</span>
+							</th:block>
+						</th:block>
+						&nbsp; 
+						<th:block th:if="${list.replyCount ne 0}">
+							<span style="color: #f56642;">[</span> 
+							<span style="color: #f56642;" th:text="${list.replyCount}"></span>
+							<span style="color: #f56642;">]</span> 
+						</th:block>
+						<th:block th:unless="${list.replyCount ne 0}" >
+						</th:block>
+						<th:block th:if ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
+                                <!-- <span style="color: #DC3535;" th:text="N"></span> -->
+                          		<img src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20"/>
+                        </th:block>
+                             
+                        <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
+                        </th:block>
 						</td>
 						<td th:text="${list.userId}"></td>
 						<td th:text="${#strings.substring(list.boardRegDate,0,10)}"></td>

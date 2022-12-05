@@ -17,8 +17,14 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-
-	//게시판 추천글 상단 정렬
+	//게시판 최신 공지사항 상단 고정
+	@Override
+	public List<BoardVO> selectNoticeBoardList(Map<String, Object> map) {
+		return sqlSession.selectList("boardMapper.selectNoticeBoardList", map);
+	}
+	
+	
+	//게시판 추천글 상단 고정
 	@Override
 	public List<BoardVO> selectLikeBoardList(Map<String, Object> map) {
 		return sqlSession.selectList("boardMapper.selectLikeBoardList", map);
@@ -76,6 +82,8 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardCnt() {
 		return sqlSession.selectOne("boardMapper.selectBoardCnt");
 	}
+
+	
 
 	
 

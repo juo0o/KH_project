@@ -22,6 +22,53 @@
 		<result column="BOARD_CATE_NAME"     property="boardCateName"/>
 	</resultMap>
 	
+	<!-- 최신 공지사항 상단 3개 -->
+	<select id="selectNoticeBoardList" resultMap="board">
+		SELECT BOARD_NUM
+       		   , BOARD_TITLE
+		       , USER_ID
+		       , BOARD_REG_DATE
+		       , REPLY_COUNT
+		       , BOARD_READ_CNT
+		       , LIKE_COUNT
+		       , BOARD_CATE_CODE
+               , BOARD_CATE_NAME 
+		FROM (SELECT BOARD_NUM
+			       , BOARD_TITLE
+			       , USER_ID
+			       , BOARD_REG_DATE
+			       , REPLY_COUNT
+			       , BOARD_READ_CNT
+			       , LIKE_COUNT
+			       , BOARD_CATE_CODE
+                   , BOARD_CATE_NAME
+       			   , RANK() OVER(ORDER BY BOARD_REG_DATE DESC) AS RANK
+      		  FROM (SELECT DISTINCT BO.BOARD_NUM
+                            		, BOARD_TITLE
+                            		, BO.USER_ID
+		                            , TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD HH24') AS BOARD_REG_DATE
+		                            , (SELECT COUNT(REPLY_NUM)
+		                                FROM BOARD_REPLY
+		                                WHERE BOARD_NUM = BO.BOARD_NUM 
+		                                ) AS REPLY_COUNT
+		                            , BOARD_READ_CNT
+		                            , (SELECT COUNT(LIKE_NUM)
+		                                FROM BOARD_LIKE
+		                                WHERE BOARD_NUM = BO.BOARD_NUM
+		                                ) AS LIKE_COUNT
+	                                , CATE.BOARD_CATE_CODE
+                            		, CATE.BOARD_CATE_NAME
+           			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
+           			ON BO.BOARD_NUM = RE.BOARD_NUM
+           			LEFT JOIN BOARD_CATEGORY CATE
+                    ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE
+                    WHERE BO.BOARD_CATE_CODE = 5			  
+           			ORDER BY BOARD_REG_DATE DESC
+           					)
+           				)
+			WHERE RANK &lt;= 3
+	</select>
+	
 	<!-- 게시판 추천글 상단 정렬 -->
 	<select id="selectLikeBoardList" resultMap="board">
 		SELECT BOARD_NUM
@@ -42,7 +89,7 @@
 			       , LIKE_COUNT
 			       , BOARD_CATE_CODE
                    , BOARD_CATE_NAME
-       			   , RANK() OVER(ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC) AS RANK
+       			   , RANK() OVER(ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC, BOARD_READ_CNT DESC) AS RANK
       		  FROM (SELECT DISTINCT BO.BOARD_NUM
                             		, BOARD_TITLE
                             		, BO.USER_ID
@@ -61,8 +108,10 @@
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
-                    ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE			  
-           			ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC)
+                    ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE	
+                    WHERE BO.BOARD_CATE_CODE != 5		  
+           			ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC, BOARD_READ_CNT DESC
+           					)
            				)
 			WHERE RANK &lt;= 3
 	</select>
@@ -81,6 +130,7 @@
                 , LIKE_COUNT
                 , BOARD_CATE_CODE
                 , BOARD_CATE_NAME
+                , IS_SECRET
 			FROM (
 					SELECT ROWNUM AS RN
 					, BOARD_NUM
@@ -92,6 +142,7 @@
 	                , LIKE_COUNT
 	                , BOARD_CATE_CODE
                     , BOARD_CATE_NAME
+                    , IS_SECRET
 				FROM (
 						    SELECT  DISTINCT BO.BOARD_NUM 
 							, BOARD_TITLE 
@@ -106,6 +157,7 @@
 		                       WHERE BOARD_NUM = BO.BOARD_NUM) AS LIKE_COUNT
 	                        , CATE.BOARD_CATE_CODE
                             , CATE.BOARD_CATE_NAME
+                            , IS_SECRET
 					FROM BOARD BO LEFT JOIN BOARD_REPLY RE
 					ON BO.BOARD_NUM = RE.BOARD_NUM
 					LEFT JOIN BOARD_CATEGORY CATE
@@ -129,7 +181,12 @@
 					<if test="toDate != null and !toDate.equals('')">
 					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 					</if>	
-				ORDER BY BOARD_NUM DESC 	
+				ORDER BY BOARD_NUM DESC	
+				<!-- ORDER BY BOARD_READ_CNT
+				ORDER BY LIKE_COUNT
+				ORDER BY #{readWay} DESC
+				ORDER BY ${readWay} DESC	
+				ORDER BY "LIKE_COUNT" DESC -->
 		        )
 	        )
 	        <if test ="startNum !=null and endNum != null">
@@ -172,8 +229,8 @@
 			, BOARD_TITLE
 			, BOARD_CONTENT
 			, BOARD_CATE_CODE
-			<!-- , IS_SECRET
-			, SECRET_PW -->
+			, IS_SECRET
+			<!-- , SECRET_PW -->
 
 		) VALUES (
 			(SELECT NVL(MAX(BOARD_NUM),0)+1 FROM BOARD)
@@ -181,8 +238,8 @@
 			, #{boardTitle}
 			, #{boardContent}
 			, #{boardCateCode}
-		<!-- 	, #{isSecret}
-		    , #{secretPw}  -->
+			, #{isSecret}
+		    <!-- , #{secretPw} -->
 		)
 	</insert>
 	

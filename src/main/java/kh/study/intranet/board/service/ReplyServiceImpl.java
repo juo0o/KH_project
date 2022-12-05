@@ -30,6 +30,21 @@ public class ReplyServiceImpl implements ReplyService {
 	  return sqlSession.selectList("replyMapper.selectReply", boardNum); 
 		  
 	  }
+
+	//댓글 수정
+	@Override
+	public void updateReply(ReplyVO replyVO) {
+		sqlSession.update("replyMapper.updateReply", replyVO);
+	}
+	
+	
+	//댓글 삭제
+	@Override
+	public void deleteReply(ReplyVO replyVO) {
+		sqlSession.delete("replyMapper.deleteReply", replyVO);
+	}
+
+	
 	
 
 	

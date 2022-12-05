@@ -11,4 +11,10 @@ public interface ReplyService {
 	
 	//댓글 조회
 	List<ReplyVO> replyList(int boardNum);
+	
+	//댓글 수정
+	void updateReply(ReplyVO replyVO);
+	
+	//댓글 삭제
+	void deleteReply(ReplyVO replyVO);
 }

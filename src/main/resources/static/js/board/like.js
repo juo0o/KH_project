@@ -29,3 +29,35 @@ function likeUp() {
 	});
 	//ajax end
 }
+
+
+
+
+//댓글 목록에서 글수정 버튼 클릭 시 실행...
+function updateReply(updateBtn){
+	if(updateBtn.innerText == '댓글수정'){
+		const contentSpan = updateBtn.closest('.replyDiv').querySelector('.replyContent_span');
+		const origin_content = contentSpan.innerText;
+		contentSpan.innerText = '';
+		
+		str = '';
+		str += `<textarea name="replyContent" class="form-control" rows="3" style="resize: none;">${origin_content}</textarea>`;
+		contentSpan.insertAdjacentHTML('afterBegin', str);
+		updateBtn.innerText = '수정완료';
+	}
+	else{
+		updateBtn.closest('form').submit();
+		
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+

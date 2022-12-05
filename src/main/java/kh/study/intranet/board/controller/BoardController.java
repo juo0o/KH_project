@@ -40,9 +40,13 @@ public class BoardController {
 	
 	// 게시글 목록 조회
 	@RequestMapping("/boardList")
-	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model) {
+	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model, Authentication authentication) {
 
-	
+		
+		
+		//id확인
+//		User user = (User)authentication.getPrincipal();
+//		boardVO.setUserId(user.getUsername());
 		
 		//map에 날짜 세팅
 		// 현재 날짜
@@ -79,7 +83,7 @@ public class BoardController {
 		//map 보내줌
 		model.addAttribute("paramMap", paramMap);
 		
-		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!cateCode = " + paramMap.get("boardCateCode"));
 		
 		//게시판 카테고리조회
 		model.addAttribute("boardCate", boardService.selectBoardCate());
@@ -90,6 +94,8 @@ public class BoardController {
 		//추천글 3개정렬
 		model.addAttribute("likeBoardList", boardService.selectLikeBoardList(paramMap));
 		
+		//최신 공지사항 3개 정렬
+		model.addAttribute("noticeBoardList", boardService.selectNoticeBoardList(paramMap));
 		
 		//페이징처리 vo보내줌
 		model.addAttribute("pageVO", pageVO);
@@ -176,6 +182,23 @@ public class BoardController {
 		replyService.regReply(replyVO);
 		return "redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
 	}
+	
+	//댓글 수정
+	@PostMapping("/updateReply")
+	public String updateReply(ReplyVO replyVO) {
+		
+		
+		replyService.updateReply(replyVO);
+		return	"redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
+	}
+	
+	
+	// 댓글 삭제
+	@GetMapping("/deleteReply")
+	public String deleteReply(ReplyVO replyVO) {
+		replyService.deleteReply(replyVO);
+		return "redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
+	}
 
 
 
@@ -223,7 +246,6 @@ public class BoardController {
 		boardService.updateBoard(boardVO);
 		return "redirect:/board/boardDetail?boardNum=" + boardVO.getBoardNum();
 	}
-//------------------------------------
 
 	// 게시글 삭제
 	@GetMapping("/deleteBoard")

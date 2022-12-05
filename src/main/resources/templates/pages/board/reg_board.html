@@ -27,36 +27,45 @@
 					  				<option style="background-color: red;"  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
 								</th:block>
 							</th:block>
-							
 							<th:block  th:unless="${cate.boardCateCode eq 5}" >
 					  			<option  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
 							</th:block>		
-					  			
 						</th:block>
 					</select>
 				</div>
-
-				
 				<!-- 비밀글 여부 -->
-				<!-- <div>
+				<div class="row">
 					<div class="form-check">
-				  		<input class="form-check-input" type="checkbox" name="isSecret" value="Y" id="flexCheckIndeterminate">
-				 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 여부</label>
+						<th:block th:if="${#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+							<input class="form-check-input" type="radio" name="isSecret" value="N" id="flexCheckIndeterminate" checked>
+					 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 미설정</label>
+						</th:block>
+						<th:block th:unless="${#strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+					  		<input class="form-check-input" type="radio" name="isSecret" value="Y" id="flexCheckIndeterminate">
+					 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 설정</label>
+					  		&nbsp;
+					  		&nbsp;
+					  		&nbsp;
+					  		<input class="form-check-input" type="radio" name="isSecret" value="N" id="flexCheckIndeterminate" checked>
+					 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 미설정</label>
+						</th:block>
 					</div>
-					<div class="mb-3 row">
+					<!-- <div class="mb-3 row">
 			    		<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호 지정</label>
 					    <div class="col-sm-4">
 				      		<input type="password" th:field="*{secretPw}" class="form-control" id="inputPassword">
 					    </div>
-		  			</div>
-				</div> -->
-				<div class="col text-right">
-					<button type="submit" class="btn btn-outline-info">
-					글 등록
-					</button>
-					<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/boardList}'|">
-					뒤로가기
-					</button>
+		  			</div> -->
+				</div>
+				<div class="row">
+					<div class="col text-right">
+						<button type="submit" class="btn btn-outline-info">
+						글 등록
+						</button>
+						<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/boardList}'|">
+						뒤로가기
+						</button>
+					</div>
 				</div>
 			</div>
 		</form>

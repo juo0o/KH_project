@@ -7,14 +7,17 @@ import kh.study.intranet.board.vo.BoardCategoryVO;
 import kh.study.intranet.board.vo.BoardVO;
 
 public interface BoardService {
+
+	//게시판 최신 공지사항 상단 3개
+	List<BoardVO> selectNoticeBoardList(Map<String, Object> map);
 	
-	//게시판 추천글 상단 정렬
+	//게시판 추천글 상단 3개
 	List<BoardVO> selectLikeBoardList (Map<String, Object> map);
 	
 	//게시글 검색 및 목록 조회 
 	List<BoardVO> selectBoardListAndSearch(Map<String, Object> map);
 	
-//	//게시판 카테고리 조회
+	//게시판 카테고리 조회
 	List<BoardVO> selectBoardCate();
 	
 	
