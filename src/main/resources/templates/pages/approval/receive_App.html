@@ -5,6 +5,9 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	
 <div layout:fragment="content">
+	<div>
+		<h3>-- 결재 대기 --</h3>	
+	</div>
 
 	<table class="table">
 			<thead>
@@ -17,18 +20,108 @@
 					<th scope="col">기안일
 				</tr>
 			</thead>
-			<tbody id="appList">
-				<tr  th:each="recive : ${reciveList}" th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
-					<td th:text="${recive.appSeq}">@mdo</td>
-					<td th:text="${recive.empVO.empName}">@mdo</td>
-					<td th:text="${recive.title}">Otto</td>
-					<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
-					<td th:text="${recive.empVO.deptName}">Otto</td>
-					<td th:text="${recive.appWriteDate}">Mark</td>
+			
+			
+			
+			<tbody id="appList" >
+		<th:block>
+			<th:block th:each="recive:${reciveList}">
+				<!-- <th:block th:if ="${recive.userVO.empPosition} == '팀장' and ${recive.receiveRefVO.appSeqStatus} =='결재대기' "> -->
+				<th:block th:if ="${map['empPosition'] == '팀장' and recive.receiveRefVO.appSeqStatus =='결재대기'}">
+				<!-- <th:block th:each="recive:${reciveList}"> -->
+					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
+					<!-- 	<th:block th:if ="${recive.appSeqStatus.equals('결재대기')}"> -->
+							<td th:text="${recive.appSeq}">@mdo</td>
+							<td th:text="${recive.empVO.empName}">@mdo</td>
+							<td th:text="${recive.title}">Otto</td>
+							<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
+							<td th:text="${recive.empVO.deptName}">Otto</td>
+							<td th:text="${recive.appWriteDate}">Mark</td>
+					<!-- 	</th:block> -->
+					</tr>
+				</th:block>
+			</th:block>
+				
+			<th:block th:each="recive:${reciveList}">
+				<!-- <th:block th:if ="${recive.userVO.empPosition} == '부장' and ${recive.receiveRefVO.appSeqStatus} =='결재중' "> -->
+				<th:block th:if ="${map['empPosition'] == '부장' and recive.receiveRefVO.appSeqStatus =='결재중'} ">
+			<!-- <th:block th:each="recive:${reciveList}"> -->
+					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
+				<!-- 	<th:block th:if ="${recive.appSeqStatus.equals('결재대기')}"> -->
+						<td th:text="${recive.appSeq}">@mdo</td>
+						<td th:text="${recive.empVO.empName}">@mdo</td>
+						<td th:text="${recive.title}">Otto</td>
+						<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
+						<td th:text="${recive.empVO.deptName}">Otto</td>
+						<td th:text="${recive.appWriteDate}">Mark</td>
+				<!-- 	</th:block> -->
 				</tr>
+				</th:block>
+			</th:block>
+		</th:block>
+			</tbody>
+		</table>
+<!-- ----------------------------------------------------------------------------------------------------------------------------------------- -->
+	<div>
+		<h3>-- 결재 완료 --</h3>	
+	</div>
+
+	<table class="table">
+			<thead>
+				<tr bordercolor="sold 1px;">
+					<th scope="col">문서번호</th>
+					<th scope="col">기안자</th>
+					<th scope="col">제목</th>
+					<th scope="col">기안서</th>
+					<th scope="col">기안부서</th>
+					<th scope="col">기안일
+				</tr>
+			</thead>
+			
+			
+			
+			<tbody id="appList" >
+		<th:block>
+			<th:block th:each="recive:${reciveList}">
+				<th:block th:if ="${map['empPosition'] == '팀장' and recive.receiveRefVO.appSeqStatus =='결재중'} ">
+				<!-- <th:block th:each="recive:${reciveList}"> -->
+					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
+					<!-- 	<th:block th:if ="${recive.appSeqStatus.equals('결재대기')}"> -->
+							<td th:text="${recive.appSeq}">@mdo</td>
+							<td th:text="${recive.empVO.empName}">@mdo</td>
+							<td th:text="${recive.title}">Otto</td>
+							<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
+							<td th:text="${recive.empVO.deptName}">Otto</td>
+							<td th:text="${recive.appWriteDate}">Mark</td>
+					<!-- 	</th:block> -->
+					</tr>
+				</th:block>
+			</th:block>
+				
+			<th:block th:each="recive:${reciveList}">
+				<th:block th:if ="${map['empPosition'] == '부장' and recive.receiveRefVO.appSeqStatus =='결재완료'} ">
+			<!-- <th:block th:each="recive:${reciveList}"> -->
+					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
+				<!-- 	<th:block th:if ="${recive.appSeqStatus.equals('결재대기')}"> -->
+						<td th:text="${recive.appSeq}">@mdo</td>
+						<td th:text="${recive.empVO.empName}">@mdo</td>
+						<td th:text="${recive.title}">Otto</td>
+						<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
+						<td th:text="${recive.empVO.deptName}">Otto</td>
+						<td th:text="${recive.appWriteDate}">Mark</td>
+				<!-- 	</th:block> -->
+				</tr>
+				</th:block>
+			</th:block>
+		</th:block>
 			</tbody>
 		</table>
 	
+	
+	
+	
+	
+ <!----- -------- ------ -------- -------- --------- ---------- ------ ------- --------- -----  -->
 	
 	<!-- 페이징 처리 -->
     <div class="row">

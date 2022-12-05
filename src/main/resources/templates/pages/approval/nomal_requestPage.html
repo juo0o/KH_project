@@ -111,7 +111,7 @@
 							기안부서
 						</td>
 						
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center;">
 							<span th:text="${document.empVO.deptName}"></span>
 						</td>
 						
@@ -119,14 +119,16 @@
 							기 안 일
 						</td>
 						
-						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center;">
+								<!-- <span th:text="${#temporals.format(document.appWriteDate, 'yyyy-MM-dd')}"></span> -->
+							
 							<span th:text="${document.appWriteDate}"></span>
 						</td>
 						
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							문서번호
 						</td>
-						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left; font-size: 12px;">
+						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-size: 12px;">
 							<!-- <input type="hidden" th:value="${appSeq.appSeq}" name="appSeq"> -->
 							<span th:text="${document.appSeq}"></span>
 						</td>
@@ -135,7 +137,7 @@
 						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
 							기 안 자
 						</td>
-						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
+						<td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center;">
 							<span th:text="${document.empVO.empName}"></span>
 						</td>
 						

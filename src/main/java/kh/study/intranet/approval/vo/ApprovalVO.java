@@ -1,6 +1,7 @@
 package kh.study.intranet.approval.vo;
 
 import kh.study.intranet.emp.vo.EmpVO;
+import kh.study.intranet.main.vo.UserVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,6 +21,7 @@ public class ApprovalVO  {
 	private AccountingVO accountingVO;
 	private AppCategoryVO appCategoryVO;
 	private ReceiveRefVO receiveRefVO;
+	private UserVO userVO;
 	
 	
 	private String table;

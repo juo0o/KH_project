@@ -16,6 +16,7 @@
 		<association property="nomalVO" resultMap="nomal"/>
 		<association property="accountingVO" resultMap="accounting"/>
 		<association property="receiveRefVO" resultMap="receiveRef"/>
+	 	<association property="userVO" resultMap="user"/>
 	</resultMap>
 	
 	
@@ -28,7 +29,7 @@
 	<resultMap type="kh.study.intranet.approval.vo.VacationVO" id="vacation">
 		<id column="VACATION_SEQ" 		property="vacationSeq"/>
 		<result column="VACATION_CONTENT" 		property="vacationContent"/>
-		<result column="VACATION_STRAT_DATE" 		property="vacationStartDate"/>
+		<result column="VACATION_START_DATE" 		property="vacationStartDate"/>
 		<result column="VACATION_END_DATE" 		property="vacationEndDate"/>
 		<result column="VACATION_PERIOD_DATE" 		property="vacationPeriodDate"/>
 		<result column="USER_ID" 		property="userId"/>
@@ -66,8 +67,28 @@
 		<result column="FINAL_APPROVAL_EMP" 		property="finalApprovalEmp"/>
 		<result column="APP_CATE_CODE" 		property="appCateCode"/>
 		<result column="APP_SEQ_STATUS" 		property="appSeqStatus"/>
-		<association property="approvalVO" resultMap="approval"/>
-		
+	<!-- 	<association property="approvalVO" resultMap="approval"/> -->
+	</resultMap>
+	
+	
+	<resultMap type="kh.study.intranet.main.vo.UserVO" id="user">
+		<id column="USER_ID" 		property="userId"/>
+		<result column="USER_PW" 		property="userPw"/>
+		<result column="EMP_NUM" 		property="empNum"/>
+		<result column="EMP_NAME" 		property="empName"/>
+		<result column="EMP_GENDER" 		property="empGender"/>
+		<result column="EMP_BIRTH_DAY" 		property="empBirthDay"/>
+		<result column="EMP_TELL" 		property="empTell"/>
+		<result column="EMP_ADDR" 		property="empAddr"/>
+		<result column="EMP_DETAIL_ADDR" 		property="empDetailAddr"/>
+		<result column="EMP_EMAIL" 		property="empEmail"/>
+		<result column="DEPT_CODE" 		property="deptCode"/>
+		<result column="DEPT_NAME" 		property="deptName"/>
+		<result column="EMP_POSITION" 		property="empPosition"/>
+		<result column="EMP_ROLE" 		property="empRole"/>
+		<result column="EMP_PICTURE_ORIGIN_NAME" 		property="empPictureOriginName"/>
+		<result column="EMP_PICTURE_REFILE_NAME" 		property="empPictureRefileName"/>
+		<result column="EMP_HIRE_DATE" 		property="empHireDate"/>
 	</resultMap>
 	
 	<select id="getAppSeq" resultMap="approval">
@@ -221,7 +242,7 @@
       (
       SELECT ROWNUM AS RN
          , APPROVAL.APP_SEQ
-         , APP_WRITE_DATE
+         , TO_CHAR(APP_WRITE_DATE,'YYYY-MM-DD') AS APP_WRITE_DATE
          , APPROVAL.APP_CATE_CODE
            , TITLE
             , APPROVAL.USER_ID
@@ -271,7 +292,7 @@
 	</select> 
 	
 	<select id="appDocuments" resultMap="approval">
-      SELECT * 
+      SELECT *
       FROM APPROVAL APP, EMP , ${table}
       WHERE  APP.APP_SEQ = ${table}.APP_SEQ
       AND APP.USER_ID = EMP.USER_ID

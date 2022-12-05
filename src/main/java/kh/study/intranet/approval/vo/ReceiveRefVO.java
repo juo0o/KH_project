@@ -16,5 +16,5 @@ public class ReceiveRefVO {
 	private String finalApprovalEmp;
 	private String appCateCode;
 	private String appSeqStatus;
-	private ApprovalVO approvalVO;
+	//private ApprovalVO approvalVO;
 }

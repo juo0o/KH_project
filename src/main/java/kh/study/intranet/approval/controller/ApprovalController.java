@@ -227,22 +227,36 @@ public class ApprovalController {
 		
 		if(approvalVO.getAppCateCode().equals("VACATION")) {
 			approvalVO.setTable("APP_FORM_VACATION");
-			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+			ApprovalVO document = approvalService.appDocuments(approvalVO);
+			document.setAppWriteDate(document.getAppWriteDate().substring(0, 10));
+			document.getVacationVO().setVacationStartDate(document.getVacationVO().getVacationStartDate().substring(0,10));
+			document.getVacationVO().setVacationEndDate(document.getVacationVO().getVacationEndDate().substring(0,10));
+			model.addAttribute("document", document);
 			model.addAttribute("ref", ref);
 			
 			return "pages/approval/vacation_requestPage";
+			
+			
 		}else if(approvalVO.getAppCateCode().equals("NOMAL")) {
 			approvalVO.setTable("APP_FORM_NOMAL");
-			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+			ApprovalVO document = approvalService.appDocuments(approvalVO);
+			document.setAppWriteDate(document.getAppWriteDate().substring(0, 10));
+			model.addAttribute("document", document);
 			model.addAttribute("ref", ref);
 			
 			return "pages/approval/nomal_requestPage";
+			
+			
 		}else if(approvalVO.getAppCateCode().equals("ACCOUNTING")) {
 			approvalVO.setTable("APP_FORM_ACCOUNTING");
-			model.addAttribute("document", approvalService.appDocuments(approvalVO));
+			ApprovalVO document = approvalService.appDocuments(approvalVO);
+			document.setAppWriteDate(document.getAppWriteDate().substring(0, 10));
+			model.addAttribute("document", document);
 			model.addAttribute("ref", ref);
 			
 			return "pages/approval/accounting_requestPage";
+			
+			
 		}else {
 			
 			return "pages/main/mainPage";
@@ -254,12 +268,8 @@ public class ApprovalController {
 	@GetMapping("/receiveAppPage")
 	public String receiveAppPage(@RequestParam Map<String, Object> map,PageVO pageVO,Model model,HttpSession session,ApprovalVO approvalVO) {
 		
-		System.out.println(session.getAttribute("userInfo")); 
-		System.out.println(session.getAttribute("userInfo")); 
-		System.out.println(session.getAttribute("userInfo")); 
-		System.out.println(); 
 		
-	UserVO userVO= (UserVO)session.getAttribute("userInfo");
+	UserVO userVO= (UserVO)session.getAttribute("userInfoAll");
 		
 		map.put("empPosition", userVO.getEmpPosition());
 		map.put("empNum", userVO.getEmpNum());
@@ -293,10 +303,14 @@ public class ApprovalController {
 		map.put("endNum", pageVO.getEndNum());
 		
 
-		model.addAttribute("reciveList",approvalService.selectReceiveApp(map));
+		model.addAttribute("reciveList",reciveList);
+
+		for(ApprovalVO e : reciveList) {
+			System.out.println(e);
+		}
 		
 		model.addAttribute("pageVO", pageVO);
-		
+		model.addAttribute("map", map);
 		
 		return "pages/approval/receive_App";
 	}
