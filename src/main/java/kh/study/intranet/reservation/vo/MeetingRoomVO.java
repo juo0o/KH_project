@@ -12,6 +12,9 @@ public class MeetingRoomVO {
 	private String roomName;
 	private String available;
 	
+	private String time;
+	private String day;
+	
 	
 	
 }

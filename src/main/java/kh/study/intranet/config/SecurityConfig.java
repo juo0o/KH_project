@@ -32,7 +32,7 @@ public class SecurityConfig {
 	AuthenticationSuccessHandler sucessHandler;
 //	
 //	@Resource(name="failHandler")
-//	AuthenticationFailureHandler failHandler;
+	AuthenticationFailureHandler failHandler;
 	
 	
 
@@ -44,9 +44,9 @@ public class SecurityConfig {
 		
 		security
 				.authorizeRequests() // authorizeRequests() : 권한(인증,인가 모두 지칭) 에 대한 설정을 시작
-					.antMatchers("/main/**"
-								).permitAll() // antMatchers("/~~") : ~~ 요청에 대한 설정을 하겠다.  permitAll "~~"요청에 대한 접근은 누구나 접근가능 
-//					.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+					.antMatchers("/user/login").permitAll() // antMatchers("/~~") : ~~ 요청에 대한 설정을 하겠다.  permitAll "~~"요청에 대한 접근은 누구나 접근가능 
+					.antMatchers("/admin/**").hasRole("ADMIN")
+					.anyRequest().permitAll()
 //					.antMatcher("/cart/**).
 				.and()
 				.formLogin()
@@ -56,15 +56,15 @@ public class SecurityConfig {
 					.passwordParameter("userPw")
 					.successHandler(sucessHandler)
 					//failhandler추가해준다\
-//					.failureHandler(failHandler)
+					.failureHandler(failHandler)
 //					.defaultSuccessUrl("/member/loginResult?isSuccess=true")
 //		            .failureUrl("/member/loginResult?isSuccess=false")	//나중에 추가해볼까
 				
-//				.and()
-//				.logout()
-//					.logoutUrl("/member/logout")
-//					.invalidateHttpSession(true)
-//					.logoutSuccessUrl("/item/list")
+				.and()
+				.logout()
+					.logoutUrl("/user/logout")
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/user/login")
 				
 				//.and()						나중에 추가해볼까
 				//.exceptionHandling().accessDeniedPage("/accessDenied"); 권한없을때

@@ -41,8 +41,6 @@
                          , USER_PW
                          , EMP_NUM
                          , EMP_NAME
-                         
-                         
                          , EMP_TELL
                          , EMP_ADDR
                          , EMP_DETAIL_ADDR
@@ -53,7 +51,6 @@
                         , #{userPw}
                         , #{empNum}
                         , #{empName}
-
                         , #{empTell}
                         , #{empAddr}
                         , #{empDetailAddr}
@@ -66,8 +63,6 @@
 		SELECT USER_ID
 			   , EMP_NUM
 			   , EMP_NAME
-			   , EMP_GENDER
-			   , EMP_BIRTHDAY
 			   , EMP_TELL
 			   , EMP_ADDR
 			   , EMP_DETAIL_ADDR
@@ -77,8 +72,6 @@
 			   , EMP_POSITION
 			   , TO_CHAR(EMP_HIRE_DATE, 'YYYY-MM-DD') AS EMP_HIRE_DATE
 			   , EMP_PICTURE_REFILE_NAME
-			   
-				
 		FROM EMP
 		WHERE USER_ID = #{userId}
 		

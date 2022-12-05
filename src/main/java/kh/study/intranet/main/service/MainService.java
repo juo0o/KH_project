@@ -12,7 +12,10 @@ public interface MainService {
 	//최근5개 게시글 조회
 	List<BoardVO> selectRecentBoard();
 	
-	//결재해야할 문서 조회
+	//공지사항 조회
+	List<BoardVO> noticeBoard();
 	
-	List<ApprovalVO> selectRecentApproval();
+	//결재해야할 문서 조회
+	List<ApprovalVO> documentsToBeApproved(UserVO userVO);
+	
 }

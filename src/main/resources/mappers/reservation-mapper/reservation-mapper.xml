@@ -132,9 +132,15 @@
 	
 	</update>
 	
-	
-	<insert id="insertAllSchedules">
-	
+	<!-- 자동Insert -->
+	<insert id="insertReserveTime">
+	INSERT INTO RESERVATION_MEETING_ROOM
+	VALUES( (SELECT NVL(MAX(TO_NUMBER(RESERVE_CODE)) + 1, 0) FROM RESERVATION_MEETING_ROOM) 
+	 	   , ''
+	 	   ,#{roomCode}
+	 	   ,TO_DATE( #{day} ,'YYYY-MM-DD')
+	 	   ,#{time}
+	 	   ,'Y')
 	</insert>
 	
 </mapper>

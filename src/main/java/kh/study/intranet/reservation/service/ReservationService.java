@@ -33,11 +33,13 @@ public interface ReservationService {
 	
 	
 	//예약가능날짜조회
-   List<Object> availableDay();
+    List<Object> availableDay();
    
-   //예약불가능 잘짜 조회
-   
-   List<Object> disAvailableDay();
+    //예약불가능 잘짜 조회
+    List<Object> disAvailableDay();
+    
+    //자동insert
+    void insertReserveTime(MeetingRoomVO meetingRoom);
    
 	
 	

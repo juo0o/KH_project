@@ -42,23 +42,19 @@ public class MainController {
 		//유저정보 보내줌
 		model.addAttribute("userInfo", userService.selectUserInfo(userVO));
 		
-		if(session.getAttribute("userInfoAll") == null) {
-			
-			//유저정보 세션에담아준다
-			session.setAttribute("userInfoAll", userService.selectUserInfo(userVO));
-			//session시간 1일로 설정
-			//session.setMaxInactiveInterval(60*60*24);
-			System.out.println("!!!!!!세선저장!!!!!!!");
-		}else {
-			System.out.println("!!!!!세션 x!!!!");
-		}
-		
 		
 		
 		//최근5개 게시글 보여줌
 		model.addAttribute("recentBoard", mainService.selectRecentBoard());
 		
+		
+		//공지사항 보여줌
+		model.addAttribute("noticeBoard", mainService.noticeBoard());
+		
+		
+		
 		//최근 결재할 문서목록 보여줌
+		model.addAttribute("documentsToBeApproved", mainService.documentsToBeApproved(userVO));
 		
 		
 		//채팅방 목록 내보내준다.
@@ -71,6 +67,7 @@ public class MainController {
 		
 		return "/main/index";
 	}
+	
 	
 	
 	

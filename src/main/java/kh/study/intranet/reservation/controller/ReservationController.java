@@ -36,19 +36,18 @@ public class ReservationController {
 	private ReservationService reservationService;
 	
 	@RequestMapping("/insertReserveAjax")
-   @ResponseBody
-   public Map<String, List<Object>> insertReserveAjX(){
+    @ResponseBody
+    public Map<String, List<Object>> insertReserveAjX(){
 
-      Map<String, List<Object>> dateList = new HashMap<>();
+       Map<String, List<Object>> dateList = new HashMap<>();
       
-      //이용가능한 날짜
-      dateList.put("avaDate", reservationService.availableDay());
-      //이용 불가능한 날짜
-      dateList.put("disDate", reservationService.disAvailableDay());
+       //이용가능한 날짜
+       dateList.put("avaDate", reservationService.availableDay());
+       //이용 불가능한 날짜
+       dateList.put("disDate", reservationService.disAvailableDay());
       
-      
-      return dateList;
-   }
+       return dateList;
+    }
 
 	
 	
@@ -81,9 +80,6 @@ public class ReservationController {
 		List<ReservationVO> list = reservationService.selectAvailableReservation(reservationVO);
 		
 		return list;
-		
-		
-		
 		
 	}
 	
@@ -134,12 +130,36 @@ public class ReservationController {
 		
 	}
 	
-	//회의실 등록 
-//	@RequestMapping("/insertAllSchedules")
-//	public Map<String, String> insertAllSchedules(){
-//		
-//		
-//	}
+	//회의실 예약날짜 자동등록 반복문
+	@RequestMapping("/insertReserveTime")
+	public void insertAllSchedules(String time ,MeetingRoomVO meetingRoom){
+		
+//		month = 12;
+//		day = 31;
+//		time = "09:00 - 12:00";
+		String[] timeArray = {"09:00-12:00","12:00-15:00","15:00-18:00"};
+		
+		System.out.println(timeArray[0]);
+		System.out.println(timeArray[1]);
+		System.out.println(timeArray[2]);
+		
+		for(int k = 0; k < timeArray.length; k++) {
+			meetingRoom.setTime(timeArray[k]);
+			for(int j = 1; j < 4; j++) {
+				meetingRoom.setRoomCode("ROOM_00" + j);
+				
+				for(int i = 1; i < 32; i++) {
+					meetingRoom.setDay("2022-12-" + i);
+					reservationService.insertReserveTime(meetingRoom);
+				}
+				
+			}
+			
+		}
+		
+	
+		
+	}
 	
 	
 	

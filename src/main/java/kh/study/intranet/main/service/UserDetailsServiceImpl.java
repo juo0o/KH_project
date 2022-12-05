@@ -1,5 +1,7 @@
 package kh.study.intranet.main.service;
 
+import javax.annotation.Resource;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+
 	
 	
 	@Override
@@ -36,7 +39,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 									 .password(userVO.getUserPw())
 									 .roles(userVO.getEmpRole())
 									 .build();
+		System.out.println("디테일즈왔고 ");
 		
+		System.out.println("userDetail에 제대로 들어감? " + userDetail);
 		
 		
 		return userDetail;

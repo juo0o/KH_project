@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class UserController {
 
 	//로그인화면으로간다
 	@RequestMapping("/login")
-	public String login() {
-		
+	public String login(HttpSession session) {
+			
+			UserVO vo = (UserVO)session.getAttribute("userInfoAll");
+			System.out.println("!!!!" + vo);
+			
 		return "/main/login_page";
 	}
 	

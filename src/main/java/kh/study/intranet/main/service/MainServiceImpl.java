@@ -23,10 +23,16 @@ public class MainServiceImpl implements MainService {
 		return sqlSession.selectList("mainMapper.selectRecentBoard");
 	}
 	
+	@Override
+	public List<BoardVO> noticeBoard() {
+		return sqlSession.selectList("mainMapper.noticeBoard");
+	}
+	
 	//결재해야핧문서조회
 	@Override
-	public List<ApprovalVO> selectRecentApproval() {
-		return sqlSession.selectList("mainMpper.selectRecentApproval");
+	public List<ApprovalVO> documentsToBeApproved(UserVO userVO) {
+		return sqlSession.selectList("mainMapper.documentsToBeApproved", userVO);
 	}
+
 
 }

@@ -58,16 +58,22 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	//예약가능날자
-   @Override
-   public List<Object> availableDay() {
-      return sqlSession.selectList("reservationMapper.availableDay");
-   }
-   //예약 불가능 날짜 조회
-   @Override
-   public List<Object> disAvailableDay() {
-      
-      return sqlSession.selectList("reservationMapper.disAvailableDay");
-   }
+    @Override
+    public List<Object> availableDay() {
+       return sqlSession.selectList("reservationMapper.availableDay");
+    }
+    //예약 불가능 날짜 조회
+    @Override
+    public List<Object> disAvailableDay() {
+       
+       return sqlSession.selectList("reservationMapper.disAvailableDay");
+    }
+
+	@Override
+	public void insertReserveTime(MeetingRoomVO meetingRoom) {
+		sqlSession.insert("reservationMapper.insertReserveTime", meetingRoom);
+		
+	}
 
 
 

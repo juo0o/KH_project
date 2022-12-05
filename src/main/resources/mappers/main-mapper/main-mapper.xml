@@ -5,6 +5,26 @@
 
 
 <mapper namespace="mainMapper">
+
+	<resultMap type="kh.study.intranet.main.vo.UserVO" id="user">
+		<id column="USER_ID" 		property="userId"/>
+		<result column="USER_PW" 		property="userPw"/>
+		<result column="EMP_NUM" 		property="empNum"/>
+		<result column="EMP_NAME" 		property="empName"/>
+		<result column="EMP_TELL" 		property="empTell"/>
+		<result column="EMP_ADDR" 		property="empAddr"/>
+		<result column="EMP_DETAIL_ADDR" 		property="empDetailAddr"/>
+		<result column="EMP_EMAIL" 		property="empEmail"/>
+		<result column="DEPT_CODE" 		property="deptCode"/>
+		<result column="DEPT_NAME" 		property="deptName"/>
+		<result column="EMP_POSITION" 		property="empPosition"/>
+		<result column="EMP_ROLE" 		property="empRole"/>
+		<result column="EMP_PICTURE_ORIGIN_NAME" 		property="empPictureOriginName"/>
+		<result column="EMP_PICTURE_REFILE_NAME" 		property="empPictureRefileName"/>
+		<result column="EMP_HIRE_DATE" 		property="empHireDate"/>
+	</resultMap>
+
+
 	
 	<resultMap type="kh.study.intranet.board.vo.BoardVO" id="board">
 		<id column="BOARD_NUM"     property="boardNum"/>
@@ -28,6 +48,64 @@
 		<result column="TITLE" 					property="title"/>
 		<result column="APP_CATE_CODE" 			property="appCateCode"/>
 		<result column="USER_ID" 			property="userId"/>
+		<association property="empVO" resultMap="empMapper.emp"/>
+		<association property="appCategoryVO" resultMap="appCategory"/>
+		<association property="vacationVO" resultMap="vacation"/>
+		<association property="nomalVO" resultMap="nomal"/>
+		<association property="accountingVO" resultMap="accounting"/>
+		<association property="receiveRefVO" resultMap="receiveRef"/>
+	 	<association property="userVO" resultMap="user"/>
+	</resultMap>
+	
+	
+	
+	<resultMap type="kh.study.intranet.approval.vo.AppCategoryVO" id="appCategory">
+		<id column="APP_CATE_CODE" 		property="appCateCode"/>
+		<result column="APP_CATE_NAME" 		property="appCateName"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.intranet.approval.vo.VacationVO" id="vacation">
+		<id column="VACATION_SEQ" 		property="vacationSeq"/>
+		<result column="VACATION_CONTENT" 		property="vacationContent"/>
+		<result column="VACATION_START_DATE" 		property="vacationStartDate"/>
+		<result column="VACATION_END_DATE" 		property="vacationEndDate"/>
+		<result column="VACATION_PERIOD_DATE" 		property="vacationPeriodDate"/>
+		<result column="USER_ID" 		property="userId"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
+		
+	</resultMap>
+	
+	<resultMap type="kh.study.intranet.approval.vo.NomalVO" id="nomal">
+		<id column="NOMAL_SEQ" 		property="nomalSeq"/>
+		<result column="NOMAL_CONTENT" 		property="nomalContent"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
+		<result column="USER_ID" 		property="userId"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.intranet.approval.vo.AccountingVO" id="accounting">
+		<id column="ACCOUNTING_SEQ" 		property="accountingSeq"/>
+		<result column="PAYMENT_REQUEST_DATE" 		property="paymentRequestDate"/>
+		<result column="ACCOUNTING_CLIENT" 		property="accountingClient"/>
+		<result column="ACCOUNT_NUMBER" 		property="accountNumber"/>
+		<result column="ACCOUNT" 		property="account"/>
+		<result column="BUSINESS_REGISTRATION_NUMBER" 		property="businessRegistrationNumber"/>
+		<result column="AMOUNT" 		property="amount"/>
+		<result column="ACCOUNTING_CONTENT" 		property="accountingContent"/>
+		<result column="ACCOUNTING_CATEGORY" 		property="accountingCategory"/>
+		<result column="USER_ID" 		property="userId"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
+	</resultMap>
+	
+	<resultMap type="kh.study.intranet.approval.vo.ReceiveRefVO" id="receiveRef">
+		<id column="RECEIVE_REF_NUM" 		property="receiveRefNum"/>
+		<result column="APP_SEQ" 		property="appSeq"/>
+		<result column="FIRST_APPROVAL" 		property="firstApproval"/>
+		<result column="FIRST_APPROVAL_EMP" 		property="firstApprovalEmp"/>
+		<result column="FINAL_APPROVAL" 		property="finalApproval"/>
+		<result column="FINAL_APPROVAL_EMP" 		property="finalApprovalEmp"/>
+		<result column="APP_CATE_CODE" 		property="appCateCode"/>
+		<result column="APP_SEQ_STATUS" 		property="appSeqStatus"/>
+	<!-- 	<association property="approvalVO" resultMap="approval"/> -->
 	</resultMap>
 
 
@@ -53,19 +131,50 @@
 		             WHERE ROWNUM BETWEEN 1 AND 5
 	</select>
 	
+	<!-- 공지사항 조회 -->
+	<select id="noticeBoard" resultMap="board">
+		SELECT * FROM BOARD WHERE BOARD_CATE_CODE = '5' ORDER BY BOARD_NUM DESC
+	</select>
+	
+	
+	
 	<!-- 결재할 문서목록 -->
-	<select id="selectRecentApproval" resultMap="approval">
-		SELECT APP.APP_SEQ
-		       , APP_WRITE_dATE
-		       , TITLE
-		       , APP.APP_CATE_CODE
-		       , APP.USER_ID
-		FROM APPROVAL APP, APP_RECEIVE_REF REF
-		WHERE APP.APP_SEQ = REF.APP_SEQ
-		AND APP_SEQ_STATUS = #{appSeqStatus}
-		AND FIRST_APPROVAL_EMP = #{empNum}
-		OR FINAL_APPROVAL_EMP = #{empNum}
+<!-- 	<select id="selectRecentApproval" resultMap="approval"> -->
+<!-- 		SELECT APP.APP_SEQ -->
+<!-- 		       , APP_WRITE_dATE -->
+<!-- 		       , TITLE -->
+<!-- 		       , APP.APP_CATE_CODE -->
+<!-- 		       , APP.USER_ID -->
+<!-- 		FROM APPROVAL APP, APP_RECEIVE_REF REF -->
+<!-- 		WHERE APP.APP_SEQ = REF.APP_SEQ -->
+<!-- 		AND APP_SEQ_STATUS = #{appSeqStatus} -->
+<!-- 		AND FIRST_APPROVAL_EMP = #{empNum} -->
+<!-- 		OR FINAL_APPROVAL_EMP = #{empNum} -->
 				
+	
+<!-- 	</select> -->
+	
+	<select id="documentsToBeApproved" resultMap="approval">
+		SELECT APP.APP_SEQ
+		       , TO_CHAR(APP_WRITE_DATE, 'YY-MM-DD') AS APP_WRITE_DATE
+		       , EMP.USER_ID
+               , EMP.EMP_NAME
+               , EMP.DEPT_NAME
+		       , TITLE
+		       , CATE.APP_CATE_NAME
+		       , APP.APP_CATE_CODE 
+		FROM APPROVAL APP, APP_RECEIVE_REF REF, EMP, APP_CATEGORY CATE
+			WHERE APP.APP_SEQ = REF.APP_SEQ
+	        AND APP.USER_ID = EMP.USER_ID
+	        AND APP.APP_CATE_CODE = CATE.APP_CATE_CODE
+			
+			AND 
+			(
+			    (FIRST_APPROVAL_EMP = (SELECT EMP_NUM FROM EMP WHERE USER_ID = #{userId}) AND FIRST_APPROVAL = 'N') 
+			    OR 
+			    (FINAL_APPROVAL_EMP = (SELECT EMP_NUM FROM EMP WHERE USER_ID = #{userId}) AND FINAL_APPROVAL = 'N')  
+			) 
+			ORDER BY APP.APP_SEQ DESC
 	
 	</select>
 </mapper>
