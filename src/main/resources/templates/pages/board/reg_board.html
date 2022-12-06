@@ -6,7 +6,7 @@
 
 
 <div layout:fragment="content">
-	<div class="col-8">
+	<div class="col-8" style="color: #333;">
 		<form th:action="@{/board/regBoard}" method="post" th:object="${boardVO}">
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">글 제목</label> 
@@ -14,20 +14,19 @@
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">글 내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{boardContent}" rows="3"></textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{boardContent}" rows="3" placeholder="인터넷 에티켓을 준수합시다."></textarea>
 			</div>
 			<div class="row">
 				<div class="col text-right">
 					<label for="Default select example" class="form-label">카테고리 선택</label>
 					<select class="form-select" aria-label="Default select example" name="boardCateCode">
 						<th:block th:each="cate: ${boardCate}" >
-						
-							<th:block  th:if="${cate.boardCateCode eq 5}" >
+							<th:block  th:if="${cate.boardCateCode eq 1}" >
 								<th:block sec:authorize="hasRole('ROLE_ADMIN')">
 					  				<option style="background-color: red;"  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
 								</th:block>
 							</th:block>
-							<th:block  th:unless="${cate.boardCateCode eq 5}" >
+							<th:block  th:unless="${cate.boardCateCode eq 1}" >
 					  			<option  th:text="${cate.boardCateName}" th:value="${cate.boardCateCode}"></option>
 							</th:block>		
 						</th:block>
@@ -50,19 +49,13 @@
 					 	 	<label class="form-check-label" for="flexCheckIndeterminate">비밀글 미설정</label>
 						</th:block>
 					</div>
-					<!-- <div class="mb-3 row">
-			    		<label for="inputPassword" class="col-sm-2 col-form-label">비밀번호 지정</label>
-					    <div class="col-sm-4">
-				      		<input type="password" th:field="*{secretPw}" class="form-control" id="inputPassword">
-					    </div>
-		  			</div> -->
 				</div>
 				<div class="row">
-					<div class="col text-right">
-						<button type="submit" class="btn btn-outline-info">
+					<div class="col text-right"  >
+						<button type="submit" class="btn btn-secondary" >
 						글 등록
 						</button>
-						<button type="button" class="btn btn-outline-info" th:onclick="|location.href='@{/board/boardList}'|">
+						<button type="button" class="btn btn-secondary"  th:onclick="|location.href='@{/board/boardList}'|">
 						뒤로가기
 						</button>
 					</div>

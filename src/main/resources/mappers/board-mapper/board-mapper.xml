@@ -62,7 +62,7 @@
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
                     ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE
-                    WHERE BO.BOARD_CATE_CODE = 5			  
+                    WHERE BO.BOARD_CATE_CODE = 1			  
            			ORDER BY BOARD_REG_DATE DESC
            					)
            				)
@@ -109,7 +109,7 @@
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
                     ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE	
-                    WHERE BO.BOARD_CATE_CODE != 5		  
+                    WHERE BO.BOARD_CATE_CODE != 1		  
            			ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC, BOARD_READ_CNT DESC
            					)
            				)
@@ -181,7 +181,13 @@
 					<if test="toDate != null and !toDate.equals('')">
 					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 					</if>	
-				ORDER BY BOARD_NUM DESC	
+				ORDER BY ${orderBy} DESC 
+<!-- 				<if test="toDate != null and !toDate.equals('')"> -->
+<!-- 						, BOARD_READ_CNT DESC -->
+<!-- 				</if> -->
+<!-- 				<if test="toDate != null and !toDate.equals('')"> -->
+<!-- 						, LIKE_COUNT DESC -->
+<!-- 				</if>	 -->
 				<!-- ORDER BY BOARD_READ_CNT
 				ORDER BY LIKE_COUNT
 				ORDER BY #{readWay} DESC
@@ -201,7 +207,7 @@
 		SELECT BOARD_CATE_CODE
 				, BOARD_CATE_NAME
 		FROM BOARD_CATEGORY  
-		ORDER BY BOARD_CATE_CODE DESC
+		ORDER BY BOARD_CATE_CODE 
 	</select>
 	
 	

@@ -43,7 +43,12 @@ public class BoardController {
 	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model, Authentication authentication) {
 
 		
+		System.out.println("!!!!!!!" + paramMap.get("orderBy"));
 		
+		if(paramMap.get("orderBy") == null || paramMap.get("orderBy") =="") {
+			paramMap.put("orderBy", "BOARD_NUM");
+		}
+
 		//id확인
 //		User user = (User)authentication.getPrincipal();
 //		boardVO.setUserId(user.getUsername());

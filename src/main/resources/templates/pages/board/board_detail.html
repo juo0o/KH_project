@@ -7,37 +7,21 @@
 <div layout:fragment="content">
 	<!-- 모든 내용이 들어오는 영역 -->
 	<div class="row justify-content-center">
-		<div class="col-8">
+		<div class="col-10" style="border:3px solid #ebecef;  border-radius:3%;      ">
 			<!-- 게시글 상세 정보 영역 -->
 			<div class="row">
-				<div class="col-2 mb-3 mt-3">
-					글 제목
-				</div>
-				<div class="col-10 mb-3 mt-3">
+				<div class="col-10 mb-3 mt-3" style="color:#333; font-size: 50px;">
 					<span th:text="${detail.boardTitle}"></span>
 				</div>
-				<div class="col-2 mb-3 mt-3">
-					작성자
-				</div>
-				<div class="col-10 mb-3 mt-3">
+				<div class="col-10 mb-1 mt-3">
 					<span th:text="${detail.userId}"></span>
 				</div>
-				<div class="col-2 mb-3 mt-3">
-					등록일
-				</div>
-				<div class="col-10 mb-3 mt-3">
+				<div class="col-10 mb-3 mt-1" style="border-bottom: solid #ebecef;">
 					<span th:text="${detail.boardRegDate}"></span>
-				</div>
-				<div class="col-2 mb-3 mt-3">
-					조회수
-				</div>
-				<div class="col-10 mb-3 mt-3">
+					&nbsp;&nbsp;조회
 					<span th:text="${detail.boardReadCnt}"></span>
 				</div>
-				<div class="col-2 mb-3 mt-3">
-					내 용
-				</div>
-				<div class="col-10 mb-3 mt-3">
+				<div style="color: black; font-weight: lighter;">
 					<span th:text="${detail.boardContent}"></span>
 				</div>
 				<input id="boardNum" type="hidden" th:value=${detail.boardNum}>
@@ -127,7 +111,9 @@
 						<input type="hidden" name="boardNum" th:value="${detail.boardNum}">
 						<div class="row">
 							<div class="col-10">
-								<textarea class="form-control" th:field="*{replyContent}" rows="3" style="resize: none;"></textarea>
+								<label class="mb-3 mt-3" for="replycontentInput" style="color: #333; font-weight: bold;">댓글</label>
+								<textarea class="form-control" th:field="*{replyContent}" id="replycontentInput" rows="3" style="resize: none;" placeholder="댓글을 남겨보세요">
+								</textarea>
 							</div>
 							<div class="col-2">
 								<button type="submit" class="btn btn-primary replyWriteBtn" style="width: 100%; height: 100%;">댓글등록</button>
