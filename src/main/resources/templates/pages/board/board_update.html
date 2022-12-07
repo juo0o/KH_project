@@ -10,9 +10,12 @@
 
 <div layout:fragment="content">
 	<div class="row justify-content-center">
-		<div class="col-6">
+		<div class="col-8" style="border:3px solid #ebecef;  border-radius:3%;">
 			<form th:action="@{/board/updateBoard}" method="post" th:object="${update}">
 				<div class="mb-3">
+					<label for="formGroupExampleInput" class="form-label">카테고리</label> 
+					<input type="text" class="form-control" id="formGroupExampleInput" th:field="*{boardCateName}" readonly> 
+					
 					<label for="formGroupExampleInput" class="form-label">글번호</label> 
 					<input type="text" class="form-control" id="formGroupExampleInput" th:field="*{boardNum}" readonly> 
 					
@@ -28,14 +31,14 @@
 
 				<label for="formGroupExampleInput" class="form-label">내용</label>
 				<div class="form-floating">
-					<textarea class="form-control" placeholder="내용을 입력하세요" id="formGroupExampleInput" style="height: 300px" th:field="*{boardContent}">
+					<textarea class="form-control" placeholder="내용을 입력하세요" id="formGroupExampleInput" style="height: 300px; resize: none;" th:field="*{boardContent}" >
 					</textarea>
 				</div>
-				<div class="row">
+				<div class="row mt-3 mb-3">
 					<div class="col text-center">
-						<button type="button" class="btn btn-outline-info"
+						<button type="button" class="btn btn-secondary"
 							th:onclick="|location.href = '@{/board/boardDetail(boardNum=${update.boardNum})}'|">뒤로가기</button>
-						<button type="submit" class="btn btn-outline-info">수정하기</button>
+						<button type="submit" class="btn btn-secondary">수정하기</button>
 					</div>
 				</div>
 			</form>

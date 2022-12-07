@@ -7,62 +7,30 @@
 <div layout:fragment="content">
 	<!-- 모든 내용이 들어오는 영역 -->
 	<div class="row justify-content-center">
-		<div class="col-10" style="border:3px solid #ebecef;  border-radius:3%;      ">
+		<div class="col-10" style="border:3px solid #ebecef;  border-radius:3%;">
 			<!-- 게시글 상세 정보 영역 -->
 			<div class="row">
-				<div class="col-10 mb-3 mt-3" style="color:#333; font-size: 50px;">
+				<div class="col-10 mt-3" style="color: #03c75a; font-size: 18px; font-weight: lighter;">
+					<span th:text="${detail.boardCateName}"></span>
+				</div>
+				<div class="col-10 mb-1" style=" border-bottom: solid #ebecef; color:#333; font-size: 50px;">
 					<span th:text="${detail.boardTitle}"></span>
 				</div>
-				<div class="col-10 mb-1 mt-3">
-					<span th:text="${detail.userId}"></span>
+				<div class="col-10 mb-1" style="color: #323232; " >
+					<span th:text="${detail.userId}" style="font-weight: normal;"></span>
+					<span th:text="${detail.empPosition}" style="font-weight: lighter;"></span>
 				</div>
-				<div class="col-10 mb-3 mt-1" style="border-bottom: solid #ebecef;">
+				<div class="col-12 mb-3 mt-1" style="border-bottom: solid #ebecef;">
 					<span th:text="${detail.boardRegDate}"></span>
 					&nbsp;&nbsp;조회
 					<span th:text="${detail.boardReadCnt}"></span>
 				</div>
 				<div style="color: black; font-weight: lighter;">
-					<span th:text="${detail.boardContent}"></span>
+					<span th:text="${detail.boardContent}" style="height: 60px; width: 100px;"></span>
 				</div>
 				<input id="boardNum" type="hidden" th:value=${detail.boardNum}>
 			</div>
-
-			<!-- 버튼 영역 -->
-			<div class="row text-end mb-3 mt-3">
-				<div class="col-12">
-					<!-- 게시글 좋아요 버튼 -->
-					<button class="btn btn-outline-info" type="button" th:onclick="clickLikeButton()">
-							<th:block th:if="${like eq true} ">
-								<div id="like">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
-							  			<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-									</svg>
-								</div>
-							</th:block>
-							<th:block th:unless="${like eq true} ">
-								<div id="like">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-								  		<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-									</svg>
-								</div>
-							</th:block>
-					</button>
-					
-					<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
-						뒤로가기
-					</button>
-					<th:block th:if="${detail.userId eq #authentication.name}">
-						<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
-							글수정
-						</button>
-					</th:block>
-					<th:block th:if="${detail.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
-						<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
-							글삭제
-						</button>
-					</th:block>
-				</div>
-			</div>
+			
 			
 			<script type="text/javascript">
 				function clickLikeButton(){
@@ -102,21 +70,56 @@
 				}
 				
 		</script> 
-			<div style="height: 20px;"></div>
-			
-			<!-- 댓글 등록 영역 -->
-			<div class="row mb-3 mt-3" style="width: 80%;">
+			<div style="height: 140px; border-bottom: solid  #ebecef;"></div>
+			<div class="row" >
+				<!-- 게시글 버튼 영역 -->
+				<div class="row text-end mb-3 mt-3" style="display: inline-block;">
+					<div class="col-12">
+						<!-- 게시글 좋아요 버튼 -->
+						<button class="btn btn-outline-danger" type="button"  th:onclick="clickLikeButton()">
+								<th:block th:if="${like eq true} ">
+									<div id="like">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+								  			<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+										</svg>
+									</div>
+								</th:block>
+								<th:block th:unless="${like eq true} ">
+									<div id="like">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+									  		<path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+										</svg>
+									</div>
+								</th:block>
+						</button>
+						<!-- 게시글 뒤로가기,수정버튼 -->
+						<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/board/boardList}'|">
+							뒤로가기
+						</button>
+						<th:block th:if="${detail.userId eq #authentication.name}">
+							<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/board/updateBoardForm(boardNum=${detail.boardNum})}'|">
+								글수정
+							</button>
+						</th:block>
+						<th:block th:if="${detail.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+							<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
+								글삭제
+							</button>
+						</th:block>
+					</div>
+				</div>
+				<!-- 댓글등록영역 -->
 				<div class="col">
 					<form th:action="@{/board/regReply}" method="post" th:object="${replyVO}">
 						<input type="hidden" name="boardNum" th:value="${detail.boardNum}">
 						<div class="row">
-							<div class="col-10">
-								<label class="mb-3 mt-3" for="replycontentInput" style="color: #333; font-weight: bold;">댓글</label>
-								<textarea class="form-control" th:field="*{replyContent}" id="replycontentInput" rows="3" style="resize: none;" placeholder="댓글을 남겨보세요">
+							<label class="mb-3" for="replycontentInput" style="color: #333; font-weight: bold;">댓글</label>
+							<div class="col-10" style="border:3px solid #ebecef;  border-radius:3%;">
+								<textarea class="form-control" th:field="*{replyContent}" id="replycontentInput" rows="3" style=" border:none; resize: none;" placeholder="댓글을 남겨보세요">
 								</textarea>
-							</div>
-							<div class="col-2">
-								<button type="submit" class="btn btn-primary replyWriteBtn" style="width: 100%; height: 100%;">댓글등록</button>
+								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="submit" class="btn btn-outline-light" style=" color: #b7b7b7; ">댓글등록</button>
+								</div>
 							</div>
 						</div>
 					</form>
@@ -138,15 +141,13 @@
 							</div>
 							<div class="col-12 mb-3">
 								<span th:text="${reply.replyRegDate}" style="color:#a7a7a7;"></span>
-							</div>
-							<div style="margin-bottom: 12px;">
 								<th:block th:if="${reply.userId == #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
-									<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/board/deleteReply(boardNum=${detail.boardNum}, replyNum=${reply.replyNum})}'|">
+									<button class="btn btn-outline-light" style="color: #b7b7b7;" type="button" th:onclick="|location.href='@{/board/deleteReply(boardNum=${detail.boardNum}, replyNum=${reply.replyNum})}'|">
 										댓글삭제
 									</button>
 								</th:block>
 								<th:block th:if="${reply.userId == #authentication.name}">
-									<button class="btn btn-primary" type="button" th:onclick="updateReply(this);">
+									<button class="btn btn-outline-light" style="color: #b7b7b7;" type="button" th:onclick="updateReply(this);">
 										댓글수정
 									</button>
 								</th:block>

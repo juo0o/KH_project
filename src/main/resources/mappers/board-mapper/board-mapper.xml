@@ -15,6 +15,7 @@
 		<result column="REPLY_COUNT"     	property="replyCount"/>
 		<result column="LIKE_COUNT"     	property="likeCount"/>
 		<result column="BOARD_CATE_NAME" 	property="boardCateName"/>
+		<result column="EMP_POSITION" 		property="empPosition"/>
 	</resultMap>
 
 	<resultMap type="kh.study.intranet.board.vo.BoardCategoryVO" id="boardCategory">
@@ -57,7 +58,7 @@
 		                                WHERE BOARD_NUM = BO.BOARD_NUM
 		                                ) AS LIKE_COUNT
 	                                , CATE.BOARD_CATE_CODE
-                            		, CATE.BOARD_CATE_NAME
+                            		, BOARD_CATE_NAME
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
@@ -104,7 +105,7 @@
 		                                WHERE BOARD_NUM = BO.BOARD_NUM
 		                                ) AS LIKE_COUNT
 	                                , CATE.BOARD_CATE_CODE
-                            		, CATE.BOARD_CATE_NAME
+                            		, BOARD_CATE_NAME
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
@@ -156,7 +157,7 @@
 		                       FROM BOARD_LIKE
 		                       WHERE BOARD_NUM = BO.BOARD_NUM) AS LIKE_COUNT
 	                        , CATE.BOARD_CATE_CODE
-                            , CATE.BOARD_CATE_NAME
+                            , BOARD_CATE_NAME
                             , IS_SECRET
 					FROM BOARD BO LEFT JOIN BOARD_REPLY RE
 					ON BO.BOARD_NUM = RE.BOARD_NUM
@@ -220,10 +221,17 @@
 		SELECT BOARD_NUM
 				, BOARD_TITLE 
 				, BOARD_CONTENT
-				, USER_ID
+				, BOARD.USER_ID
 				, BOARD_READ_CNT
 				, TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') AS BOARD_REG_DATE
-		FROM BOARD
+				, BOARD.BOARD_CATE_CODE
+				, (SELECT BOARD_CATE_NAME
+				   FROM BOARD_CATEGORY
+				   WHERE BOARD_CATE_CODE = BOARD.BOARD_CATE_CODE) AS BOARD_CATE_NAME
+			    , (SELECT EMP_POSITION
+			       FROM EMP
+			       WHERE USER_ID = BOARD.USER_ID) AS EMP_POSITION
+		FROM BOARD  
 		WHERE BOARD_NUM = #{boardNum}
 	</select>
 	
