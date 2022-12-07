@@ -4,11 +4,13 @@
 <!-- 해당 파일에 모든 쿼리문을 작성 -->
 <mapper namespace="replyMapper">
 	<resultMap type="kh.study.intranet.board.vo.ReplyVO" id="reply">
-		<id column="REPLY_NUM"     property="replyNum"/>
-		<result column="REPLY_CONTENT"     property="replyContent"/>
-		<result column="BOARD_NUM"     property="boardNum"/>
-		<result column="USER_ID"     property="userId"/>
-		<result column="REPLY_REG_DATE"     property="replyRegDate"/>
+	<id column="REPLY_NUM"     			   		property="replyNum"/>
+		<result column="REPLY_CONTENT"     		property="replyContent"/>
+		<result column="BOARD_NUM"     			property="boardNum"/>
+		<result column="USER_ID"     			property="userId"/>
+		<result column="REPLY_REG_DATE"     	property="replyRegDate"/>
+		<result column="EMP_NAME"     			property="empName"/>
+		<result column="EMP_POSITION"     		property="empPosition"/>
 	</resultMap>
 	
 	<!--댓글 등록  -->
@@ -32,8 +34,14 @@
 		SELECT REPLY_NUM
 				, REPLY_CONTENT
 				, USER_ID
-				, REPLY_REG_DATE 
-		FROM BOARD_REPLY
+				, REPLY_REG_DATE
+				, (SELECT EMP_NAME
+				   FROM EMP
+				   WHERE USER_ID = RE.USER_ID ) AS EMP_NAME
+			    , (SELECT EMP_POSITION
+			       FROM EMP
+			       WHERE USER_ID = RE.USER_ID) AS EMP_POSITION
+		FROM BOARD_REPLY RE
 		WHERE BOARD_NUM = #{boardNum}
 		ORDER BY REPLY_NUM DESC
 	</select>

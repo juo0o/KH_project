@@ -16,6 +16,7 @@
 		<result column="LIKE_COUNT"     	property="likeCount"/>
 		<result column="BOARD_CATE_NAME" 	property="boardCateName"/>
 		<result column="EMP_POSITION" 		property="empPosition"/>
+		<result column="EMP_NAME" 			property="empName"/>
 	</resultMap>
 
 	<resultMap type="kh.study.intranet.board.vo.BoardCategoryVO" id="boardCategory">
@@ -34,6 +35,7 @@
 		       , LIKE_COUNT
 		       , BOARD_CATE_CODE
                , BOARD_CATE_NAME 
+               , EMP_NAME
 		FROM (SELECT BOARD_NUM
 			       , BOARD_TITLE
 			       , USER_ID
@@ -43,7 +45,8 @@
 			       , LIKE_COUNT
 			       , BOARD_CATE_CODE
                    , BOARD_CATE_NAME
-       			   , RANK() OVER(ORDER BY BOARD_REG_DATE DESC) AS RANK
+                   , EMP_NAME
+       			   , RANK() OVER(ORDER BY BOARD_NUM DESC) AS RANK
       		  FROM (SELECT DISTINCT BO.BOARD_NUM
                             		, BOARD_TITLE
                             		, BO.USER_ID
@@ -59,12 +62,15 @@
 		                                ) AS LIKE_COUNT
 	                                , CATE.BOARD_CATE_CODE
                             		, BOARD_CATE_NAME
+                            		, (SELECT EMP_NAME
+		                               FROM EMP
+		                               WHERE USER_ID = BO.USER_ID) AS EMP_NAME
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
                     ON BO.BOARD_CATE_CODE = CATE.BOARD_CATE_CODE
                     WHERE BO.BOARD_CATE_CODE = 1			  
-           			ORDER BY BOARD_REG_DATE DESC
+           			ORDER BY BOARD_NUM DESC
            					)
            				)
 			WHERE RANK &lt;= 3
@@ -81,6 +87,7 @@
 		       , LIKE_COUNT
 		       , BOARD_CATE_CODE
                , BOARD_CATE_NAME 
+               , EMP_NAME
 		FROM (SELECT BOARD_NUM
 			       , BOARD_TITLE
 			       , USER_ID
@@ -90,6 +97,7 @@
 			       , LIKE_COUNT
 			       , BOARD_CATE_CODE
                    , BOARD_CATE_NAME
+                   , EMP_NAME
        			   , RANK() OVER(ORDER BY LIKE_COUNT DESC, BOARD_REG_DATE DESC, BOARD_READ_CNT DESC) AS RANK
       		  FROM (SELECT DISTINCT BO.BOARD_NUM
                             		, BOARD_TITLE
@@ -106,6 +114,9 @@
 		                                ) AS LIKE_COUNT
 	                                , CATE.BOARD_CATE_CODE
                             		, BOARD_CATE_NAME
+                            		, (SELECT EMP_NAME
+		                               FROM EMP
+		                               WHERE USER_ID = BO.USER_ID) AS EMP_NAME
            			FROM BOARD BO LEFT JOIN BOARD_REPLY RE
            			ON BO.BOARD_NUM = RE.BOARD_NUM
            			LEFT JOIN BOARD_CATEGORY CATE
@@ -132,6 +143,7 @@
                 , BOARD_CATE_CODE
                 , BOARD_CATE_NAME
                 , IS_SECRET
+                , EMP_NAME
 			FROM (
 					SELECT ROWNUM AS RN
 					, BOARD_NUM
@@ -144,6 +156,7 @@
 	                , BOARD_CATE_CODE
                     , BOARD_CATE_NAME
                     , IS_SECRET
+                    , EMP_NAME
 				FROM (
 						    SELECT  DISTINCT BO.BOARD_NUM 
 							, BOARD_TITLE 
@@ -159,6 +172,9 @@
 	                        , CATE.BOARD_CATE_CODE
                             , BOARD_CATE_NAME
                             , IS_SECRET
+                            , (SELECT EMP_NAME
+                               FROM EMP
+                               WHERE USER_ID = BO.USER_ID) AS EMP_NAME
 					FROM BOARD BO LEFT JOIN BOARD_REPLY RE
 					ON BO.BOARD_NUM = RE.BOARD_NUM
 					LEFT JOIN BOARD_CATEGORY CATE
@@ -183,17 +199,6 @@
 					AND TO_CHAR(BOARD_REG_DATE, 'YYYY-MM-DD') &lt;= #{toDate}
 					</if>	
 				ORDER BY ${orderBy} DESC 
-<!-- 				<if test="toDate != null and !toDate.equals('')"> -->
-<!-- 						, BOARD_READ_CNT DESC -->
-<!-- 				</if> -->
-<!-- 				<if test="toDate != null and !toDate.equals('')"> -->
-<!-- 						, LIKE_COUNT DESC -->
-<!-- 				</if>	 -->
-				<!-- ORDER BY BOARD_READ_CNT
-				ORDER BY LIKE_COUNT
-				ORDER BY #{readWay} DESC
-				ORDER BY ${readWay} DESC	
-				ORDER BY "LIKE_COUNT" DESC -->
 		        )
 	        )
 	        <if test ="startNum !=null and endNum != null">
@@ -231,6 +236,9 @@
 			    , (SELECT EMP_POSITION
 			       FROM EMP
 			       WHERE USER_ID = BOARD.USER_ID) AS EMP_POSITION
+		        , (SELECT EMP_NAME
+                   FROM EMP
+                   WHERE USER_ID = BOARD.USER_ID) AS EMP_NAME
 		FROM BOARD  
 		WHERE BOARD_NUM = #{boardNum}
 	</select>

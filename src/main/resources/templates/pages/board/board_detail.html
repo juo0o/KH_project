@@ -17,7 +17,7 @@
 					<span th:text="${detail.boardTitle}"></span>
 				</div>
 				<div class="col-10 mb-1" style="color: #323232; " >
-					<span th:text="${detail.userId}" style="font-weight: normal;"></span>
+					<span th:text="${detail.empName}" style="font-weight: normal;"></span>
 					<span th:text="${detail.empPosition}" style="font-weight: lighter;"></span>
 				</div>
 				<div class="col-12 mb-3 mt-1" style="border-bottom: solid #ebecef;">
@@ -134,7 +134,8 @@
 							<input type="hidden" name="boardNum" th:value="${detail.boardNum}">
 							<input type="hidden" name="replyNum" th:value="${reply.replyNum}">
 							<div class="col-12">
-								<span th:text="${reply.userId}" style="font-weight: bold;"></span>
+								<span th:text="${reply.empName}" style="font-weight: bold;"></span>
+								<span th:text="${reply.empPosition}" style="font-weight: bold;"></span>
 							</div>
 							<div class="col-12">
 								<span th:text="${reply.replyContent}" class="replyContent_span"></span>

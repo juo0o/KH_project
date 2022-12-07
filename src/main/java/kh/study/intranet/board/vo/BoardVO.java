@@ -22,6 +22,7 @@ public class BoardVO extends PageVO {
 	private int boardCateCode;
 	private String boardCateName;
 	private String empPosition;
+	private String empName;
 	
 	
 	

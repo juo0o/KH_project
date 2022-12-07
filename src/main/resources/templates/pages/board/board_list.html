@@ -45,10 +45,9 @@
 						<tr>
 							<td rowspan="2">
 								<div class="row">
+									<div class="col-12"><br></div>
 									<div class="col-12">
-										검 색
-									</div>
-									<div class="col-12">
+										검 색<br>
 										조 건
 									</div>
 								</div>
@@ -165,7 +164,7 @@
 		                            </th:block>
 								</a>
 							</td>
-							<td th:text="${notice.userId}"></td>
+							<td th:text="${notice.empName}"></td>
 							<td th:text="${#strings.substring(notice.boardRegDate,0,10)}"></td>
 							<td th:text="${notice.boardReadCnt}"></td>
 							<td th:text="${notice.likeCount}"></td>
@@ -200,7 +199,7 @@
 		                            </th:block>
 								</a>
 							</td>
-							<td th:text="${like.userId}"></td>
+							<td th:text="${like.empName}"></td>
 							<td th:text="${#strings.substring(like.boardRegDate,0,10)}"></td>
 							<td th:text="${like.boardReadCnt}"></td>
 							<td th:text="${like.likeCount}"></td>
@@ -243,7 +242,7 @@
 	                        <th:block th:unless ="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH') eq list.boardRegDate}">
 	                        </th:block>
 							</td>
-							<td th:text="${list.userId}"></td>
+							<td th:text="${list.empName}"></td>
 							<td th:text="${#strings.substring(list.boardRegDate,0,10)}"></td>
 							<td th:text="${list.boardReadCnt}"></td>
 							<td th:text="${list.likeCount}"></td>

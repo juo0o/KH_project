@@ -13,5 +13,7 @@ public class ReplyVO  {
 	private int boardNum;
 	private String userId;
 	private String replyRegDate;
+	private String empName;
+	private String empPosition;
 
 }
