@@ -2,15 +2,24 @@ package kh.study.intranet.reservation.service;
 
 import java.util.List;
 
+import kh.study.intranet.main.vo.UserVO;
 import kh.study.intranet.reservation.vo.MeetingRoomVO;
 import kh.study.intranet.reservation.vo.ReservationVO;
 
 public interface ReservationService {
 	
+	
+	
 	//회의실 조회
 	List<MeetingRoomVO> selectMeetingRoom();
 	
 	void regReservation(ReservationVO reservationVO);
+	
+	//내 예약 정보
+	List<ReservationVO> selectMyReserve(UserVO userVO);
+	
+	//내 예약 삭제
+	void deleteReserve(ReservationVO reservationVO);
 	
 	//날짜정보
 	List<ReservationVO> selectReservation(String reserveDate);

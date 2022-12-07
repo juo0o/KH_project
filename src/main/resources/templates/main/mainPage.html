@@ -27,7 +27,7 @@ layout:decorate="~{layout/base_layout}">
                     <div class="row">
                     
                     
-                    		<!-- 최근 결재문서 -->
+                    		<!-- 내정보 -->
                 			<div class="col-xl-3" >
 	                            <div class="card shadow mb-4">
 	                            	
@@ -101,51 +101,12 @@ layout:decorate="~{layout/base_layout}">
 	                            </div>
                 			</div>
                 			
-                			<!-- 결재문서 -->
-                			<div class="col-xl-4" >
-	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
-	                            	<div class="card-header py-3">
-	                                    <h6 class="m-0 font-weight-bold text-primary">결재할 문서</h6>
-	                                </div>
-	                               
-	                                <div class="card-body" align="center">
-
-			   							 <table class="table">
-											<thead>
-												<tr bordercolor="sold 1px;">
-													<th scope="col">기안자</th>
-													<th scope="col">제목</th>
-													<th scope="col">기안서</th>
-													<th scope="col">기안일
-												</tr>
-											</thead>
-											<tbody id="appList">
-												<tr  th:each="app : ${documentsToBeApproved}" th:onclick="requestApproval([[${app.appSeq}]],[[${app.appCateCode}]]);">
-													<td th:text="${app.empVO.empName}">@mdo</td>
-													<td th:text="${app.title}">Otto</td>
-													<td th:text="${app.appCategoryVO.appCateName}">Otto</td>
-													<td th:text="${app.appWriteDate}">Mark</td>
-												</tr>
-											</tbody>
-										</table>
-			   							 
-			   							 <script type="text/javascript">
-			   							 
-											function requestApproval(appSeq, appCateCode) {
-													location.href='/approval/appDocuments?appSeq=' + appSeq + '&appCateCode=' + appCateCode;
-											}
-			   							 </script>
-			   							 
-			   							 
-			   							 
-	                                </div>
-	                            </div>
-                			</div>
+                			
                 	
                             
                             <!-- 게시판 최근글 -->
                             <div class="col-xl-4">
-	                            <div class="card border-left-success shadow mb-4" style="height: 300px;">
+	                            <div class="card border-left-success shadow mb-4 scroll2" style="height: 300px;">
 	                                <div class="card-header py-3">
 	                                    <h6 class="m-0 font-weight-bold text-primary">최근글</h6>
 	                                </div>
@@ -196,7 +157,7 @@ layout:decorate="~{layout/base_layout}">
 
 						<!-- 게시판 최근글 -->
                             <div class="col-xl-4">
-	                            <div class="card border-left-success shadow mb-4" style="height: 300px;">
+	                            <div class="card border-left-success shadow mb-4 scroll2" style="height: 300px;">
 	                                <div class="card-header py-3">
 	                                    <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
 	                                </div>
@@ -243,19 +204,16 @@ layout:decorate="~{layout/base_layout}">
 	                        </div>
                       
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2" style="height: 300px;">
-                            
-                            	 <div class="card-header py-3">
+                        <div class="col-xl-4 col-md-6 mb-4" >
+                            <div class="card border-left-success shadow py-2 scroll2" >
+                            	<div class="card-header py-3">
 	                                    <h6 class="m-0 font-weight-bold text-primary">채팅방</h6>
-	                                </div>
+	                            </div>
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-
                                             <div>
-                                            	<table class="table table-striped" style=" width: 350px;" >
-					
+                                            	<table class="table table-striped" style=" width: 350px; height: 200px;" >
 													<colgroup>
 														<col width="10%">
 														<col width="30%">
@@ -266,33 +224,73 @@ layout:decorate="~{layout/base_layout}">
 														<td>채팅방이름</td>
 														<td>최근채팅시간</td>
 													</tr>
-													
 													<tr th:each="chatRoom : ${chatRoomList}">
 														<td th:text="${chatRoomStat.count}"></td>
 														<td><a th:href="|/chat/chat_room?roomName=${chatRoom.roomName}&roomId=${chatRoom.roomId}|">[[${chatRoom.roomName}]]</a></td>
 														<td>
-															<!-- <a th:onclick="window.open('/chat/chat_room2?roomName=[[${chatRoom.roomName}]]&roomId=[[${chatRoom.roomId}]]','exobud','width=500px, height=700px, resizable=yes');" style="cursor:hand;">[[${chatRoom.roomName}]]</a> -->
-															<!-- <a th:onclick="|@{window.open('/chat/chat_room2(roomName=chatRoom.roomName, roomId=chatRoom.roomId)','exobud','width=500px, height=700px, resizable=yes')}" style="cursor:hand;">[[${chatRoom.roomName}]]</a> -->
 															<a th:onclick="openWindow([[${chatRoom.roomName}]],[[${chatRoom.roomId}]])" style="cursor:hand;">[[${chatRoom.roomName}]]</a>
 														</td>
 													</tr>
 												</table>
-                                            	
                                             	<script type="text/javascript">
                                             		function openWindow(roomName,roomId){
                                             			window.open('/chat/chat_room2?roomName' + roomName + "&roomId="+roomId , 'exobud','width=500px, height=700px, resizable=yes');
                                             		}
                                             	
                                             	</script>
-                                            	
-                                            	
                                             </div>
                                         </div>
-                                      
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        
+                        <!-- 결재문서 -->
+                			<div class="col-xl-12" >
+	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
+	                            	<div class="card-header py-3">
+	                                    <h6 class="m-0 font-weight-bold text-primary">결재할 문서</h6>
+	                                </div>
+	                               
+	                                <div class="card-body" align="center">
+
+			   							 <table class="table">
+											<thead>
+												<tr bordercolor="sold 1px;">
+												<th scope="col">문서번호</th>
+													<th scope="col">기안자</th>
+													<th scope="col">제목</th>
+													<th scope="col">기안서</th>
+													<th scope="col">기안부서</th>
+													<th scope="col">기안일</th>
+												</tr>
+											</thead>
+											<tbody id="appList">
+												<tr  th:each="app : ${documentsToBeApproved}" th:onclick="requestApproval([[${app.appSeq}]],[[${app.appCateCode}]]);">
+													<td th:text="${app.appSeq}">@mdo</td>
+													<td th:text="${app.empVO.empName}">@mdo</td>
+													<td th:text="${app.title}">Otto</td>
+													<td th:text="${app.appCategoryVO.appCateName}">Otto</td>
+													<td th:text="${app.empVO.deptName}">Otto</td>
+													<td th:text="${app.appWriteDate}">Mark</td>
+												</tr>
+											</tbody>
+										</table>
+			   							 
+			   							 <script type="text/javascript">
+			   							 
+											function requestApproval(appSeq, appCateCode) {
+													location.href='/approval/appDocuments?appSeq=' + appSeq + '&appCateCode=' + appCateCode;
+											}
+			   							 </script>
+			   							 
+			   							 
+			   							 
+	                                </div>
+	                            </div>
+                			</div>
+                        
 
     
          

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			center: 'title',
 			right: 'dayGridMonth,timeGridWeek,timeGridDay'
 		},
-		//initialView: 'dayGridWeek',
+		initialView: 'timeGridWeek',
 		height: '550px',
 		expandRows: true,
 		/*events:[
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					for(var date of result.reservedList){
 	                              
                           events.push({
-                             title : date.roomName,
+                             title : date.roomName + " " + date.reserveName,
                              start : date.reserveDate +"T"+  date.startTime  ,
                              end : date.reserveDate +"T"+ date.endTime  ,
                              
@@ -91,6 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 	calendar.render();
+	
+	
+//	fc-daygrid-day-frame fc-scrollgrid-sync-inner
+//	$('.fc-daygrid-day-frame').css("height","10px");
+//	$('.fc-daygrid-day-frame').css("word-break","break-all");
 });
  
 	

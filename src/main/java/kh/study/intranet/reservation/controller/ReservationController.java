@@ -2,6 +2,8 @@ package kh.study.intranet.reservation.controller;
 
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,17 +55,36 @@ public class ReservationController {
 	
 	
 	@RequestMapping("/insertReserve")
-	public String insertReserve(MeetingRoomVO meetingRoomVO,Model model,ReservationVO reservationVO,Authentication authentication,UserVO userVO) {
+	public String insertReserve(UserVO userVO,Model model,Authentication authentication) {
 		
 		model.addAttribute("available", reservationService.availableReserve());
 		
 		//---회의실 조회---//
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
 		
+		//내 예약 조회
+		User user = (User)authentication.getPrincipal();
+		userVO.setUserId(user.getUsername());
+		model.addAttribute("selectMyReserve", reservationService.selectMyReserve(userVO));
+		
+		
 		return "pages/reservation/insertReserve";
 	
 	}
 	
+	
+	//내 예약 취소
+	@ResponseBody
+	@RequestMapping("/deleteReserve")
+	public void deleteReserve(ReservationVO reservationVO) {
+		
+		System.out.println("!!!!!!!!!!!!!!!!");
+		System.out.println(reservationVO);
+		System.out.println(reservationVO);
+		System.out.println(reservationVO);
+		
+		reservationService.deleteReserve(reservationVO);
+	}
 	
 	@ResponseBody
 	@PostMapping("/selectReserve")
@@ -87,14 +108,32 @@ public class ReservationController {
 	//등록 눌렀을때 실행되는 ajax
 	@ResponseBody
 	@PostMapping("/regReservation")
-	public void regReservation(MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) {
+	public ReservationVO regReservation(UserVO userVO,MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) throws ParseException {
 		User user = (User)authentication.getPrincipal();
-		
+		userVO.setUserId(user.getUsername());
 		reservationVO.setReserveUserId(user.getUsername());
 		
+		if(reservationVO.getReserveName() == null || reservationVO.getReserveName() == "") {
+			reservationVO.setReserveName("");
+		}
+		
+		if(reservationVO.getReserveComment() == null || reservationVO.getReserveComment() == "") {
+			reservationVO.setReserveComment("");
+		}
+		
+		//등록쿼리
 		reservationService.reserveUpdate(reservationVO); 
 		
+		//내 예약 조회해서 마지막꺼찾는다.
+		ReservationVO recentRegRes = new ReservationVO();
 		
+		for(ReservationVO e : reservationService.selectMyReserve(userVO)) {
+			if(e.getReserveTime().equals(reservationVO.getReserveTime()) && e.getReserveDate().equals(reservationVO.getReserveDate()) ) {
+				recentRegRes = e;
+			}
+		}
+		// 결과 리턴
+		return recentRegRes;
 	}
 	
 	//회의실 예약조회 눌렀을시 페이지 이동
@@ -149,7 +188,7 @@ public class ReservationController {
 				meetingRoom.setRoomCode("ROOM_00" + j);
 				
 				for(int i = 1; i < 32; i++) {
-					meetingRoom.setDay("2022-12-" + i);
+					meetingRoom.setDay("2023-01-" + i);
 					reservationService.insertReserveTime(meetingRoom);
 				}
 				

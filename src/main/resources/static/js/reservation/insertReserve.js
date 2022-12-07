@@ -1,84 +1,8 @@
-//캘린더~~~~~~~~~~~~~~~~~
-/*var list = [];
-
-list = $('.aaa').value;
-
-alert(list);*/
-
-
 
 
 var sysdate = 0;
 		
-    
-      /*document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        
-        
-        
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-        	
-        		
-
-        	
-        	
-        	
-            
-        	locale : 'ko',
-        	
-        	headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-              },
-         	
-          //initialView: 'dayGridMonth',
-          
-          height: '550px',
-          
-          expandRows: true ,
-          
-          
-		 
-          
-          
-          
-          
-          dateClick: function (info) {
-              
-            
-              
-              
-              
-              
-              
-              
-              
-              
-              
-//          //모달창띄운다
-            $('#createEventModal').modal('show');
-           
-            showRoomInfoAjax(info.dateStr);
-    
-            sysdate = info.dateStr;
-              
-      }
-              
-  
-	
-       
-              
-              
-      
-         
-              
-              
-        });
-        calendar.render();
-      });*/
-      
+ 
 //=======================================캘린더 출력, 이벤트적용  
       document.addEventListener('DOMContentLoaded', function() {
    
@@ -161,9 +85,6 @@ var sysdate = 0;
  function showRoomInfoAjax(dateStr) {
 
  		var reservation;
-      //alert('ajax실행함수 실행 : ' + dateStr)
-       		
-         //alert(dateStr);
             $.ajax({
                url: '/reservation/selectReserve', //요청경로
                type: 'post',
@@ -173,43 +94,7 @@ var sysdate = 0;
 //               cache: false,
 				async: false,
                success: function(result) {
-               		 //모달창띄운다
-               		 
                  reservation = result;
-	           	   
-	           //document.querySelector('select').value;   
-	           	   
-               
-//               memberInfo.innerHTML ='';
-              	//let str='';
-              	 //str +=   `        `;
-
-//               str +=  `        `
-//               str +=  `        `
-//               str +=  `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `  
-//               str +=  `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=  `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=  `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `    
-//               str +=  `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `
-//               str +=   `        `
-//
-//
-//                memberInfo.insertAdjacentHTML('afterbegin', str);
                },
                error: function() {
                   alert('ajax 실패');
@@ -234,70 +119,66 @@ function goReserve(){
 		
 		//const roomCode = document.querySelectorAll('#roomCode').value;
 		const reserveTime = document.querySelector('#reserveTime').value;
-		
+		const reserveName = document.querySelector('#reserveName').value;
+		const reserveComment = document.querySelector('#reserveComment').value;
+	
 		if(reserveTime == 0 ,reserveTime ==''){
 			alert('먼저 회의실을 선택해주세요');
 			return;
 		}
-		
-		
-		//alert(sysdate);
-		
-		//alert(selectedTag);
-		//alert('aaa');
-		//var formTag = $("#regReserve").serialize();
-		//alert(formTag);
-		
-		//alert(roomCode);
-		
-		//alert(reserveTime);
-	
 		
 		$.ajax({
                url: '/reservation/regReservation', //요청경로
                type: 'post',
                data: {'roomCode':document.querySelector('#meetingRoom').value 
                ,'reserveTime':document.querySelector('#reserveTime').value
-               ,'reserveDate':sysdate}, //필요한 데이터
+               ,'reserveDate':sysdate
+               , 'reserveName' : reserveName
+               , 'reserveComment' : reserveComment
+               }, //필요한 데이터
                //async: false,
                success: function(result) {
-           			alert('등록완료');
-           			
-           		
-           			
-           			
+           				Swal.fire({
+      				  icon: 'success',
+      				  title: '등록완료.',
+      				  text: '',
+      				});
+      				console.log(result);
+      				//삭제하고 예약목록 그려준다.
+      				let reserveAjaxDiv = document.querySelector('#resrveAjax');
+      				let str = '';
+      				
+      				
+      				
+		      		str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveName}</span> </div>     `
+			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.roomCode}</span> </div>     `
+			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveDate}</span> </div>     `
+			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveTime}</span> </div>     `
+			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveComment}</span> </div>     `
+			      	str+=`		<div class="col-2" align="right"> <button onclick="deleteReserve(this,[[${result.reserveCode}]])" class="btn btn-outline-info">취소</button> </div>`
+               
+               		reserveAjaxDiv.insertAdjacentHTML('afterbegin', str);
                },
                error: function() {
                   alert('ajax 실패');
-         
                }
                
                
             });
-               $('#createEventModal').modal('hide');
+            
+            $('#reserveForm')[0].reset();
+            $('#createEventModal').modal('hide');
            			
 }
+
+
            			
-           			
-            
-           		
-           		
-            
-               			
-               			
-               			
-               
 
 //회의실 선택시 변경되는 함수
 function selectChange(info){
 	
 	
 	var roomCode = document.querySelector('#meetingRoom').value;
-	
-	//alert("roomCode : " + roomCode);
-	//alert(sysdate);
-	
-	
 	$.ajax({
                url: '/reservation/selectChange', //요청경로
                type: 'post',
@@ -306,10 +187,7 @@ function selectChange(info){
                
                success: function(result) {
            			
-           		
            			const selectBox = document.querySelector('#reserveTime');
-           		    
-           		   
            		    
            		    selectBox.innerHTML = '';
            		    
@@ -327,9 +205,6 @@ function selectChange(info){
 						
            			
            			selectBox.insertAdjacentHTML('beforeend',str);
-           			
-           			
-           			
                
                },
                error: function() {
@@ -345,6 +220,38 @@ function selectChange(info){
 	
 }
 
+
+
+function deleteReserve(event,reserveCode){
+    		alert(reserveCode);
+    		
+    		$.ajax({
+    			url: '/reservation/deleteReserve', //요청경로
+    			type: 'post',
+    			data: {'reserveCode' :  reserveCode}, //필요한 데이터
+    			
+    			success: function(userInfo) {
+    				Swal.fire({
+      				  icon: 'success',
+      				  title: '예약을 취소하였습니다.',
+      				  text: '',
+      				});                                                                                                                         
+      				return;                                                              
+    			},                                                                                                                                                  
+    			error: function() {         
+    				Swal.fire({
+    				  icon: 'error',
+    				  title: '변경실패',
+    				  text: '',
+    				});                                                                                                                         
+    				return;
+    			}
+    		});
+    		
+    		let deleteTag = event.parentNode.parentNode;
+    		deleteTag.remove();
+    		
+    	}
       
       
       

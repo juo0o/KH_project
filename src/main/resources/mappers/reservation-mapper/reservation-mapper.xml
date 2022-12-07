@@ -19,6 +19,8 @@
 	<resultMap type="kh.study.intranet.reservation.vo.ReservationVO" id="reservation">
 		<id column="RESERVE_CODE" property="reserveCode"/>
 		<result column="RESERVE_USER_ID" property="reserveUserId"/>
+		<result column="RESERVE_NAME" property="reserveName"/>
+		<result column="RESERVE_COMMENT" property="reserveComment"/>
 		<result column="ROOM_CODE" property="roomCode"/>
 		<result column="RESERVE_DATE" property="reserveDate"/>
 		<result column="RESERVE_TIME" property="reserveTime"/>
@@ -27,7 +29,7 @@
 		
 	</resultMap>
 		
-	   <!-- 예약가능날짜 조회 -->   
+   <!-- 예약가능날짜 조회 -->   
    <select id="availableDay" resultType="String">
       SELECT 
             DISTINCT ( TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
@@ -46,7 +48,31 @@
       FROM RESERVATION_MEETING_ROOM
       WHERE RESERVE_AVAILABLE = 'Y'
    </select>
+   
+   <!-- 내 예약 조회 -->
+	<select id="selectMyReserve" resultMap="reservation">
+			SELECT RES.RESERVE_CODE
+				   , RESERVE_USER_ID
+				   , RESERVE_NAME
+				   , RESERVE_COMMENT
+				   , (SELECT ROOM_NAME FROM MEETING_ROOM WHERE ROOM_CODE = RES.ROOM_CODE ) AS ROOM_CODE 
+				   , TO_CHAR(RESERVE_DATE, 'YYYY-MM-DD') AS RESERVE_DATE
+				   , RESERVE_TIME
+		    FROM RESERVATION_MEETING_ROOM RES
+		    WHERE RESERVE_USER_ID = #{userId}
+		    AND TO_DATE(RESERVE_DATE, 'YY-MM-DD') &gt;= SYSDATE
+		    ORDER BY RESERVE_DATE 
+	</select>
 	
+	<!-- 내 예약 삭제 -->
+	<delete id="deleteReserve">
+		UPDATE RESERVATION_MEETING_ROOM 
+		            SET 
+		            RESERVE_USER_ID = ''
+		            , RESERVE_NAME = ''
+		            , RESERVE_AVAILABLE = 'Y'
+		WHERE RESERVE_CODE = #{reserveCode}
+	</delete>
 	
 	<select id="selectMeetingRoom" resultMap="meeting">
 	SELECT ROOM_CODE
@@ -63,6 +89,8 @@
 	     , ROOM_NAME
 	     , RESERVE_CODE
 	     , RESERVE_USER_ID
+	     , RESERVE_NAME
+	     , RESERVE_COMMENT
 	     , TO_CHAR(RESERVE_DATE,'YYYY-MM-DD') AS RESERVE_DATE
 	     , RESERVE_TIME
 	     , RESERVE_AVAILABLE
@@ -114,19 +142,20 @@
 	
 	
 	
-	<!--업데이트 초안  -->
-	
+	<!--예약 업데이트  -->
 	<update id="reserveUpdate">
 	UPDATE RESERVATION_MEETING_ROOM
 	SET
-	RESERVE_AVAILABLE = 'N'
+		RESERVE_AVAILABLE = 'N'
+		, RESERVE_USER_ID = #{reserveUserId}
+		, RESERVE_NAME = #{reserveName}
+		, RESERVE_COMMENT = #{reserveComment}
 	WHERE
-	
-	ROOM_CODE = #{roomCode}
-	
+		ROOM_CODE = #{roomCode}
 	AND
-	RESERVE_DATE = #{reserveDate}
-	AND RESERVE_TIME = #{reserveTime}
+		RESERVE_DATE = #{reserveDate}
+	AND 
+		RESERVE_TIME = #{reserveTime}
 	
 	<!-- AND RESERVE_CODE = #{reserveCode} -->
 	
@@ -136,6 +165,8 @@
 	<insert id="insertReserveTime">
 	INSERT INTO RESERVATION_MEETING_ROOM
 	VALUES( (SELECT NVL(MAX(TO_NUMBER(RESERVE_CODE)) + 1, 0) FROM RESERVATION_MEETING_ROOM) 
+	 	   , ''
+	 	   , ''
 	 	   , ''
 	 	   ,#{roomCode}
 	 	   ,TO_DATE( #{day} ,'YYYY-MM-DD')

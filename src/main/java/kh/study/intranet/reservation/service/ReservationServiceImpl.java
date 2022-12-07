@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.study.intranet.main.vo.UserVO;
 import kh.study.intranet.reservation.vo.MeetingRoomVO;
 import kh.study.intranet.reservation.vo.ReservationVO;
 
@@ -20,7 +21,18 @@ public class ReservationServiceImpl implements ReservationService{
 		
 		return sqlSession.selectList("reservationMapper.selectMeetingRoom");
 	}
-
+	//내 예약 조회
+	@Override
+	public List<ReservationVO> selectMyReserve(UserVO userVO) {
+		return sqlSession.selectList("reservationMapper.selectMyReserve", userVO);
+	}
+	
+	//내 예약 삭제
+	@Override
+	public void deleteReserve(ReservationVO reservationVO) {
+		sqlSession.delete("reservationMapper.deleteReserve", reservationVO);
+	}
+	
 	@Override
 	public void regReservation(ReservationVO reservationVO) {
 		sqlSession.insert("reservationMapper.regReservation",reservationVO);
@@ -74,6 +86,7 @@ public class ReservationServiceImpl implements ReservationService{
 		sqlSession.insert("reservationMapper.insertReserveTime", meetingRoom);
 		
 	}
+
 
 
 

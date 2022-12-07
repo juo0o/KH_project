@@ -12,17 +12,17 @@ import lombok.ToString;
 @ToString
 public class UserVO extends PageVO  {
 	
-		@NotBlank(message= "ID는 필수입력사항입니다.")
+//		@NotBlank(message= "ID는 필수입력사항입니다.")
 		private String userId;
 		
 //		@NotBlank(message= "PW는 필수입력사항입니다.")
 //		@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$", message = "비밀번호는 최소8자 최대16자 영문 숫자 최소하나...")		
 		private String userPw;
 		
-		@NotBlank(message= "사번는 필수입력사항입니다.")
+//		@NotBlank(message= "사번는 필수입력사항입니다.")
 		private String empNum;
 		
-		@NotBlank(message= "이름은 필수입력사항입니다.")
+//		@NotBlank(message= "이름은 필수입력사항입니다.")
 		private String empName;
 		
 		
