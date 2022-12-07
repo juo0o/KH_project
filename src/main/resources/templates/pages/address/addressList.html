@@ -25,7 +25,13 @@
 		<div id="addList" style="font-size: 16px;">
 			<th:block th:each="myAddress:${myAddressList}">
 				<div>
-					<a th:text="${myAddress.bookName}" th:href="@{/address/myAddress(listPk=${myAddress.listPk})}"></a>
+					<ul>
+						<li>
+							<a th:text="${myAddress.bookName}" th:href="@{/address/myAddress(listPk=${myAddress.listPk})}"></a>
+						
+						</li>
+					</ul>
+				
 					
 				</div>
 			</th:block>
@@ -35,20 +41,13 @@
 	</li>
 </ul>
 
-
-
-
 <input type="text" placeholder="연락처 그룹 이름..." name="bookName" id="groupName" value="" style="margin-bottom: 25px;">
 <input class="btn btn-info" type="button" value="주소록 그룹 추가" onclick="goAddress();" id="groupAdd">
 
-<!-- <div id="등록할때마다 계속 조회를해서 다시ㅡㄱ려준다"></div> -->
-
-<!-- <div id="insertDiv"></div> -->
-
-</section>
 </div>
-<!-- <input class="edit" type="text" placeholder="연락처 그룹 이름" > -->
-<div class="col-7"><form th:action="@{/address/addressList}" method="post">
+
+<div class="col-7">
+		<form th:action="@{/address/addressList}" method="post">
 			<table class="table align-middle table-bordered text-center test " style="width: 900px; height: 200px;">
 				<colgroup>
 					<col width="8%">
@@ -88,7 +87,7 @@
 						<input class="form-control" type="text" name="empPosition" id="" th:value="${paramMap['empPosition']}" >
 					</td>
 					<td rowspan="2">
-						<button type="submit" id="searchButton" class="btn btn-primary" style="height: 90px;">Search</button>
+						<button type="submit" id="searchButton" class="btn btn-outline-info" style="height: 90px;">검색</button>
 					</td>
 				</tr>
 				<tr>
@@ -105,18 +104,7 @@
 					</td>
 					<td class="searchTitle">상태</td>
 					<td colspan="2">
-						<!-- <div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
-						  <label class="form-check-label" for="">전체</label>
-						</div>
-			   			<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
-						  <label class="form-check-label" for="">판매중</label>
-						</div>
-			   			<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
-						  <label class="form-check-label" for="">매진</label>
-						</div> -->
+					
 					</td>
 				</tr>
 			</table>
@@ -125,14 +113,7 @@
 		</form>
 		<br>
 	
-		<!-- <div>
-			<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regEmpModal">
-			  사원등록
-			</button>
-			<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regDeptModal">
-			  부서등록
-			</button>
-		</div> -->
+		
 </div>
 
 <div class="row">
@@ -153,7 +134,7 @@
 			<div>
 				<table class="table" >
 					<thead>
-						<tr bordercolor="sold 1px;" class="table-Light" >
+						<tr bordercolor="sold 1px;" class="table-secondary" >
 							<th scope="col">이름(표시명)</th>
 							<th scope="col">직위</th>
 							<th scope="col">휴대폰</th>
@@ -166,7 +147,7 @@
 					</thead>
 					<tbody id="" >
 						<th:block >
-							<tr class="table-secondary" th:each="address:${addressList}">
+							<tr class="table-light" th:each="address:${addressList}">
 								<td th:text="${address.empName}"></td>
 								<td th:text="${address.empPosition}"></td>
 								<td th:text="${address.empTell}"></td>
@@ -204,12 +185,6 @@
     	
     
     </div>
-    
-    
-    
-    
-    
-    
     
     </div>
     

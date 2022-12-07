@@ -19,9 +19,9 @@
 </ul> 
 			
 			<div>
-				<table class="table">
+				<table class="table" style="border-color: black;">
 					<thead>
-						<tr bordercolor="sold 1px;">
+						<tr class="table-secondary">
 							<th scope="col">이름(표시명)</th>
 							<th scope="col">직위</th>
 							<th scope="col">휴대폰</th>
@@ -32,15 +32,15 @@
 							<th scope="col">그룹</th>
 						</tr>
 					</thead>
-					<tbody >
-					<th:block th:if="${#lists.size(myAddressList)}==0">
-						<tr>
-							<td colspan="8" style="text-align: center;">등록된 연락처가 없습니다</td>
-						</tr>
-					</th:block>
+					<tbody>
+						<th:block th:if="${#lists.size(myAddressList)}==0">
+							<tr>
+								<td colspan="8" style="text-align: center;">등록된 연락처가 없습니다</td>
+							</tr>
+						</th:block>
 					
 						 <th:block th:unless="${#lists.size(myAddressList)==0}" th:each="myAddress : ${myAddressList}" >
-						 	<tr class="table-secondary" style="font-size: 18px;"> 
+						 	<tr class="table-light" style="font-size: 16px; font-weight: bold; font-style:italic;"> 
 								<td>
 									<a th:text="${myAddress.empName}" th:href="@{/address/updateAddress(bookPk=${myAddress.bookPk},listPk=${myAddress.listPk})}"></a>
 								</td> 
@@ -56,11 +56,12 @@
 					</tbody>
 					
 				</table>
-<div style="text-align: center;">
-	<input class="btn btn-dark" type="button" value="연락처 추가하기" th:onclick="|location.href='@{/address/addAddress(listPk=${listPk})}'|">
-	<input class="btn btn-info" type="button" value="주소록 목록" th:onclick="|location.href='@{/address/addressList}'|">
-</div>
+		<div style="text-align: center;">
+			<input class="btn btn-info" type="button" value="연락처 추가하기" th:onclick="|location.href='@{/address/addAddress(listPk=${listPk})}'|">
+			<input class="btn btn-dark" type="button" value="주소록 목록" th:onclick="|location.href='@{/address/addressList}'|">
+			
+		</div>
 
-</div>
+	</div>
 </div>
 </html>

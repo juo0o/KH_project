@@ -28,7 +28,8 @@ function goAddress(){
                		 let str = '';
                		 
                		 for(let myAddress of result){
-						str += `<div><a>${myAddress.bookName}</a></div>`	
+						str += `<div><ul><li><a href="/address/myAddress?listPk=${myAddress.listPk}">${myAddress.bookName}</a></li></ul></div>`	
+							
 							
 						
 					}
@@ -49,41 +50,6 @@ function goAddress(){
 	
 }
 
-//취소 버튼 클릭시
-function cancelbtn(){
-	
-	
-	
-	
-	
-	
-	/* $.ajax({
-               url: '/address/insertAddress', //요청경로
-               type: 'post',
-               data: {},
-//               processData: false,
-//               contentType: false,
-//               cache: false,
-				async: false,
-               success: function(result) {
-               		 alert('aaa');
-               		 
-               		
-               		 
-               		 
-               	
-               },
-               error: function() {
-                  
-                  alert('실패');
-         
-                  
-               }
-            });
-	*/
-}
-
-const deleteModal = document.querySelector('#deleteModal');
 
 //삭제 버튼 클릭시
 function deleteBtn(bookPk,listPk){

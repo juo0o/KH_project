@@ -89,15 +89,7 @@ public class AddressController {
 			
 			//다음에 들어갈 List_pk 값 조회
 			//String listPk = addressService.selectNextListPk();
-			
-			//addressListVO.setListPk(listPk);
-			
-			//model.addAttribute("listPk", listPk);
-			
 			model.addAttribute("myAddressList", addressService.insertAddressList(addressListVO.getBookOwnerId()));
-			
-			
-//			model.addAttribute("addressList", addressService.addressList());
 			
 		
 		return "pages/address/addressList";
@@ -106,11 +98,6 @@ public class AddressController {
 	@ResponseBody
 	@PostMapping("/insertAddress")
 	public List<AddressListVO> insertAddress(AddressListVO addressListVO,AddressVO addressVO,Authentication authentication,Model model) {
-		
-	
-		
-		
-		
 		
 		
 		User user = (User)authentication.getPrincipal();
@@ -128,7 +115,8 @@ public class AddressController {
 	@GetMapping("/myAddress")
 	public String myAddress(String listPk, Model model,String bookPk) {
 		
-		//System.out.println(bookPk);
+	
+		
 		model.addAttribute("myAddressList", addressService.selectListPk(listPk));
 		
 		model.addAttribute("listPk", listPk);
@@ -148,7 +136,9 @@ public class AddressController {
 	//연락처 등록
 	@PostMapping("/regAddress")
 	public String regAddress(String listPk,AddressVO addressVO,Model model) {
+		
 		addressService.regMyAddress(addressVO);
+		
 		return "redirect:/address/myAddress?listPk=" + listPk;
 	}
 	//주소록 수정페이지로 이동
@@ -157,9 +147,7 @@ public class AddressController {
 		
 		model.addAttribute("book", addressService.selectBookPk(bookPk));
 		
-		
 		return "pages/address/updateAddress";
-		
 		
 	}
 	//개인주소록 수정
@@ -169,11 +157,6 @@ public class AddressController {
 		
 		addressService.updateAddress(addressVO);
 		
-		
-		
-		//System.out.println(listPk);
-		//System.out.println(bookPk);
-		
 		return "redirect:/address/myAddress?listPk=" + addressVO.getListPk();
 	}
 	
@@ -181,9 +164,6 @@ public class AddressController {
 	@ResponseBody
 	@PostMapping("/deleteAddress")
 	public void deleteBtn(AddressVO addressVO) {
-		
-		
-		//System.out.println(addressVO);
 		
 		addressService.deleteAddress(addressVO);
 		
