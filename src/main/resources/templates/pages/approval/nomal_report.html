@@ -71,7 +71,7 @@ layout:decorate="~{layout/base_layout}">
 <!-- 									<td>a</td> -->
 										<td
 											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
-											<select name="firstApprovalEmp" style="border: none;">
+											<select name="firstApprovalEmp" style="border: none;text-align: center;">
 												<option th:each="role : ${empRole}"
 													th:value="${role.empNum}" th:text="${role.empName}"
 													th:if="${role.empPosition eq '팀장'}"></option>
@@ -80,7 +80,7 @@ layout:decorate="~{layout/base_layout}">
 										<!-- 부장 -->
 										<td
 											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
-											<select name="finalApprovalEmp" style="border: none;">
+											<select name="finalApprovalEmp" style="border: none;text-align: center;">
 												<option th:each="role : ${empRole}"
 													th:value="${role.empNum}" th:text="${role.empName}"
 													th:if="${role.empPosition eq '부장'}"></option>
@@ -90,8 +90,8 @@ layout:decorate="~{layout/base_layout}">
 								
 								<tr style="border: 1px solid black;">
 <!-- 									<td>a</td> -->
-									<td style="border: 1px solid black;">도장</td>
-									<td style="border: 1px solid black;">도장</td>
+									<td style="border: 1px solid black;"></td>
+									<td style="border: 1px solid black;"></td>
 								</tr>
 							</table>
 							<input type="hidden" value="N" name="firstApproval">
@@ -189,7 +189,7 @@ layout:decorate="~{layout/base_layout}">
 					<tr>
 					<!-- 본문내용 -->
 						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
-							<textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"></textarea>
+							<textarea style="border: none;  resize: none;" cols="161" rows="32" name="nomalContent"></textarea>
 						</td>
 					</tr>
 				</tbody>

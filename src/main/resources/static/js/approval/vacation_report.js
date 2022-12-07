@@ -1,4 +1,4 @@
-//연차수 계싼
+//연차수 계산
 
 var startDate = document.querySelector('#startDate');
 var endDate = document.querySelector('#endDate');

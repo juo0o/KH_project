@@ -21,7 +21,7 @@ function approvalMark(firstApprovalEmp,appSeq) {
 		type: 'post',
 		data: {'firstApprovalEmp':firstApprovalEmp,'appSeq':appSeq}, //필요한 데이터
 		success: function(result) {
-			alert('결재승인 하실라우');
+			alert('결재승인 하시겠습니까?');
 			const mark = document.querySelector('#approvalButton');
 			mark.innerHTML ='';
 			let str = '';
@@ -47,12 +47,12 @@ function approvalFinalMark(finalApprovalEmp,appSeq) {
 		type: 'post',
 		data: {'finalApprovalEmp':finalApprovalEmp,'appSeq':appSeq}, //필요한 데이터
 		success: function(result) {
-			alert('결재승인 하실라우');
+			alert('결재승인 하시겠습니까?');
 			const mark = document.querySelector('#approvalButton2');
 			mark.innerHTML ='';
 			let str = '';
 			
-			str += ' <img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width: 85px;"> ';
+			str += ' <img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg" style="width: 80px;"> ';
 			
 			mark.insertAdjacentHTML('beforeend',str);
 		},

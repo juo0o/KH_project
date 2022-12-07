@@ -98,14 +98,12 @@
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
-													<div>그림</div>
-													<div>그림</div>
+													<div style="height: 50px"></div>
 												</td>
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
-													<div>그림</div>
-													<div>그림</div>
+													<div style="height: 50px"></div>
 												</td>
 											</tr>
 											<tr>
@@ -113,7 +111,7 @@
 											<tr>
 										<td
 											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
-											<select name="firstApprovalEmp" style="border: none;">
+											<select name="firstApprovalEmp" style="border: none;text-align: center;">
 												<option th:each="role : ${empRole}"
 													th:value="${role.empNum}" th:text="${role.empName}"
 													th:if="${role.empPosition eq '팀장'}"></option>
@@ -122,7 +120,7 @@
 										<!-- 부장 -->
 										<td
 											style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
-											<select name="finalApprovalEmp" style="border: none;">
+											<select name="finalApprovalEmp" style="border: none;text-align: center;">
 												<option th:each="role : ${empRole}"
 													th:value="${role.empNum}" th:text="${role.empName}"
 													th:if="${role.empPosition eq '부장'}"></option>
@@ -157,10 +155,10 @@
 							<tbody>
 								<tr>
 									<td colspan="6" class="detailColumn">&nbsp; &nbsp; &nbsp;&nbsp;<span>
-									<input type="radio" class="" id="" value="A" name="accountingCategory"><label class="">세금계산서</label>
-									<input type="radio" id="" value="B" name="accountingCategory"><label>간이영수증</label>
-									<input type="radio" id="" value="C"	name="accountingCategory"><label class="editor_label">신용카드</label>
-									<input type="radio" class="" id="" value="D" name="accountingCategory"><label class="editor_label">기타</label></span>
+									<input type="radio" class="" id="" value="세금계산서" name="accountingCategory"><label class="">세금계산서</label>
+									<input type="radio" id="" value="간이영수증" name="accountingCategory"><label>간이영수증</label>
+									<input type="radio" id="" value="신용카드"	name="accountingCategory"><label class="editor_label">신용카드</label>
+									<input type="radio" class="" id="" value="기타" name="accountingCategory"><label class="editor_label">기타</label></span>
 									</td>
 								</tr>
 								<tr>
@@ -170,24 +168,10 @@
 										<input type="hidden" name="appCateCode" value="ACCOUNTING">
 									</td>
 								</tr>
-								<!-- <tr>
-									<td class="subjectColumn">금 액</td>
-									<td class="detailColumn">&nbsp;
-										<input type="text" class="ipt_editor ipt_editor_num" name="" id="" value="">정
-									</td>
-									<td class="subjectColumn">가 액</td>
-									<td class="detailColumn">\
-										<input type="text" class="ipt_editor ipt_editor_num edit" name="" id="" value="" style="text-align: right;">
-									</td>
-									<td class="subjectColumn">세 액</td>
-									<td class="detailColumn">\
-										<input type="text" class="ipt_editor ipt_editor_num edit" name="A" id="A" value="" style="text-align: right;">
-									</td>
-								</tr> -->
 								<tr>
 									<td class="subjectColumn">금 액</td>
 									<td class="detailColumn">
-											<input style="border: none" type="number" name="amount" id="" value="">&nbsp;
+											<input style="border: none; text-align: right; width: 80px;" type="text" name="amount" id="" value="" onkeyup="inputNumberFormat(this)">원
 									</td>
 									<td class="subjectColumn">사업자<br>등록번호
 									</td>
@@ -212,17 +196,6 @@
 							</colgroup>
 
 							<tbody>
-								<!-- <tr>
-									<td class="subjectColumn">가지급금<br>수령자</td>
-									<td class="detailColumn" style="border-top: 0px;">
-									<input
-										type="text" class="ipt_editor" name="editorForm_13" id="" value="">
-									</td>
-									<td class="subjectColumn" style="border-top: 0px;">지급방법</td>
-									<td class="detailColumn" style="border-top: 0px;">
-										<input type="text" class="ipt_editor" name="editorForm_14" id="" value=""><br>
-									</td>
-								</tr> -->
 								<tr>
 									<td class="subjectColumn">계좌번호</td>
 									<td class="detailColumn">
@@ -379,6 +352,22 @@
 			              }
 			            })
 			         }
+					
+					function inputNumberFormat(obj) {
+					     obj.value = comma(uncomma(obj.value));
+					 }
+
+					 function comma(str) {
+					     str = String(str);
+					     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+					 }
+
+					 function uncomma(str) {
+					     str = String(str);
+					     return str.replace(/[^\d]+/g, '');
+					 }
+					
+					
 			</script>
 </div>
 </html>

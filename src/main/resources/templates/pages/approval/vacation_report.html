@@ -100,14 +100,14 @@
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
-													<div>그림</div>
-													<div>그림</div>
+													<div style="height: 50px">
+													</div>
 												</td>
 												<td
 													style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 													rowspan="2">
-													<div>그림</div>
-													<div>그림</div>
+													<div></div>
+													<div></div>
 												</td>
 											</tr>
 											<tr>
@@ -115,12 +115,12 @@
 											<tr>
 											<!-- 팀장 -->	<td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
 															>
-															<select name="firstApprovalEmp" style="border: none;">
+															<select name="firstApprovalEmp" style="border: none; text-align: center;">
 																<option th:each="role : ${empRole}" th:value="${role.empNum}" th:text="${role.empName}" th:if="${role.empPosition eq '팀장'}"></option>
 															</select>
 														</td>
 											<!-- 부장 --><td	style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">
-															<select name="finalApprovalEmp" style="border: none;">
+															<select name="finalApprovalEmp" style="border: none;text-align: center;">
 																<option th:each="role : ${empRole}" th:value="${role.empNum}" th:text="${role.empName}" th:if="${role.empPosition eq '부장'}"></option>
 															</select>
 														</td>
@@ -196,7 +196,7 @@
 								</span>
 								<span style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;">
 									<b>사용일수 : 
-										<input id="vacationPeriod" name="vacationPeriodDate" value="" style="border: none;"></th:block>
+									<input id="vacationPeriod" name="vacationPeriodDate" value="" style="border: none;"></th:block>
 									 </b> 
 								</span>
 							</td>

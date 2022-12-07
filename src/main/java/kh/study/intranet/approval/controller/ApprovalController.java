@@ -49,18 +49,6 @@ public class ApprovalController {
 	@RequestMapping("/approvalBoard")
 	public String approvalBoard(@RequestParam Map<String, Object> paramMap,Model model, ApprovalVO approvalVO,String appSeqStatus,PageVO pageVO) {
 		
-		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
-		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
-		System.out.println("결재상태 : " + paramMap.get("appSeqStatus"));
-		/*
-		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
-		 * );
-		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
-		 * );
-		 * System.out.println(approvalVO.getReceiveRefVO().setAppSeqStatus(appSeqStatus)
-		 * );
-		 */
-		
 		Map<String, Object> countApp= new HashMap<>();
 		countApp = approvalService.selectAppCount(appSeqStatus);
 		
@@ -223,7 +211,7 @@ public class ApprovalController {
 		
 		
 		
-		
+		//휴가신청서 조회,승인페이지
 		
 		if(approvalVO.getAppCateCode().equals("VACATION")) {
 			approvalVO.setTable("APP_FORM_VACATION");
@@ -236,7 +224,7 @@ public class ApprovalController {
 			
 			return "pages/approval/vacation_requestPage";
 			
-			
+		//일반품의서 조회,승인페이지	
 		}else if(approvalVO.getAppCateCode().equals("NOMAL")) {
 			approvalVO.setTable("APP_FORM_NOMAL");
 			ApprovalVO document = approvalService.appDocuments(approvalVO);
@@ -246,7 +234,7 @@ public class ApprovalController {
 			
 			return "pages/approval/nomal_requestPage";
 			
-			
+		//회계품의서 조회,승인페이지	
 		}else if(approvalVO.getAppCateCode().equals("ACCOUNTING")) {
 			approvalVO.setTable("APP_FORM_ACCOUNTING");
 			ApprovalVO document = approvalService.appDocuments(approvalVO);
@@ -271,29 +259,16 @@ public class ApprovalController {
 		
 	UserVO userVO= (UserVO)session.getAttribute("userInfoAll");
 		
+		//세션에서 뽑은 포지션 데이터 맵에 넣기
 		map.put("empPosition", userVO.getEmpPosition());
+		//세션에서 뽑은 사원번호 데이터 맵에 넣기
 		map.put("empNum", userVO.getEmpNum());
 		
-		
-		System.out.println(map.get("empPosition"));
-		System.out.println(map.get("empPosition"));
-		System.out.println(map.get("empPosition"));
-		System.out.println();
-		System.out.println(map.get("empNum"));
-		System.out.println(map.get("empNum"));
-		System.out.println(map.get("empNum"));
-	   
-	  
 	   
 	   List<ApprovalVO> reciveList = approvalService.selectReceiveApp(map);
 	   
 		int totalDateCnt = reciveList.size();
 		
-		System.out.println(totalDateCnt);
-		System.out.println(totalDateCnt);
-		System.out.println(totalDateCnt);
-		System.out.println(totalDateCnt);
-		System.out.println(totalDateCnt);
 	   //전체 데이터 수
 	 	pageVO.setTotalDataCnt(totalDateCnt);
 		//실행

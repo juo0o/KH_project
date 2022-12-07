@@ -104,10 +104,10 @@
 														</span>
 													</th:block>
 													<th:block th:unless="${#authentication.name eq ref.FIRST_USER_ID}"  style="height: 60px;">
-														<span style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'Y'}">
+														<span  id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'Y'}">
 															<img src="/imgs/approval/thumb_d_B7B18BFBE0353B3F8C77E8006E453562.jpg"	style="width: 80px;">
 														</span>
-														<span style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'N'}"></span>
+														<span  id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'N'}"></span>
 													</th:block>
 												</td>
 												<td
@@ -148,29 +148,6 @@
 							</tbody>
 						</table> 
 						<br>
-					<!-- 	<table class="__se_tbl" style="background: white; border: 0px solid black; border-image: none; color: black; font-family: malgun gothic, dotum, arial, tahoma; font-size: 12px; border-collapse: collapse !important; float:right;" >
-								<tr>
-									<td
-										style="background: rgb(221, 221, 221); padding: 3px !important; border: 1px solid black; border-image: none; width: 20px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-										rowspan="4">승인</td>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">대표이사</td>
-								</tr>
-								<tr>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;"
-										rowspan="2">
-										<div>그림</div>
-										<div>승인자</div>
-									</td>
-								</tr>
-								<tr>
-								</tr>
-								<tr>
-									<td
-										style="padding: 3px !important; border: 1px solid black; border-image: none; width: 100px; height: 22px; text-align: center; font-weight: bold; vertical-align: middle;">승인날짜</td>
-								</tr>
-						</table>  -->
 					</div>
 					<br>
 				<div>
@@ -207,7 +184,7 @@
 								<span th:text="${document.vacationVO.vacationEndDate}"></span>
 								<span style="line-height: normal; font-family: malgun gothic, dotum, arial, tahoma; font-size: 9pt; margin-top: 0px; margin-bottom: 0px;">
 									<b>사용일수 : </b> 
-									<span class="editor_num" data-type="num" th:text="${document.vacationVO.vacationPeriodDate}"></span> 
+									<span  style="font-weight: 800" class="editor_num" data-type="num" th:text="${document.vacationVO.vacationPeriodDate}"></span> 
 								</span>
 							</td>
 						</tr>
@@ -220,12 +197,6 @@
 								<!-- 휴가사유칸 -->
 							</td>	
 								
-							<!-- <td
-								style="background: rgb(255, 255, 255); padding: 3px; border: 1px solid black; border-image: none; width: 700px; height: 100px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; vertical-align: top;">
-								<span>
-									
-								</span>
-							</td> -->
 						</tr>
 						<tr>
 							<td

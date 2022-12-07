@@ -21,16 +21,6 @@
 						<td style="padding: 3px; border: 1px solid black; height: 140px !important; font-size: 27px; font-weight: bold; text-align: center; vertical-align: middle;" colspan="2">
 							품 &nbsp;의 &nbsp;서
 						</td>
-<!-- 						<td> -->
-<!-- 							<div class="row" style="background-color: blue;"> -->
-							
-<!-- 								<div class="col-3"> aa</div> -->
-<!-- 								<div class="col-3">bb</div> -->
-<!-- 								<div class="col-3"> cc</div> -->
-<!-- 								<div class="col-3">dd</div> -->
-
-<!-- 							</div> -->
-<!-- 						</td> -->
 						<td></td>
 						<td></td>
 						<td colspan="2" >
@@ -129,7 +119,6 @@
 							문서번호
 						</td>
 						<td rowspan="2" style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-size: 12px;">
-							<!-- <input type="hidden" th:value="${appSeq.appSeq}" name="appSeq"> -->
 							<span th:text="${document.appSeq}"></span>
 						</td>
 					</tr>
@@ -141,22 +130,9 @@
 							<span th:text="${document.empVO.empName}"></span>
 						</td>
 						
-						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
-							보존년한
-						</td> -->
-						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<span>[보존연한]</span>
-						</td> -->
-						
-						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: center; font-weight: bold;">
-							문서종류
-						</td> -->
-						<!-- <td style="padding: 3px; height: 20px; vertical-align: middle; border: 1px solid black; text-align: left;">
-							<span>[문서종류]</span>
-						</td> -->
 					</tr>
 				</tbody>
-			</table> <!-- 문서 헤더 끝--> <!-- 마진 시작-->
+			</table> 
 		</div>
 			<table
 				style="width: 1000px; border-collapse: collapse; border-spacing: 0px; border: 1px solid black;">
@@ -168,7 +144,7 @@
 						</td>
 					</tr>
 				</tbody>
-			</table> <!-- 마진 끝 --> 
+			</table> 
 			
 			
 			
@@ -189,7 +165,6 @@
 						</td>
 						<td>
 							<span th:text="${document.title}"></span>
-							<!-- <input style="border: none; width:900px;" type="text" name="title" value=""> -->
 						</td>
 							
 					</tr>
@@ -198,7 +173,6 @@
 					<!-- 본문내용 -->
 						<td style="padding: 3px; height: 540px; vertical-align: top; border: 1px solid black;" colspan="2">
 							<span th:text="${document.nomalVO.nomalContent}"></span>
-							<!-- <textarea style="border: none;  resize: none;" cols="161" rows="29" name="nomalContent"></textarea> -->
 						</td>
 					</tr>
 				</tbody>

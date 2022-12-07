@@ -91,13 +91,14 @@
 		<result column="EMP_HIRE_DATE" 		property="empHireDate"/>
 	</resultMap>
 	
+	<!-- 문서번호,기안일 자동생성  -->
 	<select id="getAppSeq" resultMap="approval">
 		SELECT (SELECT 'APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(APP_SEQ, 5))), 0) + 1, 3, 0) FROM APPROVAL) APP_SEQ
         ,TO_CHAR(SYSDATE,'YYYY-MM-DD') AS APP_WRITE_DATE
 		FROM DUAL
 	</select>
 	
-	
+	<!-- 로그인한 유저 조회 -->
 	<select id="selectAppEmp" resultMap="empMapper.emp">
 		SELECT EMP_NAME
 			, EMP.DEPT_NAME
@@ -106,6 +107,7 @@
 		AND USER_ID = #{userId}
 	</select>
 	
+	<!-- 승인칸 팀장,부장들 조회 -->
 	<select id="selectRole" resultMap="empMapper.emp">
 		SELECT EMP_ROLE, EMP_NAME, EMP_POSITION, EMP_NUM
 		FROM EMP
@@ -113,6 +115,7 @@
 		OR EMP.EMP_POSITION= '부장'
 	</select>
 	
+	<!-- 품의서 등록 -->
 	<insert id="insertApproval">
 		INSERT INTO APPROVAL(
 			APP_SEQ
@@ -127,6 +130,7 @@
 		)
 	</insert>
 	
+	<!-- 휴가신청서 등록 -->
 	<insert id="insertVacation">
 		<selectKey resultType="String" keyProperty="vacationSeq" order="BEFORE">
 			SELECT 'VACATION_APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(VACATION_SEQ, 14))), 0) + 1, 3, 0) 
@@ -151,6 +155,7 @@
 		)
 	</insert>
 	
+	<!-- 기안서 등록 -->
 	<insert id="insertNomal">
 		<selectKey resultType="String" keyProperty="nomalSeq" order="BEFORE">
 			SELECT 'NOMAL_APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(NOMAL_SEQ, 11))), 0) + 1, 3, 0) 
@@ -169,6 +174,7 @@
 		)
 	</insert>
 	
+	<!-- 회계품의서 등록 -->
 	<insert id="insertAccounting">
 		<selectKey resultType="String" keyProperty="accountingSeq" order="BEFORE">
 			SELECT 'ACCOUNTING_APP_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ACCOUNTING_SEQ, 16))), 0) + 1, 3, 0) 
@@ -200,7 +206,7 @@
 			, #{userId}
 		)
 	</insert>
-	
+	<!-- 결재선 등록 -->
 	<insert id="insertReceiveRef">
 		<selectKey resultType="String" keyProperty="receiveRefNum" order="BEFORE">
 			SELECT 'RECEIVE_REF_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RECEIVE_REF_NUM, 13))), 0) + 1, 3, 0) 
@@ -227,6 +233,7 @@
 		)
 	</insert>
 	
+	<!-- 신성처 조회 + 검색기능 -->
 	<select id="selectApp" resultMap="approval">
       SELECT RN
          , APP_SEQ
@@ -280,10 +287,9 @@
       <if test ="startNum !=null and endNum != null">
         WHERE RN &gt;= #{startNum} AND RN &lt;= #{endNum}
         </if>
-      
-      
    </select>
 	
+	<!-- 기안서 리스트 조회 -->
 	<select id="selectBoxList" resultMap="approval"> 
 		SELECT DISTINCT APP_CATE_NAME, APPROVAL.APP_CATE_CODE
 		FROM APPROVAL,APP_CATEGORY
@@ -291,6 +297,7 @@
 		<!-- DISTINCT -->
 	</select> 
 	
+	<!-- 기안서별 조회 -->
 	<select id="appDocuments" resultMap="approval">
       SELECT *
       FROM APPROVAL APP, EMP , ${table}
@@ -299,6 +306,7 @@
       AND APP.APP_SEQ = #{appSeq}
    </select>
 	
+	<!-- 결재권자 조회  -->
 	<select id="selectReciveRef" resultType="hashmap">
 		SELECT FIRST_APPROVAL
 		 	, FINAL_APPROVAL
@@ -314,6 +322,7 @@
 		WHERE APP_SEQ = #{appSeq}
 	</select>
 	
+	<!-- 첫번쨰 승인 클릭시 업데이트 -->
 	<update id="updateApproval">
 		UPDATE APP_RECEIVE_REF
 			SET FIRST_APPROVAL = 'Y'
@@ -321,6 +330,7 @@
 		WHERE FIRST_APPROVAL_EMP = #{firstApprovalEmp}
         AND APP_SEQ = #{appSeq}
 	</update> 
+	<!-- 두번쨰 승인 클릭시 업데이트 -->
 	<update id="updateFinalApproval">
 		UPDATE APP_RECEIVE_REF
 			SET FINAL_APPROVAL = 'Y'
@@ -328,7 +338,7 @@
 		WHERE FINAL_APPROVAL_EMP = #{finalApprovalEmp}
         AND APP_SEQ = #{appSeq}
 	</update> 
-	
+	<!-- 결재진행별 카운트 조회 -->
 	<select id="selectAppCount" resultType="hashmap">
 		SELECT DISTINCT (SELECT COUNT(APP_SEQ_STATUS) FROM APP_RECEIVE_REF 
 				WHERE APP_SEQ_STATUS = '결재대기') AS SEQ_STATUS_ONE
@@ -340,6 +350,7 @@
 		
 	</select>
 	
+	<!-- 결재권자 결재문서함 -->
 	<select id="selectReceiveApp" resultMap="approval">
 		SELECT ROWNUM AS RN
         	 , APP_SEQ
@@ -388,11 +399,4 @@
        </if>
 	</select>
 </mapper>
-
-	
-
-
-<!--  -->
-
-
 

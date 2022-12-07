@@ -41,9 +41,9 @@
 		</div>
 	</div>
 	<br>
-	<div>
+	<div style="text-align: center;">
 		<form th:action="@{/approval/approvalBoard}" method="post">
-		<table class="table align-middle table-bordered text-center test">
+		<table class="table align-middle table-bordered text-center">
 			<colgroup>
 				<col width="8%">
 				<col width="8%">
@@ -56,10 +56,10 @@
 				<col width="8%">
 			</colgroup>
 			<tr>
-				<td rowspan="2">
-					<div class="row">
-						<div class="col-12">검 색</div>
-					</div>
+				<td rowspan="2" align="center">
+						<br>
+						검 색<br>
+						조 건
 				</td>
 				<td class="searchTitle">기안서</td>
 				<td><select class="form-select" name="appCateCode" style="border: none;">
@@ -73,14 +73,14 @@
 				<td colspan="2"><input class="form-control" type="text"
 					name="title" id="" th:value="${paramMap['title']}">
 				</td>
-				<td class="searchTitle">사원</td>
+				<td class="searchTitle">사원명</td>
 				<td><input class="form-control" type="text" name="empName"
 					id="" th:value="${paramMap['empName']}"></td>
 				<td rowspan="2">
 					<button type="submit" id="searchButton"  class="btn btn-outline-info" style="height: 90px;">검색</button>
 				</td>
 			</tr>
-			<tr>
+			<tr style="text-align: center;">
 				<td class="searchTitle">기안일</td>
 				<td colspan="3">
 					<div class="row">
@@ -125,7 +125,7 @@
 	<div>결재 수신목록 &nbsp;&nbsp;
 	</div>
 	<div>
-		<table class="table">
+		<table class="table  table-hover">
 			<thead>
 				<tr bordercolor="sold 1px;">
 					<th scope="col">문서번호</th>
