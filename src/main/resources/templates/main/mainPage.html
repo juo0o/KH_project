@@ -43,13 +43,26 @@ layout:decorate="~{layout/base_layout}">
 										 
 										 <div class="row">
 										 	<div class="col text-left m-1">
-										 		오늘일정
+										 		부서
+										 	</div>
+										 	<div class="col text-right m-1">
+										 		<span th:text="${userInfo.deptName}"></span>
 										 	</div>
 										 </div>
 										 
 										 <div class="row">
 										 	<div class="col text-left m-1">
-										 		결재할문서
+										 		결재 받을 문서
+										 	</div>
+										 	<div class="col right m-1">
+										 		<span th:text="${documentsFromBeApprov.size}"></span>
+										 		개
+										 	</div>
+										 </div>
+										 
+										 <div class="row">
+										 	<div class="col text-left m-1">
+										 		결재 할 문서
 										 	</div>
 										 	<div class="col right m-1">
 										 		<span th:text="${documentsToBeApproved.size}"></span>
@@ -57,11 +70,6 @@ layout:decorate="~{layout/base_layout}">
 										 	</div>
 										 </div>
 										 
-										 <div class="row">
-										 	<div class="col text-left m-1">
-										 	aaaa
-										 	</div>
-										 </div>
 	                                </div>
 	                            </div>
                 			</div>
@@ -213,20 +221,19 @@ layout:decorate="~{layout/base_layout}">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div>
-                                            	<table class="table table-striped" style=" width: 350px; height: 200px;" >
+                                            	<table class="table table-striped" style=" width: 350px; height: 160px;" >
 													<colgroup>
-														<col width="10%">
-														<col width="30%">
-														<col width="30%">
+														<col width="40%">
+														<col width="60%">
 													</colgroup>
 													<tr>
 														<td>NO</td>
 														<td>채팅방이름</td>
-														<td>최근채팅시간</td>
+<!-- 														<td>최근채팅시간</td> -->
 													</tr>
 													<tr th:each="chatRoom : ${chatRoomList}">
 														<td th:text="${chatRoomStat.count}"></td>
-														<td><a th:href="|/chat/chat_room?roomName=${chatRoom.roomName}&roomId=${chatRoom.roomId}|">[[${chatRoom.roomName}]]</a></td>
+<!-- 														<td><a th:href="|/chat/chat_room?roomName=${chatRoom.roomName}&roomId=${chatRoom.roomId}|">[[${chatRoom.roomName}]]</a></td> -->
 														<td>
 															<a th:onclick="openWindow([[${chatRoom.roomName}]],[[${chatRoom.roomId}]])" style="cursor:hand;">[[${chatRoom.roomName}]]</a>
 														</td>
@@ -246,13 +253,50 @@ layout:decorate="~{layout/base_layout}">
                         </div>
                         
                         
-                        <!-- 결재문서 -->
-                			<div class="col-xl-12" >
+                        
+                        <!-- 결재할문서 -->
+                			<div class="col-xl-6" >
+	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
+	                            	<div class="card-header py-3">
+	                                    <h6 class="m-0 font-weight-bold text-primary">결재 받을 문서</h6>
+	                                </div>
+	                               
+	                                <div class="card-body" align="center">
+
+			   							 <table class="table">
+											<thead>
+												<tr bordercolor="sold 1px;">
+												<th scope="col">문서번호</th>
+													<th scope="col">기안자</th>
+													<th scope="col">제목</th>
+													<th scope="col">기안서</th>
+													<th scope="col">기안부서</th>
+													<th scope="col">기안일</th>
+												</tr>
+											</thead>
+											<tbody id="appList">
+												<tr  th:each="appFrom : ${documentsFromBeApprov}" th:onclick="requestApproval([[${appFrom.appSeq}]],[[${appFrom.appCateCode}]]);">
+													<td th:text="${appFrom.appSeq}">@mdo</td>
+													<td th:text="${appFrom.empVO.empName}">@mdo</td>
+													<td th:text="${appFrom.title}">Otto</td>
+													<td th:text="${appFrom.appCategoryVO.appCateName}">Otto</td>
+													<td th:text="${appFrom.empVO.deptName}">Otto</td>
+													<td th:text="${appFrom.appWriteDate}">Mark</td>
+												</tr>
+											</tbody>
+										</table>
+	                                </div>
+	                            </div>
+                			</div>
+                        
+                        
+                        
+                        <!-- 결재받을문서 -->
+                			<div class="col-xl-6" >
 	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
 	                            	<div class="card-header py-3">
 	                                    <h6 class="m-0 font-weight-bold text-primary">결재할 문서</h6>
 	                                </div>
-	                               
 	                                <div class="card-body" align="center">
 
 			   							 <table class="table">
@@ -284,12 +328,11 @@ layout:decorate="~{layout/base_layout}">
 													location.href='/approval/appDocuments?appSeq=' + appSeq + '&appCateCode=' + appCateCode;
 											}
 			   							 </script>
-			   							 
-			   							 
-			   							 
 	                                </div>
 	                            </div>
                 			</div>
+                			
+                		
                         
 
     

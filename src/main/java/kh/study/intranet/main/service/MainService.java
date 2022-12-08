@@ -18,4 +18,7 @@ public interface MainService {
 	//결재해야할 문서 조회
 	List<ApprovalVO> documentsToBeApproved(UserVO userVO);
 	
+	//결재받을 문서 조회
+	List<ApprovalVO> documentsFromBeApprov(UserVO userVO);
+	
 }

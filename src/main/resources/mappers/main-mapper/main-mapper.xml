@@ -154,6 +154,7 @@
 	
 <!-- 	</select> -->
 	
+	<!-- 결재받을문서 -->
 	<select id="documentsToBeApproved" resultMap="approval">
 		SELECT APP.APP_SEQ
 		       , TO_CHAR(APP_WRITE_DATE, 'YY-MM-DD') AS APP_WRITE_DATE
@@ -175,8 +176,29 @@
 			    (FINAL_APPROVAL_EMP = (SELECT EMP_NUM FROM EMP WHERE USER_ID = #{userId}) AND FINAL_APPROVAL = 'N')  
 			) 
 			ORDER BY APP.APP_SEQ DESC
-	
 	</select>
+	
+	<!-- 결재할 문서 -->
+	<select id="documentsFromBeApprov" resultMap="approval">
+		SELECT APP.APP_SEQ
+			       , TO_CHAR(APP_WRITE_DATE, 'YY-MM-DD') AS APP_WRITE_DATE
+			       , EMP.USER_ID
+	               , EMP.EMP_NAME
+	               , EMP.DEPT_NAME
+			       , TITLE
+			       , CATE.APP_CATE_NAME
+			       , APP.APP_CATE_CODE 
+		FROM APPROVAL APP, APP_RECEIVE_REF REF, EMP, APP_CATEGORY CATE
+			WHERE APP.APP_SEQ = REF.APP_SEQ
+	        AND APP.USER_ID = EMP.USER_ID
+	        AND APP.APP_CATE_CODE = CATE.APP_CATE_CODE
+			AND APP.USER_ID = #{userId}
+            AND ( FIRST_APPROVAL = 'Y' OR FINAL_APPROVAL = 'Y')
+			ORDER BY APP.APP_SEQ DESC
+	</select>
+	
+	
+	
 </mapper>
 
 

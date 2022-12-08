@@ -34,5 +34,11 @@ public class MainServiceImpl implements MainService {
 		return sqlSession.selectList("mainMapper.documentsToBeApproved", userVO);
 	}
 
+	@Override
+	public List<ApprovalVO> documentsFromBeApprov(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("mainMapper.documentsFromBeApprov", userVO);
+	}
+
 
 }

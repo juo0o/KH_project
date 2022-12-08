@@ -52,6 +52,8 @@ public class MainController {
 		model.addAttribute("noticeBoard", mainService.noticeBoard());
 		
 		
+		//결재 받을 문서 개수
+		model.addAttribute("documentsFromBeApprov", mainService.documentsFromBeApprov(userVO));
 		
 		//최근 결재할 문서목록 보여줌
 		model.addAttribute("documentsToBeApproved", mainService.documentsToBeApproved(userVO));
@@ -60,6 +62,12 @@ public class MainController {
 		//채팅방 목록 내보내준다.
 		model.addAttribute("chatRoomList", chatService.selectChatRoomList());
 		return "/main/mainPage";
+	}
+	
+	@RequestMapping("/accessDenied")
+	public String accessDenied() {
+		
+		return "/main/accessDenied";
 	}
 	
 	@RequestMapping("/index")

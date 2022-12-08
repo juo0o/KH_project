@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorate="~{layout/base_layout}">
+
+
+	<div layout:fragment="content" align="center">
+		
+		<script type="text/javascript">
+		
+			alert("권한이없습니다.");
+			location.href = "/main/mainPage";
+		</script>
+	</div>
+</html>

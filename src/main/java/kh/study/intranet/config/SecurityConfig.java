@@ -65,9 +65,8 @@ public class SecurityConfig {
 					.logoutUrl("/user/logout")
 					.invalidateHttpSession(true)
 					.logoutSuccessUrl("/user/login")
-				
-				//.and()						나중에 추가해볼까
-				//.exceptionHandling().accessDeniedPage("/accessDenied"); 권한없을때
+				.and()					//	나중에 추가해볼까
+				.exceptionHandling().accessDeniedPage("/main/accessDenied"); // 권한없을때
 				;
 		
 		return security.build();
