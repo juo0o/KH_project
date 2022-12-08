@@ -55,6 +55,26 @@ public class UserController {
 	}
 	
 	
+	//아이디 중복확인
+	@ResponseBody
+	@RequestMapping("/confirmId")
+	public boolean confirmId(UserVO userVO) {
+		UserVO userInfo = 	userService.selectUserInfo(userVO);
+		
+		System.out.println("!!!!!!!!!!!!!!!!!컨트롤러 옴?????");
+		
+		System.out.println("user~~~~ :  "+ userInfo);
+		if(userInfo == null) {
+			System.out.println("null");
+			return true;
+		}
+		else {
+			System.out.println("not null");
+			return false;
+		}
+	}
+	
+	
 	// @Valid : post로 전달된 데이터가 검증 규칙을 따르는지 확인
 	// @BindingResult : 검증대상 객체와 검증 결과에 대한 정보를 담고 있는 객체
 	//					검증 객체 바로 다음 순서에 선언되어야 한다......
