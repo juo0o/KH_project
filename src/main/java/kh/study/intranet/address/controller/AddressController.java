@@ -160,7 +160,7 @@ public class AddressController {
 		return "redirect:/address/myAddress?listPk=" + addressVO.getListPk();
 	}
 	
-	//삭제 버튼 ajax
+	//수정화면에서 내가 등록한 주소록 삭제 버튼 ajax
 	@ResponseBody
 	@PostMapping("/deleteAddress")
 	public void deleteBtn(AddressVO addressVO) {
@@ -168,6 +168,18 @@ public class AddressController {
 		addressService.deleteAddress(addressVO);
 		
 	}
+	
+	
+	//개인 주소록 삭제
+	@ResponseBody
+	@PostMapping("/deleteAddressList")
+	public void deleteAddressList(String listPk) {
+		
+		System.out.println(listPk);
+		addressService.deleteAddressList(listPk);
+		
+	}
+	
 	
 	
 	

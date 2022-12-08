@@ -73,6 +73,12 @@ public class AddressServiceImpl implements AddressService{
 		return sqlSession.selectOne("addressMapper.selectNextListPk");
 	}
 
+	@Override
+	public void deleteAddressList(String listPk) {
+		sqlSession.delete("addressMapper.deleteAddressList",listPk);
+		
+	}
+
 	
 	
 }

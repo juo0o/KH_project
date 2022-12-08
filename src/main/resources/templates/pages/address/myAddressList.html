@@ -56,12 +56,15 @@
 					</tbody>
 					
 				</table>
-		<div style="text-align: center;">
+		<div style="text-align: center;" id="myBtn">
 			<input class="btn btn-info" type="button" value="연락처 추가하기" th:onclick="|location.href='@{/address/addAddress(listPk=${listPk})}'|">
 			<input class="btn btn-dark" type="button" value="주소록 목록" th:onclick="|location.href='@{/address/addressList}'|">
 			
 		</div>
 
 	</div>
+	
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="../js/address/address.js"></script>	
 </div>
 </html>

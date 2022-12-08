@@ -27,6 +27,8 @@ public interface AddressService {
 	//다음에 들어갈 List_pk 조회
 	String selectNextListPk();
 	
+	void deleteAddressList(String listPk);
+	
 	
 	
 }

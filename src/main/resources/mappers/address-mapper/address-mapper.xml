@@ -169,8 +169,15 @@
 	WHERE BOOK_PK = #{bookPk}
 	
 	
+	</delete>
+	
+	<delete id="deleteAddressList">
+	DELETE ADDRESS_BOOK_LIST
+	WHERE LIST_PK = #{listPk}
 	
 	</delete>
+	
+	
 	
 </mapper>
 
