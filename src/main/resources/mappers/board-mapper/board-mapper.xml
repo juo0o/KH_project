@@ -131,7 +131,7 @@
 	
 	<!--게시글 검색 및 조회  -->
 	<select id="selectBoardListAndSearch" resultMap="board">
-	
+		
 		SELECT RN
 				, BOARD_NUM
 				, BOARD_TITLE
@@ -204,7 +204,7 @@
 	        <if test ="startNum !=null and endNum != null">
 	        WHERE RN &gt;= #{startNum} AND RN &lt;= #{endNum}
 	        </if>
-	
+	        
 	</select>
 	
 	<!-- 게시판카테고리조회 -->
@@ -214,15 +214,12 @@
 				, BOARD_CATE_NAME
 		FROM BOARD_CATEGORY  
 		ORDER BY BOARD_CATE_CODE 
+	
 	</select>
 	
-	
-	
-	
-	
-
 	<!-- 게시글 상세조회 -->
 	<select id="selectBoardDetail" resultMap="board">
+		
 		SELECT BOARD_NUM
 				, BOARD_TITLE 
 				, BOARD_CONTENT
@@ -241,10 +238,12 @@
                    WHERE USER_ID = BOARD.USER_ID) AS EMP_NAME
 		FROM BOARD  
 		WHERE BOARD_NUM = #{boardNum}
+	
 	</select>
 	
 	<!-- 게시글 등록 -->
 	<insert id="insertBoard">
+		
 		INSERT INTO BOARD (
 			BOARD_NUM
 			, USER_ID
@@ -252,7 +251,6 @@
 			, BOARD_CONTENT
 			, BOARD_CATE_CODE
 			, IS_SECRET
-			<!-- , SECRET_PW -->
 
 		) VALUES (
 			(SELECT NVL(MAX(BOARD_NUM),0)+1 FROM BOARD)
@@ -261,44 +259,45 @@
 			, #{boardContent}
 			, #{boardCateCode}
 			, #{isSecret}
-		    <!-- , #{secretPw} -->
 		)
+	
 	</insert>
 	
 	<!-- 게시글 수정 -->
 	<update id="updateBoard">
+	
 	UPDATE BOARD
 	SET	BOARD_TITLE = #{boardTitle}
-		, BOARD_CONTENT = #{boardContent}
+	  	, BOARD_CONTENT = #{boardContent}
+	
 	WHERE BOARD_NUM = #{boardNum}
+	
 	</update>
 	
 	<!--게시글 삭제  -->
 	<delete id="deleteBoard">
+	
 	DELETE FROM BOARD WHERE BOARD_NUM = #{boardNum}
+	
 	</delete>
 	
 	
 	<!-- 게시글 조회수증가 -->
 	<update id="updateReadCnt">
+		
 		UPDATE BOARD
 		SET BOARD_READ_CNT = BOARD_READ_CNT + 1 
 		WHERE BOARD_NUM = #{boardNum}
+	
 	</update>
 	
 	<!-- 게시글 총 개수 조회 -->
 	<select id="selectBoardCnt" resultType="int">
+		
 		SELECT COUNT(BOARD_NUM)
 		FROM BOARD
+	
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
 	
 </mapper>
 

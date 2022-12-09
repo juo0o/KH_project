@@ -22,13 +22,4 @@ public class BoardLikeServiceImpl implements BoardLikeService {
 	public void insertLike(BoardLikeVO boardLikeVO) {
 		sqlSession.insert("boardLikeMapper.insertLike", boardLikeVO);
 	}
-
-
-
-	
-	
-
-	
-	
-	
 }

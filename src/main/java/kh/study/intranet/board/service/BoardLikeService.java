@@ -9,6 +9,4 @@ public interface BoardLikeService {
 
 	//좋아요 버튼 클릭
 	void insertLike(BoardLikeVO boardLikeVO);
-	
-	
 }

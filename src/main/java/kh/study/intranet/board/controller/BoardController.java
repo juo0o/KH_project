@@ -1,8 +1,12 @@
 package kh.study.intranet.board.controller;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -41,17 +45,10 @@ public class BoardController {
 	// 게시글 목록 조회
 	@RequestMapping("/boardList")
 	public String boardList(@RequestParam Map<String, Object> paramMap, PageVO pageVO, Model model, Authentication authentication) {
-
-		
-		System.out.println("!!!!!!!" + paramMap.get("orderBy"));
 		
 		if(paramMap.get("orderBy") == null || paramMap.get("orderBy") =="") {
 			paramMap.put("orderBy", "BOARD_NUM");
 		}
-
-		//id확인
-//		User user = (User)authentication.getPrincipal();
-//		boardVO.setUserId(user.getUsername());
 		
 		//map에 날짜 세팅
 		// 현재 날짜
@@ -69,17 +66,10 @@ public class BoardController {
 		//조건검색결과 데이터 수
 		int totalDateCnt = boardService.selectBoardListAndSearch(paramMap).size();
 		
-		
-		
 		//검색결과 전체데이터 수 넣어준다.
 		pageVO.setTotalDataCnt(totalDateCnt);
 		//실행
 		pageVO.setPageInfo();
-		
-		System.out.println(pageVO);
-		System.out.println(pageVO);
-		System.out.println(pageVO);
-		
 		
 		// 페이징에 따라 조회될 데이터를 넣어준다.
 		paramMap.put("startNum",pageVO.getStartNum());
@@ -87,8 +77,6 @@ public class BoardController {
 		
 		//map 보내줌
 		model.addAttribute("paramMap", paramMap);
-		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!cateCode = " + paramMap.get("boardCateCode"));
 		
 		//게시판 카테고리조회
 		model.addAttribute("boardCate", boardService.selectBoardCate());
@@ -105,20 +93,16 @@ public class BoardController {
 		//페이징처리 vo보내줌
 		model.addAttribute("pageVO", pageVO);
 		
-		
-		
-
 		return "pages/board/board_list";
 	}
 	
-	
-
-	
-	
 	// 상세 게시글 조회
 	@GetMapping("/boardDetail")
-	public String boardDetail(int boardNum,String aaa, ReplyVO replyVO, BoardLikeVO boardLikeVO, Authentication authentication , Model model) {
-	    
+	public String boardDetail(int boardNum, ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response, BoardLikeVO boardLikeVO, Authentication authentication , Model model) {
+		
+		
+		
+		
 		// 게시글 상세 조회
 		model.addAttribute("detail", boardService.boardDetail(boardNum));
 
@@ -143,9 +127,36 @@ public class BoardController {
 			model.addAttribute("like", true);
 		}
 		
+		Cookie oldCookie = null;
+		
+		Cookie[] cookies = request.getCookies();
+		
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("postView")) {
+					oldCookie = cookie;
+				}
+			}
+		}
+		
+		if(oldCookie != null) {
+			if(!oldCookie.getValue().contains("[" + boardNum + "]")) {
+				boardService.boardDetail(boardNum);
+				oldCookie.setValue(oldCookie.getValue() + "_[" + boardNum + "]");
+				oldCookie.setPath("/");
+				oldCookie.setMaxAge(60*60*24);
+				response.addCookie(oldCookie);
+				
+			}
+		} else {
+			boardService.boardDetail(boardNum);
+			Cookie newCookie = new Cookie("postView", "[" + boardNum + "]");
+			newCookie.setPath("/");
+			newCookie.setMaxAge(60*60*24);
+			response.addCookie(newCookie);
+		}
 		
 		return "pages/board/board_detail";
-		
 	}
 	
 	//게시글 좋아요 기능
@@ -155,7 +166,6 @@ public class BoardController {
 		//id확인
 		User user = (User)authentication.getPrincipal();
 		boardLikeVO.setUserId(user.getUsername());
-		
 		
 		boardLikeService.insertLike(boardLikeVO);
 		
@@ -175,16 +185,17 @@ public class BoardController {
 		
 		return result;
 	}
-	
 
 	// 댓글 등록
 	@PostMapping("/regReply")
 	public String regReply(ReplyVO replyVO, Authentication authentication) {
+		
 		// userId
 		User user = (User) authentication.getPrincipal();
 		replyVO.setUserId(user.getUsername());
 
 		replyService.regReply(replyVO);
+		
 		return "redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
 	}
 	
@@ -192,29 +203,23 @@ public class BoardController {
 	@PostMapping("/updateReply")
 	public String updateReply(ReplyVO replyVO) {
 		
-		
 		replyService.updateReply(replyVO);
+		
 		return	"redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
 	}
-	
 	
 	// 댓글 삭제
 	@GetMapping("/deleteReply")
 	public String deleteReply(ReplyVO replyVO) {
+		
 		replyService.deleteReply(replyVO);
+		
 		return "redirect:/board/boardDetail?boardNum=" + replyVO.getBoardNum();
 	}
-
-
-
-//-------------------------------------	
 
 	// 게시글 등록 페이지로이동
 	@GetMapping("/regBoardForm")
 	public String regBoardForm(BoardVO boardVO, Model model) {
-		//boardcategory 테이블에서 카테고리 싹다 조회해
-		//리스트 model로 html로 보내서
-		// select박스 그려준다. 이름은 cateName value= catecode  
 
 		model.addAttribute("boardCate", boardService.selectBoardCate()); 
 		
@@ -228,7 +233,6 @@ public class BoardController {
 		// 아이디 호출
 		User user = (User) authentication.getPrincipal();
 		boardVO.setUserId(user.getUsername());
-
 	
 		// 게시글 등록메소드 실행
 		boardService.regBoard(boardVO);
@@ -236,7 +240,6 @@ public class BoardController {
 		
 		return "redirect:/board/boardList";
 	}
-//--------------------------------
 
 	// 게시글 수정페이지로 이동
 	@GetMapping("/updateBoardForm")
@@ -258,7 +261,4 @@ public class BoardController {
 		boardService.deleteBoard(boardVO);
 		return "redirect:/board/boardList";
 	}
-
-//---------------------------------------
-
 }

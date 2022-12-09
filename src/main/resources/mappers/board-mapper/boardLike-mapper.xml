@@ -9,7 +9,7 @@
 		<result column="LIKE_CHECK" property="likeCheck" />
 	</resultMap>
 
-	
+	<!-- 좋아요 기능 확인 -->
 	<select id="boardLikeCheck" resultMap="boardLike">
 		SELECT LIKE_NUM
 			, BOARD_NUM 
@@ -21,6 +21,7 @@
 
 	<!-- 게시글 좋아요 기능(추천,취소) -->
 	<insert id="insertLike">
+		
 		MERGE INTO BOARD_LIKE
 		USING DUAL
 		ON (BOARD_NUM = #{boardNum} AND USER_ID = #{userId})
@@ -41,11 +42,8 @@
 				, #{boardNum}
 				, #{userId}
 			)
+			
 	</insert>
-
-
-
-
 
 </mapper>
 

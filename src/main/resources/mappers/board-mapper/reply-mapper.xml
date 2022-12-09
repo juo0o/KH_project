@@ -15,6 +15,7 @@
 	
 	<!--댓글 등록  -->
 	<insert id="insertReply">
+		
 		INSERT INTO BOARD_REPLY(
 			REPLY_NUM
 			, REPLY_CONTENT
@@ -26,11 +27,13 @@
 			, #{boardNum}
 			, #{userId}
 		)
+		
 	</insert>
 	
 	
 	<!-- 댓글 조회 -->
 	<select id="selectReply" resultMap="reply">
+		
 		SELECT REPLY_NUM
 				, REPLY_CONTENT
 				, USER_ID
@@ -44,22 +47,26 @@
 		FROM BOARD_REPLY RE
 		WHERE BOARD_NUM = #{boardNum}
 		ORDER BY REPLY_NUM DESC
+		
 	</select>
 
 	<!-- 댓글 수정 -->
 	<update id="updateReply">
+	
 		UPDATE BOARD_REPLY
 		SET REPLY_CONTENT = #{replyContent}
 		WHERE REPLY_NUM = #{replyNum}
+		
 	</update>
 	
 	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteReply">
+	
 		DELETE FROM BOARD_REPLY
 		WHERE REPLY_NUM = #{replyNum}
-	</delete>
 	
+	</delete>
 	
 </mapper>
 

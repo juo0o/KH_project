@@ -26,18 +26,17 @@
 					<input type="text" class="form-control" id="formGroupExampleInput" th:field="*{boardRegDate}" readonly> 
 					
 					<label for="formGroupExampleInput" class="form-label">작성자</label> 
-					<input type="text" class="form-control" id="formGroupExampleInput" th:field="*{userId}" readonly>
+					<input type="text" class="form-control" id="formGroupExampleInput" th:field="*{empName}" readonly>
 				</div>
 
 				<label for="formGroupExampleInput" class="form-label">내용</label>
 				<div class="form-floating">
-					<textarea class="form-control" placeholder="내용을 입력하세요" id="formGroupExampleInput" style="height: 300px; resize: none;" th:field="*{boardContent}" >
+					<textarea class="form-control" id="formGroupExampleInput" style="height: 300px; resize: none;" th:field="*{boardContent}" >
 					</textarea>
 				</div>
 				<div class="row mt-3 mb-3">
 					<div class="col text-center">
-						<button type="button" class="btn btn-secondary"
-							th:onclick="|location.href = '@{/board/boardDetail(boardNum=${update.boardNum})}'|">뒤로가기</button>
+						<button type="button" class="btn btn-secondary" th:onclick="|location.href = '@{/board/boardDetail(boardNum=${update.boardNum})}'|">뒤로가기</button>
 						<button type="submit" class="btn btn-secondary">수정하기</button>
 					</div>
 				</div>

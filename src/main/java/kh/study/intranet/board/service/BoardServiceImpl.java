@@ -23,7 +23,6 @@ public class BoardServiceImpl implements BoardService {
 		return sqlSession.selectList("boardMapper.selectNoticeBoardList", map);
 	}
 	
-	
 	//게시판 추천글 상단 고정
 	@Override
 	public List<BoardVO> selectLikeBoardList(Map<String, Object> map) {
@@ -41,18 +40,14 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> selectBoardCate() {
 		return sqlSession.selectList("boardMapper.selectBoardCate");
 	}
-	
-	
-	
-	
 
 	//게시글 상세조회
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public BoardVO boardDetail(int boardNum) {
-		
+		//게시글 조회수 증가
 		sqlSession.update("boardMapper.updateReadCnt", boardNum);
-				
+		//게시글 상세조회
 		return sqlSession.selectOne("boardMapper.selectBoardDetail", boardNum);
 	}
 	
@@ -72,7 +67,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void deleteBoard(BoardVO boardVO) {
 		sqlSession.delete("boardMapper.deleteBoard", boardVO);
-		
 	}
 
 
@@ -82,23 +76,8 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardCnt() {
 		return sqlSession.selectOne("boardMapper.selectBoardCnt");
 	}
-
-	
-
-	
-
-	
-
-
-
 }
 	
-//	//게시글 조회수 증가
-//	@Override
-//	public int updateReadCnt(int boardNum) {
-//		return 1;
-//	}
-// 트랜잭션처리로 메소드 자체가 필요없음(쿼리문을 바로 serviceImpl로 가져다 쓰기때문)
 
 	
 	

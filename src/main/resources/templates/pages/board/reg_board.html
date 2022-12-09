@@ -6,7 +6,7 @@
 
 
 <div layout:fragment="content">
-	<div class="col-10 pt-3 pb-5" style="color: #333; border:3px solid #ebecef;  border-radius:3%;">
+	<div class="col-10 pt-3 pb-5" style="color: #333; border:3px solid #ebecef; border-radius:3%;">
 		<form th:action="@{/board/regBoard}" method="post" th:object="${boardVO}">
 			<div class="mb-3">
 				<label for="exampleFormControlInput1" class="form-label">글 제목</label> 
@@ -14,8 +14,8 @@
 			</div>
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">글 내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{boardContent}" rows="10" placeholder="인터넷 에티켓을 준수합시다."
-				style="resize: none;"></textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" th:field="*{boardContent}" rows="10" placeholder="인터넷 에티켓을 준수합시다." style="resize: none;">
+				</textarea>
 			</div>
 			<div class="row">
 				<div class="col-6">

@@ -21,15 +21,13 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public void regReply(ReplyVO replyVO) {
 		sqlSession.insert("replyMapper.insertReply", replyVO);
-		
 	}
 
 	//댓글 조회
 	@Override 
 	public List<ReplyVO> replyList(int boardNum) { 
 	  return sqlSession.selectList("replyMapper.selectReply", boardNum); 
-		  
-	  }
+	}
 
 	//댓글 수정
 	@Override
@@ -37,17 +35,9 @@ public class ReplyServiceImpl implements ReplyService {
 		sqlSession.update("replyMapper.updateReply", replyVO);
 	}
 	
-	
 	//댓글 삭제
 	@Override
 	public void deleteReply(ReplyVO replyVO) {
 		sqlSession.delete("replyMapper.deleteReply", replyVO);
 	}
-
-	
-	
-
-	
-	
-	
 }

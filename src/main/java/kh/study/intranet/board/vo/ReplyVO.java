@@ -15,5 +15,4 @@ public class ReplyVO  {
 	private String replyRegDate;
 	private String empName;
 	private String empPosition;
-
 }

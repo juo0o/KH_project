@@ -7,7 +7,7 @@
 <div layout:fragment="content">
 	<!-- 모든 내용이 들어오는 영역 -->
 	<div class="row justify-content-center">
-		<div class="col-10" style="border:3px solid #ebecef;  border-radius:3%;">
+		<div class="col-10" style="border:3px solid #ebecef; border-radius:3%;">
 			<!-- 게시글 상세 정보 영역 -->
 			<div class="row">
 				<div class="col-10 mt-3" style="color: #03c75a; font-size: 18px; font-weight: lighter;">
@@ -30,8 +30,7 @@
 				</div>
 				<input id="boardNum" type="hidden" th:value=${detail.boardNum}>
 			</div>
-			
-			
+			<!-- 좋아요 기능 -->			
 			<script type="text/javascript">
 				function clickLikeButton(){
 					
@@ -68,8 +67,7 @@
 					});
 					//ajax end
 				}
-				
-		</script> 
+			</script> 
 			<div style="height: 140px; border-bottom: solid  #ebecef;"></div>
 			<div class="row" >
 				<!-- 게시글 버튼 영역 -->
@@ -125,7 +123,6 @@
 					</form>
 				</div>
 			</div>
-			
 			<!-- 댓글 목록 영역 -->
 			<div class="row mb-3 mt-3" style="width: 80%;">
 				<div class="col">
@@ -160,10 +157,8 @@
 			</div>
 		</div>
 	</div>
-
 	
 	<script type="text/javascript" th:src="@{/js/board/like.js}"></script>
+
 </div>
-
-
 </html>
