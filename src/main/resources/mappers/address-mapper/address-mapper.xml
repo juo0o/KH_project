@@ -45,7 +45,8 @@
 		<result column="EMP_PICTURE_REFILE_NAME" 	property="empPictureRefileName"/>
 		<result column="EMP_HIRE_DATE" 				property="empHireDate"/>
 	</resultMap>
-		
+	
+	<!-- 공용주소록 목록 조회 -->	
 	<select id="addressList" resultMap="emp">
 	SELECT EMP_NAME
 		 , EMP_POSITION
@@ -57,13 +58,6 @@
 		FROM EMP
 	
 	</select>
-	
-	<!-- 다음에 들어갈 List_pk를 조회함  -->
-	<select id="selectNextListPk" resultType="String">
-		SELECT 'LIST_' ||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(LIST_PK,6))),0) +1,3,0) FROM ADDRESS_BOOK_LIST
-	</select>
-	
-	
 	
 	
 	
@@ -155,22 +149,19 @@
 			,EMP_EMAIL = #{empEmail}
 			,DEPT_NAME = #{deptName}
 			,EMP_POSITION = #{empPosition}
-			
 			WHERE BOOK_PK = #{bookPk}
-			
-			
-			
-	
-	
 	</update>
 	
+	
+	<!-- 등록된 개인주소록 내용 삭제  -->
 	<delete id="deleteAddress">
 	DELETE ADDRESS_BOOK
 	WHERE BOOK_PK = #{bookPk}
 	
-	
 	</delete>
 	
+	
+	<!-- 개인주소록 삭제  -->
 	<delete id="deleteAddressList">
 	DELETE ADDRESS_BOOK_LIST
 	WHERE LIST_PK = #{listPk}

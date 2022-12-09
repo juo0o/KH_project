@@ -33,6 +33,7 @@ public class AddressController {
 	@Resource(name = "adminService")
 	private AdminService adminService;
 	
+	//개인주소록,공용주소록 목록 조회
 	@RequestMapping("/addressList")
 	public String addressList(@RequestParam Map<String, Object> paramMap,AddressVO addressVO,Model model,Authentication authentication,EmpVO empVO,AddressListVO addressListVO,PageVO pageVO) {
 		
@@ -41,23 +42,11 @@ public class AddressController {
 			
 			
 			//map에 날짜 세팅
-			// 현재 날짜
-			String nowDate = appDateUtil.getNowDateToString("-");// 2020-10-10
+			//현재 날짜
+			String nowDate = appDateUtil.getNowDateToString("-");
 			// 한달 전날짜
 			String beforeDate = appDateUtil.getBeforeMonthDateToString();
-			 //넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
-				
-//			if (paramMap.get("fromDate") == null) {
-//					
-//				paramMap.put("fromDate", beforeDate);
-//				
-//				}
-//				
-//			if (paramMap.get("toDate") == null) {
-//				
-//				paramMap.put("toDate", nowDate);
-//			
-//				}
+
 			 
 			//조건검색결과 데이터 수
 			int totalDateCnt = adminService.selectEmpListSearchAndPage(paramMap).size();
@@ -68,7 +57,7 @@ public class AddressController {
 			//실행
 			pageVO.setPageInfo();
 			
-			// 페이징에 따라 조회될 데이터를 넣어준다.
+			//페이징에 따라 조회될 데이터를 넣어준다.
 
 			paramMap.put("startNum",pageVO.getStartNum());
 			paramMap.put("endNum", pageVO.getEndNum());
@@ -87,14 +76,14 @@ public class AddressController {
 			User user =(User)authentication.getPrincipal();
 			addressListVO.setBookOwnerId(user.getUsername());
 			
-			//다음에 들어갈 List_pk 값 조회
-			//String listPk = addressService.selectNextListPk();
+			
 			model.addAttribute("myAddressList", addressService.insertAddressList(addressListVO.getBookOwnerId()));
 			
 		
 		return "pages/address/addressList";
 	}
 	
+	//개인주소록 그룹 추가시 ajax
 	@ResponseBody
 	@PostMapping("/insertAddress")
 	public List<AddressListVO> insertAddress(AddressListVO addressListVO,AddressVO addressVO,Authentication authentication,Model model) {
@@ -106,12 +95,10 @@ public class AddressController {
 		
 		addressService.insertAddress(addressListVO);
 		
-		//addressService.insertAddressList(addressListVO.getBookOwnerId());
-		
-		
 		return 	addressService.insertAddressList(addressListVO.getBookOwnerId());
 
 	}
+	//등록한 개인주소록 이름 클릭시 내 주소록으로 이동
 	@GetMapping("/myAddress")
 	public String myAddress(String listPk, Model model,String bookPk) {
 		
@@ -125,7 +112,7 @@ public class AddressController {
 		return "pages/address/myAddressList";
 	}
 	
-	//연락처 추가 클릭시
+	//개인주소록에서 연락처 추가 클릭시
 	@GetMapping("/addAddress")
 	public String addAddress(String listPk,Model model) {
 
@@ -141,7 +128,7 @@ public class AddressController {
 		
 		return "redirect:/address/myAddress?listPk=" + listPk;
 	}
-	//주소록 수정페이지로 이동
+	//개인주소록 수정페이지로 이동
 	@GetMapping("/updateAddress")
 	public String updateAddress(Model model,String bookPk,String listPk) {
 		
@@ -160,7 +147,7 @@ public class AddressController {
 		return "redirect:/address/myAddress?listPk=" + addressVO.getListPk();
 	}
 	
-	//수정화면에서 내가 등록한 주소록 삭제 버튼 ajax
+	//수정화면에서 내가 등록한 주소록 삭제 ajax
 	@ResponseBody
 	@PostMapping("/deleteAddress")
 	public void deleteBtn(AddressVO addressVO) {
@@ -170,12 +157,12 @@ public class AddressController {
 	}
 	
 	
-	//개인 주소록 삭제
+	//개인 주소록 삭제 ajax
 	@ResponseBody
 	@PostMapping("/deleteAddressList")
 	public void deleteAddressList(String listPk) {
 		
-		System.out.println(listPk);
+		
 		addressService.deleteAddressList(listPk);
 		
 	}

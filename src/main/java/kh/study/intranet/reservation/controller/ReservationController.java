@@ -50,16 +50,14 @@ public class ReservationController {
       
        return dateList;
     }
-
 	
-	
-	
+	//회의실 예약 등록화면으로 이동
 	@RequestMapping("/insertReserve")
 	public String insertReserve(UserVO userVO,Model model,Authentication authentication) {
 		
 		model.addAttribute("available", reservationService.availableReserve());
 		
-		//---회의실 조회---//
+		//회의실 조회
 		model.addAttribute("meetingRoom", reservationService.selectMeetingRoom());
 		
 		//내 예약 조회
@@ -71,18 +69,13 @@ public class ReservationController {
 		return "pages/reservation/insertReserve";
 	
 	}
-	
-	
-	//내 예약 취소
+		
+	//내 예약 취소 
 	@ResponseBody
 	@RequestMapping("/deleteReserve")
 	public void deleteReserve(ReservationVO reservationVO) {
 		
-		System.out.println("!!!!!!!!!!!!!!!!");
-		System.out.println(reservationVO);
-		System.out.println(reservationVO);
-		System.out.println(reservationVO);
-		
+	
 		reservationService.deleteReserve(reservationVO);
 	}
 	
@@ -105,10 +98,11 @@ public class ReservationController {
 	}
 	
 	
-	//등록 눌렀을때 실행되는 ajax
+	//회의실 등록 눌렀을때 실행되는 ajax
 	@ResponseBody
 	@PostMapping("/regReservation")
 	public ReservationVO regReservation(UserVO userVO,MeetingRoomVO meetingRoomVO,ReservationVO reservationVO,Authentication authentication) throws ParseException {
+		
 		User user = (User)authentication.getPrincipal();
 		userVO.setUserId(user.getUsername());
 		reservationVO.setReserveUserId(user.getUsername());
@@ -188,7 +182,7 @@ public class ReservationController {
 				meetingRoom.setRoomCode("ROOM_00" + j);
 				
 				for(int i = 1; i < 32; i++) {
-					meetingRoom.setDay("2023-01-" + i);
+					meetingRoom.setDay("2022-12-" + i);
 					reservationService.insertReserveTime(meetingRoom);
 				}
 				

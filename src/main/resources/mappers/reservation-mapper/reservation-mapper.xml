@@ -31,20 +31,20 @@
 		
    <!-- 예약가능날짜 조회 -->   
    <select id="availableDay" resultType="String">
-      SELECT 
-            DISTINCT ( TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
-      		FROM RESERVATION_MEETING_ROOM
-     		 WHERE RESERVE_AVAILABLE = 'Y'
+      SELECT DISTINCT ( TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      FROM RESERVATION_MEETING_ROOM
+      WHERE RESERVE_AVAILABLE = 'Y'
+            
    </select>
    
    <!-- 예약 불가능 날짜 조회 -->
    <select id="disAvailableDay" resultType="String">
-      SELECT     
-              DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      SELECT DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
       FROM RESERVATION_MEETING_ROOM
+         
           MINUS
-      SELECT     
-              DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
+      
+      SELECT DISTINCT (  TO_CHAR( RESERVE_DATE, 'YYYY-MM-DD') )  AS RESERVE_DATE 
       FROM RESERVATION_MEETING_ROOM
       WHERE RESERVE_AVAILABLE = 'Y'
    </select>
@@ -61,7 +61,7 @@
 		    FROM RESERVATION_MEETING_ROOM RES
 		    WHERE RESERVE_USER_ID = #{userId}
 		    AND TO_DATE(RESERVE_DATE, 'YY-MM-DD') &gt;= SYSDATE
-		    ORDER BY RESERVE_DATE 
+		    ORDER BY RESERVE_TIME 
 	</select>
 	
 	<!-- 내 예약 삭제 -->
@@ -96,9 +96,9 @@
 	     , RESERVE_AVAILABLE
 	     FROM MEETING_ROOM M , RESERVATION_MEETING_ROOM R
 	     WHERE M.ROOM_CODE = R.ROOM_CODE
-	     <!-- AND RESERVE_USER_ID = #{reserveUserId} -->
 	     AND RESERVE_AVAILABLE = 'N'
-	     <!-- AND RESERVE_DATE = '2022-11-11' -->	
+	    
+	     	
 	
 	</select>
 	
@@ -156,8 +156,7 @@
 		RESERVE_DATE = #{reserveDate}
 	AND 
 		RESERVE_TIME = #{reserveTime}
-	
-	<!-- AND RESERVE_CODE = #{reserveCode} -->
+		
 	
 	</update>
 	

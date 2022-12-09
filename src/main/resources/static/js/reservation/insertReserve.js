@@ -3,7 +3,7 @@
 var sysdate = 0;
 		
  
-//=======================================캘린더 출력, 이벤트적용  
+//캘린더 출력, 이벤트적용  
       document.addEventListener('DOMContentLoaded', function() {
    
    
@@ -32,13 +32,12 @@ var sysdate = 0;
 	                       ,cache: false
 	                       ,success: function(resultMap){
 	                              var events = [];
-	                              console.log(resultMap);
-	                  
+	                              	                  
 	                           //예약불가능한날 선택해서 색바꾸어준다
                               for(var date of resultMap.disDate){
 	                              
 	                              events.push({
-	                                 title : 'ccc',
+	                                 title : '',
 	                                 start : date,
 	                                 end : date,
 	                                 display: 'background',
@@ -49,7 +48,7 @@ var sysdate = 0;
                               for(var date of resultMap.avaDate){
 	                              
 	                              events.push({
-	                                 title : 'ccc',
+	                                 title : '',
 	                                 start : date,
 	                                 end : date,
 	                                 display: 'background',
@@ -63,7 +62,7 @@ var sysdate = 0;
                
                dateClick: function (info) {
                  
-   //          //모달창띄운다
+               //등록 모달창띄운다
                $('#createEventModal').modal('show');
               
                showRoomInfoAjax(info.dateStr);
@@ -76,13 +75,8 @@ var sysdate = 0;
         
       });
        
-      
-      
-      
-      
  
- 
- function showRoomInfoAjax(dateStr) {
+function showRoomInfoAjax(dateStr) {
 
  		var reservation;
             $.ajax({
@@ -105,12 +99,9 @@ var sysdate = 0;
             });
             
       $('#createEventModal').modal('show');
-      console.log(reservation);
+      
       return reservation;
       
-      
-//          $('#createEventModal').modal('hide');
-          
          
       }
  
@@ -123,7 +114,11 @@ function goReserve(){
 		const reserveComment = document.querySelector('#reserveComment').value;
 	
 		if(reserveTime == 0 ,reserveTime ==''){
-			alert('먼저 회의실을 선택해주세요');
+				Swal.fire({
+      				  icon: 'success',
+      				  title: '회의실을 선택해주세요',
+      				  text: '',
+      				});
 			return;
 		}
 		
@@ -143,7 +138,8 @@ function goReserve(){
       				  title: '등록완료.',
       				  text: '',
       				});
-      				console.log(result);
+      				
+      				
       				//삭제하고 예약목록 그려준다.
       				let reserveAjaxDiv = document.querySelector('#resrveAjax');
       				let str = '';
@@ -171,14 +167,11 @@ function goReserve(){
            			
 }
 
-
-           			
-
 //회의실 선택시 변경되는 함수
 function selectChange(info){
 	
-	
 	var roomCode = document.querySelector('#meetingRoom').value;
+	
 	$.ajax({
                url: '/reservation/selectChange', //요청경로
                type: 'post',
@@ -200,7 +193,8 @@ function selectChange(info){
            		    for(let reserve of result){
 						
 						str += `<option value="${reserve.reserveTime}">${reserve.reserveTime}</option>`;
-						//str+= `<option value="">예약 가능한 시간이 없습니다.</option>`
+						
+												
 					}
 						
            			
@@ -214,16 +208,12 @@ function selectChange(info){
                
                
             });
-	
-               //$('#createEventModal').modal('hide');
-	
-	
 }
 
 
-
+//회의실 예약 삭제
 function deleteReserve(event,reserveCode){
-    		alert(reserveCode);
+    		
     		
     		$.ajax({
     			url: '/reservation/deleteReserve', //요청경로

@@ -7,59 +7,57 @@
   
 <div layout:fragment="content">
 
- <ul class="side_depth" style="display: block;">
-    <li class="group ui-state-disabled">
-        <p class="title on">
-            <a href="#">
-                <ins class="ic"></ins>
-                <span class="contactTag" title="개인 주소록" style="font-size: 20px; font-weight: bold;">IN 개인 주소록</span>
-            </a>
-        </p>
-    </li>
-</ul> 
+	 <ul class="side_depth" style="display: block;">
+	    <li class="group ui-state-disabled">
+	        <p class="title on">
+	            <a href="#">
+	                <span class="contactTag" title="개인 주소록" style="font-size: 20px; font-weight: bold;">IN 개인 주소록</span>
+	            </a>
+	        </p>
+	    </li>
+	</ul> 
 			
-			<div>
-				<table class="table" style="border-color: black;">
-					<thead>
-						<tr class="table-secondary">
-							<th scope="col">이름(표시명)</th>
-							<th scope="col">직위</th>
-							<th scope="col">휴대폰</th>
-							<th scope="col">이메일</th>
-							<th scope="col">부서</th>
-							<th scope="col">주소</th>
-							<th scope="col">메모</th>
-							<th scope="col">그룹</th>
-						</tr>
-					</thead>
-					<tbody>
-						<th:block th:if="${#lists.size(myAddressList)}==0">
-							<tr>
-								<td colspan="8" style="text-align: center;">등록된 연락처가 없습니다</td>
-							</tr>
-						</th:block>
-					
-						 <th:block th:unless="${#lists.size(myAddressList)==0}" th:each="myAddress : ${myAddressList}" >
-						 	<tr class="table-light" style="font-size: 16px; font-weight: bold; font-style:italic;"> 
-								<td>
-									<a th:text="${myAddress.empName}" th:href="@{/address/updateAddress(bookPk=${myAddress.bookPk},listPk=${myAddress.listPk})}"></a>
-								</td> 
-							 	<td th:text="${myAddress.empPosition}"></td>
-								<td th:text="${myAddress.empTell}"></td>
-								<td th:text="${myAddress.empEmail}"></td>
-								<td th:text="${myAddress.deptName}"></td>
-								<td th:text="${myAddress.empAddr}"></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</th:block> 
-					</tbody>
-					
-				</table>
+	<div>
+		<table class="table" style="border-color: black;">
+			<thead>
+				<tr class="table-secondary">
+					<th scope="col">이름(표시명)</th>
+					<th scope="col">직위</th>
+					<th scope="col">휴대폰</th>
+					<th scope="col">이메일</th>
+					<th scope="col">부서</th>
+					<th scope="col">주소</th>
+					<th scope="col">메모</th>
+					<th scope="col">그룹</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${#lists.size(myAddressList)}==0">
+					<tr>
+						<td colspan="8" style="text-align: center;">등록된 연락처가 없습니다</td>
+					</tr>
+				</th:block>
+			
+				 <th:block th:unless="${#lists.size(myAddressList)==0}" th:each="myAddress : ${myAddressList}" >
+				 	<tr class="table-light" style="font-size: 16px; font-weight: bold; font-style:italic;"> 
+						<td>
+							<a th:text="${myAddress.empName}" th:href="@{/address/updateAddress(bookPk=${myAddress.bookPk},listPk=${myAddress.listPk})}"></a>
+						</td> 
+					 	<td th:text="${myAddress.empPosition}"></td>
+						<td th:text="${myAddress.empTell}"></td>
+						<td th:text="${myAddress.empEmail}"></td>
+						<td th:text="${myAddress.deptName}"></td>
+						<td th:text="${myAddress.empAddr}"></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</th:block> 
+			</tbody>
+			
+		</table>
 		<div style="text-align: center;" id="myBtn">
 			<input class="btn btn-info" type="button" value="연락처 추가하기" th:onclick="|location.href='@{/address/addAddress(listPk=${listPk})}'|">
-			<input class="btn btn-dark" type="button" value="주소록 목록" th:onclick="|location.href='@{/address/addressList}'|">
-			
+			<input class="btn btn-dark" type="button" value="주소록 목록" th:onclick="|location.href='@{/address/addressList}'|">			
 		</div>
 
 	</div>

@@ -12,7 +12,4 @@ public class AddressListVO {
 	private String listPk;
 	private String bookOwnerId; //주소록 주인 ID
 	private String bookName;
-	
-	
-	
 }

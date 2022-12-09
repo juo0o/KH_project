@@ -9,65 +9,57 @@ function goAddress(){
       				  title: '이름을 입력해주세요.',
       				  text: '',
       				});
-			
 			return;
 		}
-	
+	 
 	 $.ajax({
                url: '/address/insertAddress', //요청경로
                type: 'post',
                data: {'bookName':bookName},
-//               processData: false,
-//               contentType: false,
-//               cache: false,
-				async: false,
+			   async: false,
                success: function(result) {
                		 	Swal.fire({
-      				  icon: 'success',
-      				  title: '주소록을 추가했습니다.',
-      				  text: '',
-      				});
-               		 
+	      				  icon: 'success',
+	      				  title: '주소록을 추가했습니다.',
+	      				  text: '',
+	      				});
                		 
                		 var add = document.querySelector('#addList');
-               		 
-               		 
-               		 
+               		
                		 add.innerHTML = '';
                		 
                		 let str = '';
                		 
                		 for(let myAddress of result){
-//						str += `<div><ul><li><a href="/address/myAddress?listPk=${myAddress.listPk}">${myAddress.bookName}</a><input type="button" value="삭제" onclick="goDelete('${myAddress.listPk}')"></li></ul></div>`	
-						str += `<div class="top"><ul><li>
-							<div class="row" style="margin-top: 3px;">
-								<div class="col-4">
-									<a href="/address/myAddress?listPk=${myAddress.listPk}">${myAddress.bookName}</a>
-								</div>
-								<div class="col-4" align="right">
-									<input class="btn btn-outline-info" type="button" value="삭제" onclick="goDelete(this,'${myAddress.listPk}')">
-								</div>
-							</div></li></ul></div>`	
-							
-							
-							
 						
+						str += `<div class="top">
+									<ul>
+										<li>
+											<div class="row" style="margin-top: 3px;">
+												<div class="col-4">
+													<a href="/address/myAddress?listPk=${myAddress.listPk}">${myAddress.bookName}</a>
+												</div>
+												<div class="col-4" align="right">
+													<input class="btn btn-outline-info" type="button" value="삭제" onclick="goDelete(this,'${myAddress.listPk}')">
+												</div>
+											 </div>
+										</li>
+									 </ul>
+								</div>`	
+							
 					}
                	
-					add.insertAdjacentHTML('beforeend',str)
+						add.insertAdjacentHTML('beforeend',str)
 
                },
+               
                error: function() {
+                  		
                   		Swal.fire({
-      				  icon: 'success',
-      				  title: '중복된 그룹명이 존재합니다.',
-      				  text: '',
-      				});
-                  
-                  
-                
-         
-                  
+	      				  icon: 'success',
+	      				  title: '중복된 그룹명이 존재합니다.',
+	      				  text: '',
+	      				});
                }
             });
 	
@@ -83,15 +75,12 @@ function deleteBtn(bookPk,listPk){
                url: '/address/deleteAddress', //요청경로
                type: 'post',
                data: {'bookPk':bookPk,'listPk':listPk},
-//               processData: false,
-//               contentType: false,
-//               cache: false,
-				async: false,
+			   async: false,
                success: function(result) {
                		alert('삭제완료');
                		
-               		
                		location.href='/address/myAddress?listPk='+listPk;
+               		
                },
                error: function() {
                   alert('실패');
@@ -111,8 +100,7 @@ function movePage(nowPage){
 function goDelete(selectedTag,listPk){
 	
 	const inputBtn = selectedTag.closest('.top');
-	
-	
+		
 	var result = confirm('삭제하시겠습니까?');
 	
 	if(result){
@@ -120,18 +108,13 @@ function goDelete(selectedTag,listPk){
                url: '/address/deleteAddressList', //요청경로
                type: 'post',
                data: {'listPk':listPk},
-//               processData: false,
-//               contentType: false,
-//               cache: false,
-				async: false,
+			   async: false,
                success: function(result) {
                		alert('삭제완료');
                		
-               		
                		inputBtn.remove();
-               		
-               	
-               	
+               		               		
+            
                },
                error: function() {
                   alert('실패');
