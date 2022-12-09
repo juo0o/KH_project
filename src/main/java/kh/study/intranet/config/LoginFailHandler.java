@@ -43,7 +43,13 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 		String errormsg = null;
 		
 		
-		
+		//비밀번호, 아이디 모두 틀리면 발동, 비밀번호만 틀려도 발동
+		//아이디가 틀리면 반드시 발동
+		if(exception instanceof InternalAuthenticationServiceException) {
+			errormsg = "아이디를 다시 입력해주세요.";
+        }else if(exception instanceof BadCredentialsException) {
+			errormsg = "비밀번호를 다시 입력해주세요.";
+		}
 		
 		String url = "/user/login";
 		

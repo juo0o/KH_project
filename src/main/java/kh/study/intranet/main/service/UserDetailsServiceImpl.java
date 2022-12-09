@@ -27,16 +27,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
 		UserVO userVO = sqlSession.selectOne("userMapper.loginMember", username);
 		
-		// UserDetails 의 리턴값이 없을때 발생하는예외
-		if(userVO == null) {
-			throw new InternalAuthenticationServiceException("아이디를 찾을수 없습니다.");
-		}
+		
 		
 		//조회되지않으면 던짐, BadCredentialException 로받음
 //		if(userVO == null) {
 //			throw new UsernameNotFoundException("아이디를 찾을수 없습니다.");
 //		}
-		
+		// UserDetails 의 리턴값이 없을때 발생하는예외
+		if(userVO == null) {
+			throw new InternalAuthenticationServiceException("아이디를 찾을수 없습니다.");
+		}
 		
 		UserDetails userDetail = User.withUsername(userVO.getUserId())
 									 .password(userVO.getUserPw())
