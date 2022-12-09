@@ -25,11 +25,7 @@ public class UserVO extends PageVO  {
 		@NotBlank(message= "이름은 필수입력사항입니다.")
 		private String empName;
 		
-		
-		private String empGender;
-		private String empBirthDay;
-		
-		
+
 		private String empTell;
 		private String empAddr;
 		private String empDetailAddr;

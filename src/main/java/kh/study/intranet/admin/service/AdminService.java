@@ -14,6 +14,7 @@ public interface AdminService {
 	
 	//유저조회
 	List<UserVO> selectEmpList();
+	
 	//유저조회 검색,페이징
 	List<UserVO> selectEmpListSearchAndPage(Map<String, Object> map);
 	

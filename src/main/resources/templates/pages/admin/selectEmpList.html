@@ -52,7 +52,7 @@ layout:decorate="~{layout/base_layout}">
 					</tr>
 					<tr>
 						<td class="searchTitle">입사일</td>
-						<td colspan="3">
+						<td colspan="4">
 							<div class="row">
 								<div class="col-6">
 									<input class="form-control" type="date" name="fromDate" id="" th:value="${paramMap['fromDate']}" >
@@ -62,7 +62,7 @@ layout:decorate="~{layout/base_layout}">
 								</div>
 							</div>
 						</td>
-						<td class="searchTitle">상태</td>
+						<td class="searchTitle"></td>
 						<td colspan="2">
 							<!-- <div class="form-check form-check-inline">
 							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
@@ -84,14 +84,14 @@ layout:decorate="~{layout/base_layout}">
 			</form>
 			<br>
 		
-			<div>
-				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regEmpModal">
-				  사원등록
-				</button>
-				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regDeptModal">
-				  부서등록
-				</button>
-			</div>
+<!-- 			<div> -->
+<!-- 				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regEmpModal"> -->
+<!-- 				  사원등록 -->
+<!-- 				</button> -->
+<!-- 				<button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#regDeptModal"> -->
+<!-- 				  부서등록 -->
+<!-- 				</button> -->
+<!-- 			</div> -->
 			<!-- 회원등록 모달 -->
 			<div class="modal fade" id="regEmpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div class="modal-dialog">

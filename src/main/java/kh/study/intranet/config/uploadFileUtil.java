@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.study.intranet.main.vo.UserVO;
 
 public class uploadFileUtil {
+	//upload Path 지정
 	private static final String UPLOAD_PATH ="D:\\dev\\workspaceSTS\\4Men-Intranet\\src\\main\\resources\\static\\imgs\\user\\";
 	
 	
@@ -15,8 +16,6 @@ public class uploadFileUtil {
 	//파일첨부 
 	public static UserVO uploadFile(MultipartFile empPictureOriginName) {
 		
-//		String fileName = null;
-//		String originFileName = null; 
 		String fileName = null;
 		String originFileName = null; 
 		
@@ -33,12 +32,6 @@ public class uploadFileUtil {
 			
 			//첨부될 파일명
 			fileName = uuid + extension;
-			
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!uploadPath  : "+UPLOAD_PATH);
 				try {
 					
 					//파일 객체를 생성한다, 예외처리가 없다면 문제가 생기기때문에 자동으로 오류를뱉는다

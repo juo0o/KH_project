@@ -199,6 +199,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"  name="userPw" id="userPw" placeholder="*비밀번호">
+                                        <div class="hasError" th:if="${#fields.hasErrors('userPw')}" th:errors="*{userPw}"></div>
                                     </div>
 <!--                                     <div class="col-sm-6"> -->
 <!--                                         <input type="password" class="form-control form-control-user" id="repeatPassword" placeholder="비밀번호 확인"> -->
@@ -208,6 +209,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" th:field="*{empName}" name="empName" id="empName" placeholder="*이름">
+                                        <div class="hasError" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
+                                        
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-user" name="empTell" id="empTell"  placeholder="전화번호 -없이 숫자만">
@@ -236,18 +239,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	                                 	</div>
 	                                 </div>
                                 </div>
-                                
-<!--                                 <div class="form-group row"> -->
-<!--                                     <div class="col-sm-6 mb-3 mb-sm-0"> -->
-<!--                                         <input type="text" class="form-control form-control-user" name="empPictureOriginName" id="empPictureOriginName" placeholder="사진"> -->
-<!--                                     </div> -->
-<!--                                     <div class="col-sm-6"> -->
-<!--                                         <input type="text" class="form-control form-control-user"  placeholder="사진등록"> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-                                
                                 	<input id="registerButton" type="button" class="btn btn-info btn-user btn-block" value="회원가입" onclick='Confirm()'>
-                                   
                             </form>
                             
                             

@@ -15,22 +15,6 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 
-//@Configuration
-//@EnableWebSocket
-//public class WebSocketConfig implements WebSocketConfigurer {
-//	
-//	@Resource(name="chatHandler")
-//	private ChatHandler chatHandler;
-//	
-//	
-//	 @Override
-//    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-//    
-//        registry.addHandler(chatHandler, "ws/chat").setAllowedOrigins("*");
-//    }
-//
-//
-//}
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -46,11 +30,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	}
 	
 	
-	
-    //endpoint를 /stomp로 하고, allowedOrigins를 "*"로 하면 페이지에서
-    //Get /info 404 Error가 발생한다. 그래서 아래와 같이 2개의 계층으로 분리하고
-    //origins를 개발 도메인으로 변경하니 잘 동작하였다.
-    //이유는 왜 그런지 아직 찾지 못함
+	/*
+    * endpoint를 /stomp로 하고, allowedOrigins를 "*"로 하면 페이지에서
+    * Get /info 404 Error가 발생한다. 그래서 아래와 같이 2개의 계층으로 분리하고
+    * origins를 개발 도메인으로 변경하니 잘 동작하였다.
+    * 이유는 왜 그런지 아직 찾지 못함
+      */
+     
+	//뭔소릴까이게
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint("/stomp/chat")

@@ -20,7 +20,6 @@ public class AdminServiceImpl implements AdminService{
 	SqlSessionTemplate sqlSession;
 	
 	
-	
 	//부서조회
 	@Override
 	public List<DeptVO> selectDeptList() {
@@ -31,7 +30,6 @@ public class AdminServiceImpl implements AdminService{
 	//유저조회
 	@Override
 	public List<UserVO> selectEmpList() {
-		
 		return sqlSession.selectList("adminMapper.selectEmpList");
 	}
 	//유저조회 페이징 검색
@@ -40,19 +38,15 @@ public class AdminServiceImpl implements AdminService{
 		return sqlSession.selectList("adminMapper.selectEmpListSearchAndPage", map);
 	}
 	
-	
 	//관리자가 개인정보 업데이트
 	public void updateEmpAdmin(Map<String, Object> update) {
-		
 		sqlSession.insert("adminMapper.updateEmpAdmin", update);
-		
 	}
 	
 	//신규사원 등록
 	@Override
 	public void regNewEmp(RegEmpVO regEmpVO) {
 		sqlSession.insert("adminMapper.regNewEmp", regEmpVO);
-		
 	}
 	
 	//신규부서등록
@@ -60,9 +54,5 @@ public class AdminServiceImpl implements AdminService{
 	public void regDept(DeptVO deptVO) {
 		sqlSession.insert("adminMapper.regDept", deptVO);
 	}
-
-
-
 	
-
 }

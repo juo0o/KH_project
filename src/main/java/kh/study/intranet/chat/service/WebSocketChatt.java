@@ -41,10 +41,6 @@ public class WebSocketChatt {
 			System.out.println("이미 연결된 session");
 		}
 		
-		System.out.println(clients.size());
-		System.out.println(clients.size());
-		System.out.println(clients.size());
-
 	}
 	
 	//클라이언트가 url을 바꾸거나 브라우저를 종료하면 자동으로 onClose() 메서드가 실행되며 해당 클라이언트 정보를 clients에서 제거합니다.
@@ -52,6 +48,5 @@ public class WebSocketChatt {
 	public void onClose(Session s) {
 		System.out.println("session close : " + s);
 		clients.remove(s);
-
 	}
 }

@@ -19,28 +19,25 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	
 	//로그인
 	@Override
 	public UserVO loginProcess(String userName) {
-		
 		return sqlSession.selectOne("userMapper.loginUser", userName);
 	}
 	
 	//회원가입
 	@Override
 	public void registerUser(UserVO userVO) {
-		
 		//비밀번호 암호화
 		userVO.setUserPw(  encoder.encode(  userVO.getUserPw())  );
 		
-		
 		sqlSession.insert("userMapper.joinMember", userVO);
-		
 	}
+	
 	//회원정보조회
 	@Override
 	public UserVO selectUserInfo(UserVO userVO) {
-		
 		return sqlSession.selectOne("userMapper.selectUserInfo",userVO );
 	}
 
@@ -48,17 +45,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateUserInfo(Map<String, String> variableMap) {
 		sqlSession.update("userMapper.updateUserInfo", variableMap);
-		
 	}
 
 	//사진등록
 	@Override
 	public void regEmpPicture(UserVO userVO) {
 		sqlSession.update("userMapper.regEmpPicture", userVO);
-		
 	}
-	
-	
-	
 
 }

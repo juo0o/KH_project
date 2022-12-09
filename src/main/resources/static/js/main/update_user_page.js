@@ -171,7 +171,6 @@ function regPicture(){
 //	let imgform = $('#regPicture')[0];
 	let imgform = document.querySelector('#regPicture');
 	
-	
 	console.log(imgform);
 	
 	$.ajax({
@@ -183,10 +182,6 @@ function regPicture(){
 			cache: false,
 			data: new FormData(imgform), //필요한 데이터
 			success: function(result) {
-			
-			// 회원정보 만들어줌
-//			$('#empImg').attr('src','/imgs/user/' + result.empPictureRefileName);
-			
                                                                                           
 			},                                                                                                                                                  
 			error: function() {                                                                                                                                 
@@ -203,7 +198,6 @@ function regPicture(){
 	       location.href="/user/updateUserForm";
 	        }); 
 		
-//		$('#regPictureModal').modal('hide');
 }
 
 
@@ -246,8 +240,6 @@ function adminhModal(keyVariable){
 	  	    adminModalSelect.innerHTML = '';
 	  	    
 	  	    	str = `<option value ="사원">사원</option>     `
-			    str += `  <option value ="대리">대리</option>  `
-			    str += `  <option value ="과장">과장</option>  `
 			    str += `  <option value ="팀장">팀장</option>  `
 			    str += `  <option value ="부장">부장</option>  `
 			    str += `  <option value ="회장">회장</option>  `
@@ -296,14 +288,7 @@ function adminUpdateUser(){
 			async:false,
 			success: function(userInfo) {
 			
-			userId = userInfo.userId;
-			// 회원정보 만들어줌
-//			let userInfoPage = document.querySelector('#userInfo');
-				
-//			userInfoPage.innerHTML ='';
-//			userInfoPage.insertAdjacentHTML('afterbegin', str);       
-			
-			                                                                                        
+			userId = userInfo.userId;                                                                                    
 			},                                                                                                                                                  
 			error: function() {         
 				Swal.fire({
@@ -315,31 +300,13 @@ function adminUpdateUser(){
 			}
 		});
 		
-//		Swal.fire({
-//          title: '변경되었습니다',
-//          icon: 'warning',
-//          showCancelButton: true,
-//          confirmButtonColor: '#3085d6',
-//          cancelButtonColor: '#FFFFFF',
-//          confirmButtonText: '확인',
-//          cancelButtonText: ''
-//        }).then((result) => {
-//          if (result.isConfirmed) {
-//           location.href="/admin/adminUpdateUserForm?userId=" + userId;
-//            
-//          }
-//        })
-		
 	Swal.fire({
 	  icon: 'success',
 	  title: '변경성공',
 	  text: '',
 	}).then((result) => {
        location.href="/admin/adminUpdateUserForm?userId=" + userId;
-        }); 	
-//	alert(userId);
-//	location.href="/admin/adminUpdateUserForm?userId=" + userId;
-//	$('#launchModal').modal('hide');
-	
+       }); 	
+
 	
 }                                                                                         

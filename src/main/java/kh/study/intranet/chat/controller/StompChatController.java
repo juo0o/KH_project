@@ -24,7 +24,6 @@ public class StompChatController {
 	ChatService chatService;
 	
 	
-	
 	//client 가 send 할 수 있는 경로
 	//stompConfig에서 설정한 applicationDestinationPrefixed 와 @massage mapping 경로가 병합된다
 	//"/publish/chat/enter"
@@ -36,10 +35,6 @@ public class StompChatController {
 
 	@MessageMapping(value = "/chat/message")
 	public void message(ChatMessageVO message) {
-		
-		System.out.println("!!방번호" + message.getRoomId());
-		System.out.println("!!아이디" + message.getUserId());
-		System.out.println("!!메세지" + message.getMessage());
 		
 //		메세지 입력 db에 저장
 		chatService.insertMessage(message);

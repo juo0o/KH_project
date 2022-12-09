@@ -26,7 +26,10 @@ public class LoginSucessHandler implements AuthenticationSuccessHandler   {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-
+		
+		
+		System.out.println("========================== sucessHandler옴 ==========================");
+		
 		String url = "/main/mainPage";
 		
 		UserVO userVO = new UserVO();

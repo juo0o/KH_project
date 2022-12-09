@@ -11,13 +11,6 @@ function regNewUser() {
 			contentType: false,
 			cache: false,
 			success: function(result) {
-			// 회원정보 만들어줌
-//			let userInfoPage = document.querySelector('#userInfo');
-//			userInfoPage.innerHTML ='';
-//			let str='';
-//                                                                                                                                 
-//			userInfoPage.insertAdjacentHTML('afterbegin', str);       
-			                                                                                        
 			},                                                                                                                                                  
 			error: function() {         
 				Swal.fire({
@@ -34,7 +27,6 @@ function regNewUser() {
 			  title: '사원등록성공',
 			  text: '',
 			}).then((result) => {
-//		       location.href="/user/updateUserForm";
 				$('#regEmpModal').modal('hide');
 		        }); 
 }
@@ -51,12 +43,6 @@ function regDept() {
 			contentType: false,
 			cache: false,
 			success: function(result) {
-			// 회원정보 만들어줌
-//			let userInfoPage = document.querySelector('#userInfo');
-//			userInfoPage.innerHTML ='';
-//			let str='';
-//			userInfoPage.insertAdjacentHTML('afterbegin', str);       
-			                                                                                        
 			},                                                                                                                                                  
 			error: function() {         
 				Swal.fire({
@@ -73,7 +59,6 @@ function regDept() {
 			  title: '부서등록성공',
 			  text: '',
 			}).then((result) => {
-//		       location.href="/user/updateUserForm";
 				$('#regDeptModal').modal('hide');
 		        }); 
 }

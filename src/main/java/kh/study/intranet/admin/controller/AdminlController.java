@@ -42,16 +42,6 @@ public class AdminlController {
 	@Resource(name="userService")
 	UserService userService;
 	
-	//직원조회
-//	@RequestMapping("/selectEmpList")
-//	public String selectEmpList(Model model) {
-//		// 기본
-//		model.addAttribute("empList",adminService.selectEmpList());
-//		
-//		
-//		return "/pages/admin/selectEmpList";
-//	}
-	
 	//검색기능 + 페이징처리 합침
 	@RequestMapping("/selectEmpList")
 	public String selectEmpList(@RequestParam Map<String, Object> paramMap,PageVO pageVO,Model model) {
@@ -65,7 +55,8 @@ public class AdminlController {
 		String nowDate = appDateUtil.getNowDateToString("-");// 2020-10-10
 		// 한달 전날짜
 		String beforeDate = appDateUtil.getBeforeMonthDateToString();
-		// 넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
+		
+//		 넘어오는 fromDate가 없다면 한달 전 날짜로 세팅
 //		if (paramMap.get("fromDate") == null) {
 //			paramMap.put("fromDate", beforeDate);
 //		}
@@ -139,8 +130,6 @@ public class AdminlController {
 		adminService.regDept(deptVO);
 		return "aaa";
 	}
-	//부서조회 
-	
 	
 	
 }

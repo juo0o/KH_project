@@ -7,20 +7,8 @@ layout:decorate="~{layout/base_layout}">
 
 	<th:block layout:fragment="content">
 	
-	
-		
-		 <!-- Main Content
-            <div id="content" style="background-color: skyblue;"> -->
-            
-                
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid" >
-                
-                
-                		
-                
-                
                 
 
                     <!-- Content Row -->
@@ -172,41 +160,40 @@ layout:decorate="~{layout/base_layout}">
 	                                <div class="card-body">
 	                                
 	                                 <table class="table table-striped table-hover" style="height: 10px;">
-					
-													<colgroup>
-														<col width="5%">
-														<col width="55%">
-														<col width="20%">
-														<col width="20%">
-													</colgroup>
-													<thead>
-														<tr>
-															<th>NO</th>
-															<th>글제목</th>
-															<th>작성자</th>
-															<th>작성일</th>
-															<!-- <th>조회수</th> -->
-														</tr>
-													</thead>
-													<tbody >
-														<th:block th:each="notice : ${noticeBoard}">
-															<tr>
-																<td th:text="${noticeboardNum}"></td>
-																<td>
-																	<a th:href="@{/board/boardDetail(boardNum=${notice.boardNum})}">
-																		<span th:text="${notice.boardTitle}">
-																		</span>
-																		&nbsp; 
-																	</a>
-																</td>
-																<td th:text="${notice.userId}"></td>
-																<td th:text="${noticeboardRegDate}" ></td>
-															</tr>
-															
-															
-														</th:block>
-													</tbody>
-												</table>
+											<colgroup>
+												<col width="5%">
+												<col width="55%">
+												<col width="20%">
+												<col width="20%">
+											</colgroup>
+											<thead>
+												<tr>
+													<th>NO</th>
+													<th>글제목</th>
+													<th>작성자</th>
+													<th>작성일</th>
+													<!-- <th>조회수</th> -->
+												</tr>
+											</thead>
+											<tbody >
+												<th:block th:each="notice : ${noticeBoard}">
+													<tr>
+														<td th:text="${noticeboardNum}"></td>
+														<td>
+															<a th:href="@{/board/boardDetail(boardNum=${notice.boardNum})}">
+																<span th:text="${notice.boardTitle}">
+																</span>
+																&nbsp; 
+															</a>
+														</td>
+														<td th:text="${notice.userId}"></td>
+														<td th:text="${noticeboardRegDate}" ></td>
+													</tr>
+													
+													
+												</th:block>
+											</tbody>
+										</table>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -262,7 +249,6 @@ layout:decorate="~{layout/base_layout}">
 	                                </div>
 	                               
 	                                <div class="card-body" align="center">
-
 			   							 <table class="table">
 											<thead>
 												<tr bordercolor="sold 1px;">
@@ -298,7 +284,6 @@ layout:decorate="~{layout/base_layout}">
 	                                    <h6 class="m-0 font-weight-bold text-primary">결재할 문서</h6>
 	                                </div>
 	                                <div class="card-body" align="center">
-
 			   							 <table class="table">
 											<thead>
 												<tr bordercolor="sold 1px;">
@@ -331,17 +316,10 @@ layout:decorate="~{layout/base_layout}">
 	                                </div>
 	                            </div>
                 			</div>
-                			
-                		
-                        
 
     
          
                     </div>
-
-    
-
-         
                 </div>
 				
 				
