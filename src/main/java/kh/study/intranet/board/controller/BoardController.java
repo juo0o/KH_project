@@ -1,6 +1,5 @@
 package kh.study.intranet.board.controller;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -100,33 +99,10 @@ public class BoardController {
 	@GetMapping("/boardDetail")
 	public String boardDetail(int boardNum, ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response, BoardLikeVO boardLikeVO, Authentication authentication , Model model) {
 		
-		
-		
-		
-		// 게시글 상세 조회
-		model.addAttribute("detail", boardService.boardDetail(boardNum));
-
-		// 댓글 조회
-		model.addAttribute("reply", replyService.replyList(boardNum));
-		
-		
-		//좋아요 상태 확인
+		//ID 확인
 		User user = (User)authentication.getPrincipal();
-		boardLikeVO.setUserId(user.getUsername());
 		
-		BoardLikeVO result = boardLikeService.boardLikeCheck(boardLikeVO);
-
-		boolean isLike;
-		
-		//좋아요가 눌리지 않은 상태
-		if(result == null) {
-			model.addAttribute("like", false);
-		}
-		else{
-		//좋아요를 누른상태
-			model.addAttribute("like", true);
-		}
-		
+		//조회수 증가(중복 방지)
 		Cookie oldCookie = null;
 		
 		Cookie[] cookies = request.getCookies();
@@ -140,21 +116,45 @@ public class BoardController {
 		}
 		
 		if(oldCookie != null) {
-			if(!oldCookie.getValue().contains("[" + boardNum + "]")) {
-				boardService.boardDetail(boardNum);
-				oldCookie.setValue(oldCookie.getValue() + "_[" + boardNum + "]");
+			if(!oldCookie.getValue().contains("[" + Integer.toString(boardNum) + "/" + user.getUsername() + "]")) {
+				boardService.updateReadCnt(boardNum);
+				oldCookie.setValue(oldCookie.getValue() + "_[" + boardNum + "/" + user.getUsername() + "]");
 				oldCookie.setPath("/");
 				oldCookie.setMaxAge(60*60*24);
 				response.addCookie(oldCookie);
 				
 			}
 		} else {
-			boardService.boardDetail(boardNum);
-			Cookie newCookie = new Cookie("postView", "[" + boardNum + "]");
+			boardService.updateReadCnt(boardNum);
+			Cookie newCookie = new Cookie("postView", "[" + boardNum + "/" + user.getUsername() + "]"); //
 			newCookie.setPath("/");
 			newCookie.setMaxAge(60*60*24);
 			response.addCookie(newCookie);
 		}
+		
+		
+		
+		// 게시글 상세 조회
+		model.addAttribute("detail", boardService.boardDetail(boardNum));
+
+		// 댓글 조회
+		model.addAttribute("reply", replyService.replyList(boardNum));
+		
+		
+		//좋아요 상태 확인
+		boardLikeVO.setUserId(user.getUsername());
+		
+		BoardLikeVO result = boardLikeService.boardLikeCheck(boardLikeVO);
+
+		//좋아요가 눌리지 않은 상태
+		if(result == null) {
+			model.addAttribute("like", false);
+		}
+		else{
+		//좋아요를 누른상태
+			model.addAttribute("like", true);
+		}
+		
 		
 		return "pages/board/board_detail";
 	}

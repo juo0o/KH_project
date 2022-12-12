@@ -43,12 +43,14 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시글 상세조회
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public BoardVO boardDetail(int boardNum) {
-		//게시글 조회수 증가
-		sqlSession.update("boardMapper.updateReadCnt", boardNum);
-		//게시글 상세조회
 		return sqlSession.selectOne("boardMapper.selectBoardDetail", boardNum);
+	}
+	
+	//게시글 조회수 증가
+	@Override
+	public void updateReadCnt(int boardNum) {
+		sqlSession.update("boardMapper.updateReadCnt", boardNum);
 	}
 	
 	//게시글 등록
@@ -76,6 +78,10 @@ public class BoardServiceImpl implements BoardService {
 	public int selectBoardCnt() {
 		return sqlSession.selectOne("boardMapper.selectBoardCnt");
 	}
+
+	
+
+	
 }
 	
 
