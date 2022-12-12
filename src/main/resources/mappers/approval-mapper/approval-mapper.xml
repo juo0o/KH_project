@@ -109,10 +109,11 @@
 	
 	<!-- 승인칸 팀장,부장들 조회 -->
 	<select id="selectRole" resultMap="empMapper.emp">
-		SELECT EMP_ROLE, EMP_NAME, EMP_POSITION, EMP_NUM
+		SELECT EMP_ROLE, EMP_NAME, EMP_POSITION, EMP_NUM ,DEPT_NAME
 		FROM EMP
-		WHERE EMP.EMP_POSITION='팀장'
-		OR EMP.EMP_POSITION= '부장'
+		WHERE DEPT_NAME = #{deptName}
+		AND (EMP.EMP_POSITION='팀장'
+		OR EMP.EMP_POSITION= '부장')
 	</select>
 	
 	<!-- 품의서 등록 -->

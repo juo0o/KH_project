@@ -19,7 +19,7 @@ public interface ApprovalService {
 	
 	EmpVO selectAppEmp(EmpVO empVO);
 	
-	List<EmpVO> selectRole();
+	List<EmpVO> selectRole(EmpVO empVO);
 	
 	void insertApproval(ApprovalVO approvalVO,VacationVO vacatioVO,NomalVO nomalVO
 			, AccountingVO accountingVO, ReceiveRefVO receiveRefVO);

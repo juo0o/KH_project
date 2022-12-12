@@ -35,8 +35,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 	
 	@Override
-	public List<EmpVO> selectRole() {
-		return sqlSession.selectList("approvalMapper.selectRole");
+	public List<EmpVO> selectRole(EmpVO empVO) {
+		return sqlSession.selectList("approvalMapper.selectRole",empVO);
 	}
 	
 	

@@ -111,15 +111,21 @@ public class ApprovalController {
 	
 	//휴가신청 작성페이지
 	@GetMapping("/vacationReport")
-	public String vacationReport(ApprovalVO approvalVO, Model model,Authentication authentication,EmpVO empVO) {
+	public String vacationReport(ApprovalVO approvalVO, Model model,Authentication authentication,EmpVO empVO,HttpSession session) {
 		
 		
 		  User user = (User)authentication.getPrincipal();
 		  empVO.setUserId(user.getUsername());
 		  
+		  UserVO emp = (UserVO)session.getAttribute("userInfoAll");
+		  empVO.setDeptName(emp.getDeptName());
+			
+			
+			
+		  
 		 model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
 		 
-		model.addAttribute("empRole", approvalService.selectRole());
+		model.addAttribute("empRole", approvalService.selectRole(empVO));
 		
 		model.addAttribute("appSeq",approvalService.getAppSeq());
 		
@@ -146,13 +152,16 @@ public class ApprovalController {
 	}
 	//일반품의서 작성페이지
 	@GetMapping("/nomalReport")
-	public String nomalReport (Model model,Authentication authentication,EmpVO empVO) {
+	public String nomalReport (Model model,Authentication authentication,EmpVO empVO,HttpSession session) {
 		
 		User user = (User)authentication.getPrincipal();
 		 empVO.setUserId(user.getUsername());
 		 
+		 UserVO emp = (UserVO)session.getAttribute("userInfoAll");
+		 empVO.setDeptName(emp.getDeptName());
+		 
 		 model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
-		 model.addAttribute("empRole", approvalService.selectRole());
+		 model.addAttribute("empRole", approvalService.selectRole(empVO));
 		 model.addAttribute("appSeq",approvalService.getAppSeq());
 		
 		return "pages/approval/nomal_report";
@@ -172,13 +181,17 @@ public class ApprovalController {
 	
 	//회계품의서 작성페이지
 	@GetMapping("/accountingReport")
-	public String orderReport (EmpVO empVO,Authentication authentication, Model model ) {
+	public String orderReport (EmpVO empVO,Authentication authentication, Model model,HttpSession session) {
 		
 		User user =(User)authentication.getPrincipal();
 		empVO.setUserId(user.getUsername());
 		
+		//세션에서 부서명 뽑아내서 empVO에 넣기
+		UserVO emp = (UserVO)session.getAttribute("userInfoAll");
+		empVO.setDeptName(emp.getDeptName());
+		
 		model.addAttribute("empInfo", approvalService.selectAppEmp(empVO));
-		model.addAttribute("empRole", approvalService.selectRole());
+		model.addAttribute("empRole", approvalService.selectRole(empVO));
 		model.addAttribute("appSeq", approvalService.getAppSeq());
 		
 		return "pages/approval/accounting_report";
