@@ -45,11 +45,12 @@ public class LoginSucessHandler implements AuthenticationSuccessHandler   {
 		session.setAttribute("userInfoAll", userVO);
 		session.setMaxInactiveInterval(60*60*24);
 		request.setAttribute("userInfoAll", session);
+		
 		//처음은 set
 //		response.setHeader("Set-Cookie", "Test1=TestCookieValue1;   Secure; SameSite=None");
 		
 		//두번째는 add
-		response.addHeader("Set-Cookie", "userInfoAll=userInfoAll;   Secure; SameSite=None");
+//		response.addHeader("Set-Cookie", "userInfoAll=userInfoAll;   Secure; SameSite=None");
 //		response.addHeader("Set-Cookie", "Test2=TestCookieValue2;  Secure;  SameSite=None");
 		
 		

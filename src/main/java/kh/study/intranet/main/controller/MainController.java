@@ -35,7 +35,9 @@ public class MainController {
 	@RequestMapping("/mainPage")
 	public String mainPage(UserVO userVO,Authentication authentication, Model model,HttpSession session) {
 		
-		
+		System.out.println("=============================================");
+		System.out.println(session.getAttribute("userInfoAll"));
+		System.out.println("=============================================");
 		User user = (User)authentication.getPrincipal();
 		userVO.setUserId(user.getUsername());
 		
