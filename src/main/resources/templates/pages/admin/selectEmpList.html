@@ -22,7 +22,9 @@ layout:decorate="~{layout/base_layout}">
 					</colgroup>
 					<tr>
 						<td rowspan="2">
+						<br>
 							<div class="row">
+							
 								<div class="col-12">
 									검 색
 								</div>
@@ -47,7 +49,7 @@ layout:decorate="~{layout/base_layout}">
 							<input class="form-control" type="text" name="empPosition" id="" th:value="${paramMap['empPosition']}" >
 						</td>
 						<td rowspan="2">
-							<button type="submit" id="searchButton" class="btn btn-primary" style="height: 90px;">Search</button>
+							<button type="submit" id="searchButton" class="btn btn-outline-info" style="height: 90px;">검색</button>
 						</td>
 					</tr>
 					<tr>
@@ -64,18 +66,7 @@ layout:decorate="~{layout/base_layout}">
 						</td>
 						<td class="searchTitle"></td>
 						<td colspan="2">
-							<!-- <div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="" th:checked="${paramMap['itemStatus'] == null or paramMap['itemStatus'] eq ''}">
-							  <label class="form-check-label" for="">전체</label>
-							</div>
-				   			<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="ON_SALE" th:checked="${paramMap['itemStatus'] eq 'ON_SALE'}">
-							  <label class="form-check-label" for="">판매중</label>
-							</div>
-				   			<div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="itemStatus" id="" value="SOLD_OUT" th:checked="${paramMap['itemStatus'] eq 'SOLD_OUT'}">
-							  <label class="form-check-label" for="">매진</label>
-							</div> -->
+		
 						</td>
 					</tr>
 				</table>

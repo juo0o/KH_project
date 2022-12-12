@@ -16,7 +16,8 @@ public class UserVO extends PageVO  {
 		private String userId;
 		
 		@NotBlank(message= "PW는 필수입력사항입니다.")
-		@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$", message = "비밀번호는 최소8자 최대16자 영문 숫자 최소하나...")		
+//		@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$", message = "비밀번호는 최소8자 최대16자 영문 숫자 최소하나...")		
+		@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "비밀번호는 최소 8 자, 최소 하나의 문자 및 하나의 숫자")		
 		private String userPw;
 		
 		@NotBlank(message= "사번는 필수입력사항입니다.")
