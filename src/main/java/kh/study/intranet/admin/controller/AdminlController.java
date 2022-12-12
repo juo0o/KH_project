@@ -19,8 +19,6 @@ import groovyjarjarantlr4.v4.parse.ANTLRParser.delegateGrammar_return;
 import kh.study.intranet.admin.service.AdminService;
 import kh.study.intranet.admin.vo.RegEmpVO;
 import kh.study.intranet.approval.service.ApprovalService;
-import kh.study.intranet.approval.service.NomalApprovalService;
-import kh.study.intranet.approval.service.VacationApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
 import kh.study.intranet.approval.vo.NomalVO;
