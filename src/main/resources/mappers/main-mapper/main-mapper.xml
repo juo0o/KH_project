@@ -133,7 +133,7 @@
 	
 	<!-- 공지사항 조회 -->
 	<select id="noticeBoard" resultMap="board">
-		SELECT * FROM BOARD WHERE BOARD_CATE_CODE = '5' ORDER BY BOARD_NUM DESC
+		SELECT * FROM BOARD WHERE BOARD_CATE_CODE = '1' ORDER BY BOARD_NUM DESC
 	</select>
 	
 	

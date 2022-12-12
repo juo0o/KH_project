@@ -9,7 +9,7 @@ import kh.study.intranet.main.vo.UserVO;
 
 public class uploadFileUtil {
 	//upload Path 지정
-	private static final String UPLOAD_PATH ="D:\\dev\\workspaceSTS\\4Men-Intranet\\src\\main\\resources\\static\\imgs\\user\\";
+	private static final String UPLOAD_PATH ="C:\\Users\\lee\\git\\4Men-Intranet\\src\\main\\resources\\static\\imgs\\user\\";
 	
 	
 	
