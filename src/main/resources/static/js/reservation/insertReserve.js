@@ -2,7 +2,15 @@
 
 var sysdate = 0;
 		
- 
+let date = new Date();
+const year = date.getFullYear();
+const month = ('0' + (date.getMonth() + 1)).slice(-2);
+const day = ('0' + date.getDate()).slice(-2);
+const dateStr = year + '-' + month + '-' + day;
+
+
+
+
 //캘린더 출력, 이벤트적용  
       document.addEventListener('DOMContentLoaded', function() {
    
@@ -41,7 +49,8 @@ var sysdate = 0;
 	                                 start : date,
 	                                 end : date,
 	                                 display: 'background',
-	                                 backgroundColor: "#EB5353"
+	                                 backgroundColor: "#EB5353",
+	                                 
 	                              })
 	                           }
 	                           //예약가능한 날 선택해서 색바꾸어준다
@@ -61,12 +70,13 @@ var sysdate = 0;
                },
                
                dateClick: function (info) {
-                 
-               //등록 모달창띄운다
-               $('#createEventModal').modal('show');
-              
-               showRoomInfoAjax(info.dateStr);
-       
+               
+               //오늘날짜 이전이면 안띄움
+               if(dateStr <= info.dateStr){
+	               //등록 모달창띄운다
+	               $('#createEventModal').modal('show');
+	               showRoomInfoAjax(info.dateStr);
+			   }
                sysdate = info.dateStr;
                },
            });
@@ -94,15 +104,10 @@ function showRoomInfoAjax(dateStr) {
                   alert('ajax 실패');
          
                }
-               
-               
             });
             
       $('#createEventModal').modal('show');
-      
       return reservation;
-      
-         
       }
  
 //등록 눌렀을시 실행되는 함수      
@@ -112,7 +117,6 @@ function goReserve(){
 		const reserveTime = document.querySelector('#reserveTime').value;
 		const reserveName = document.querySelector('#reserveName').value;
 		const reserveComment = document.querySelector('#reserveComment').value;
-	
 		if(reserveTime == 0 ,reserveTime ==''){
 				Swal.fire({
       				  icon: 'success',
@@ -139,13 +143,9 @@ function goReserve(){
       				  text: '',
       				});
       				
-      				
       				//삭제하고 예약목록 그려준다.
       				let reserveAjaxDiv = document.querySelector('#resrveAjax');
       				let str = '';
-      				
-      				
-      				
 		      		str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveName}</span> </div>     `
 			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.roomCode}</span> </div>     `
 			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveDate}</span> </div>     `
@@ -158,13 +158,10 @@ function goReserve(){
                error: function() {
                   alert('ajax 실패');
                }
-               
-               
             });
             
             $('#reserveForm')[0].reset();
             $('#createEventModal').modal('hide');
-           			
 }
 
 //회의실 선택시 변경되는 함수
@@ -177,36 +174,27 @@ function selectChange(info){
                type: 'post',
                data: {'roomCode': roomCode,
                		  'reserveDate' : sysdate}, //필요한 데이터
-               
                success: function(result) {
-           			
            			const selectBox = document.querySelector('#reserveTime');
-           		    
            		    selectBox.innerHTML = '';
-           		    
-           		    
            		    $("#reserveTime option").remove();
-           		    
-           		    
            		    let str = '';
            		    
-           		    for(let reserve of result){
-						
-						str += `<option value="${reserve.reserveTime}">${reserve.reserveTime}</option>`;
-						
-												
+           		    if(result.length == 0){
+						str += ' <option>예약이 불가능합니다.</option>';
+					}
+           		    else{
+	           		    for(let reserve of result){
+							str += `<option value="${reserve.reserveTime}">${reserve.reserveTime}</option>`;
+						}
 					}
 						
-           			
+           			console.log(str);
            			selectBox.insertAdjacentHTML('beforeend',str);
-               
                },
                error: function() {
                   alert('ajax 실패');
-         
                }
-               
-               
             });
 }
 
@@ -219,7 +207,6 @@ function deleteReserve(event,reserveCode){
     			url: '/reservation/deleteReserve', //요청경로
     			type: 'post',
     			data: {'reserveCode' :  reserveCode}, //필요한 데이터
-    			
     			success: function(userInfo) {
     				Swal.fire({
       				  icon: 'success',
@@ -240,9 +227,7 @@ function deleteReserve(event,reserveCode){
     		
     		let deleteTag = event.parentNode.parentNode;
     		deleteTag.remove();
-    		
     	}
-      
       
       
       
