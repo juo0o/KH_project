@@ -210,6 +210,7 @@
 								<th:block th:unless="${list.isSecret eq 'N'}">
 									<!-- 작성자본인과 관리자만 수정삭제가능 -->
 									<th:block th:if="${list.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
+										<img src="/imgs/board/자물쇠.png" height="20" width="20">
 										<a th:href="@{/board/boardDetail(boardNum=${list.boardNum})}">
 											<span th:text="${list.boardTitle}"></span>
 										</a>

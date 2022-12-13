@@ -52,6 +52,23 @@ function updateReply(updateBtn){
 	}
 }
 
+//게시글삭제
+function deleteBoard(boardNum){
+	 Swal.fire({
+          title: '삭제하시겠습니까?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '삭제',
+          cancelButtonText: '취소'
+        }).then((result) => {
+          if (result.isConfirmed) {
+				location.href='/board/deleteBoard?boardNum=' + boardNum;
+          };
+        })
+}
+
 
 
 

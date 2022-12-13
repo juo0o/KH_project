@@ -100,7 +100,7 @@
 							</button>
 						</th:block>
 						<th:block th:if="${detail.userId eq #authentication.name or #strings.contains(#authentication.authorities,'ROLE_ADMIN')}">
-							<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/board/deleteBoard(boardNum=${detail.boardNum})}'|">
+							<button class="btn btn-secondary" type="button" th:onclick="|deleteBoard([[${detail.boardNum}]])|">
 								글삭제
 							</button>
 						</th:block>
