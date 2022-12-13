@@ -63,7 +63,7 @@
 		    FROM RESERVATION_MEETING_ROOM RES
 		    WHERE RESERVE_USER_ID = #{userId}
 		    AND TO_DATE(RESERVE_DATE, 'YY-MM-DD') &gt;= SYSDATE
-		    ORDER BY RESERVE_TIME 
+		    ORDER BY RESERVE_DATE 
 	</select>
 	
 	<!-- 내 예약 삭제 -->

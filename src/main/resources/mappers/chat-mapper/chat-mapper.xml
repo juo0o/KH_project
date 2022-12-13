@@ -55,6 +55,9 @@
 		   )			
 	</insert>
 	
+	<!-- 채팅방별 마지막 메세지 시간 -->
+	
+	
 	<!-- 채팅방 메세지 조회 -->
 	<select id="selectMessageList" resultMap="chatMessage">
 	SELECT MESSAGE_NUM

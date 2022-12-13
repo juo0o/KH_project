@@ -151,7 +151,7 @@ layout:decorate="~{layout/base_layout}">
 
 
 
-						<!-- 게시판 최근글 -->
+						<!-- 공지사항 -->
                             <div class="col-xl-4">
 	                            <div class="card border-left-success shadow mb-4 scroll2" style="height: 300px;">
 	                                <div class="card-header py-3">
@@ -187,7 +187,7 @@ layout:decorate="~{layout/base_layout}">
 															</a>
 														</td>
 														<td th:text="${notice.userId}"></td>
-														<td th:text="${noticeboardRegDate}" ></td>
+														<td th:text="${notice.boardRegDate}" ></td>
 													</tr>
 													
 													
@@ -228,7 +228,7 @@ layout:decorate="~{layout/base_layout}">
 												</table>
                                             	<script type="text/javascript">
                                             		function openWindow(roomName,roomId){
-                                            			window.open('/chat/chat_room2?roomName' + roomName + "&roomId="+roomId , 'exobud','width=500px, height=700px, resizable=yes');
+                                            			window.open('/chat/chat_room2?roomName=' + roomName + "&roomId="+roomId , 'exobud','width=500px, height=700px, resizable=yes');
                                             		}
                                             	
                                             	</script>
@@ -241,7 +241,7 @@ layout:decorate="~{layout/base_layout}">
                         
                         
                         
-                        <!-- 결재할문서 -->
+                        <!-- 결재받을문서 -->
                 			<div class="col-xl-6" >
 	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
 	                            	<div class="card-header py-3">
@@ -277,7 +277,7 @@ layout:decorate="~{layout/base_layout}">
                         
                         
                         
-                        <!-- 결재받을문서 -->
+                        <!-- 결재할문서 -->
                 			<div class="col-xl-6" >
 	                            <div class="card border-left-success shadow mb-4" style="height: 300px;" id="scroll">
 	                            	<div class="card-header py-3">

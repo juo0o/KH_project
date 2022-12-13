@@ -133,7 +133,12 @@
 	
 	<!-- 공지사항 조회 -->
 	<select id="noticeBoard" resultMap="board">
-		SELECT * FROM BOARD WHERE BOARD_CATE_CODE = '1' ORDER BY BOARD_NUM DESC
+		SELECT  BOARD_NUM
+                 , BOARD_TITLE
+                 , USER_ID
+                 , TO_CHAR(BOARD_REG_DATE, 'MM-DD') AS BOARD_REG_DATE
+		FROM BOARD 
+		WHERE BOARD_CATE_CODE = '1' ORDER BY BOARD_NUM DESC
 	</select>
 	
 	
@@ -154,7 +159,7 @@
 	
 <!-- 	</select> -->
 	
-	<!-- 결재받을문서 -->
+	<!-- 결재할문서 -->
 	<select id="documentsToBeApproved" resultMap="approval">
 		SELECT APP.APP_SEQ
 		       , TO_CHAR(APP_WRITE_DATE, 'YY-MM-DD') AS APP_WRITE_DATE
@@ -178,7 +183,7 @@
 			ORDER BY APP.APP_SEQ DESC
 	</select>
 	
-	<!-- 결재할 문서 -->
+	<!-- 결재받을 문서 -->
 	<select id="documentsFromBeApprov" resultMap="approval">
 		SELECT APP.APP_SEQ
 			       , TO_CHAR(APP_WRITE_DATE, 'YY-MM-DD') AS APP_WRITE_DATE
@@ -193,7 +198,7 @@
 	        AND APP.USER_ID = EMP.USER_ID
 	        AND APP.APP_CATE_CODE = CATE.APP_CATE_CODE
 			AND APP.USER_ID = #{userId}
-            AND ( FIRST_APPROVAL = 'Y' OR FINAL_APPROVAL = 'Y')
+            AND ( FIRST_APPROVAL = 'N' OR FINAL_APPROVAL = 'N')
 			ORDER BY APP.APP_SEQ DESC
 	</select>
 	

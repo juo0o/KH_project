@@ -8,82 +8,153 @@ const month = ('0' + (date.getMonth() + 1)).slice(-2);
 const day = ('0' + date.getDate()).slice(-2);
 const dateStr = year + '-' + month + '-' + day;
 
+//시작하잠자ㅏ 달력띄어줌
+$(document).ready(loadCalendar())
 
-
-
-//캘린더 출력, 이벤트적용  
-      document.addEventListener('DOMContentLoaded', function() {
-   
-   
-        var calendarEl = document.getElementById('calendar');
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-           
-            locale : 'ko',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            //initialView: 'dayGridMonth',
-            height: '550px',
-          
-            expandRows: true ,
-            events:function(info, successCallback, failureCallback){
-	                	$.ajax({
-	                       type: 'POST'
-	                       ,cache: false
-	                       ,url: '/reservation/insertReserveAjax'
-	                       ,dataType: 'json'
-	                       ,processData: false
-	                       ,contentType: false
-	                       ,cache: false
-	                       ,success: function(resultMap){
-	                              var events = [];
-	                              	                  
-	                           //예약불가능한날 선택해서 색바꾸어준다
-                              for(var date of resultMap.disDate){
-	                              
-	                              events.push({
-	                                 title : '',
-	                                 start : date,
-	                                 end : date,
-	                                 display: 'background',
-	                                 backgroundColor: "#EB5353",
-	                                 
-	                              })
-	                           }
-	                           //예약가능한 날 선택해서 색바꾸어준다
-                              for(var date of resultMap.avaDate){
-	                              
-	                              events.push({
-	                                 title : '',
-	                                 start : date,
-	                                 end : date,
-	                                 display: 'background',
-	                                 backgroundColor: "#0E3EDA"
-	                              })
-	                           }
-	                          successCallback(events);
-	                         }
-	                     });
-               },
-               
-               dateClick: function (info) {
-               
-               //오늘날짜 이전이면 안띄움
-               if(dateStr <= info.dateStr){
-	               //등록 모달창띄운다
-	               $('#createEventModal').modal('show');
-	               showRoomInfoAjax(info.dateStr);
-			   }
-               sysdate = info.dateStr;
-               },
-           });
-        
-        calendar.render();
-        
-      });
+//달력불러오기
+function loadCalendar(){
+	  var calendarEl = document.getElementById('calendar');
+	        
+	        var calendar = new FullCalendar.Calendar(calendarEl, {
+	           
+	            locale : 'ko',
+	            headerToolbar: {
+	                left: 'prev,next today',
+	                center: 'title',
+	                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+	            },
+	            //initialView: 'dayGridMonth',
+	            height: '550px',
+	          
+	            expandRows: true ,
+	            events:function(info, successCallback, failureCallback){
+		                	$.ajax({
+		                       type: 'POST'
+		                       ,cache: false
+		                       ,url: '/reservation/insertReserveAjax'
+		                       ,dataType: 'json'
+		                       ,processData: false
+		                       ,contentType: false
+		                       ,cache: false
+		                       ,success: function(resultMap){
+		                              var events = [];
+		                              	                  
+		                           //예약불가능한날 선택해서 색바꾸어준다
+	                              for(var date of resultMap.disDate){
+		                              
+		                              events.push({
+		                                 title : '',
+		                                 start : date,
+		                                 end : date,
+		                                 display: 'background',
+		                                 backgroundColor: "#EB5353",
+		                                 
+		                              })
+		                           }
+		                           //예약가능한 날 선택해서 색바꾸어준다
+	                              for(var date of resultMap.avaDate){
+		                              
+		                              events.push({
+		                                 title : '',
+		                                 start : date,
+		                                 end : date,
+		                                 display: 'background',
+		                                 backgroundColor: "#0E3EDA"
+		                              })
+		                           }
+		                          successCallback(events);
+		                         }
+		                     });
+	               },
+	               
+	               dateClick: function (info) {
+	               
+	               //오늘날짜 이전이면 안띄움
+	               if(dateStr <= info.dateStr){
+		               //등록 모달창띄운다
+		               $('#createEventModal').modal('show');
+		               showRoomInfoAjax(info.dateStr);
+				   }
+	               sysdate = info.dateStr;
+	               },
+	           });
+	        
+	        calendar.render();
+}
+	
+	//캘린더 출력, 이벤트적용  
+//      document.addEventListener('DOMContentLoaded', function() {
+//   
+//   
+//        var calendarEl = document.getElementById('calendar');
+//        
+//        var calendar = new FullCalendar.Calendar(calendarEl, {
+//           
+//            locale : 'ko',
+//            headerToolbar: {
+//                left: 'prev,next today',
+//                center: 'title',
+//                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+//            },
+//            //initialView: 'dayGridMonth',
+//            height: '550px',
+//          
+//            expandRows: true ,
+//            events:function(info, successCallback, failureCallback){
+//	                	$.ajax({
+//	                       type: 'POST'
+//	                       ,cache: false
+//	                       ,url: '/reservation/insertReserveAjax'
+//	                       ,dataType: 'json'
+//	                       ,processData: false
+//	                       ,contentType: false
+//	                       ,cache: false
+//	                       ,success: function(resultMap){
+//	                              var events = [];
+//	                              	                  
+//	                           //예약불가능한날 선택해서 색바꾸어준다
+//                              for(var date of resultMap.disDate){
+//	                              
+//	                              events.push({
+//	                                 title : '',
+//	                                 start : date,
+//	                                 end : date,
+//	                                 display: 'background',
+//	                                 backgroundColor: "#EB5353",
+//	                                 
+//	                              })
+//	                           }
+//	                           //예약가능한 날 선택해서 색바꾸어준다
+//                              for(var date of resultMap.avaDate){
+//	                              
+//	                              events.push({
+//	                                 title : '',
+//	                                 start : date,
+//	                                 end : date,
+//	                                 display: 'background',
+//	                                 backgroundColor: "#0E3EDA"
+//	                              })
+//	                           }
+//	                          successCallback(events);
+//	                         }
+//	                     });
+//               },
+//               
+//               dateClick: function (info) {
+//               
+//               //오늘날짜 이전이면 안띄움
+//               if(dateStr <= info.dateStr){
+//	               //등록 모달창띄운다
+//	               $('#createEventModal').modal('show');
+//	               showRoomInfoAjax(info.dateStr);
+//			   }
+//               sysdate = info.dateStr;
+//               },
+//           });
+//        
+//        calendar.render();
+//        
+//      });
        
  
 function showRoomInfoAjax(dateStr) {
@@ -129,6 +200,7 @@ function goReserve(){
 		$.ajax({
                url: '/reservation/regReservation', //요청경로
                type: 'post',
+               async : false ,
                data: {'roomCode':document.querySelector('#meetingRoom').value 
                ,'reserveTime':document.querySelector('#reserveTime').value
                ,'reserveDate':sysdate
@@ -151,9 +223,11 @@ function goReserve(){
 			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveDate}</span> </div>     `
 			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveTime}</span> </div>     `
 			      	str+=`		<div class="col-2" style="padding-top: 4px;"> <span >${result.reserveComment}</span> </div>     `
-			      	str+=`		<div class="col-2" align="right"> <button onclick="deleteReserve(this,[[${result.reserveCode}]])" class="btn btn-outline-info">취소</button> </div>`
+			      	str+=`		<div class="col-2" align="right"> <button onclick="deleteReserve(this,${result.reserveCode})" class="btn btn-outline-info">취소</button> </div>`
                
                		reserveAjaxDiv.insertAdjacentHTML('afterbegin', str);
+               		//성공하고 달력띄어줌
+               		loadCalendar();
                },
                error: function() {
                   alert('ajax 실패');
@@ -162,6 +236,8 @@ function goReserve(){
             
             $('#reserveForm')[0].reset();
             $('#createEventModal').modal('hide');
+            //예약하면 달력다ㅣㅅ불러옴
+            loadCalendal();
 }
 
 //회의실 선택시 변경되는 함수
@@ -205,6 +281,7 @@ function deleteReserve(event,reserveCode){
     		
     		$.ajax({
     			url: '/reservation/deleteReserve', //요청경로
+    			async : false  ,
     			type: 'post',
     			data: {'reserveCode' :  reserveCode}, //필요한 데이터
     			success: function(userInfo) {
@@ -212,7 +289,9 @@ function deleteReserve(event,reserveCode){
       				  icon: 'success',
       				  title: '예약을 취소하였습니다.',
       				  text: '',
-      				});                                                                                                                         
+      				});
+      				//삭제하고 달력띄어줌
+               		loadCalendar();    
       				return;                                                              
     			},                                                                                                                                                  
     			error: function() {         
@@ -227,6 +306,8 @@ function deleteReserve(event,reserveCode){
     		
     		let deleteTag = event.parentNode.parentNode;
     		deleteTag.remove();
+    		//취소하면 달력 다시불러옴
+            
     	}
       
       

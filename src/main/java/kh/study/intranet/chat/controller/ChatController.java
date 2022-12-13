@@ -80,6 +80,9 @@ public class ChatController {
 //		    model.addAttribute("room", repository.findRoomById(roomId));
 		    model.addAttribute("roomId", roomId);
 		    model.addAttribute("roomName", roomName);
+		    System.out.println("!!!!!!!!! : " + roomName);
+		    System.out.println("!!!!!!!!! : " + roomName);
+		    System.out.println("!!!!!!!!! : " + roomName);
 		    
 		    //채팅메세지 보내주기
 		    if(roomId !=null) {
