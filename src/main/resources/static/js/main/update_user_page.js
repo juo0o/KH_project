@@ -171,18 +171,21 @@ function regPicture(){
 //	let imgform = $('#regPicture')[0];
 	let imgform = document.querySelector('#regPicture');
 	
-	console.log(imgform);
+	
+
 	
 	$.ajax({
 			url: '/user/regPicture', //요청경로
 			type: 'post',
 			enctype: 'multipart/form-data',
+			async: false ,
 			processData: false,
 			contentType: false,
 			cache: false,
 			data: new FormData(imgform), //필요한 데이터
 			success: function(result) {
-                                                                                          
+                
+                                                                              
 			},                                                                                                                                                  
 			error: function() {                                                                                                                                 
 				alert('ajax 실패');                                                                                                                             
@@ -190,14 +193,30 @@ function regPicture(){
 			}
 		});
 		
-		Swal.fire({
-		  icon: 'success',
-		  title: '변경성공',
-		  text: '',
-		}).then((result) => {
-	       location.href="/user/updateUserForm";
-	        }); 
-		
+				Swal.fire({
+//				  icon: 'info',
+				  timer : 3000,
+				  title: '변경중',
+				  buttons: false,
+				  text: ''   ,
+				  showCloseButton : false   ,
+				  showConfirmButton : false  ,
+				  html:
+                          `
+                             <div class="input-group" >
+                                <img src="/imgs/common/loadin.gif" style=" margin : auto; height : 150px; width: 150px;"  />
+                             </div>`,
+				}).then((result) => {
+			       		Swal.fire({
+						  icon: 'success',
+						  timer : 3000,
+						  title: '변경완료',
+						  text: ''   ,
+						  showConfirmButton : false
+						}).then((result) => {
+					       location.href="/user/updateUserForm";
+					        }); 
+			        });   
 }
 
 
