@@ -8,7 +8,7 @@
 <br>
 
 
-<a href="https://www.youtube.com/watch?v=Stht_QTjvtE  ">시연영상 보러가기</a>
+<a href="https://www.youtube.com/watch?v=-0LDqazFLAE  ">시연영상 보러가기</a>
 
 <br>
 
@@ -225,7 +225,6 @@
 ### 결재문서함
 
 ![결재 문서함](https://user-images.githubusercontent.com/116548340/206597225-962c1984-9af1-4892-8383-53a535ff2d37.png)
-
 
 
 ### 사내 게시판 페이지
