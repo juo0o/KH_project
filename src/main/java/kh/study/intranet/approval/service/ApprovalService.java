@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kh.study.intranet.alarm.vo.AlarmVO;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
@@ -22,7 +23,7 @@ public interface ApprovalService {
 	List<EmpVO> selectRole(EmpVO empVO);
 	
 	void insertApproval(ApprovalVO approvalVO,VacationVO vacatioVO,NomalVO nomalVO
-			, AccountingVO accountingVO, ReceiveRefVO receiveRefVO);
+			, AccountingVO accountingVO, ReceiveRefVO receiveRefVO,AlarmVO alarmVO);
 	
 	List<ApprovalVO> selectApp(Map<String, Object> map);
 	

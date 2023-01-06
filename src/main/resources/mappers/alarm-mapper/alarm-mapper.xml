@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 해당 파일에 모든 쿼리문을 작성 -->
+<mapper namespace="alarmMapper">
+	<resultMap type="kh.study.intranet.alarm.vo.AlarmVO" id="alarm">
+		<id column="ALARM_STATUS"     			property="alarmStatus"/>
+		<result column="USER_ID" 		property="userId"/>
+		<result column="APP_SEQ" 			property="appSeq"/>
+		<result column="FROM_USER_ID" 			property="fromUserId"/>
+	</resultMap>
+
+	<!-- 결제시 알람 인설트 -->
+	<insert id="insertAlarm">
+		INSERT INTO ALARM(
+			USER_ID
+			, APP_SEQ
+			, FROM_USER_ID
+		)VALUES(
+			#{userId}
+			, #{appSeq}
+			, (SELECT USER_ID FROM EMP WHERE EMP_NUM = #{fromUserId})
+		)
+	
+	</insert>
+	
+	<!-- 알람 조회 -->
+	<select id="selectAlarm" resultMap="alarm">
+		SELECT ALARM_STATUS
+			, ALARM.USER_ID
+			, ALARM.APP_SEQ
+			, ALARM.FROM_USER_ID
+		FROM ALARM,EMP,APPROVAL
+		WHERE ALARM.USER_ID = EMP.USER_ID
+		AND ALARM.APP_SEQ = APPROVAL.APP_SEQ
+		AND ALARM.FROM_USER_ID = #{userId}
+		AND ALARM_STATUS = 'N'
+	</select>
+</mapper>
+

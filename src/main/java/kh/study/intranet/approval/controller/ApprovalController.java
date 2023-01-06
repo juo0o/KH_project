@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import kh.study.intranet.admin.service.AdminService;
+import kh.study.intranet.alarm.service.AlarmService;
+import kh.study.intranet.alarm.vo.AlarmVO;
 import kh.study.intranet.approval.service.ApprovalService;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
@@ -40,7 +43,12 @@ public class ApprovalController {
 	private ApprovalService approvalService;
 	
 	@Resource(name="adminService")
-	AdminService adminService;
+	private AdminService adminService;
+	
+	@Resource(name="alarmService")
+	private AlarmService alarmService;
+	
+	
 	
 	
 	
@@ -136,15 +144,17 @@ public class ApprovalController {
 	}
 	//휴가신청서 등록
 	@PostMapping("/regVacation")
-	public String regVacation(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,Authentication authentication,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
+	public String regVacation(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,Authentication authentication,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO,AlarmVO alarmVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		vacationVO.setUserId(user.getUsername());
-		  
 		
-		  approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
+		alarmVO.setUserId(user.getUsername());
+		alarmVO.setAppSeq(approvalVO.getAppSeq());
 		
+		  approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
+		  alarmService.insertAlarm(alarmVO);
 		//vacationApprovalService.insertVacation(vacationVO);
 		
 		
@@ -168,14 +178,23 @@ public class ApprovalController {
 	}
 	//일반품의서 등록
 	@PostMapping("/regNomal")
-	public String regNomal(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
+	public String regNomal(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO,AlarmVO alarmVO) {
 		
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		nomalVO.setUserId(user.getUsername());
+		alarmVO.setUserId(user.getUsername());
+		alarmVO.setFromUserId(receiveRefVO.getFirstApprovalEmp());
 		
-		 approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
+		alarmVO.setAppSeq(approvalVO.getAppSeq());
 		
+		System.out.println(alarmVO);
+		System.out.println(alarmVO);
+		System.out.println(alarmVO);
+		System.out.println(alarmVO);
+		
+		 approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
+		 alarmService.insertAlarm(alarmVO);
 		return "redirect:/approval/nomalReport";
 	}
 	
@@ -198,14 +217,15 @@ public class ApprovalController {
 	}
 	//회계품의서 등록
 	@PostMapping("/regAccounting")
-	public String regAccounting(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
+	public String regAccounting(VacationVO vacationVO,EmpVO empVO,ApprovalVO approvalVO,NomalVO nomalVO,Authentication athenAuthentication,AccountingVO accountingVO,ReceiveRefVO receiveRefVO,AlarmVO alarmVO) {
 		
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		accountingVO.setUserId(user.getUsername());
+		alarmVO.setUserId(user.getUsername());
 		
-		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO);
-		
+		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
+		alarmService.insertAlarm(alarmVO);
 		
 		return "redirect:/approval/accountingReport";
 	}
@@ -320,7 +340,21 @@ public class ApprovalController {
 		
 	}
 	
+//-------------------------------------------------------
+	//알람 창 불러오는 에이작스
 	
+	@ResponseBody
+	@PostMapping("/alarm")
+		public String alarm(AlarmVO alarmVO,Authentication authentication) {
+			
+		User user = (User)authentication.getPrincipal();
+		alarmVO.setUserId(user.getUsername());
+		alarmVO.setFromUserId(user.getUsername());
+		
+		alarmService.selectAlarm(alarmVO);
+			return "fragment/top";
+		}
+	}
 	
 	
 		
@@ -328,4 +362,4 @@ public class ApprovalController {
 
 	
 	
-}
+

@@ -1,5 +1,6 @@
 package kh.study.intranet.approval.vo;
 
+import kh.study.intranet.alarm.vo.AlarmVO;
 import kh.study.intranet.emp.vo.EmpVO;
 import kh.study.intranet.main.vo.UserVO;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class ApprovalVO  {
 	private AppCategoryVO appCategoryVO;
 	private ReceiveRefVO receiveRefVO;
 	private UserVO userVO;
+	private AlarmVO alarmVO;
 	
 	
 	private String table;

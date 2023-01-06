@@ -327,7 +327,10 @@
 	</div>
 </form>
 </div>
+
+	<script src="/js/approval/index.js"></script>
 	<script type="text/javascript">
+	
 					function Confirm(){
 			            Swal.fire({
 			              title: '결재하시겠습니까?',
@@ -343,6 +346,7 @@
 			                $('#accountingButton').attr('onclick','')
 			                $('#accountingButton').click();
 			                
+			                connectWs();
 			              }
 			            })
 			         }

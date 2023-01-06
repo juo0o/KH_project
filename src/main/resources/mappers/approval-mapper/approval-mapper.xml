@@ -17,6 +17,7 @@
 		<association property="accountingVO" resultMap="accounting"/>
 		<association property="receiveRefVO" resultMap="receiveRef"/>
 	 	<association property="userVO" resultMap="user"/>
+	 
 	</resultMap>
 	
 	

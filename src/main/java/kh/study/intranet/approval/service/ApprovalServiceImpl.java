@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kh.study.intranet.alarm.vo.AlarmVO;
 import kh.study.intranet.approval.vo.AccountingVO;
 import kh.study.intranet.approval.vo.AppCategoryVO;
 import kh.study.intranet.approval.vo.ApprovalVO;
@@ -42,7 +43,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void insertApproval(ApprovalVO approvalVO,VacationVO vacationVO,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO) {
+	public void insertApproval(ApprovalVO approvalVO,VacationVO vacationVO,NomalVO nomalVO,AccountingVO accountingVO,ReceiveRefVO receiveRefVO,AlarmVO alarmVO ) {
 		sqlSession.insert("approvalMapper.insertApproval",approvalVO);
 		
 		System.out.println(vacationVO);
@@ -69,6 +70,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 		}
 		
 		sqlSession.insert("approvalMapper.insertReceiveRef",receiveRefVO);
+		sqlSession.insert("alarmMapper.insertAlarm",alarmVO);
 	}
 
 
