@@ -46,7 +46,7 @@
 	</resultMap>
 	
 	<resultMap type="kh.study.intranet.approval.vo.AccountingVO" id="accounting">
-		<id column="ACCOUNTING_SEQ" 		property="accountingSeq"/>
+		<id column="ACCOUNTING_SEQ" 		property="acco-untingSeq"/>
 		<result column="PAYMENT_REQUEST_DATE" 		property="paymentRequestDate"/>
 		<result column="ACCOUNTING_CLIENT" 		property="accountingClient"/>
 		<result column="ACCOUNT_NUMBER" 		property="accountNumber"/>

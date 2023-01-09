@@ -1,5 +1,13 @@
+let isExistAlarm = false;
+
+let alarmAppSeq;
+
+
 function alarm() {
 	
+	if(isExistAlarm) {
+		return;
+	}
 	
 	//ajax start
 	$.ajax({
@@ -8,6 +16,14 @@ function alarm() {
 		data: {}, //필요한 데이터
 		success: function(result) {
 			
+			if(result == null)
+				return;
+				
+			if(result.length == 0)
+				return;
+				
+			isExistAlarm = true;
+			alarmAppSeq = result[0].appSeq;
 		
 //			const alarmModal = new bootstrap.Modal('#alarm');
 //			alarmModal.show();
@@ -20,4 +36,10 @@ function alarm() {
 	});
 	//ajax end
 }
-setInterval(alarm, 10000);
+setInterval(alarm, 5000);
+
+
+
+function updateAlarm() {
+	location.href='/approval/updateAlarm?appSeq='+alarmAppSeq;
+}

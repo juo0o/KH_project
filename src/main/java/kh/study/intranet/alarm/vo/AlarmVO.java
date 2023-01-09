@@ -11,5 +11,5 @@ public class AlarmVO {
 	private String alarmStatus;
 	private String userId;
 	private String appSeq;
-	private String fromUserId;
+	private String toUserId;
 }

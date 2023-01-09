@@ -60,7 +60,7 @@
 										</td>
 										<td style="border: 1px solid black;" id="approvalButton" th:if="${ref.FIRST_APPROVAL == 'N'}">
 											<input type="button" value="결재승인"
-											th:onclick="approvalMark([[${ref.FIRST_APPROVAL_EMP}]],[[${document.appSeq}]]);">
+											th:onclick="approvalMark([[${ref.FIRST_APPROVAL_EMP}]],[[${document.appSeq}]],[[${ref.FINAL_APPROVAL_EMP}]]);">
 										</td>
 									</th:block>
 									<th:block th:unless="${#authentication.name eq ref.FIRST_USER_ID}">

@@ -33,7 +33,7 @@ public interface ApprovalService {
 	
 	HashMap<String, Object> selectReciveRef(ReceiveRefVO receiveRefVO);
 	
-	void updateApproval(ReceiveRefVO receiveRefVO);
+	void updateApproval(ReceiveRefVO receiveRefVO,AlarmVO alarmVO);
 	
 	void updateFinalApproval(ReceiveRefVO receiveRefVO);
 	

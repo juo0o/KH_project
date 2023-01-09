@@ -183,9 +183,9 @@ public class ApprovalController {
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		nomalVO.setUserId(user.getUsername());
-		alarmVO.setUserId(user.getUsername());
-		alarmVO.setFromUserId(receiveRefVO.getFirstApprovalEmp());
 		
+		alarmVO.setUserId(user.getUsername());
+		alarmVO.setToUserId(receiveRefVO.getFirstApprovalEmp());
 		alarmVO.setAppSeq(approvalVO.getAppSeq());
 		
 		System.out.println(alarmVO);
@@ -328,9 +328,29 @@ public class ApprovalController {
 	//첫번쨰 승인자가 결재승인 클릭시 도장찍힘
 	@ResponseBody
 	@PostMapping("/approvalMark")
-	public void approvalMark(ReceiveRefVO receiveRefVO) {
-		approvalService.updateApproval(receiveRefVO); 
+	public void approvalMark(ReceiveRefVO receiveRefVO,AlarmVO alarmVO,Authentication authentication,ApprovalVO approvalVO) {
 		
+		User user = (User)authentication.getPrincipal();
+		
+		alarmVO.setUserId(user.getUsername());
+		alarmVO.setToUserId(receiveRefVO.getFinalApprovalEmp());
+		alarmVO.setAppSeq(receiveRefVO.getAppSeq());
+		
+		
+		System.out.println(alarmVO.getUserId());
+		System.out.println(alarmVO.getToUserId());
+		System.out.println(alarmVO.getAppSeq());
+		System.out.println();
+		System.out.println(alarmVO.getUserId());
+		System.out.println(alarmVO.getToUserId());
+		System.out.println(alarmVO.getAppSeq());
+		System.out.println();
+		System.out.println(alarmVO.getUserId());
+		System.out.println(alarmVO.getToUserId());
+		System.out.println(alarmVO.getAppSeq());
+		System.out.println();
+		
+		approvalService.updateApproval(receiveRefVO,alarmVO); 
 	}
 	//두번쨰 승인자가 결재승인 클릭시 도장찍힘
 	@ResponseBody
@@ -345,18 +365,37 @@ public class ApprovalController {
 	
 	@ResponseBody
 	@PostMapping("/alarm")
-		public String alarm(AlarmVO alarmVO,Authentication authentication) {
+		public List<AlarmVO> alarm(AlarmVO alarmVO,Authentication authentication,ReceiveRefVO receiveRefVO) {
 			
-		User user = (User)authentication.getPrincipal();
-		alarmVO.setUserId(user.getUsername());
-		alarmVO.setFromUserId(user.getUsername());
+			User user = (User)authentication.getPrincipal();
+			System.out.println( user.getAuthorities() );
+			
+			String authorities = user.getAuthorities().toString();
+			if(! (authorities.contains("ROLE_MANAGER") || authorities.contains("ROLE_EMPLOYEE")) )
+				return null;
+				
+			alarmVO.setUserId(user.getUsername());
+			alarmVO.setToUserId(receiveRefVO.getFirstApprovalEmp());
+			alarmVO.setToUserId(receiveRefVO.getFinalApprovalEmp());
+			
 		
-		alarmService.selectAlarm(alarmVO);
-			return "fragment/top";
+		
+			return alarmService.selectAlarm(alarmVO);
 		}
+
+//----------------------------------------------------
+	//알람 눌렀을때 업데이트
+	
+	@GetMapping("/updateAlarm")
+	public String updateAlarm(AlarmVO alarmVO) {
+		
+		alarmService.updateAlarm(alarmVO);
+		
+		return "redirect:/approval/receiveAppPage";
 	}
 	
 	
+}
 		
 	
 

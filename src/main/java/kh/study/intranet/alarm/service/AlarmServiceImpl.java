@@ -29,4 +29,12 @@ public class AlarmServiceImpl implements AlarmService{
 	public List<AlarmVO> selectAlarm(AlarmVO alarmVO) {
 		return sqlSession.selectList("alarmMapper.selectAlarm",alarmVO);
 	}
+
+	@Override
+	public void updateAlarm(AlarmVO alarmVO) {
+		sqlSession.update("alarmMapper.updateAlarm",alarmVO);
+		
+	}
+	
+	
 }

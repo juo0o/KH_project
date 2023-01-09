@@ -9,4 +9,6 @@ public interface AlarmService {
 	void insertAlarm(AlarmVO alarmVO);
 	
 	List<AlarmVO> selectAlarm(AlarmVO alarmVO);
+	
+	void updateAlarm(AlarmVO alarmVO);
 }

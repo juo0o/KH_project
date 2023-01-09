@@ -96,10 +96,13 @@ public class ApprovalServiceImpl implements ApprovalService{
 	public HashMap<String, Object> selectReciveRef(ReceiveRefVO receiveRefVO) {
 		return sqlSession.selectOne("approvalMapper.selectReciveRef",receiveRefVO);
 	}
-
+	
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void updateApproval(ReceiveRefVO receiveRefVO) {
+	public void updateApproval(ReceiveRefVO receiveRefVO,AlarmVO alarmVO) {
 		sqlSession.update("approvalMapper.updateApproval",receiveRefVO);
+		
+		sqlSession.insert("alarmMapper.insertAlarm",alarmVO);
 		
 		
 	}
