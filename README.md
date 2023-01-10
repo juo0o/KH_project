@@ -224,7 +224,7 @@
 
 ### 결재문서함
 
-![결재 문서함](file:///C:/Users/congh/Desktop/2.png)
+![결재 문서함](https://user-images.githubusercontent.com/116548340/206597225-962c1984-9af1-4892-8383-53a535ff2d37.png)
 
 
 ### 사내 게시판 페이지
