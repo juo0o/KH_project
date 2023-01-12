@@ -56,6 +56,7 @@
                                 <div class="boxTop" style="background: #BDBDBD;">
 								     <img class="profileTop" id="empImg" alt="" th:src="|/imgs/user/${session.userInfoAll.empPictureRefileName}|" style="width: 100%; height: 100%;"> 
 								 </div>
+								 
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -104,19 +105,16 @@
 				  </div>
 				</div>
 	<!-- 알람차 Modal -->
-	<div class="modal" tabindex="-1" id="alarm">
+	
+ <input type="hidden" id="EmpNum" th:value="${session.userInfoAll.empNum}">
+	
+	<div id="alarmDiv" style="background-color: white; text-align : center; line-height : 150px; border: 2px solid #36B9CC; position: absolute; width: 300px; height: 150px; z-index:100; right:0%; bottom: -5%; visibility : hidden;" onclick="updateAlarm();">
 <!-- 		<form th:action="@{/approval/uqdateAlarm}" method="post"> -->
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" onclick="updateAlarm();">
-					<h5 class="modal-title" >새로운 결재 요청되었습니다.</h5>
+					새로운 결재 요청되었습니다.
 					<!-- <button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button> -->
-				</div>
-			</div>
-		</div>
-<!-- 		</form> -->
 	</div>
+<!-- 		</form> -->
 
 
 	<link rel="stylesheet" type="text/css" href="/css/main/top.css">

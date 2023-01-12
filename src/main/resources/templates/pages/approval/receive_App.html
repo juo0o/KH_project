@@ -8,7 +8,6 @@
 	<div>
 		<h3>-- 결재 대기 --</h3>	
 	</div>
-
 	<table class="table table-hover">
 			<thead>
 				<tr bordercolor="sold 1px;">
@@ -21,14 +20,12 @@
 				</tr>
 			</thead>
 			
-			
-			
 			<tbody id="appList" >
 		<th:block>
 			<th:block th:each="recive:${reciveList}">
 				<th:block th:if ="${map['empPosition'] == '팀장' and recive.receiveRefVO.appSeqStatus =='결재대기'}">
 					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
-							<td th:text="${recive.appSeq}">@mdo</td>
+							<td class="icon" th:text="${recive.appSeq}">@mdo</td>
 							<td th:text="${recive.empVO.empName}">@mdo</td>
 							<td th:text="${recive.title}">Otto</td>
 							<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
@@ -41,7 +38,7 @@
 			<th:block th:each="recive:${reciveList}">
 				<th:block th:if ="${map['empPosition'] == '부장' and recive.receiveRefVO.appSeqStatus =='결재중'} ">
 					<tr th:onclick="requestApproval([[${recive.appSeq}]],[[${recive.appCateCode}]]);">
-						<td th:text="${recive.appSeq}">@mdo</td>
+						<td class="icon" th:text="${recive.appSeq}">@mdo</td>
 						<td th:text="${recive.empVO.empName}">@mdo</td>
 						<td th:text="${recive.title}">Otto</td>
 						<td th:text="${recive.appCategoryVO.appCateName}">Otto</td>
@@ -127,6 +124,31 @@
 			</th:block>
 		</div>
 	</div>   
+	
+	<!-- <input type="hidden" th:value="${alarmList}" id="alarmList"> -->
+	<script th:inline="javascript">
+		const alarmList = /*[[${alarmList}]]*/[];
+		//알람
+
+		
+		for(alarmApp of alarmList){
+			alarmApp.appSeq; // APP_011
+			
+			for(iconTag of document.querySelectorAll(".icon")) {
+				console.log(iconTag.innerText);
+				
+				if(iconTag.innerText.indexOf( alarmApp.appSeq ) > -1) {
+					iconTag.insertAdjacentHTML('beforeend',`<img  style="position:relative; z-index:1; left:-75px; top:-15px;" src="/imgs/board/icons8-동그라미-n-48.png" height="20" width="20" />`)
+				}
+				
+			};
+		}
+
+
+
+	</script>
+	
+	
 	
 	<script type="text/javascript" th:src="@{/js/approval/request_approval.js}"></script>
 </div>	

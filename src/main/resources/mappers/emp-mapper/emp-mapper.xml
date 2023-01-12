@@ -29,6 +29,7 @@
 		<result column="EMP_PICTURE_ORIGIN_NAME" 	property="empPictureOriginName"/>
 		<result column="EMP_PICTURE_REFILE_NAME" 	property="empPictureRefileName"/>
 		<result column="EMP_HIRE_DATE" 				property="empHireDate"/>
+		<result column="ALARM_ALL" 		property="alarmAll"/>
 	</resultMap>
 </mapper>
 

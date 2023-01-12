@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.study.intranet.alarm.vo.AlarmVO;
+import kh.study.intranet.emp.vo.EmpVO;
 
 @Service("alarmService")
 public class AlarmServiceImpl implements AlarmService{
@@ -34,6 +35,18 @@ public class AlarmServiceImpl implements AlarmService{
 	public void updateAlarm(AlarmVO alarmVO) {
 		sqlSession.update("alarmMapper.updateAlarm",alarmVO);
 		
+	}
+	
+	
+
+	@Override
+	public void updateEmpAlarm(EmpVO empVO) {
+		sqlSession.insert("alarmMapper.updateEmpAlarm",empVO);
+	}
+
+	@Override
+	public EmpVO selectEmpAlarm(EmpVO empVO) {
+		return sqlSession.selectOne("alarmMapper.selectEmpAlarm",empVO);
 	}
 	
 	

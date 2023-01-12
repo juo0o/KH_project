@@ -25,6 +25,7 @@ public class EmpVO  {
 	   private String empPictureOriginName;
 	   private String empPictureRefileName;
 	   private String empHireDate;
+	   private String alarmAll;
 
 	
 	

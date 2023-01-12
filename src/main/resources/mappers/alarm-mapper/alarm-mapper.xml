@@ -10,18 +10,24 @@
 		<result column="TO_USER_ID" 			property="toUserId"/>
 	</resultMap>
 
+	
+	
+	
+	<!-- 전체알람 업데이트 -->
+	<update id="updateEmpAlarm">
+		UPDATE EMP
+		SET ALARM_ALL = #{alarmAll}
+		WHERE EMP_NUM = #{empNum}
+	</update>
+	
+	<select id="selectEmpAlarm" resultMap="empMapper.emp">
+		SELECT ALARM_ALL
+		FROM EMP
+		WHERE USER_ID = #{userId}
+	</select>
 	<!-- 결제시 알람 인설트 -->
 	<insert id="insertAlarm">
-	
-		MERGE INTO ALARM
-		USING DUAL
-		ON (TO_USER_ID = #{toUserId})
-		WHEN MATCHED THEN
-			UPDATE
-			SET SEQ_ALL = 'Y'
-			WHERE 
-		WHEN NOT MATCHED THEN
-			INSERT INTO ALARM(
+		INSERT INTO ALARM(
 				USER_ID
 				, APP_SEQ
 				, TO_USER_ID
@@ -30,7 +36,6 @@
 				, #{appSeq}
 				, (SELECT USER_ID FROM EMP WHERE EMP_NUM = #{toUserId})
 			)
-	
 	</insert>
 	
 	<!-- 알람 조회 -->
@@ -39,10 +44,8 @@
 			, ALARM.USER_ID
 			, ALARM.APP_SEQ
 			, ALARM.TO_USER_ID
-		FROM ALARM,EMP,APPROVAL
-		WHERE ALARM.USER_ID = EMP.USER_ID
-		AND ALARM.APP_SEQ = APPROVAL.APP_SEQ
-		AND ALARM.TO_USER_ID = #{userId}
+		FROM ALARM
+		WHERE ALARM.TO_USER_ID = #{userId}
 		AND ALARM_STATUS = 'N'
 	</select>
 	
@@ -53,5 +56,9 @@
 		WHERE APP_SEQ = #{appSeq}
 	
 	</update>
+	
+	
+	
+	
 </mapper>
 

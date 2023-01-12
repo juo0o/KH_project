@@ -1,7 +1,5 @@
 let isExistAlarm = false;
 
-let alarmAppSeq;
-
 
 function alarm() {
 	
@@ -18,17 +16,20 @@ function alarm() {
 			
 			if(result == null)
 				return;
-				
-			if(result.length == 0)
+			if(result == 'N')
 				return;
 				
+				
 			isExistAlarm = true;
-			alarmAppSeq = result[0].appSeq;
+			
 		
 //			const alarmModal = new bootstrap.Modal('#alarm');
 //			alarmModal.show();
 			
-			$('#alarm').modal('show');
+			//document.querySelector("#alarmDiv").dis;
+			$("#alarmDiv").css('visibility','visible');
+			
+//			$('#alarm').modal('show');
 		},
 		error: function() {
 			alert('실패');
@@ -41,5 +42,12 @@ setInterval(alarm, 5000);
 
 
 function updateAlarm() {
-	location.href='/approval/updateAlarm?appSeq='+alarmAppSeq;
+	
+	const empNum = document.querySelector("#EmpNum").value;
+	
+	location.href='/approval/updateAlarm?empNum='+empNum;
 }
+
+
+
+
