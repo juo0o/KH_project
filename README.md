@@ -214,13 +214,14 @@
 
 ![부장 결재](https://user-images.githubusercontent.com/107612677/212478591-1dfd13c9-cf03-4c22-b274-7264497c1b01.gif)
 
+> ##### 최종 결재
+
+<img width="800" alt="6" src="https://user-images.githubusercontent.com/107612677/212479276-e68d75f8-4458-41b4-bb86-a22f22347c24.png">
+
 ### 조건별 기안서 검색
 
 ![결재 문서함](https://user-images.githubusercontent.com/107612677/212478681-f263e35e-6f3d-4416-ada7-37e7860b0042.gif)
 
-##### 최종 결재
-
-<img width="800" alt="6" src="https://user-images.githubusercontent.com/107612677/212479276-e68d75f8-4458-41b4-bb86-a22f22347c24.png">
 <br><br>
 ***
 <br><br>
