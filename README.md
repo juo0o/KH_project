@@ -219,7 +219,7 @@
 
 ### 서류작성
 
-![서류작성](https://user-images.githubusercontent.com/104358180/206954690-565c0f31-3024-4f20-964d-c70d96effacd.png)
+![서류작성](https://user-images.githubusercontent.com/107612677/212457593-fa09fa47-1d75-43b4-92d1-215a78dbda93.gif)
 
 
 ### 결재문서함
