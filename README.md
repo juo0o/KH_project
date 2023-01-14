@@ -181,69 +181,27 @@
 ![테이블 관계도](https://user-images.githubusercontent.com/104358180/206993936-36e43b15-ba85-4c1d-88d5-917afd5912c6.PNG)
 
 
-##  결과물 
+##  내가 맡은 기능 결과물
 
-### 로그인 
+###  전자 서류 결재 요청
 
-
-![로그인](https://user-images.githubusercontent.com/116548340/206611100-d1f6971a-80c1-4c00-966d-4bf5eb0a1ad6.png)
-
-### 회원가입 
-![회원가입](https://user-images.githubusercontent.com/104358180/206955610-60b90f32-a3d5-4ad1-9170-02c3b15bfa00.png)
-
-### 메인 
-
-![메인페이지](https://user-images.githubusercontent.com/116548340/206363392-46e11251-3e4d-473c-96e0-d507b6cc5c78.png)
-
-### 관리자 
-
-
-![관리자 페이지](https://user-images.githubusercontent.com/104358180/206954392-b00aefcb-7a62-4ec5-851f-cbeae1625806.png)
-
-### 주소록 
-
-
-![주소록 페이지](https://user-images.githubusercontent.com/116548340/206364100-c0226fb9-25c7-4c18-bf0d-e260de3d9811.png)
-
-
-### 채팅 
-
-![채팅방](https://user-images.githubusercontent.com/116548340/206594026-31b88eaa-a8c6-4ed8-b14b-5622719aa259.png)
-
-
-###  전자결재 조회
-
-![전자 결제조회](https://user-images.githubusercontent.com/116548340/206594228-f4ea5089-94ea-46e4-aca9-9dbdcb79b30f.png)
+![전자 결재 서류 작성](https://user-images.githubusercontent.com/107612677/212478516-453d45a3-61ab-4a20-8667-c208d0aacf31.gif)
 
 
 
-### 서류작성
+### 팀장 결재
 
-![서류작성](https://user-images.githubusercontent.com/107612677/212457593-fa09fa47-1d75-43b4-92d1-215a78dbda93.gif)
-
-
-### 결재문서함
-
-![결재 문서함](https://user-images.githubusercontent.com/116548340/206597225-962c1984-9af1-4892-8383-53a535ff2d37.png)
+![팀장 결재](https://user-images.githubusercontent.com/107612677/212478554-77019554-b6dc-4624-bba9-976e5583eb17.gif)
 
 
-### 사내 게시판 페이지
+### 부장 결재
 
-![사내 게시판 조회](https://user-images.githubusercontent.com/116548340/206595687-c93654c8-0276-413a-9cf0-eeba6d20544f.png)
-
-
-### 게시글 상세 페이지
-
-![상세게시글](https://user-images.githubusercontent.com/116548340/206342008-9b02219d-ff3c-41e5-9aff-1b5d77725ccd.png)
-
-### 회의실 예약 
-
-![회의실 예약](https://user-images.githubusercontent.com/116548340/206596000-222e9b23-16e4-480a-ba63-9b13f017ac7c.png)
+![부장 결재](https://user-images.githubusercontent.com/107612677/212478591-1dfd13c9-cf03-4c22-b274-7264497c1b01.gif)
 
 
-### 회의실 예약 조회 
+### 부장 결재
 
-![회의실 예약 조회](https://user-images.githubusercontent.com/116548340/206596111-fd9d883b-aff2-49ef-8621-8ea34a8dc8b2.png)
+![결재 문서함](https://user-images.githubusercontent.com/107612677/212478681-f263e35e-6f3d-4416-ada7-37e7860b0042.gif)
 
 <br><br>
 ***
