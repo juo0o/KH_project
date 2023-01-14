@@ -214,7 +214,7 @@
 
 ![부장 결재](https://user-images.githubusercontent.com/107612677/212478591-1dfd13c9-cf03-4c22-b274-7264497c1b01.gif)
 
-### 부장 결재
+### 조건별 기안서 검색
 
 ![결재 문서함](https://user-images.githubusercontent.com/107612677/212478681-f263e35e-6f3d-4416-ada7-37e7860b0042.gif)
 
