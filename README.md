@@ -187,24 +187,24 @@
 
 ![전자 결재 서류 작성](https://user-images.githubusercontent.com/107612677/212478516-453d45a3-61ab-4a20-8667-c208d0aacf31.gif)
 
-# 서류 작성 페이지로 이동
-> <img width="1221" alt="1" src="https://user-images.githubusercontent.com/107612677/212479160-b61edbc9-6fbf-4f55-843a-58486aee0930.png">
+##### 서류 작성 페이지로 이동
+> <img width="500" alt="1" src="https://user-images.githubusercontent.com/107612677/212479160-b61edbc9-6fbf-4f55-843a-58486aee0930.png">
 
-# 서류 작성 페이지
-> <img width="1218" alt="2" src="https://user-images.githubusercontent.com/107612677/212479228-4cfa5138-1198-4231-957f-8a58aedf2c3b.png">
+##### 기안서 종류
+> <img width="500" alt="4" src="https://user-images.githubusercontent.com/107612677/212479253-9a4fd11f-1199-4b36-bf47-a106b8735ed1.png">
 
-# 기안서 종류
-> <img width="1218" alt="4" src="https://user-images.githubusercontent.com/107612677/212479253-9a4fd11f-1199-4b36-bf47-a106b8735ed1.png">
+##### 서류 작성 페이지
+> <img width="500" alt="2" src="https://user-images.githubusercontent.com/107612677/212479228-4cfa5138-1198-4231-957f-8a58aedf2c3b.png">
 
 ### 결재 요청시 알림
 
-<img width="1218" alt="알림" src="https://user-images.githubusercontent.com/107612677/212479514-ba7b529d-106a-48f0-b319-23fded761f03.png">
+<img width="500" alt="알림" src="https://user-images.githubusercontent.com/107612677/212479514-ba7b529d-106a-48f0-b319-23fded761f03.png">
 
-<img width="1214" alt="알림2" src="https://user-images.githubusercontent.com/107612677/212479519-d8a80e72-155b-425f-9b7e-e4a9a59f3bb7.png">
+<img width="500" alt="알림2" src="https://user-images.githubusercontent.com/107612677/212479519-d8a80e72-155b-425f-9b7e-e4a9a59f3bb7.png">
 
 ### 개인 결재 문서함
 
-<img width="1218" alt="5" src="https://user-images.githubusercontent.com/107612677/212479266-c8d4bedd-4141-4f31-a4ad-f77b349c6ad7.png">
+<img width="500" alt="5" src="https://user-images.githubusercontent.com/107612677/212479266-c8d4bedd-4141-4f31-a4ad-f77b349c6ad7.png">
 
 ### 팀장 결재
 
@@ -218,9 +218,9 @@
 
 ![결재 문서함](https://user-images.githubusercontent.com/107612677/212478681-f263e35e-6f3d-4416-ada7-37e7860b0042.gif)
 
-# 최종 결재
+##### 최종 결재
 
-<img width="1217" alt="6" src="https://user-images.githubusercontent.com/107612677/212479276-e68d75f8-4458-41b4-bb86-a22f22347c24.png">
+<img width="500" alt="6" src="https://user-images.githubusercontent.com/107612677/212479276-e68d75f8-4458-41b4-bb86-a22f22347c24.png">
 <br><br>
 ***
 <br><br>
