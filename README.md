@@ -198,7 +198,7 @@
 
 ### 결재 요청시 알림
 
-<img width="800" alt="알림" src="https://user-images.githubusercontent.com/107612677/212479514-ba7b529d-106a-48f0-b319-23fded761f03.png">
+<img width="800" alt="결재 알림" src="https://user-images.githubusercontent.com/107612677/212480188-dfff729f-e359-49e5-8c48-0e4e64f54366.png">
 
 <img width="800" alt="알림2" src="https://user-images.githubusercontent.com/107612677/212479519-d8a80e72-155b-425f-9b7e-e4a9a59f3bb7.png">
 
