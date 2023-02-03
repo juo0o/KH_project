@@ -98,6 +98,12 @@
 				<td colspan="2">
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="appSeqStatus"
+							id="" value="전체"
+							th:checked="${paramMap['appSeqStatus'] eq '결재대기' && paramMap['appSeqStatus'] eq '결재중' && paramMap['appSeqStatus'] eq '결재완료'}">
+						<label class="form-check-label" for="">전체</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="appSeqStatus"
 							id="" value="결재대기"
 							th:checked="${paramMap['appSeqStatus'] eq '결재대기'}">
 						<label class="form-check-label" for="">결재대기</label>

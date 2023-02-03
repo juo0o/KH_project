@@ -151,10 +151,14 @@ public class ApprovalController {
 		vacationVO.setUserId(user.getUsername());
 		
 		alarmVO.setUserId(user.getUsername());
+		alarmVO.setToUserId(receiveRefVO.getFirstApprovalEmp());
 		alarmVO.setAppSeq(approvalVO.getAppSeq());
 		
-		  approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
-		  alarmService.insertAlarm(alarmVO);
+		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
+		 
+		empVO.setAlarmAll("Y");
+		empVO.setEmpNum(receiveRefVO.getFirstApprovalEmp());  
+		alarmService.updateEmpAlarm(empVO);
 		//vacationApprovalService.insertVacation(vacationVO);
 		
 		
@@ -226,10 +230,16 @@ public class ApprovalController {
 		User user = (User)athenAuthentication.getPrincipal();
 		approvalVO.setUserId(user.getUsername());
 		accountingVO.setUserId(user.getUsername());
+		
 		alarmVO.setUserId(user.getUsername());
+		alarmVO.setToUserId(receiveRefVO.getFirstApprovalEmp());
+		alarmVO.setAppSeq(approvalVO.getAppSeq());
 		
 		approvalService.insertApproval(approvalVO,vacationVO,nomalVO,accountingVO,receiveRefVO,alarmVO);
-		alarmService.insertAlarm(alarmVO);
+		
+		empVO.setAlarmAll("Y");
+		empVO.setEmpNum(receiveRefVO.getFirstApprovalEmp());
+		alarmService.updateEmpAlarm(empVO);
 		
 		return "redirect:/approval/accountingReport";
 	}

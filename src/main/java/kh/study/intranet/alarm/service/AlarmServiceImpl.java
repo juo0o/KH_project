@@ -41,7 +41,7 @@ public class AlarmServiceImpl implements AlarmService{
 
 	@Override
 	public void updateEmpAlarm(EmpVO empVO) {
-		sqlSession.insert("alarmMapper.updateEmpAlarm",empVO);
+		sqlSession.update("alarmMapper.updateEmpAlarm",empVO);
 	}
 
 	@Override

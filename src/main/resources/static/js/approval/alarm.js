@@ -37,7 +37,7 @@ function alarm() {
 	});
 	//ajax end
 }
-setInterval(alarm, 5000);
+setInterval(alarm, 3000);
 
 
 
